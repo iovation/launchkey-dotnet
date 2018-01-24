@@ -1,0 +1,20 @@
+﻿version: 3.0.0.{build}
+
+configuration: Release
+
+branches:
+  only:
+    - master
+
+build:
+  parallel: true
+  project: src\iovation.LaunchKey.Sdk.sln
+  verbosity: minimal
+  publish_nuget: true
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'

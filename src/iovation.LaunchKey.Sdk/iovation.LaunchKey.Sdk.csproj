@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A477BF92-ADD7-4737-A4A6-1192C81E3C53}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>iovation.LaunchKey.Sdk</RootNamespace>
+    <AssemblyName>iovation.LaunchKey.Sdk</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\iovation.LaunchKey.Sdk.XML</DocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\iovation.LaunchKey.Sdk.XML</DocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="jose-jwt, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jose-jwt.2.4.0\lib\net40\jose-jwt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Domain\Webhook\ServiceUserSessionEndWebhookPackage.cs" />
+    <Compile Include="Error\CacheException.cs" />
+    <Compile Include="Cache\HashCache.cs" />
+    <Compile Include="Client\BasicDirectoryClient.cs" />
+    <Compile Include="Client\BasicServiceClient.cs" />
+    <Compile Include="Client\DirectoryFactory.cs" />
+    <Compile Include="Client\OrganizationFactory.cs" />
+    <Compile Include="Domain\Directory\Device.cs" />
+    <Compile Include="Domain\Directory\DeviceStatus.cs" />
+    <Compile Include="Domain\Directory\DirectoryUserDeviceLinkData.cs" />
+    <Compile Include="Client\IDirectoryClient.cs" />
+    <Compile Include="Client\IServiceClient.cs" />
+    <Compile Include="Client\ServiceFactory.cs" />
+    <Compile Include="Domain\Directory\Session.cs" />
+    <Compile Include="Crypto\ICrypto.cs" />
+    <Compile Include="Crypto\Jwe\IJweService.cs" />
+    <Compile Include="Crypto\Jwe\JweService.cs" />
+    <Compile Include="Crypto\Jwt\IJwtService.cs" />
+    <Compile Include="Crypto\BouncyCastleCrypto.cs" />
+    <Compile Include="Crypto\Jwt\JwtClaims.cs" />
+    <Compile Include="Crypto\Jwt\JwtData.cs" />
+    <Compile Include="Error\JwtError.cs" />
+    <Compile Include="Crypto\Jwt\JwtService.cs" />
+    <Compile Include="Domain\Error.cs" />
+    <Compile Include="Domain\Service\Location.cs" />
+    <Compile Include="Error\BaseException.cs" />
+    <Compile Include="Error\CryptographyError.cs" />
+    <Compile Include="Error\EntityNotFound.cs" />
+    <Compile Include="Error\Forbidden.cs" />
+    <Compile Include="Error\JweException.cs" />
+    <Compile Include="Domain\Service\AuthorizationResponse.cs" />
+    <Compile Include="Domain\Service\AuthPolicy.cs" />
+    <Compile Include="Domain\Webhook\AuthorizationResponseWebhookPackage.cs" />
+    <Compile Include="Domain\Webhook\IWebhookPackage.cs" />
+    <Compile Include="Error\InvalidResponseException.cs" />
+    <Compile Include="Error\RateLimited.cs" />
+    <Compile Include="Error\RequestTimedOut.cs" />
+    <Compile Include="Error\Unauthorized.cs" />
+    <Compile Include="FactoryFactory.cs" />
+    <Compile Include="FactoryFactoryBuilder.cs" />
+    <Compile Include="Json\IJsonEncoder.cs" />
+    <Compile Include="Error\JsonEncoderException.cs" />
+    <Compile Include="Json\JsonNetJsonEncoder.cs" />
+    <Compile Include="Json\UnixTimestampJsonDateConverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Time\IUnixTimeConverter.cs" />
+    <Compile Include="Time\UnixTimeConverter.cs" />
+    <Compile Include="Transport\Domain\AuthPolicy.cs" />
+    <Compile Include="Transport\Domain\DirectoryV3DevicesDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryV3DevicesListPostRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryV3DevicesListPostResponse.cs" />
+    <Compile Include="Transport\Domain\DirectoryV3DevicesPostRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryV3DevicesPostResponse.cs" />
+    <Compile Include="Transport\Domain\DirectoryV3SessionsDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryV3SessionsListPostRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryV3SessionsListPostResponse.cs" />
+    <Compile Include="Transport\Domain\EntityIdentifier.cs" />
+    <Compile Include="Transport\Domain\EntityKeyMap.cs" />
+    <Compile Include="Transport\Domain\EntityType.cs" />
+    <Compile Include="Error\NoKeyFoundException.cs" />
+    <Compile Include="Transport\ITransport.cs" />
+    <Compile Include="Error\CommunicationErrorException.cs" />
+    <Compile Include="Transport\Domain\PublicV3PingGetResponse.cs" />
+    <Compile Include="Transport\Domain\PublicV3PublicKeyGetResponse.cs" />
+    <Compile Include="Transport\Domain\IServerSentEvent.cs" />
+    <Compile Include="Transport\Domain\ServiceV3AuthsGetResponse.cs" />
+    <Compile Include="Transport\Domain\ServiceV3AuthsGetResponseCore.cs" />
+    <Compile Include="Transport\Domain\ServiceV3AuthsGetResponseDevice.cs" />
+    <Compile Include="Transport\Domain\ServiceV3AuthsPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServiceV3AuthsPostResponse.cs" />
+    <Compile Include="Transport\Domain\ServiceV3SessionsDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\ServiceV3SessionsPostRequest.cs" />
+    <Compile Include="Error\AuthorizationRequestTimedOutError.cs" />
+    <Compile Include="Transport\WebClient\CachedKey.cs" />
+    <Compile Include="Transport\WebClient\HttpClient.cs" />
+    <Compile Include="Transport\WebClient\HttpMethod.cs" />
+    <Compile Include="Transport\WebClient\HttpResponse.cs" />
+    <Compile Include="Transport\WebClient\IHttpClient.cs" />
+    <Compile Include="Error\InvalidRequestException.cs" />
+    <Compile Include="Transport\Domain\ServerSentEventAuthorizationResponse.cs" />
+    <Compile Include="Transport\Domain\ServerSentEventUserServiceSessionEnd.cs" />
+    <Compile Include="Transport\WebClient\WebClientTransport.cs" />
+    <Compile Include="Util\ByteArrayUtils.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="iovation.LaunchKey.Sdk.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

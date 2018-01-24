@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>iovation.LaunchKey.Sdk</id>
+    <version>$version$</version>
+    <authors>iovation, Inc.</authors>
+    <!--<licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>-->
+    <projectUrl>https://docs.launchkey.com/api/index.html</projectUrl>
+    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>SDK for accessing LaunchKey V3 endpoints.</description>
+    <copyright>Copyright 2018 iovation, Inc.</copyright>
+    <tags>LaunchKey Security Multi-Factor Two-Factor Authentication 2FA MFA</tags>
+    <dependencies>
+      <dependency id="BouncyCastle" version="1.8.1" />
+      <dependency id="jose-jwt" version="2.4.0" />
+      <dependency id="Newtonsoft.Json" version="10.0.3" />
+    </dependencies>
+  </metadata>
+</package>

@@ -1,0 +1,71 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using iovation.LaunchKey.Sdk.Domain.Service;
+using iovation.LaunchKey.Sdk.Domain.Webhook;
+
+namespace iovation.LaunchKey.Sdk.Client
+{
+	public interface IServiceClient
+	{
+		/// <summary>
+		/// Perform an authorization for a user of a service.
+		/// </summary>
+		/// <param name="user">The username or directory user ID to authorize</param>
+		/// <param name="context">The message to display on the device during authorization request</param>
+		/// <param name="policy">The authorization policy to use when authorizing the user</param>
+		/// <returns>The authorization request identifier, which can be used for checking the status of this request</returns>
+		string Authorize(string user, string context, AuthPolicy policy);
+
+		/// <summary>
+		/// Perform an authorization for a user of a service.
+		/// </summary>
+		/// <param name="user">The username or directory user ID to authorize</param>
+		/// <param name="context">The message to display on the device during authorization request</param>
+		/// <returns>The authorization request identifier, which can be used for checking the status of this request</returns>
+		string Authorize(string user, string context);
+
+		/// <summary>
+		/// Perform an authorization for a user of a service.
+		/// </summary>
+		/// <param name="user">The username or directory user ID to authorize</param>
+		/// <returns>The authorization request identifier, which can be used for checking the status of this request</returns>
+		string Authorize(string user);
+
+		/// <summary>
+		/// Retrieve the status of an authorization request.
+		/// </summary>
+		/// <param name="authorizationRequestId">The authorization request identifier, usually retrieved via Authorize()</param>
+		/// <returns>NULL if the authorization is pending. A response package once the user has responded.</returns>
+		AuthorizationResponse GetAuthorizationResponse(string authorizationRequestId);
+
+		/// <summary>
+		/// Begin a session for a user of this service.
+		/// </summary>
+		/// <param name="user">The username or directory user ID</param>
+		void SessionStart(string user);
+
+		/// <summary>
+		/// Begin a session for a user of this service, tied to a specific authorization request.
+		/// </summary>
+		/// <param name="user">The username or directory user ID</param>
+		/// <param name="authorizationRequestId">the authorization request that is associated with this session</param>
+		void SessionStart(string user, string authorizationRequestId);
+
+		/// <summary>
+		/// Ends a session for a user of this service.
+		/// </summary>
+		/// <param name="user">The username or directory user ID to end the session for</param>
+		void SessionEnd(string user);
+
+		/// <summary>
+		/// Process a Webhook payload received from the LaunchKey WebHook service.
+		/// </summary>
+		/// <param name="headers"></param>
+		/// <param name="body"></param>
+		/// <returns></returns>
+		IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body);
+	}
+}
