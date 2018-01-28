@@ -5,6 +5,7 @@ namespace iovation.LaunchKey.Sdk.Error
 	/// <summary>
 	/// Thrown when an authorization request has failed due to a timeout
 	/// </summary>
+	[Serializable]
 	public class AuthorizationRequestTimedOutError : BaseException
 	{
 		public AuthorizationRequestTimedOutError() : base("Authorization timed out") { }

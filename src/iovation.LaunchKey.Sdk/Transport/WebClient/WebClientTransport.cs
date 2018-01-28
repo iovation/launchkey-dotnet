@@ -363,7 +363,6 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 		{
 			try
 			{
-				Console.WriteLine($"response: {data}");
 				return _jsonDecoder.DecodeObject<TResultType>(data);
 			}
 			catch (JsonEncoderException ex)
