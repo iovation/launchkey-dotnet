@@ -5,6 +5,7 @@ namespace iovation.LaunchKey.Sdk.Error
 	/// <summary>
 	/// Base class for all communication related exceptions (i.e. those caused by transport-level errors)
 	/// </summary>
+	[Serializable]
 	public class CommunicationErrorException : BaseException
 	{
 		public CommunicationErrorException(string message) : base(message)

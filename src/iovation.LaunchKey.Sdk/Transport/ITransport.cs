@@ -94,10 +94,12 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// <summary>
 		/// process a server-sent event, and return a properly decoded and verified response object
 		/// </summary>
+		/// <param name="method">The HTTP method from the HTTP request</param>
+		/// <param name="path">The HTTP request path from the HTTP request</param>
 		/// <param name="headers">the HTTP headers from the HTTP request received in the Webhook</param>
 		/// <param name="body">the HTTP body from the HTTP request received in the Webhook</param>
 		/// <returns>decoded and verified response details</returns>
-		IServerSentEvent HandleServerSentEvent(Dictionary<string, List<string>> headers, string body);
+		IServerSentEvent HandleServerSentEvent(Dictionary<string, List<string>> headers, string body, string method = null, string path = null);
 
 	}
 }

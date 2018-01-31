@@ -17,22 +17,7 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// <param name="context">The message to display on the device during authorization request</param>
 		/// <param name="policy">The authorization policy to use when authorizing the user</param>
 		/// <returns>The authorization request identifier, which can be used for checking the status of this request</returns>
-		string Authorize(string user, string context, AuthPolicy policy);
-
-		/// <summary>
-		/// Perform an authorization for a user of a service.
-		/// </summary>
-		/// <param name="user">The username or directory user ID to authorize</param>
-		/// <param name="context">The message to display on the device during authorization request</param>
-		/// <returns>The authorization request identifier, which can be used for checking the status of this request</returns>
-		string Authorize(string user, string context);
-
-		/// <summary>
-		/// Perform an authorization for a user of a service.
-		/// </summary>
-		/// <param name="user">The username or directory user ID to authorize</param>
-		/// <returns>The authorization request identifier, which can be used for checking the status of this request</returns>
-		string Authorize(string user);
+		string Authorize(string user, string context = null, AuthPolicy policy = null);
 
 		/// <summary>
 		/// Retrieve the status of an authorization request.
@@ -65,7 +50,9 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// </summary>
 		/// <param name="headers"></param>
 		/// <param name="body"></param>
+		/// <param name="method">The HTTP method of the received request. Optional. Include for stricter security checks.</param>
+		/// <param name="path">The HTTP path of the received request. Optional. Include for stricter security checks.</param>
 		/// <returns></returns>
-		IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body);
+		IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null);
 	}
 }

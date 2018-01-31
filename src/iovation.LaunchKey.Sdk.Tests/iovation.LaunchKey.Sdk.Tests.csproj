@@ -111,6 +111,7 @@
     <Compile Include="Transport\Domain\ServiceV3SessionsDeleteRequestTests.cs" />
     <Compile Include="Transport\WebClient\WebClientTransportTests.cs" />
     <Compile Include="Transport\WebClient\CachedKeyTests.cs" />
+    <Compile Include="Transport\WebClient\WebClientTransport_WebhookTests.cs" />
     <Compile Include="Util\ByteArrayTests.cs" />
   </ItemGroup>
   <ItemGroup>

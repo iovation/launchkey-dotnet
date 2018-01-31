@@ -15,7 +15,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		public void Constructor_ShouldPopulateFactorBasedOnDeviceIntegrity()
 		{
 			var authPolicy = new AuthPolicy(
-				deviceIntegrity: true
+				null,
+				null,
+				null,
+				null,
+				true,
+				null
 			);
 
 			Assert.IsTrue(authPolicy.Factors != null);
@@ -30,7 +35,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		[TestMethod]
 		public void Constructor_ShouldNotAddGeofenceFactorIfNullLocations()
 		{
-			var policy = new AuthPolicy();
+			var policy = new AuthPolicy(null, null, null, null, null, null);
 
 			Assert.IsTrue(policy.Factors.Count == 0);
 		}
@@ -38,7 +43,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		[TestMethod]
 		public void Constructor_ShouldNotAddGeofenceFactorIfEmptyLocations()
 		{
-			var policy = new AuthPolicy(locations: new List<AuthPolicy.Location>());
+			var policy = new AuthPolicy(null, null, null, null, null, new List<AuthPolicy.Location>());
 
 			Assert.IsTrue(policy.Factors.Count == 0);
 		}
@@ -46,8 +51,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		[TestMethod]
 		public void Constructor_ShouldPopulateGeofences()
 		{
-			var policy = new AuthPolicy(
-				locations: new List<AuthPolicy.Location>
+			var policy = new AuthPolicy(null, null, null, null, null, new List<AuthPolicy.Location>
 				{
 					new AuthPolicy.Location
 					{
@@ -73,8 +77,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		[TestMethod]
 		public void Constructor_ShouldAllowGeofencesAndDeviceIntegrity()
 		{
-			var policy = new AuthPolicy(
-				locations: new List<AuthPolicy.Location>
+			var policy = new AuthPolicy(null, null, null, null, true, new List<AuthPolicy.Location>
 				{
 					new AuthPolicy.Location
 					{
@@ -82,8 +85,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 						Longitude = 44.44,
 						Radius = 10
 					}
-				},
-				deviceIntegrity: true
+				}
 			);
 
 			Assert.IsTrue(policy.Factors != null);
@@ -110,7 +112,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		[TestMethod]
 		public void Constructor_ShouldIncludeAny()
 		{
-			var policy = new AuthPolicy(any: 99);
+			var policy = new AuthPolicy(99, null, null, null, null, null);
 
 			Assert.IsTrue(policy.MinimumRequirements != null);
 			Assert.IsTrue(policy.MinimumRequirements.Count == 1);
@@ -120,12 +122,29 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		[TestMethod]
 		public void Constructor_ShouldIncludeFlags()
 		{
-			var policy = new AuthPolicy(requireInherenceFactor: true, requirePosessionFactor: false);
+			var policy = new AuthPolicy(null, null, true, null, null, null);
 
 			Assert.IsTrue(policy.MinimumRequirements[0].Inherence == 1);
 			Assert.IsTrue(policy.MinimumRequirements[0].Possession == 0);
 			Assert.IsTrue(policy.MinimumRequirements[0].Knowledge == 0);
 			Assert.IsTrue(!policy.MinimumRequirements[0].Any.HasValue);
+		}
+
+		[TestMethod]
+		public void Constructor_ShouldIncludeDeviceIntegrityFlags()
+		{
+			var policy = new AuthPolicy(null, null, null, null, null, null);
+			Assert.IsTrue(policy.Factors.Count == 0);
+
+			var policyWithIntegrityFalse = new AuthPolicy(null, null, null, null, false, null);
+			Assert.IsTrue(policyWithIntegrityFalse.Factors.Count == 1);
+			Assert.IsTrue(policyWithIntegrityFalse.Factors[0].Factor == AuthPolicy.FactorType.DeviceIntegrity);
+			Assert.IsTrue(policyWithIntegrityFalse.Factors[0].Attributes.FactorEnabled == 0);
+
+			var policyWithIntegrityTrue = new AuthPolicy(null, null, null, null, true, null);
+			Assert.IsTrue(policyWithIntegrityTrue.Factors.Count == 1);
+			Assert.IsTrue(policyWithIntegrityTrue.Factors[0].Factor == AuthPolicy.FactorType.DeviceIntegrity);
+			Assert.IsTrue(policyWithIntegrityTrue.Factors[0].Attributes.FactorEnabled == 1);
 		}
 	}
 }

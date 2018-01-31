@@ -23,7 +23,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			_transport = transport;
 		}
 
-		public string Authorize(string user, string context, AuthPolicy policy)
+		public string Authorize(string user, string context = null, AuthPolicy policy = null)
 		{
 			Transport.Domain.AuthPolicy requestPolicy = null;
 			if (policy != null)
@@ -46,17 +46,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			}
 			var request = new ServiceV3AuthsPostRequest(user, requestPolicy, context);
 			var response = _transport.ServiceV3AuthsPost(request, _serviceId);
-			return response.AuthRequest.ToString("N");
-		}
-
-		public string Authorize(string user, string context)
-		{
-			return Authorize(user, context, null);
-		}
-
-		public string Authorize(string user)
-		{
-			return Authorize(user, null, null);
+			return response.AuthRequest.ToString("D");
 		}
 
 		public AuthorizationResponse GetAuthorizationResponse(string authorizationRequestId)
@@ -65,7 +55,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			if (response != null)
 			{
 				return new AuthorizationResponse(
-					response.AuthorizationRequestId.ToString("N"),
+					response.AuthorizationRequestId.ToString("D"),
 					response.Response,
 					response.ServiceUserHash,
 					response.OrganizationUserHash,
@@ -98,15 +88,15 @@ namespace iovation.LaunchKey.Sdk.Client
 			_transport.ServiceV3SessionsDelete(request, _serviceId);
 		}
 
-		public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body)
+		public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null)
 		{
-			var serverSentEvent = _transport.HandleServerSentEvent(headers, body);
+			var serverSentEvent = _transport.HandleServerSentEvent(headers, body, method, path);
 			if (serverSentEvent is ServerSentEventAuthorizationResponse)
 			{
 				var authEvent = (ServerSentEventAuthorizationResponse)serverSentEvent;
 				return new AuthorizationResponseWebhookPackage(
 					new AuthorizationResponse(
-						authEvent.AuthorizationRequestId.ToString("N"),
+						authEvent.AuthorizationRequestId.ToString("D"),
 						authEvent.Response,
 						authEvent.ServiceUserHash,
 						authEvent.OrganizationUserHash,

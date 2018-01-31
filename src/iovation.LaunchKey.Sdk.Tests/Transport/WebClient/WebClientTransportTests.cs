@@ -296,7 +296,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 			mock.Verify(p => p.ExecuteRequest(HttpMethod.GET, MakeUrl("/public/v3/public-key/keyid"), null, null));
 		}
 
-		private Mock<IHttpClient> MakeMockHttpClient(string responseBody = "ok", int responseCode = 200)
+		protected Mock<IHttpClient> MakeMockHttpClient(string responseBody = "ok", int responseCode = 200)
 		{
 			var mock = new Mock<IHttpClient>();
 			mock.Setup(h => h.ExecuteRequest(
@@ -318,8 +318,18 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 			return mock;
 		}
 
-		private ITransport MakeMockedTransport(IHttpClient httpClient, IJsonEncoder jsonService, int responseCode = 200, string hashAlgo = "S256", string hashValue = "ff")
+		protected ITransport MakeMockedTransport(IHttpClient httpClient, IJsonEncoder jsonService, int responseCode = 200, string hashAlgo = "S256", string hashValue = "ff", JwtClaimsResponse response = null)
 		{
+			if (response == null)
+			{
+				response = new JwtClaimsResponse
+				{
+					StatusCode = responseCode,
+					ContentHashAlgorithm = hashAlgo,
+					ContentHash = hashValue
+				};
+			}
+
 			var crypto = new Mock<ICrypto>();
 			crypto.Setup(p => p.LoadRsaPublicKey(It.IsAny<string>()))
 				.Returns(new RSACryptoServiceProvider());
@@ -345,12 +355,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 					IssuedAt = new DateTime(2017,1,1),
 					Issuer = "my issuer",
 					NotBefore = new DateTime(2017, 1,1),
-					Response = new JwtClaimsResponse
-					{
-						StatusCode = responseCode,
-						ContentHashAlgorithm = hashAlgo,
-						ContentHash = hashValue
-					}
+					Response = response
 				});
 			jwtService.Setup(p => p.GetJWTData(It.IsAny<string>())).Returns(new JwtData("my iss", TestConsts.DefaultServiceEntity.ToString(), DefaultSubject.ToString(), "key id"));
 
@@ -373,7 +378,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 			);
 		}
 
-		private Mock<IJsonEncoder> MakeMockedJsonService()
+		protected Mock<IJsonEncoder> MakeMockedJsonService()
 		{
 			var jsonService = new Mock<IJsonEncoder>();
 
@@ -547,53 +552,6 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		}
 
 		[TestMethod]
-		public void HandleServerSentEvent_ShouldHandleAuthPackage()
-		{
-			var transport = MakeMockedTransportDefault(MakeMockHttpClient().Object);
-			var pkey = new RSACryptoServiceProvider();
-			var jwtService = new JwtService(new UnixTimeConverter(), "lka", new Dictionary<string, RSA>
-				{
-				{"key", pkey}
-				},
-				"key", 5);
-
-			var reqId = Guid.NewGuid();
-			var jwt = jwtService.Encode(reqId.ToString("N"), TestConsts.DefaultServiceEntity.ToString(), TestConsts.DefaultServiceEntity.ToString(), DateTime.Now, "POST", "/webhook", null, null);
-			
-			var response = transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { jwt }},
-				{"Content-Type", new List<string> {"application/jose" }}
-			}, "body");
-
-			Assert.IsTrue(response is ServerSentEventAuthorizationResponse);
-		}
-
-		[TestMethod]
-		public void HandleServerSentEvent_ShouldHandleSessionEnd()
-		{
-			var transport = MakeMockedTransportDefault(MakeMockHttpClient().Object);
-			var pkey = new RSACryptoServiceProvider();
-			var jwtService = new JwtService(new UnixTimeConverter(), "lka", new Dictionary<string, RSA>
-				{
-					{"key", pkey}
-				},
-				"key", 5);
-
-			var reqId = Guid.NewGuid();
-			var jwt = jwtService.Encode(reqId.ToString("N"), TestConsts.DefaultServiceEntity.ToString(), TestConsts.DefaultServiceEntity.ToString(), DateTime.Now, "POST", "/webhook", null, null);
-
-			var response = transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { jwt }},
-				{"Content-Type", new List<string> {"application/json" }}
-			}, "body");
-
-			Assert.IsTrue(response is ServerSentEventUserServiceSessionEnd);
-		}
-
-
-		[TestMethod]
 		[ExpectedException(typeof(InvalidResponseException))]
 		public void PrivateClaims_VerifyResponseCode()
 		{
@@ -658,6 +616,166 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 			{
 				Assert.IsInstanceOfType(e.InnerException, typeof(JwtError));
 				Assert.AreEqual(e.InnerException.Message, "Hash of response content does not match JWT response hash");
+			}
+		}
+
+		[TestMethod]
+		public void PrivateClaims_LocationHeaderPresentButNotInJwt_ShouldThrow()
+		{
+			var httpClientMock = new Mock<IHttpClient>();
+			httpClientMock.Setup(h => h.ExecuteRequest(
+				It.IsAny<HttpMethod>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<Dictionary<string, string>>()
+			)).Returns(new HttpResponse
+			{
+				Headers = new System.Net.WebHeaderCollection
+				{
+					{"X-IOV-KEY-ID", "key id"},
+					{"X-IOV-JWT", "my jwt" },
+					{"Location", "http://badguys.com" }
+				},
+				ResponseBody = "basic key data",
+				StatusCode = HttpStatusCode.OK,
+				StatusDescription = "OK"
+			});
+
+			var httpClient = httpClientMock.Object;
+			var transport = MakeMockedTransport(httpClient, MakeMockedJsonService().Object);
+
+			try
+			{
+				transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
+				Assert.Fail();
+			}
+			catch (InvalidResponseException e)
+			{
+				Assert.IsInstanceOfType(e.InnerException, typeof(JwtError));
+				Assert.AreEqual(e.InnerException.Message, "Location header of response content does not match JWT response location");
+			}
+		}
+
+		[TestMethod]
+		public void PrivateClaims_CacheControlHeaderPresentButNotInJwt_ShouldThrow()
+		{
+			var httpClientMock = new Mock<IHttpClient>();
+			httpClientMock.Setup(h => h.ExecuteRequest(
+				It.IsAny<HttpMethod>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<Dictionary<string, string>>()
+			)).Returns(new HttpResponse
+			{
+				Headers = new System.Net.WebHeaderCollection
+				{
+					{"X-IOV-KEY-ID", "key id"},
+					{"X-IOV-JWT", "my jwt" },
+					{"Cache-control", "nefarious value" }
+				},
+				ResponseBody = "response",
+				StatusCode = HttpStatusCode.OK,
+				StatusDescription = "OK"
+			});
+
+			var httpClient = httpClientMock.Object;
+			var transport = MakeMockedTransport(httpClient, MakeMockedJsonService().Object);
+
+			try
+			{
+				transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
+				Assert.Fail();
+			}
+			catch (InvalidResponseException e)
+			{
+				Assert.IsInstanceOfType(e.InnerException, typeof(JwtError));
+				Assert.AreEqual(e.InnerException.Message, "Cache-Control header of response content does not match JWT response cache");
+			}
+		}
+
+		[TestMethod]
+		public void PrivateClaims_CacheControlHeaderMismatch_ShouldThrow()
+		{
+			var httpClientMock = new Mock<IHttpClient>();
+			httpClientMock.Setup(h => h.ExecuteRequest(
+				It.IsAny<HttpMethod>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<Dictionary<string, string>>()
+			)).Returns(new HttpResponse
+			{
+				Headers = new System.Net.WebHeaderCollection
+				{
+					{"X-IOV-KEY-ID", "key id"},
+					{"X-IOV-JWT", "my jwt" },
+					{"Cache-control", "nefarious value" }
+				},
+				ResponseBody = "response",
+				StatusCode = HttpStatusCode.OK,
+				StatusDescription = "OK"
+			});
+
+			var httpClient = httpClientMock.Object;
+			var transport = MakeMockedTransport(httpClient, MakeMockedJsonService().Object, response: new JwtClaimsResponse
+			{
+				CacheControlHeader = null,
+				ContentHash = "ff",
+				ContentHashAlgorithm = "S256"
+			});
+
+			try
+			{
+				transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
+				Assert.Fail();
+			}
+			catch (InvalidResponseException e)
+			{
+				Assert.IsInstanceOfType(e.InnerException, typeof(JwtError));
+				Assert.AreEqual(e.InnerException.Message, "Cache-Control header of response content does not match JWT response cache");
+			}
+		}
+
+
+		[TestMethod]
+		public void PrivateClaims_LocationHeaderMismatch_ShouldThrow()
+		{
+			var httpClientMock = new Mock<IHttpClient>();
+			httpClientMock.Setup(h => h.ExecuteRequest(
+				It.IsAny<HttpMethod>(),
+				It.IsAny<string>(),
+				It.IsAny<string>(),
+				It.IsAny<Dictionary<string, string>>()
+			)).Returns(new HttpResponse
+			{
+				Headers = new System.Net.WebHeaderCollection
+				{
+					{"X-IOV-KEY-ID", "key id"},
+					{"X-IOV-JWT", "my jwt" },
+					{"Location", "http://badguys.com" }
+				},
+				ResponseBody = "response",
+				StatusCode = HttpStatusCode.OK,
+				StatusDescription = "OK"
+			});
+
+			var httpClient = httpClientMock.Object;
+			var transport = MakeMockedTransport(httpClient, MakeMockedJsonService().Object, response: new JwtClaimsResponse
+			{
+				CacheControlHeader = null,
+				LocationHeader = "http://goodguys.com",
+				ContentHash = "ff",
+				ContentHashAlgorithm = "S256"
+			});
+
+			try
+			{
+				transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
+				Assert.Fail();
+			}
+			catch (InvalidResponseException e)
+			{
+				Assert.IsInstanceOfType(e.InnerException, typeof(JwtError));
+				Assert.AreEqual(e.InnerException.Message, "Location header of response content does not match JWT response location");
 			}
 		}
 	}

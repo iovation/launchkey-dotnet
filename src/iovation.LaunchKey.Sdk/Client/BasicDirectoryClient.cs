@@ -33,7 +33,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			{
 				devices.Add(
 					new Device(
-						responseDevice.Id.ToString("N"),
+						responseDevice.Id.ToString("D"),
 						responseDevice.Name,
 						DeviceStatus.FromCode(responseDevice.Status),
 						responseDevice.Type,

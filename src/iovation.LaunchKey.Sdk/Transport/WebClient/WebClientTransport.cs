@@ -187,7 +187,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 					hashString = ByteArrayUtils.ByteArrayToHexString(hash);
 					hashFunction = "S256";
 				}
-				var requestId = Guid.NewGuid().ToString("N");
+				var requestId = Guid.NewGuid().ToString("D");
 
 				// sign the encrypted payload and turn it into a JWT token ... this is sent as the header
 				var token = _jwtService.Encode(
@@ -283,19 +283,62 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			return DecodeResponse<TResultType>(decryptedPayload);
 		}
 
+		private void ValidateHash(string body, string hashAlgo, string hash)
+		{
+			byte[] hashBytes;
+			var bodyBytes = Encoding.UTF8.GetBytes(body);
+
+			if (hashAlgo == "S256")
+			{
+				hashBytes = _crypto.Sha256(bodyBytes);
+			}
+			else if (hashAlgo == "S384")
+			{
+				hashBytes = _crypto.Sha384(bodyBytes);
+			}
+			else if (hashAlgo == "S512")
+			{
+				hashBytes = _crypto.Sha512(bodyBytes);
+			}
+			else
+			{
+				throw new JwtError($"Hash of response content uses unsupported algorithm of {hashAlgo}");
+			}
+
+			var computedBodyHash = ByteArrayUtils.ByteArrayToHexString(hashBytes);
+			if (computedBodyHash != hash)
+			{
+				throw new JwtError($"Hash of response content does not match JWT response hash");
+			}
+		}
+
+		private void ValidatePrivateClaimsForServerSentRequest(string method, string path, string body, JwtClaimsRequest privateClaims)
+		{
+			if (privateClaims == null)
+				throw new JwtError("Request did not contain mandatory private claims.");
+
+			if (method != null && method != privateClaims.Method)
+				throw new JwtError("Request method did not match the request method of the signed JWT token.");
+
+			if (path != null && path != privateClaims.Path)
+				throw new JwtError("Request path did not match the request path of the signed JWT token.");
+
+			// if we have a body to hash OR the JWT has a hash
+			if (!string.IsNullOrWhiteSpace(body) || !string.IsNullOrWhiteSpace(privateClaims.ContentHash))
+			{
+				ValidateHash(body, privateClaims.ContentHashAlgorithm, privateClaims.ContentHash);
+			}
+		}
+
 		private void ValidatePrivateClaims(HttpResponse response, JwtClaims jwt)
 		{
 			// verify response information matches the JWT
-			if (!string.IsNullOrWhiteSpace(jwt.Response.LocationHeader))
-			{
-				if (response.Headers[HttpResponseHeader.Location] != jwt.Response.LocationHeader)
-					throw new JwtError("Location header of response content does not match JWT response location");
-			}
-			if (!string.IsNullOrWhiteSpace(jwt.Response.CacheControlHeader))
-			{
-				if (response.Headers[HttpResponseHeader.CacheControl] != jwt.Response.CacheControlHeader)
-					throw new JwtError("Cache-Control header of response content does not match JWT response cache");
-			}
+			if (response.Headers[HttpResponseHeader.Location] != jwt.Response.LocationHeader)
+				throw new JwtError("Location header of response content does not match JWT response location");
+
+			if (response.Headers[HttpResponseHeader.CacheControl] != jwt.Response.CacheControlHeader)
+				throw new JwtError("Cache-Control header of response content does not match JWT response cache");
+
 			if ((int) response.StatusCode != jwt.Response.StatusCode)
 			{
 				throw new JwtError("Status code of response content does not match JWT response status code");
@@ -304,31 +347,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			// if the response has body content, we need to validate the hash
 			if (!string.IsNullOrWhiteSpace(response.ResponseBody))
 			{
-				byte[] hash;
-				var bodyBytes = Encoding.UTF8.GetBytes(response.ResponseBody);
-
-				if (jwt.Response.ContentHashAlgorithm == "S256")
-				{
-					hash = _crypto.Sha256(bodyBytes);
-				}
-				else if (jwt.Response.ContentHashAlgorithm == "S384")
-				{
-					hash = _crypto.Sha384(bodyBytes);
-				}
-				else if (jwt.Response.ContentHashAlgorithm == "S512")
-				{
-					hash = _crypto.Sha512(bodyBytes);
-				}
-				else
-				{
-					throw new JwtError($"Hash of response content uses unsupported algorithm of {jwt.Response.ContentHashAlgorithm}");
-				}
-
-				var hashString = ByteArrayUtils.ByteArrayToHexString(hash);
-				if (hashString != jwt.Response.ContentHash)
-				{
-					throw new JwtError($"Hash of response content does not match JWT response hash");
-				}
+				ValidateHash(response.ResponseBody, jwt.Response.ContentHashAlgorithm, jwt.Response.ContentHash);
 			}
 		}
 
@@ -363,7 +382,6 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 		{
 			try
 			{
-				Console.WriteLine($"response: {data}");
 				return _jsonDecoder.DecodeObject<TResultType>(data);
 			}
 			catch (JsonEncoderException ex)
@@ -529,7 +547,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			throw new InvalidRequestException($"{headerKey} header is missing");
 		}
 
-		public IServerSentEvent HandleServerSentEvent(Dictionary<string, List<string>> headers, string body)
+		public IServerSentEvent HandleServerSentEvent(Dictionary<string, List<string>> headers, string body, string method = null, string path = null)
 		{
 			var iovHeader = GetFirstHeader(headers, IOV_JWT_HEADER);
 			var contentHeader = GetFirstHeader(headers, "Content-Type");
@@ -545,7 +563,9 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 				// note we do not store the result -- its not needed. Just want the decoder to throw an exception
 				// if there is a validation issue
 				// we also dont verify our private claims here, as they are not present or relevant
-				_jwtService.Decode(publicKey.KeyData, _issuer.ToString(), null, GetCurrentTime(), iovHeader);
+				var jwtObject = _jwtService.Decode(publicKey.KeyData, _issuer.ToString(), null, GetCurrentTime(), iovHeader);
+
+				ValidatePrivateClaimsForServerSentRequest(method, path, body, jwtObject.Request);
 
 				// if this is application/jose, its an auths response. 
 				// im not sure if this is great -- maybe a better way to detect it. 
