@@ -36,7 +36,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
 		/// <summary>
 		/// Whether or not to enforce Jailbreak detection (device integrity) on this request
 		/// </summary>
-		public bool JailbreakDetection { get; }
+		public bool? JailbreakDetection { get; }
 
 		/// <summary>
 		/// Create an auth policy based on several options.
@@ -64,7 +64,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
 			bool? requireKnowledgeFactor = null,
 			bool? requireInherenceFactor = null,
 			bool? requirePosessionFactor = null,
-			bool jailbreakDetection = false,
+			bool? jailbreakDetection = null,
 			List<Location> locations = null)
 		{
 			if (requiredFactors.HasValue && (requireKnowledgeFactor.HasValue || requireInherenceFactor.HasValue || requirePosessionFactor.HasValue))

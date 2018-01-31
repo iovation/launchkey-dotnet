@@ -100,12 +100,12 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 		}
 
 		public AuthPolicy(
-			int? any = null,
-			bool? requireKnowledgeFactor = null,
-			bool? requireInherenceFactor = null,
-			bool? requirePosessionFactor = null,
-			bool deviceIntegrity = false,
-			List<Location> locations = null)
+			int? any,
+			bool? requireKnowledgeFactor,
+			bool? requireInherenceFactor,
+			bool? requirePosessionFactor,
+			bool? deviceIntegrity,
+			List<Location> locations)
 		{
 			MinimumRequirements = new List<MinimumRequirement>();
 			Factors = new List<AuthPolicyFactor>();
@@ -121,7 +121,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 					Possession = IntFromNullableBool(requirePosessionFactor)
 				});
 			}
-			if (deviceIntegrity)
+			if (deviceIntegrity != null)
 			{
 				Factors.Add(new AuthPolicyFactor
 				{
@@ -130,7 +130,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 					Requirement = FactorRequirementType.ForcedRequirement,
 					Attributes = new AuthPolicyFactorAttributes
 					{
-						FactorEnabled = 1,
+						FactorEnabled = deviceIntegrity.Value ? 1 : 0,
 						Locations = null
 					}
 				});

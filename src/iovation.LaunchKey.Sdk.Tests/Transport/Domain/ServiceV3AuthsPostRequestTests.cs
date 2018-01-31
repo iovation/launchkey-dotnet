@@ -11,7 +11,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		[TestMethod]
 		public void Constructor_ShouldSetProperties()
 		{
-			var authPolicy = new AuthPolicy();
+			var authPolicy = new AuthPolicy(null, null, null, null, null, null);
 			var o = new ServiceV3AuthsPostRequest("un", authPolicy, "ctx");
 
 			Assert.AreSame(o.AuthPolicy, authPolicy);
@@ -41,9 +41,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		public void ShouldSerializeCorrectly_WithContextAndPolicy()
 		{
 			var encoder = new JsonNetJsonEncoder();
-			var policy = new AuthPolicy(
-				any: 2,
-				locations: new System.Collections.Generic.List<AuthPolicy.Location>
+			var policy = new AuthPolicy(2, null, null, null, null, 
+				new System.Collections.Generic.List<AuthPolicy.Location>
 				{
 					new AuthPolicy.Location
 					{
