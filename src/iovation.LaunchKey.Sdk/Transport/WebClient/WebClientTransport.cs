@@ -333,16 +333,12 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 		private void ValidatePrivateClaims(HttpResponse response, JwtClaims jwt)
 		{
 			// verify response information matches the JWT
-			if (!string.IsNullOrWhiteSpace(jwt.Response.LocationHeader))
-			{
-				if (response.Headers[HttpResponseHeader.Location] != jwt.Response.LocationHeader)
-					throw new JwtError("Location header of response content does not match JWT response location");
-			}
-			if (!string.IsNullOrWhiteSpace(jwt.Response.CacheControlHeader))
-			{
-				if (response.Headers[HttpResponseHeader.CacheControl] != jwt.Response.CacheControlHeader)
-					throw new JwtError("Cache-Control header of response content does not match JWT response cache");
-			}
+			if (response.Headers[HttpResponseHeader.Location] != jwt.Response.LocationHeader)
+				throw new JwtError("Location header of response content does not match JWT response location");
+
+			if (response.Headers[HttpResponseHeader.CacheControl] != jwt.Response.CacheControlHeader)
+				throw new JwtError("Cache-Control header of response content does not match JWT response cache");
+
 			if ((int) response.StatusCode != jwt.Response.StatusCode)
 			{
 				throw new JwtError("Status code of response content does not match JWT response status code");
