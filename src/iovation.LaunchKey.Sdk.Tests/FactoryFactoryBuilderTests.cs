@@ -26,7 +26,7 @@ namespace iovation.LaunchKey.Sdk.Tests
 		public void AddDirectoryPrivateKey_ShouldAddKey()
 		{
 			var ffb = new FactoryFactoryBuilder();
-			var result = ffb.AddDirectoryPrivateKey(TestConsts.DefaultDirectoryId.ToString("N"), TestConsts.DefaultPrivateKey);
+			var result = ffb.AddDirectoryPrivateKey(TestConsts.DefaultDirectoryId.ToString("D"), TestConsts.DefaultPrivateKey);
 
 			Assert.AreSame(ffb, result);
 		}
@@ -35,7 +35,7 @@ namespace iovation.LaunchKey.Sdk.Tests
 		public void AddServicePrivateKey_ShouldAddKey()
 		{
 			var ffb = new FactoryFactoryBuilder();
-			var result = ffb.AddServicePrivateKey(TestConsts.DefaultServiceId.ToString("N"), TestConsts.DefaultPrivateKey);
+			var result = ffb.AddServicePrivateKey(TestConsts.DefaultServiceId.ToString("D"), TestConsts.DefaultPrivateKey);
 
 			Assert.AreSame(ffb, result);
 		}
@@ -44,7 +44,7 @@ namespace iovation.LaunchKey.Sdk.Tests
 		public void AddOrgPrivateKey_ShouldAddKey()
 		{
 			var ffb = new FactoryFactoryBuilder();
-			var result = ffb.AddOrganizationPrivateKey(TestConsts.DefaultOrgId.ToString("N"), TestConsts.DefaultPrivateKey);
+			var result = ffb.AddOrganizationPrivateKey(TestConsts.DefaultOrgId.ToString("D"), TestConsts.DefaultPrivateKey);
 
 			Assert.AreSame(ffb, result);
 		}

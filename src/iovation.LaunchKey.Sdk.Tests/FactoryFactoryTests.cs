@@ -46,7 +46,7 @@ namespace iovation.LaunchKey.Sdk.Tests
 		public void MakeServiceFactory_ShouldReturnServiceFactory()
 		{
 			var factoryFactory = MakeFactoryFactory();
-			var serviceClient = factoryFactory.MakeServiceFactory(TestConsts.DefaultServiceId.ToString("N"), "key");
+			var serviceClient = factoryFactory.MakeServiceFactory(TestConsts.DefaultServiceId.ToString("D"), "key");
 
 			Assert.IsTrue(serviceClient != null);
 		}
@@ -55,7 +55,7 @@ namespace iovation.LaunchKey.Sdk.Tests
 		public void MakeDirectoryFactory_ShouldReturnDirectoryFactory()
 		{
 			var factoryFactory = MakeFactoryFactory();
-			var directoryFactory = factoryFactory.MakeDirectoryFactory(TestConsts.DefaultDirectoryId.ToString("N"), "key");
+			var directoryFactory = factoryFactory.MakeDirectoryFactory(TestConsts.DefaultDirectoryId.ToString("D"), "key");
 
 			Assert.IsTrue(directoryFactory != null);
 		}
@@ -64,7 +64,7 @@ namespace iovation.LaunchKey.Sdk.Tests
 		public void MakeOrganizationFactory_ShouldReturnOrganizationFactory()
 		{
 			var factoryFactory = MakeFactoryFactory();
-			var organizationFactory = factoryFactory.MakeOrganizationFactory(TestConsts.DefaultOrgId.ToString("N"), "key");
+			var organizationFactory = factoryFactory.MakeOrganizationFactory(TestConsts.DefaultOrgId.ToString("D"), "key");
 
 			Assert.IsTrue(organizationFactory != null);			
 		}

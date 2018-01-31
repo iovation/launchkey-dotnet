@@ -187,7 +187,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 					hashString = ByteArrayUtils.ByteArrayToHexString(hash);
 					hashFunction = "S256";
 				}
-				var requestId = Guid.NewGuid().ToString("N");
+				var requestId = Guid.NewGuid().ToString("D");
 
 				// sign the encrypted payload and turn it into a JWT token ... this is sent as the header
 				var token = _jwtService.Encode(

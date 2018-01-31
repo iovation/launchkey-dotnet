@@ -56,7 +56,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
 			Assert.AreEqual("my phone", response[0].Name);
 			Assert.AreEqual("IOS", response[0].Type);
-			Assert.AreEqual(TestConsts.DefaultDeviceId.ToString("N"), response[0].Id);
+			Assert.AreEqual(TestConsts.DefaultDeviceId.ToString("D"), response[0].Id);
 			Assert.AreEqual(TestConsts.DefaultTime, response[0].Created);
 			Assert.AreEqual(TestConsts.DefaultTime, response[0].Updated);
 			Assert.AreEqual(DeviceStatus.Linked, response[0].Status);
@@ -75,7 +75,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 				)
 			);
 
-			client.UnlinkDevice("user id", TestConsts.DefaultDeviceId.ToString("N"));
+			client.UnlinkDevice("user id", TestConsts.DefaultDeviceId.ToString("D"));
 
 			mockTransport.Verify(p => p.DirectoryV3DevicesDelete(It.IsAny<DirectoryV3DevicesDeleteRequest>(), It.IsAny<EntityIdentifier>()));
 		}

@@ -46,7 +46,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			}
 			var request = new ServiceV3AuthsPostRequest(user, requestPolicy, context);
 			var response = _transport.ServiceV3AuthsPost(request, _serviceId);
-			return response.AuthRequest.ToString("N");
+			return response.AuthRequest.ToString("D");
 		}
 
 		public string Authorize(string user, string context)
@@ -65,7 +65,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			if (response != null)
 			{
 				return new AuthorizationResponse(
-					response.AuthorizationRequestId.ToString("N"),
+					response.AuthorizationRequestId.ToString("D"),
 					response.Response,
 					response.ServiceUserHash,
 					response.OrganizationUserHash,
@@ -106,7 +106,7 @@ namespace iovation.LaunchKey.Sdk.Client
 				var authEvent = (ServerSentEventAuthorizationResponse)serverSentEvent;
 				return new AuthorizationResponseWebhookPackage(
 					new AuthorizationResponse(
-						authEvent.AuthorizationRequestId.ToString("N"),
+						authEvent.AuthorizationRequestId.ToString("D"),
 						authEvent.Response,
 						authEvent.ServiceUserHash,
 						authEvent.OrganizationUserHash,

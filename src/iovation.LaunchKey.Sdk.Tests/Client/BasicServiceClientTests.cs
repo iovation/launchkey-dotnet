@@ -30,7 +30,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			var response = client.Authorize("user");
 
 			mockTransport.Verify();
-			Assert.AreEqual(TestConsts.DefaultAuthenticationId.ToString("N"), response);
+			Assert.AreEqual(TestConsts.DefaultAuthenticationId.ToString("D"), response);
 		}
 
 		[TestMethod]
@@ -84,7 +84,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
 
-			var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("N"));
+			var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
 			mockTransport.Verify();
 			Assert.IsTrue(response == null);
@@ -101,7 +101,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 				.Verifiable();
 
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-			var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("N"));
+			var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
 			mockTransport.Verify();
 
@@ -121,7 +121,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 				.Verifiable();
 
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-			client.SessionStart("user", TestConsts.DefaultAuthenticationId.ToString("N"));
+			client.SessionStart("user", TestConsts.DefaultAuthenticationId.ToString("D"));
 			mockTransport.Verify();
 		}
 
@@ -160,7 +160,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
 			var authResponse = ((AuthorizationResponseWebhookPackage)response).AuthorizationResponse;
 			// verify response contents
-			Assert.AreEqual(authResponse.AuthorizationRequestId, testResponse.AuthorizationRequestId.ToString("N"));
+			Assert.AreEqual(authResponse.AuthorizationRequestId, testResponse.AuthorizationRequestId.ToString("D"));
 			Assert.AreEqual(authResponse.Authorized, testResponse.Response);
 			Assert.AreEqual(authResponse.DeviceId, testResponse.DeviceId);
 			Assert.AreEqual(authResponse.DevicePins.Count, testResponse.DevicePins.Length);

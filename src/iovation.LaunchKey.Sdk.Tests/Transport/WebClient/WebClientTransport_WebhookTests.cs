@@ -180,7 +180,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 				"key", 5);
 
 			var reqId = Guid.NewGuid();
-			var jwt = jwtService.Encode(reqId.ToString("N"),
+			var jwt = jwtService.Encode(reqId.ToString("D"),
 				TestConsts.DefaultServiceEntity.ToString(),
 				TestConsts.DefaultServiceEntity.ToString(),
 				DateTime.Now,
