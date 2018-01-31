@@ -34,7 +34,7 @@ namespace iovation.LaunchKey.Sdk.Cache
 				}
 				catch (Exception ex)
 				{
-					throw new CacheException("Cache error not set", ex);
+					throw new CacheException("Cache error on set", ex);
 				}
 			}
 		}
