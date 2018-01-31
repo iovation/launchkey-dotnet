@@ -13,7 +13,7 @@ This SDK is targeted toward:
 The solution file is for Visual Studio 2015. The project should build out of the box. Simply clone, open in VS, compile.
 
 ## Example & Usage
-The primary entry point to the SDK is a class named `FactoryFactoryBuilder`. This class, located in the `iovation.LaunchKey.Sdk` namespace provides fatories for instantiating API clients which can be used to consume the LaunchKey platform API. The `FactoryFactoryBuilder` is designed to simplify creating the rather complex (and highly customizable!) object model that drives the LaunchKey .NET SDK.
+The primary entry point to the SDK is a class named `FactoryFactoryBuilder`. This class, located in the `iovation.LaunchKey.Sdk` namespace provides factories for instantiating API clients which can be used to consume the LaunchKey platform API. The `FactoryFactoryBuilder` is designed to simplify creating the rather complex (and highly customizable!) object model that drives the LaunchKey .NET SDK.
 
 To be able to use the SDK, you will need a few pieces of key information:
 
