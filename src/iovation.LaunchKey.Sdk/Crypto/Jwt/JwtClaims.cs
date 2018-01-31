@@ -22,6 +22,23 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwt
 		public string LocationHeader { get; set; }
 	}
 
+	public class JwtClaimsRequest
+	{
+		[JsonProperty("func")]
+		public string ContentHashAlgorithm { get; set; }
+
+		[JsonProperty("hash")]
+		public string ContentHash { get; set; }
+
+		[JsonProperty("meth")]
+		public string Method { get; set; }
+
+		[JsonProperty("path")]
+		public string Path { get; set; }
+	}
+
+
+
 	public class JwtClaims
 	{
 		[JsonProperty("jti")]
@@ -50,6 +67,9 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwt
 
 		[JsonProperty("response")]
 		public JwtClaimsResponse Response { get; set; }
+
+		[JsonProperty("request")]
+		public JwtClaimsRequest Request { get; set; }
 
 		public static JwtClaims FromJson(string json)
 		{

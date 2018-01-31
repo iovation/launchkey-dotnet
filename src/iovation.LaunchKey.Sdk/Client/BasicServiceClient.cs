@@ -98,9 +98,9 @@ namespace iovation.LaunchKey.Sdk.Client
 			_transport.ServiceV3SessionsDelete(request, _serviceId);
 		}
 
-		public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body)
+		public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null)
 		{
-			var serverSentEvent = _transport.HandleServerSentEvent(headers, body);
+			var serverSentEvent = _transport.HandleServerSentEvent(headers, body, method, path);
 			if (serverSentEvent is ServerSentEventAuthorizationResponse)
 			{
 				var authEvent = (ServerSentEventAuthorizationResponse)serverSentEvent;

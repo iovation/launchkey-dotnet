@@ -546,52 +546,6 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 			);
 		}
 
-		[TestMethod]
-		public void HandleServerSentEvent_ShouldHandleAuthPackage()
-		{
-			var transport = MakeMockedTransportDefault(MakeMockHttpClient().Object);
-			var pkey = new RSACryptoServiceProvider();
-			var jwtService = new JwtService(new UnixTimeConverter(), "lka", new Dictionary<string, RSA>
-				{
-				{"key", pkey}
-				},
-				"key", 5);
-
-			var reqId = Guid.NewGuid();
-			var jwt = jwtService.Encode(reqId.ToString("N"), TestConsts.DefaultServiceEntity.ToString(), TestConsts.DefaultServiceEntity.ToString(), DateTime.Now, "POST", "/webhook", null, null);
-			
-			var response = transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { jwt }},
-				{"Content-Type", new List<string> {"application/jose" }}
-			}, "body");
-
-			Assert.IsTrue(response is ServerSentEventAuthorizationResponse);
-		}
-
-		[TestMethod]
-		public void HandleServerSentEvent_ShouldHandleSessionEnd()
-		{
-			var transport = MakeMockedTransportDefault(MakeMockHttpClient().Object);
-			var pkey = new RSACryptoServiceProvider();
-			var jwtService = new JwtService(new UnixTimeConverter(), "lka", new Dictionary<string, RSA>
-				{
-					{"key", pkey}
-				},
-				"key", 5);
-
-			var reqId = Guid.NewGuid();
-			var jwt = jwtService.Encode(reqId.ToString("N"), TestConsts.DefaultServiceEntity.ToString(), TestConsts.DefaultServiceEntity.ToString(), DateTime.Now, "POST", "/webhook", null, null);
-
-			var response = transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { jwt }},
-				{"Content-Type", new List<string> {"application/json" }}
-			}, "body");
-
-			Assert.IsTrue(response is ServerSentEventUserServiceSessionEnd);
-		}
-
 
 		[TestMethod]
 		[ExpectedException(typeof(InvalidResponseException))]

@@ -148,7 +148,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			var testBody = "body";
 			var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] {"1234"});
 			var mockTransport = new Mock<ITransport>();
-			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody)).Returns(testResponse).Verifiable();
+			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
 			var response = client.HandleWebhook(testHeaders, testBody);
 
@@ -176,7 +176,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			var testBody = "body";
 			var testResponse = new ServerSentEventUserServiceSessionEnd {ApiTime = TestConsts.DefaultTime, UserHash = "uhash"};
 			var mockTransport = new Mock<ITransport>();
-			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody)).Returns(testResponse).Verifiable();
+			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
 			var response = client.HandleWebhook(testHeaders, testBody);
 
@@ -200,7 +200,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			var testBody = "body";
 			var testResponse = new Mock<IServerSentEvent>().Object;
 			var mockTransport = new Mock<ITransport>();
-			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody)).Returns(testResponse).Verifiable();
+			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
 
 			client.HandleWebhook(testHeaders, testBody);
