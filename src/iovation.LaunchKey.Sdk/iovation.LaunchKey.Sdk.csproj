@@ -59,6 +59,7 @@
     <Compile Include="Client\BasicOrganizationClient.cs" />
     <Compile Include="Client\IOrganizationClient.cs" />
     <Compile Include="Client\IServiceManagingClient.cs" />
+    <Compile Include="Domain\ServiceManager\Service.cs" />
     <Compile Include="Domain\Webhook\ServiceUserSessionEndWebhookPackage.cs" />
     <Compile Include="Error\CacheException.cs" />
     <Compile Include="Cache\HashCache.cs" />
@@ -134,6 +135,10 @@
     <Compile Include="Transport\Domain\ServiceV3SessionsDeleteRequest.cs" />
     <Compile Include="Transport\Domain\ServiceV3SessionsPostRequest.cs" />
     <Compile Include="Error\AuthorizationRequestTimedOutError.cs" />
+    <Compile Include="Transport\Domain\ServicesGetResponse.cs" />
+    <Compile Include="Transport\Domain\ServicesListPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServicesListPostResponse.cs" />
+    <Compile Include="Transport\Domain\ServicesPatchRequest.cs" />
     <Compile Include="Transport\WebClient\CachedKey.cs" />
     <Compile Include="Transport\WebClient\HttpClient.cs" />
     <Compile Include="Transport\WebClient\HttpMethod.cs" />

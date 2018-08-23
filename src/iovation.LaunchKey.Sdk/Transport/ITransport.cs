@@ -106,7 +106,30 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// </summary>
 		/// <param name="request">The service details</param>
 		/// <param name="subject">The organization to create the service for</param>
-		/// <returns></returns>
+		/// <returns>the response with the unique ID of the service created</returns>
 		ServicesPostResponse OrganizationV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Updates a service for the given organization
+		/// </summary>
+		/// <param name="request">The service to update</param>
+		/// <param name="subject">The organization the service belongs to</param>
+		/// <returns>the response with the unique ID of the service updated</returns>
+		void OrganizationV3ServicesPatch(ServicesPatchRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get a list of specific services for an organization
+		/// </summary>
+		/// <param name="request">The list of services to fetch</param>
+		/// <param name="subject">The organization the services belong to</param>
+		/// <returns>the response from the LaunchKey API</returns>
+		ServicesListPostResponse OrganizationV3ServicesListPost(ServicesListPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get all services for an organization
+		/// </summary>
+		/// <param name="subject"></param>
+		/// <returns>the response from the LaunchKey API</returns>
+		ServicesGetResponse OrganizationV3ServicesGet(EntityIdentifier subject);
 	}
 }

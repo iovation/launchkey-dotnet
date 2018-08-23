@@ -540,6 +540,24 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			return serviceResponse;
 		}
 
+		public void OrganizationV3ServicesPatch(ServicesPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/organization/v3/services", subject, request, null);
+		}
+
+		public ServicesListPostResponse OrganizationV3ServicesListPost(ServicesListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/services/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<ServicesListPostResponse.Service>>(response);
+			return new ServicesListPostResponse(decryptedResponse);
+		}
+
+		public ServicesGetResponse OrganizationV3ServicesGet(EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.GET, "/organization/v3/services", subject, null, null);
+			var decryptedResponse = DecryptResponse<List<ServicesGetResponse.Service>>(response);
+			return new ServicesGetResponse(decryptedResponse);
+		}
 
 		private string GetFirstHeader(Dictionary<string, List<string>> headers, string headerKey)
 		{

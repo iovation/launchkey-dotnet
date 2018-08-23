@@ -569,6 +569,38 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		}
 
 		[TestMethod]
+		public void OrganizationV3ServicesPatch_ShouldCallApi()
+		{
+			var request = new ServicesPatchRequest(TestConsts.DefaultServiceId, "Test service", "Test desc", new Uri("http://e.com/i"), new Uri("http://e.com/cb"), true);
+			DoApiCallTest(
+				t => t.OrganizationV3ServicesPatch(request, TestConsts.DefaultOrganizationEntity),
+				HttpMethod.PATCH,
+				"/organization/v3/services"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicesListPost_ShouldCallApi()
+		{
+			var request = new ServicesListPostRequest(new List<Guid>{Guid.NewGuid()});
+			DoApiCallTest(
+				t => t.OrganizationV3ServicesListPost(request, TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/services/list"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicesGet_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3ServicesGet(TestConsts.DefaultOrganizationEntity),
+				HttpMethod.GET,
+				"/organization/v3/services"
+			);
+		}
+		
+		[TestMethod]
 		[ExpectedException(typeof(InvalidResponseException))]
 		public void PrivateClaims_VerifyResponseCode()
 		{
