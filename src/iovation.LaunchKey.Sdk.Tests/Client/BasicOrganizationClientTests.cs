@@ -32,6 +32,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
 			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
 			var response = client.CreateService("service name", "desc", iconUrl, callbackUrl, true);
+
+			// verify the call made it to transport with right params
 			mockTransport.Verify(
 				x => x.OrganizationV3ServicesPost(It.Is<ServicesPostRequest>(
 						p => p.Active == true
@@ -42,6 +44,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 					),
 					It.IsAny<EntityIdentifier>()), Times.Once());
 
+			// verify result from transport made its way back out
 			Assert.AreEqual(returnedGuid, response);
 		}
 	}
