@@ -533,6 +533,14 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			ExecuteRequest(HttpMethod.DELETE, "/directory/v3/sessions", subject, request, null);
 		}
 
+		public ServicesPostResponse OrganizationV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/services", subject, request, null);
+			var serviceResponse = DecryptResponse<ServicesPostResponse>(response);
+			return serviceResponse;
+		}
+
+
 		private string GetFirstHeader(Dictionary<string, List<string>> headers, string headerKey)
 		{
 			foreach (var header in headers)

@@ -56,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Client\BasicOrganizationClient.cs" />
+    <Compile Include="Client\IOrganizationClient.cs" />
+    <Compile Include="Client\IServiceManagingClient.cs" />
     <Compile Include="Domain\Webhook\ServiceUserSessionEndWebhookPackage.cs" />
     <Compile Include="Error\CacheException.cs" />
     <Compile Include="Cache\HashCache.cs" />
@@ -116,6 +119,8 @@
     <Compile Include="Transport\Domain\EntityKeyMap.cs" />
     <Compile Include="Transport\Domain\EntityType.cs" />
     <Compile Include="Error\NoKeyFoundException.cs" />
+    <Compile Include="Transport\Domain\ServicesPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServicesPostResponse.cs" />
     <Compile Include="Transport\ITransport.cs" />
     <Compile Include="Error\CommunicationErrorException.cs" />
     <Compile Include="Transport\Domain\PublicV3PingGetResponse.cs" />

@@ -40,5 +40,14 @@ namespace iovation.LaunchKey.Sdk.Client
 		{
 			return new BasicDirectoryClient(Guid.Parse(directoryId), _transport);
 		}
+
+		/// <summary>
+		/// Creates an organization client for managing the organization, its services and directories
+		/// </summary>
+		/// <returns></returns>
+		public IOrganizationClient MakeOrganizationClient()
+		{
+			return new BasicOrganizationClient(_organizationId, _transport);
+		}
 	}
 }

@@ -552,6 +552,23 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		}
 
 		[TestMethod]
+		public void OrganizationV3ServicesPost_ShouldCallApi()
+		{
+			var request = new ServicesPostRequest(
+				"Super service",
+				new Uri("http://moreimportanter.tld/icon.ico"), 
+				"Description", 
+				new Uri("http://veryimportanturl.tld"),
+				true
+			);
+			DoApiCallTest(
+				t => t.OrganizationV3ServicesPost(request, TestConsts.DefaultOrganizationEntity), 
+				HttpMethod.POST, 
+				"/organization/v3/services"
+			);
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(InvalidResponseException))]
 		public void PrivateClaims_VerifyResponseCode()
 		{
@@ -598,7 +615,6 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 				Assert.AreEqual(e.InnerException.Message, "Hash of response content does not match JWT response hash");
 			}
 		}
-
 
 		[TestMethod]
 		public void PrivateClaims_VerifyHash512()

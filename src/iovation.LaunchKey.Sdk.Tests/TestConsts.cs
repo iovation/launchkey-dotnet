@@ -15,6 +15,7 @@ namespace iovation.LaunchKey.Sdk.Tests
 		public static readonly Guid DefaultServiceId = new Guid("00000000-0000-0000-0000-000000000009");
 		public static readonly Guid DefaultOrgId = new Guid("00000000-0000-0000-0000-000000000012");
 		public static readonly EntityIdentifier DefaultServiceEntity = new EntityIdentifier(EntityType.Service, TestConsts.DefaultServiceId);
+		public static readonly EntityIdentifier DefaultOrganizationEntity = new EntityIdentifier(EntityType.Organization, TestConsts.DefaultOrgId);
 		public static readonly Guid DefaultDeviceId = new Guid("00000000-0000-0000-0000-000000000005");
 		public static readonly DateTime DefaultTime = new DateTime(2015, 1, 1);
 

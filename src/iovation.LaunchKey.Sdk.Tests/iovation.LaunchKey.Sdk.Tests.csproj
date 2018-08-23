@@ -73,6 +73,7 @@
     <Compile Include="Cache\CacheExceptionTests.cs" />
     <Compile Include="Cache\HashCacheTests.cs" />
     <Compile Include="Client\BasicDirectoryClientTests.cs" />
+    <Compile Include="Client\BasicOrganizationClientTests.cs" />
     <Compile Include="Client\BasicServiceClientTests.cs" />
     <Compile Include="Crypto\Jwe\JweServiceTests.cs" />
     <Compile Include="Crypto\Jwt\JwtClaimsTests.cs" />

@@ -167,4 +167,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		public string Username { get; set; }
 	}
 
+	[Verb("org-create-service", HelpText = "Create a service for an organization")]
+	class CreateServiceOptions : OrgOptions
+	{
+		[Option('n', "name", HelpText = "The name of the service to create", Required = true)]
+		public string Name { get; set; }
+	}
+
 }

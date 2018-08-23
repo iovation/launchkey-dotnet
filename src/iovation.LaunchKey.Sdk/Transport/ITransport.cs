@@ -101,5 +101,12 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// <returns>decoded and verified response details</returns>
 		IServerSentEvent HandleServerSentEvent(Dictionary<string, List<string>> headers, string body, string method = null, string path = null);
 
+		/// <summary>
+		/// Creates a service for the given organization
+		/// </summary>
+		/// <param name="request">The service details</param>
+		/// <param name="subject">The organization to create the service for</param>
+		/// <returns></returns>
+		ServicesPostResponse OrganizationV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject);
 	}
 }

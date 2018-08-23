@@ -23,7 +23,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 					DirectoryServiceSessionStartOptions,
 					DirectoryServiceSessionEndOptions,
 					OrgDirectoryListDevicesOptions,
-					OrgServiceAuthOptions>(args)
+					OrgServiceAuthOptions,
+					CreateServiceOptions>(args)
 				.MapResult(
 					// service functions
 					(ServiceAuthOptions opts) => ServiceExamples.DoServiceAuthorization(opts.Username, opts.ServiceId, opts.PrivateKeyPath),
@@ -45,6 +46,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 					// org functions
 					(OrgDirectoryListDevicesOptions opts) => OrgExamples.DoDirectoryDeviceList(opts.OrganizationId, opts.PrivateKeyPath, opts.DirectoryId, opts.UserId),
 					(OrgServiceAuthOptions opts) => OrgExamples.DoServiceAuth(opts.OrganizationId, opts.PrivateKeyPath, opts.ServiceId, opts.UserId),
+					(CreateServiceOptions opts) => OrgExamples.DoCreateService(opts.OrganizationId, opts.PrivateKeyPath, opts.Name),
+
 
 					// errors
 					(errs) => 1
