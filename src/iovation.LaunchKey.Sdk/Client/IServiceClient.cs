@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Domain.Service;
 using iovation.LaunchKey.Sdk.Domain.Webhook;
 
@@ -17,12 +13,22 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// <param name="context">The message to display on the device during authorization request</param>
 		/// <param name="policy">The authorization policy to use when authorizing the user</param>
 		/// <returns>The authorization request identifier, which can be used for checking the status of this request</returns>
+		[System.Obsolete("Authorize is deprecated in favor of CreateAuthorizationRequest")]
 		string Authorize(string user, string context = null, AuthPolicy policy = null);
+
+		/// <summary>
+		/// Create an authorization request for a user of a service.
+		/// </summary>
+		/// <param name="user">The username or directory user ID to authorize</param>
+		/// <param name="context">The message to display on the device during authorization request</param>
+		/// <param name="policy">The authorization policy to use when authorizing the user</param>
+		/// <returns>Information regarding the authorization request.</returns>
+		AuthorizationRequest CreateAuthorizationRequest(string user, string context = null, AuthPolicy policy = null);
 
 		/// <summary>
 		/// Retrieve the status of an authorization request.
 		/// </summary>
-		/// <param name="authorizationRequestId">The authorization request identifier, usually retrieved via Authorize()</param>
+		/// <param name="authorizationRequestId">The authorization request identifier, usually retrieved via CreateAuthorizationRequest()</param>
 		/// <returns>NULL if the authorization is pending. A response package once the user has responded.</returns>
 		AuthorizationResponse GetAuthorizationResponse(string authorizationRequestId);
 

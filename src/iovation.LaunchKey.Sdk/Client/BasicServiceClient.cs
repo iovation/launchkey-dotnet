@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using iovation.LaunchKey.Sdk.Domain.Service;
 using iovation.LaunchKey.Sdk.Domain.Webhook;
 using iovation.LaunchKey.Sdk.Error;
@@ -25,6 +23,11 @@ namespace iovation.LaunchKey.Sdk.Client
 
 		public string Authorize(string user, string context = null, AuthPolicy policy = null)
 		{
+			return CreateAuthorizationRequest(user, context, policy).Id;
+		}
+		
+		public AuthorizationRequest CreateAuthorizationRequest(string user, string context = null, AuthPolicy policy = null)
+		{
 			Transport.Domain.AuthPolicy requestPolicy = null;
 			if (policy != null)
 			{
@@ -46,8 +49,10 @@ namespace iovation.LaunchKey.Sdk.Client
 			}
 			var request = new ServiceV3AuthsPostRequest(user, requestPolicy, context);
 			var response = _transport.ServiceV3AuthsPost(request, _serviceId);
-			return response.AuthRequest.ToString("D");
+			var authRequest = new AuthorizationRequest(response.AuthRequest.ToString("D"), response.PushPackage);
+			return authRequest;
 		}
+
 
 		public AuthorizationResponse GetAuthorizationResponse(string authorizationRequestId)
 		{
@@ -109,7 +114,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
 			if (serverSentEvent is ServerSentEventUserServiceSessionEnd)
 			{
-				var sessionEvent = (ServerSentEventUserServiceSessionEnd) serverSentEvent;
+				var sessionEvent = (ServerSentEventUserServiceSessionEnd)serverSentEvent;
 				return new ServiceUserSessionEndWebhookPackage(
 					sessionEvent.UserHash,
 					sessionEvent.ApiTime
