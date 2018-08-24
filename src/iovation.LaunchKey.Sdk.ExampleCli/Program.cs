@@ -48,7 +48,6 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 					(OrgServiceAuthOptions opts) => OrgExamples.DoServiceAuth(opts.OrganizationId, opts.PrivateKeyPath, opts.ServiceId, opts.UserId),
 					(CreateServiceOptions opts) => OrgExamples.DoCreateService(opts.OrganizationId, opts.PrivateKeyPath, opts.Name),
 
-
 					// errors
 					(errs) => 1
 				);

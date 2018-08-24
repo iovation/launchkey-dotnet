@@ -63,57 +63,56 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\org_client\services\org-client-service-create.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-create.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\services\org-client-service-get-all.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-get-all.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\services\org-client-service-get-list.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-get-list.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\services\org-client-service-get-one.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-get-one.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\services\org-client-service-update.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-update.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\OrganizationServiceSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Features\directory_client\devices\directory-client-device-link.feature" />
-    <None Include="Features\directory_client\devices\directory-client-device-list.feature" />
-    <None Include="Features\directory_client\devices\directory-client-device-unlink.feature" />
-    <None Include="Features\directory_client\services\directory-client-service-create.feature" />
-    <None Include="Features\directory_client\services\directory-client-service-get-all.feature" />
-    <None Include="Features\directory_client\services\directory-client-service-get-list.feature" />
-    <None Include="Features\directory_client\services\directory-client-service-get-one.feature" />
-    <None Include="Features\directory_client\services\directory-client-service-update.feature" />
-    <None Include="Features\directory_client\services\policy\directory-client-service-policy-get.feature" />
-    <None Include="Features\directory_client\services\policy\directory-client-service-policy-remove.feature" />
-    <None Include="Features\directory_client\services\policy\directory-client-service-policy-set.feature" />
-    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-add.feature" />
-    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-get.feature" />
-    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-remove.feature" />
-    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-update.feature" />
-    <None Include="Features\directory_client\sessions\directory-client-service-sessions-delete.feature" />
-    <None Include="Features\directory_client\sessions\directory-client-service-sessions-get.feature" />
-    <None Include="Features\org_client\directories\org-client-directory-create.feature" />
-    <None Include="Features\org_client\directories\org-client-directory-get-all.feature" />
-    <None Include="Features\org_client\directories\org-client-directory-get-list.feature" />
-    <None Include="Features\org_client\directories\org-client-directory-get-one.feature" />
-    <None Include="Features\org_client\directories\org-client-directory-update.feature" />
-    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-add.feature" />
-    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-get.feature" />
-    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-remove.feature" />
-    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-update.feature" />
-    <None Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-generate-and-add.feature" />
-    <None Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-list.feature" />
-    <None Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-remove.feature" />
-    <None Include="Features\org_client\services\org-client-service-create.feature" />
-    <None Include="Features\org_client\services\org-client-service-get-all.feature" />
-    <None Include="Features\org_client\services\org-client-service-get-list.feature" />
-    <None Include="Features\org_client\services\org-client-service-get-one.feature" />
-    <None Include="Features\org_client\services\org-client-service-update.feature" />
-    <None Include="Features\org_client\services\policy\org-client-service-policy-get.feature" />
-    <None Include="Features\org_client\services\policy\org-client-service-policy-remove.feature" />
-    <None Include="Features\org_client\services\policy\org-client-service-policy-set.feature" />
-    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-add.feature" />
-    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-get.feature" />
-    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-remove.feature" />
-    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-update.feature" />
-    <None Include="Features\service_client\auth_request\service-client-auth-request-get.feature" />
-    <None Include="Features\service_client\auth_request\service-client-auth-request-send-policy.feature" />
-    <None Include="Features\service_client\auth_request\service-client-auth-request-send.feature" />
-    <None Include="Features\service_client\session\service-client-session-end.feature" />
-    <None Include="Features\service_client\session\service-client-session-start.feature" />
+    <None Include="Features\org_client\services\org-client-service-create.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-create.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\org-client-service-get-all.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-get-all.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\org-client-service-get-list.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-get-list.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\org-client-service-get-one.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-get-one.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\org-client-service-update.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-update.feature.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
