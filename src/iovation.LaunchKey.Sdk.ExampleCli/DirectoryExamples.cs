@@ -71,13 +71,13 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 				var serviceClient = directoryFactory.MakeServiceClient(serviceId);
 
 				Console.WriteLine("Sending service auth request ... ");
-				var authId = serviceClient.Authorize(userId);
+				var authorizationRequest = serviceClient.CreateAuthorizationRequest(userId);
 				while (true)
 				{
 					Console.WriteLine("checking auth");
 
 					// poll for a response
-					var authResponse = serviceClient.GetAuthorizationResponse(authId);
+					var authResponse = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
 
 					// if we got one, process it
 					if (authResponse != null)

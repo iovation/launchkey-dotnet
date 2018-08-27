@@ -86,6 +86,7 @@
     <Compile Include="Error\EntityNotFound.cs" />
     <Compile Include="Error\Forbidden.cs" />
     <Compile Include="Error\JweException.cs" />
+    <Compile Include="Domain\Service\AuthorizationRequest.cs" />
     <Compile Include="Domain\Service\AuthorizationResponse.cs" />
     <Compile Include="Domain\Service\AuthPolicy.cs" />
     <Compile Include="Domain\Webhook\AuthorizationResponseWebhookPackage.cs" />

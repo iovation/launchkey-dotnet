@@ -57,7 +57,7 @@ var serviceClient = serviceFactory.MakeServiceClient();
 
 ### Step 4: Make the appropriate call
 ```c#
-serviceClient.Authorize("myusername");
+serviceClient.CreateAuthorizationRequest("myusername");
 ```
 
 ### All Together: Nice and Compact, Polling Authorization Example
@@ -67,10 +67,10 @@ var serviceKeyContents = File.ReadAllText("my-service-key.txt");
 var factory = new FactoryFactoryBuilder().Build();
 var serviceFactory = factory.MakeServiceFactory("6FFC9464-4B29-422A-9D70-87D22CB09A61", serviceKeyContents);
 var serviceClient = serviceFactory.MakeServiceClient();
-var authId = serviceClient.Authorize("myusername");
+var authorizationRequest = serviceClient.CreateAuthorizationRequest("myusername");
 while (true)
 {
-	var response = serviceClient.GetAuthorizationResponse(authId);
+	var response = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
 	if (response != null)
 	{
 		if (response.Authorized)

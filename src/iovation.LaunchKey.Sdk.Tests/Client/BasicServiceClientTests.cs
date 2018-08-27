@@ -21,10 +21,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 		{
 			var mockTransport = new Mock<ITransport>();
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-			mockTransport.Setup(p => 
+			mockTransport.Setup(p =>
 				p.ServiceV3AuthsPost(It.Is<ServiceV3AuthsPostRequest>(x => x.Username == "user"),
 				It.IsAny<EntityIdentifier>()))
-				.Returns(new ServiceV3AuthsPostResponse {AuthRequest = TestConsts.DefaultAuthenticationId})
+				.Returns(new ServiceV3AuthsPostResponse { AuthRequest = TestConsts.DefaultAuthenticationId })
 				.Verifiable();
 
 			var response = client.Authorize("user");
@@ -69,6 +69,64 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
 
 			client.Authorize("name", "buy", new Sdk.Domain.Service.AuthPolicy(requiredFactors: 2));
+
+			mockTransport.Verify();
+		}
+
+		[TestMethod]
+		public void CreateAuthorizationRequest_ShouldCallTransport()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+			mockTransport.Setup(p =>
+				p.ServiceV3AuthsPost(It.Is<ServiceV3AuthsPostRequest>(x => x.Username == "user"),
+				It.IsAny<EntityIdentifier>()))
+				.Returns(new ServiceV3AuthsPostResponse { AuthRequest = TestConsts.DefaultAuthenticationId, PushPackage = "Push Package" })
+				.Verifiable();
+
+			var response = client.CreateAuthorizationRequest("user");
+
+			mockTransport.Verify();
+			Assert.AreEqual(TestConsts.DefaultAuthenticationId.ToString("D"), response.Id);
+			Assert.AreEqual("Push Package", response.PushPackage);
+		}
+
+		[TestMethod]
+		public void CreateAuthorizationRequest_ShouldCallTransportWithContext()
+		{
+			var mockTransport = new Mock<ITransport>();
+			mockTransport.Setup(p => p.ServiceV3AuthsPost(
+				It.Is<ServiceV3AuthsPostRequest>(req => req.Username == "name" && req.Context == "buy"),
+				It.IsAny<EntityIdentifier>()))
+				.Returns(new ServiceV3AuthsPostResponse
+				{
+					AuthRequest = TestConsts.DefaultAuthenticationId
+				})
+				.Verifiable();
+
+			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+
+			client.CreateAuthorizationRequest("name", "buy");
+
+			mockTransport.Verify();
+		}
+
+		[TestMethod]
+		public void CreateAuthorizationRequest_ShouldCallTransportWithPolicy()
+		{
+			var mockTransport = new Mock<ITransport>();
+			mockTransport.Setup(p => p.ServiceV3AuthsPost(
+					It.Is<ServiceV3AuthsPostRequest>(req => req.Username == "name" && req.Context == "buy" && req.AuthPolicy.MinimumRequirements[0].Any == 2),
+					It.IsAny<EntityIdentifier>()))
+				.Returns(new ServiceV3AuthsPostResponse
+				{
+					AuthRequest = TestConsts.DefaultAuthenticationId
+				})
+				.Verifiable();
+
+			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+
+			client.CreateAuthorizationRequest("name", "buy", new Sdk.Domain.Service.AuthPolicy(requiredFactors: 2));
 
 			mockTransport.Verify();
 		}
@@ -146,7 +204,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 		{
 			var testHeaders = new Dictionary<string, List<string>>();
 			var testBody = "body";
-			var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] {"1234"});
+			var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] { "1234" });
 			var mockTransport = new Mock<ITransport>();
 			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
@@ -174,7 +232,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 		{
 			var testHeaders = new Dictionary<string, List<string>>();
 			var testBody = "body";
-			var testResponse = new ServerSentEventUserServiceSessionEnd {ApiTime = TestConsts.DefaultTime, UserHash = "uhash"};
+			var testResponse = new ServerSentEventUserServiceSessionEnd { ApiTime = TestConsts.DefaultTime, UserHash = "uhash" };
 			var mockTransport = new Mock<ITransport>();
 			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
