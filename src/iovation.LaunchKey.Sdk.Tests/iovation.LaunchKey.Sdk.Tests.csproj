@@ -82,6 +82,7 @@
     <Compile Include="Crypto\Jwt\JwtServiceTests.cs" />
     <Compile Include="Domain\Directory\DeviceStatusTests.cs" />
     <Compile Include="Domain\Service\AuthPolicyTests.cs" />
+    <Compile Include="Error\InvalidRequestExceptionTests.cs" />
     <Compile Include="FactoryFactoryBuilderTests.cs" />
     <Compile Include="FactoryFactoryTests.cs" />
     <Compile Include="Json\JsonNetJsonEncoderTests.cs" />

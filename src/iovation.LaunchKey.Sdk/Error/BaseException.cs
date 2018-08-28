@@ -44,5 +44,12 @@ namespace iovation.LaunchKey.Sdk.Error
 		{
 			return $"{GetType().Name}{{message='{Message}', ErrorCode='{ErrorCode}'}}";
 		}
+
+		public override bool Equals(object obj)
+		{
+			var exception = obj as BaseException;
+			return exception != null &&
+				   ErrorCode == exception.ErrorCode;
+		}
 	}
 }
