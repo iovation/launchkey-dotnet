@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps
 {
@@ -9,8 +10,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps
 
 		public TestConfiguration()
 		{
-			OrgPrivateKey = File.ReadAllText(Path.Combine("Secrets", "OrgPrivateKey.txt"));
-			OrgId = File.ReadAllText(Path.Combine("Secrets", "OrgId.txt"));
+			var keyPath = Path.Combine("Secrets", "OrgPrivateKey.txt");
+			var idPath = Path.Combine("Secrets", "OrgId.txt");
+
+			if (!File.Exists(keyPath) || !File.Exists(idPath))
+				throw new Exception($"Test configuration is invalid -- files with secrets should exist: {keyPath}, {idPath}");
+
+			OrgPrivateKey = File.ReadAllText(keyPath);
+			OrgId = File.ReadAllText(idPath);
 		}
 	}
 }
