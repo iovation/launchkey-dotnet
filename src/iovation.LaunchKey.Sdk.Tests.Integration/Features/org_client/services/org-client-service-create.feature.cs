@@ -121,7 +121,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
 #line 13
     testRunner.And("I attempt to create a Organization Service with the same name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
-    testRunner.Then("a com.iovation.launchkey.sdk.error.ServiceNameTaken exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("a iovation.LaunchKey.Sdk.Error.ServiceNameTaken exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

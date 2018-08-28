@@ -120,7 +120,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
     testRunner.When("I attempt retrieve a list of Organization Services with the Service ID \"eba60cb8-" +
                     "c649-11e7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
-    testRunner.Then("a com.iovation.launchkey.sdk.error.Forbidden exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("a iovation.LaunchKey.Sdk.Error.Forbidden exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

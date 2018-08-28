@@ -99,6 +99,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
             this.ScenarioStart();
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "key",
+                        "value"});
+            table1.AddRow(new string[] {
                         "description",
                         "Super Awesome Service"});
             table1.AddRow(new string[] {
@@ -112,17 +115,17 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
                         "True"});
 #line 7
     testRunner.Given("I created a Organization Service with the following:", ((string)(null)), table1, "Given ");
-#line 12
-    testRunner.When("I retrieve the created Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
-    testRunner.Then("the Organization Service name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.When("I retrieve the created Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14
-    testRunner.And("the Organization Service description is \"Super Awesome Service\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("the Organization Service name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 15
-    testRunner.And("the Organization Service icon is \"https://www.iovation.com/icon\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the Organization Service description is \"Super Awesome Service\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
-    testRunner.And("the Organization Service callback_url is \"https://www.iovation.com/callback\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the Organization Service icon is \"https://www.iovation.com/icon\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 17
+    testRunner.And("the Organization Service callback_url is \"https://www.iovation.com/callback\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
     testRunner.And("the Organization Service is active", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -134,14 +137,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
         public virtual void GetAnInvalidServiceRaisesAnException()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get an invalid Service raises an exception", null, ((string[])(null)));
-#line 19
+#line 20
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 20
+#line 21
     testRunner.When("I attempt to retrieve the Organization Service with the ID \"eba60cb8-c649-11e7-ab" +
                     "c4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 21
-    testRunner.Then("a com.iovation.launchkey.sdk.error.Forbidden exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 22
+    testRunner.Then("a iovation.LaunchKey.Sdk.Error.Forbidden exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

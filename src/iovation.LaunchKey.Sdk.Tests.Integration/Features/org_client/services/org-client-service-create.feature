@@ -11,4 +11,4 @@ Feature: Organization clients can create Organization Services
   Scenario: Client sending duplicate Service name raises ServiceNameInUse
     Given I created an Organization Service
     And I attempt to create a Organization Service with the same name
-    Then a com.iovation.launchkey.sdk.error.ServiceNameTaken exception is thrown
+    Then a iovation.LaunchKey.Sdk.Error.ServiceNameTaken exception is thrown

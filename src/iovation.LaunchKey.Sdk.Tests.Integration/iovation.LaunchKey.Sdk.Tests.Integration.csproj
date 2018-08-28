@@ -89,7 +89,12 @@
       <DependentUpon>org-client-service-update.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\OrganizationServiceSteps.cs" />
+    <Compile Include="Steps\CommonContext.cs" />
+    <Compile Include="Steps\CommonSteps.cs" />
+    <Compile Include="Steps\OrgClient\CreatedServiceInfo.cs" />
+    <Compile Include="Steps\OrgClient\OrganizationServiceSteps.cs" />
+    <Compile Include="Steps\OrgClient\ServiceDescriptionTable.cs" />
+    <Compile Include="Steps\TestConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -114,6 +119,20 @@
       <LastGenOutput>org-client-service-update.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj">
+      <Project>{A477BF92-ADD7-4737-A4A6-1192C81E3C53}</Project>
+      <Name>iovation.LaunchKey.Sdk</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Secrets\OrgId.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Secrets\OrgPrivateKey.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

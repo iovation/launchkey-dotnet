@@ -93,6 +93,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
 #line 6
   #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "key",
+                        "value"});
+            table1.AddRow(new string[] {
                         "description",
                         "Super Awesome Service"});
             table1.AddRow(new string[] {
@@ -115,13 +118,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
         public virtual void ClientCanUpdateAllAttributesOtherThanIDAndName()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Client can update all attributes other than ID and name", null, ((string[])(null)));
-#line 13
+#line 14
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "key",
+                        "value"});
+            table2.AddRow(new string[] {
                         "description",
                         "So Much Awesome"});
             table2.AddRow(new string[] {
@@ -133,19 +139,19 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
             table2.AddRow(new string[] {
                         "active",
                         "False"});
-#line 14
+#line 15
     testRunner.When("I update the Organization Service with the following:", ((string)(null)), table2, "When ");
-#line 19
-    testRunner.And("I retrieve the created Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 20
-    testRunner.Then("the Organization Service name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 21
-    testRunner.And("the Organization Service description is \"So Much Awesome\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I retrieve the created Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
-    testRunner.And("the Organization Service icon is \"https://www.iovation.com/iconic\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("the Organization Service name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 23
-    testRunner.And("the Organization Service callback_url is \"https://www.iovation.com/callbackish\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the Organization Service description is \"So Much Awesome\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 24
+    testRunner.And("the Organization Service icon is \"https://www.iovation.com/iconic\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 25
+    testRunner.And("the Organization Service callback_url is \"https://www.iovation.com/callbackish\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
     testRunner.And("the Organization Service is not active", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -159,16 +165,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to update an invalid Organization Service throws a Forbidden exception" +
                     "", null, ((string[])(null)));
-#line 26
+#line 28
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 27
+#line 29
     testRunner.When("I attempt to update the active status of the Organization Service with the ID \"eb" +
                     "a60cb8-c649-11e7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 28
-    testRunner.Then("a com.iovation.launchkey.sdk.error.Forbidden exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 30
+    testRunner.Then("a iovation.LaunchKey.Sdk.Error.Forbidden exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

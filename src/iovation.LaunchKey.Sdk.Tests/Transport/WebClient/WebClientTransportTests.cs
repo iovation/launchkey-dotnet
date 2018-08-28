@@ -450,7 +450,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 
 			Assert.IsNull(response);
 		}
-
+		
 		[TestMethod]
 		[ExpectedException(typeof(AuthorizationRequestTimedOutError))]
 		public void ServiceV3AuthsGet_ShouldThrowIfTimedOut()
@@ -460,6 +460,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 			var transport = MakeMockedTransport(httpClient, MakeMockedJsonService().Object, 408);
 			transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
 		}
+
 
 		[TestMethod]
 		public void ServiceV3AuthsPost_ShouldCallApi()
