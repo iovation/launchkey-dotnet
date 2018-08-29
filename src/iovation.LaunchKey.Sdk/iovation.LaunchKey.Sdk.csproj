@@ -153,6 +153,12 @@
     <Compile Include="Transport\Domain\ServicesListPostRequest.cs" />
     <Compile Include="Transport\Domain\ServicesListPostResponse.cs" />
     <Compile Include="Transport\Domain\ServicesPatchRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesGetResponse.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesListPostRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesListPostResponse.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesPatchRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesPostRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesPostResponse.cs" />
     <Compile Include="Transport\WebClient\CachedKey.cs" />
     <Compile Include="Transport\WebClient\HttpClient.cs" />
     <Compile Include="Transport\WebClient\HttpMethod.cs" />

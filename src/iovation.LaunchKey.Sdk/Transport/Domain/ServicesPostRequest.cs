@@ -24,11 +24,11 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 		[JsonProperty("active")]
 		public bool Active { get; }
 
-		public ServicesPostRequest(string name, Uri icon, string description, Uri callbackUrl, bool active)
+		public ServicesPostRequest(string name, string description, Uri icon, Uri callbackUrl, bool active)
 		{
 			Name = name;
-			Icon = icon;
 			Description = description;
+			Icon = icon;
 			CallbackUrl = callbackUrl;
 			Active = active;
 		}

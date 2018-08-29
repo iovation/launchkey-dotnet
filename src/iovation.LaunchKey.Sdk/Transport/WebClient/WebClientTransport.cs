@@ -559,6 +559,32 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			return new ServicesGetResponse(decryptedResponse);
 		}
 
+		public OrganizationV3DirectoriesPostResponse OrganizationV3DirectoriesPost(OrganizationV3DirectoriesPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directories", subject, request, null);
+			var decryptedResponse = DecryptResponse<OrganizationV3DirectoriesPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void OrganizationV3DirectoriesPatch(OrganizationV3DirectoriesPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/organization/v3/directories", subject, request, null);
+		}
+
+		public OrganizationV3DirectoriesGetResponse OrganizationV3DirectoriesGet(EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.GET, "/organization/v3/directories", subject, null, null);
+			var decryptedResponse = DecryptResponse<OrganizationV3DirectoriesGetResponse>(response);
+			return decryptedResponse;
+		}
+
+		public OrganizationV3DirectoriesListPostResponse OrganizationV3DirectoriesListPost(OrganizationV3DirectoriesListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directories/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<OrganizationV3DirectoriesListPostResponse>(response);
+			return decryptedResponse;
+		}
+
 		public ServicesPostResponse DirectoryV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject)
 		{
 			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/services", subject, request, null);

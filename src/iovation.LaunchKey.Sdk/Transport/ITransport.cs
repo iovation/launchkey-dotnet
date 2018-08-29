@@ -134,6 +134,36 @@ namespace iovation.LaunchKey.Sdk.Transport
 
 
 		/// <summary>
+		/// Create a directory for the given organization
+		/// </summary>
+		/// <param name="request">The directory details</param>
+		/// <param name="subject">The organization to create the directory within</param>
+		/// <returns>the response from the LaunchKey API</returns>
+		OrganizationV3DirectoriesPostResponse OrganizationV3DirectoriesPost(OrganizationV3DirectoriesPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Update a directory for the given organization
+		/// </summary>
+		/// <param name="request">The directory details</param>
+		/// <param name="subject">The organization to create the directory within</param>
+		void OrganizationV3DirectoriesPatch(OrganizationV3DirectoriesPatchRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get all directories for the given organization
+		/// </summary>
+		/// <param name="subject">The organization to retrieve from</param>
+		/// <returns>A list of directories within the organization</returns>
+		OrganizationV3DirectoriesGetResponse OrganizationV3DirectoriesGet(EntityIdentifier subject);
+
+		/// <summary>
+		/// Get a list of specific directories for the given organization
+		/// </summary>
+		/// <param name="request">A list of directory IDs to retrieve</param>
+		/// <param name="subject">The organization to retrieve from</param>
+		/// <returns></returns>
+		OrganizationV3DirectoriesListPostResponse OrganizationV3DirectoriesListPost(OrganizationV3DirectoriesListPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
 		/// Creates a service for the given directory
 		/// </summary>
 		/// <param name="request">The service details</param>

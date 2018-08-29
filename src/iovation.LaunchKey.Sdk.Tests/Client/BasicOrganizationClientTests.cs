@@ -24,7 +24,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
 			mockTransport.Setup(p =>
 					p.OrganizationV3ServicesPost(
-						It.IsAny<ServicesPostRequest>(), 
+						It.IsAny<ServicesPostRequest>(),
 						It.IsAny<EntityIdentifier>()
 					)
 				)

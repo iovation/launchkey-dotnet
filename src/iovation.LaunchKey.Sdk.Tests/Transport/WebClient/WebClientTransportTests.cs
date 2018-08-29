@@ -557,8 +557,8 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		{
 			var request = new ServicesPostRequest(
 				"Super service",
-				new Uri("http://moreimportanter.tld/icon.ico"), 
 				"Description", 
+				new Uri("http://moreimportanter.tld/icon.ico"), 
 				new Uri("http://veryimportanturl.tld"),
 				true
 			);
@@ -598,6 +598,46 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 				t => t.OrganizationV3ServicesGet(TestConsts.DefaultOrganizationEntity),
 				HttpMethod.GET,
 				"/organization/v3/services"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoriesPost_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoriesPost(new OrganizationV3DirectoriesPostRequest("dir name"), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directories"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoriesListPatch_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoriesPatch(new OrganizationV3DirectoriesPatchRequest(TestConsts.DefaultDirectoryId, true, "android", "ioskey"), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.PATCH,
+				"/organization/v3/directories"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoriesGet_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoriesGet(TestConsts.DefaultOrganizationEntity),
+				HttpMethod.GET,
+				"/organization/v3/directories"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoriesListPost_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoriesListPost(new OrganizationV3DirectoriesListPostRequest(new List<Guid> {Guid.NewGuid()}), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directories/list"
 			);
 		}
 		

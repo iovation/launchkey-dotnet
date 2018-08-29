@@ -84,7 +84,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
 		public Guid CreateService(string name, string description, Uri icon, Uri callbackUrl, bool active)
 		{
-			var request = new ServicesPostRequest(name, icon, description, callbackUrl, active);
+			var request = new ServicesPostRequest(name, description, icon, callbackUrl, active);
 			var response = _transport.DirectoryV3ServicesPost(request, _directoryId);
 			return response.Id;
 		}
