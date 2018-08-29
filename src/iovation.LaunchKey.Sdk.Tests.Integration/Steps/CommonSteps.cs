@@ -20,12 +20,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps
 			_commonContext = commonContext;
 		}
 
-		[Then(@"an? (.+) exception is thrown")]
-		public void ThrowExceptionStep(string exceptionTypeName)
+		[Then(@"an? (.+) error occurs")]
+		public void ThrowExceptionStep(string errorName)
 		{
 			var exception = _commonContext.GetLastException();
 			Assert.IsNotNull(exception, "An exception was not thrown when one was expected.");
-			Assert.AreEqual(exceptionTypeName, exception.GetType().ToString(), "Exception was thrown but was the wrong type.");
+			Assert.AreEqual($"iovation.LaunchKey.Sdk.Error.{errorName}", exception.GetType().ToString(), "Exception was thrown but was the wrong type.");
 		}
 	}
 }

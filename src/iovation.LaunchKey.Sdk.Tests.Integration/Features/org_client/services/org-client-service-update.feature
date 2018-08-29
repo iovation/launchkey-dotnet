@@ -27,4 +27,4 @@ Feature: Organization clients can update Organization Services
 
   Scenario: Attempting to update an invalid Organization Service throws a Forbidden exception
     When I attempt to update the active status of the Organization Service with the ID "eba60cb8-c649-11e7-abc4-cec278b6b50a"
-    Then a iovation.LaunchKey.Sdk.Error.Forbidden exception is thrown
+    Then a Forbidden error occurs
