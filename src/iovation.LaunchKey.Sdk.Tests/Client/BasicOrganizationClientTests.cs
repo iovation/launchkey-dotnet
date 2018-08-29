@@ -12,8 +12,8 @@ using Moq;
 namespace iovation.LaunchKey.Sdk.Tests.Client
 {
 	[TestClass]
-    public class BasicOrganizationClientTests
-    {
+	public class BasicOrganizationClientTests
+	{
 		[TestMethod]
 		public void CreateService_ShouldCallTransportWithCorrectParams()
 		{
@@ -28,7 +28,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 						It.IsAny<EntityIdentifier>()
 					)
 				)
-				.Returns(new ServicesPostResponse {Id = returnedGuid });
+				.Returns(new ServicesPostResponse { Id = returnedGuid });
 
 			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
 			var response = client.CreateService("service name", "desc", iconUrl, callbackUrl, true);
@@ -162,7 +162,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 				.Returns(new ServicesListPostResponse(new List<ServicesListPostResponse.Service> { serviceObject, serviceObject2 }));
 
 			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
-			var responseObject = client.GetServices(new List<Guid>{serviceId, serviceId2});
+			var responseObject = client.GetServices(new List<Guid> { serviceId, serviceId2 });
 
 			// verify the call made it to transport with right params
 			mockTransport.Verify(
@@ -196,10 +196,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			var mockTransport = new Mock<ITransport>();
 			var callbackUrl = new Uri("http://example.com");
 			var iconUrl = new Uri("http://example.com/icon");
-			var serviceObject = new ServicesGetResponse.Service {Active = true, CallbackUrl = callbackUrl, Description = "one service", Name = "my service", Icon = iconUrl, Id = Guid.NewGuid()};
+			var serviceObject = new ServicesGetResponse.Service { Active = true, CallbackUrl = callbackUrl, Description = "one service", Name = "my service", Icon = iconUrl, Id = Guid.NewGuid() };
 
 			mockTransport.Setup(p => p.OrganizationV3ServicesGet(It.IsAny<EntityIdentifier>()))
-				.Returns(new ServicesGetResponse(new List<ServicesGetResponse.Service> {serviceObject}))
+				.Returns(new ServicesGetResponse(new List<ServicesGetResponse.Service> { serviceObject }))
 				.Verifiable();
 
 			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
@@ -215,6 +215,184 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			Assert.AreEqual(responseObject[0].Icon, serviceObject.Icon);
 			Assert.AreEqual(responseObject[0].Id, serviceObject.Id);
 			Assert.AreEqual(responseObject[0].Name, serviceObject.Name);
+		}
+
+		[TestMethod]
+		public void CreateDirectory_ShouldCallTransportWithCorrectParams()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var returnedId = Guid.NewGuid();
+			mockTransport.Setup(p =>
+					p.OrganizationV3DirectoriesPost(
+						It.Is<OrganizationV3DirectoriesPostRequest>(x => x.Name == "x"),
+						It.IsAny<EntityIdentifier>()))
+				.Returns(new OrganizationV3DirectoriesPostResponse {Id = returnedId})
+				.Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
+			var response = client.CreateDirectory("x");
+
+			Assert.AreEqual(returnedId, response);
+		}
+
+		[TestMethod]
+		public void UpdateDirectory_ShouldCallTransportWithCorrectParams()
+		{
+			var mock = new Mock<ITransport>();
+			mock.Setup(p =>
+				p.OrganizationV3DirectoriesPatch(
+					It.Is<OrganizationV3DirectoriesPatchRequest>(
+						x => x.Active == true
+							&& x.AndroidKey == "a"
+							&& x.IosP12 == "i"
+							&& x.DirectoryId == TestConsts.DefaultDirectoryId
+						),
+					It.IsAny<EntityIdentifier>()))
+				.Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mock.Object);
+
+			client.UpdateDirectory(TestConsts.DefaultDirectoryId, true, "a", "i");
+			mock.Verify();
+		}
+
+		[TestMethod]
+		public void GetDirectory_ShouldCallTransportWithCorrectParams()
+		{
+			var mock = new Mock<ITransport>();
+			var did = Guid.NewGuid();
+			var sdkid = Guid.NewGuid();
+			var sid = Guid.NewGuid();
+			mock.Setup(
+				m => m.OrganizationV3DirectoriesListPost(
+					It.IsAny<OrganizationV3DirectoriesListPostRequest>(), 
+					It.IsAny<EntityIdentifier>()
+				))
+				.Returns(new OrganizationV3DirectoriesListPostResponse(new List<OrganizationV3DirectoriesListPostResponse.Directory>
+				{
+					new OrganizationV3DirectoriesListPostResponse.Directory
+					{
+						Active = true,
+						AndroidKey = "a",
+						Id = did,
+						IosCertificateFingerprint = "i",
+						Name = "n",
+						SdkKeys = new List<Guid>
+						{
+							sdkid
+						},
+						ServiceIds = new List<Guid>
+						{
+							sid
+						}
+					}
+				}));
+
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mock.Object);
+			var response = client.GetDirectory(Guid.NewGuid());
+
+			Assert.IsTrue(response != null);
+			Assert.IsTrue(response.Active);
+			Assert.IsTrue(response.AndroidKey == "a");
+			Assert.IsTrue(response.IosCertificateFingerprint == "i");
+			Assert.IsTrue(response.Name == "n");
+			Assert.IsTrue(response.SdkKeys.Count == 1);
+			Assert.IsTrue(response.SdkKeys[0] == sdkid);
+			Assert.IsTrue(response.ServiceIds.Count == 1);
+			Assert.IsTrue(response.ServiceIds[0] == sid);
+		}
+
+
+		[TestMethod]
+		public void GetDirectories_ShouldCallTransportWithCorrectParams()
+		{
+			var mock = new Mock<ITransport>();
+			var did = Guid.NewGuid();
+			var sdkid = Guid.NewGuid();
+			var sid = Guid.NewGuid();
+			mock.Setup(
+					m => m.OrganizationV3DirectoriesListPost(
+						It.IsAny<OrganizationV3DirectoriesListPostRequest>(),
+						It.IsAny<EntityIdentifier>()
+					))
+				.Returns(new OrganizationV3DirectoriesListPostResponse(new List<OrganizationV3DirectoriesListPostResponse.Directory>
+				{
+					new OrganizationV3DirectoriesListPostResponse.Directory
+					{
+						Active = true,
+						AndroidKey = "a",
+						Id = did,
+						IosCertificateFingerprint = "i",
+						Name = "n",
+						SdkKeys = new List<Guid>
+						{
+							sdkid
+						},
+						ServiceIds = new List<Guid>
+						{
+							sid
+						}
+					}
+				}));
+
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mock.Object);
+			var response = client.GetDirectories(new List<Guid>() { Guid.NewGuid() });
+
+			Assert.IsTrue(response != null);
+			Assert.IsTrue(response.Count == 1);
+			Assert.IsTrue(response[0].Active);
+			Assert.IsTrue(response[0].AndroidKey == "a");
+			Assert.IsTrue(response[0].IosCertificateFingerprint == "i");
+			Assert.IsTrue(response[0].Name == "n");
+			Assert.IsTrue(response[0].SdkKeys.Count == 1);
+			Assert.IsTrue(response[0].SdkKeys[0] == sdkid);
+			Assert.IsTrue(response[0].ServiceIds.Count == 1);
+			Assert.IsTrue(response[0].ServiceIds[0] == sid);
+		}
+
+		[TestMethod]
+		public void GetAllDirectories_ShouldCallTransportWithCorrectParams()
+		{
+			var mock = new Mock<ITransport>();
+			var did = Guid.NewGuid();
+			var sdkid = Guid.NewGuid();
+			var sid = Guid.NewGuid();
+			mock.Setup(m => m.OrganizationV3DirectoriesGet(It.IsAny<EntityIdentifier>()))
+				.Returns(new OrganizationV3DirectoriesGetResponse(new List<OrganizationV3DirectoriesGetResponse.Directory>
+				{
+					new OrganizationV3DirectoriesGetResponse.Directory
+					{
+						Active = true,
+						AndroidKey = "a",
+						Id = did,
+						IosCertificateFingerprint = "i",
+						Name = "n",
+						SdkKeys = new List<Guid>
+						{
+							sdkid
+						},
+						ServiceIds = new List<Guid>
+						{
+							sid
+						}
+					}
+				}));
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mock.Object);
+			var response = client.GetAllDirectories();
+
+			Assert.IsTrue(response != null);
+			Assert.IsTrue(response.Count == 1);
+			Assert.IsTrue(response[0].Active);
+			Assert.IsTrue(response[0].AndroidKey == "a");
+			Assert.IsTrue(response[0].IosCertificateFingerprint == "i");
+			Assert.IsTrue(response[0].Name == "n");
+			Assert.IsTrue(response[0].SdkKeys.Count == 1);
+			Assert.IsTrue(response[0].SdkKeys[0] == sdkid);
+			Assert.IsTrue(response[0].ServiceIds.Count == 1);
+			Assert.IsTrue(response[0].ServiceIds[0] == sid);
 		}
 	}
 }

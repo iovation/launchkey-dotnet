@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Cache\ICache.cs" />
     <Compile Include="Client\BasicOrganizationClient.cs" />
+    <Compile Include="Domain\Organization\Directory.cs" />
     <Compile Include="Client\IOrganizationClient.cs" />
     <Compile Include="Client\IServiceManagingClient.cs" />
     <Compile Include="Domain\ServiceManager\Service.cs" />

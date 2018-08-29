@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using iovation.LaunchKey.Sdk.Domain.Organization;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 using iovation.LaunchKey.Sdk.Transport;
 using iovation.LaunchKey.Sdk.Transport.Domain;
@@ -78,6 +79,67 @@ namespace iovation.LaunchKey.Sdk.Client
 				);
 			}
 			return services;
+		}
+
+		public Guid CreateDirectory(string name)
+		{
+			var request = new OrganizationV3DirectoriesPostRequest(name);
+			var response = _transport.OrganizationV3DirectoriesPost(request, _organizationId);
+			return response.Id;
+		}
+
+		public void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12)
+		{
+			var request = new OrganizationV3DirectoriesPatchRequest(directoryId, active, androidKey, iosP12);
+			_transport.OrganizationV3DirectoriesPatch(request, _organizationId);
+		}
+
+		public Directory GetDirectory(Guid directoryId)
+		{
+			return GetDirectories(new List<Guid> {directoryId})[0];
+		}
+
+		public List<Directory> GetDirectories(List<Guid> directoryIds)
+		{
+			var request = new OrganizationV3DirectoriesListPostRequest(directoryIds);
+			var response = _transport.OrganizationV3DirectoriesListPost(request, _organizationId);
+			var directories = new List<Directory>();
+
+			foreach (var directoryItem in response.Directories)
+			{
+				directories.Add(new Directory(
+					directoryItem.Id,
+					directoryItem.Name,
+					directoryItem.Active,
+					directoryItem.ServiceIds,
+					directoryItem.SdkKeys,
+					directoryItem.AndroidKey,
+					directoryItem.IosCertificateFingerprint
+				));
+			}
+
+			return directories;
+		}
+
+		public List<Directory> GetAllDirectories()
+		{
+			var response = _transport.OrganizationV3DirectoriesGet(_organizationId);
+			var directories = new List<Directory>();
+
+			foreach (var directoryItem in response.Directories)
+			{
+				directories.Add(new Directory(
+					directoryItem.Id,
+					directoryItem.Name,
+					directoryItem.Active,
+					directoryItem.ServiceIds,
+					directoryItem.SdkKeys,
+					directoryItem.AndroidKey,
+					directoryItem.IosCertificateFingerprint
+				));
+			}
+
+			return directories;
 		}
 	}
 }
