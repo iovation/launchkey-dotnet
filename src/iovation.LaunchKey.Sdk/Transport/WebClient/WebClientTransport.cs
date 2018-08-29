@@ -559,6 +559,32 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			return new ServicesGetResponse(decryptedResponse);
 		}
 
+		public ServicesPostResponse DirectoryV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/services", subject, request, null);
+			var serviceResponse = DecryptResponse<ServicesPostResponse>(response);
+			return serviceResponse;
+		}
+
+		public void DirectoryV3ServicesPatch(ServicesPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/directory/v3/services", subject, request, null);
+		}
+
+		public ServicesListPostResponse DirectoryV3ServicesListPost(ServicesListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/services/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<ServicesListPostResponse.Service>>(response);
+			return new ServicesListPostResponse(decryptedResponse);
+		}
+
+		public ServicesGetResponse DirectoryV3ServicesGet(EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.GET, "/directory/v3/services", subject, null, null);
+			var decryptedResponse = DecryptResponse<List<ServicesGetResponse.Service>>(response);
+			return new ServicesGetResponse(decryptedResponse);
+		}
+
 		private string GetFirstHeader(Dictionary<string, List<string>> headers, string headerKey)
 		{
 			foreach (var header in headers)

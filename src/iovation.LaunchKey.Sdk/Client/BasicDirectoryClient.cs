@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using iovation.LaunchKey.Sdk.Domain.Directory;
+using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 using iovation.LaunchKey.Sdk.Transport;
 using iovation.LaunchKey.Sdk.Transport.Domain;
 
@@ -78,6 +80,66 @@ namespace iovation.LaunchKey.Sdk.Client
 		{
 			var request = new DirectoryV3SessionsDeleteRequest(userId);
 			_transport.DirectoryV3SessionsDelete(request, _directoryId);
+		}
+
+		public Guid CreateService(string name, string description, Uri icon, Uri callbackUrl, bool active)
+		{
+			var request = new ServicesPostRequest(name, icon, description, callbackUrl, active);
+			var response = _transport.DirectoryV3ServicesPost(request, _directoryId);
+			return response.Id;
+		}
+
+		public void UpdateService(Guid serviceId, string name, string description, Uri icon, Uri callbackUrl, bool active)
+		{
+			var request = new ServicesPatchRequest(serviceId, name, description, icon, callbackUrl, active);
+			_transport.DirectoryV3ServicesPatch(request, _directoryId);
+		}
+
+		public Service GetService(Guid serviceId)
+		{
+			return GetServices(new List<Guid> { serviceId }).First();
+		}
+
+		public List<Service> GetServices(List<Guid> serviceIds)
+		{
+			var request = new ServicesListPostRequest(serviceIds);
+			var response = _transport.DirectoryV3ServicesListPost(request, _directoryId);
+			var services = new List<Service>();
+
+			foreach (var serviceItem in response.Services)
+			{
+				services.Add(
+					new Service(
+						serviceItem.Id,
+						serviceItem.Name,
+						serviceItem.Description,
+						serviceItem.Icon,
+						serviceItem.CallbackUrl,
+						serviceItem.Active
+					));
+			}
+
+			return services;
+		}
+
+		public List<Service> GetAllServices()
+		{
+			var response = _transport.DirectoryV3ServicesGet(_directoryId);
+			var services = new List<Service>();
+			foreach (var serviceItem in response.Services)
+			{
+				services.Add(
+					new Service(
+						serviceItem.Id,
+						serviceItem.Name,
+						serviceItem.Description,
+						serviceItem.Icon,
+						serviceItem.CallbackUrl,
+						serviceItem.Active
+					)
+				);
+			}
+			return services;
 		}
 	}
 }

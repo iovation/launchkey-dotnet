@@ -131,5 +131,37 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// <param name="subject"></param>
 		/// <returns>the response from the LaunchKey API</returns>
 		ServicesGetResponse OrganizationV3ServicesGet(EntityIdentifier subject);
+
+
+		/// <summary>
+		/// Creates a service for the given directory
+		/// </summary>
+		/// <param name="request">The service details</param>
+		/// <param name="subject">The directory to create the service for</param>
+		/// <returns>the response with the unique ID of the service created</returns>
+		ServicesPostResponse DirectoryV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Updates a service for the given directory
+		/// </summary>
+		/// <param name="request">The service to update</param>
+		/// <param name="subject">The directory the service belongs to</param>
+		/// <returns>the response with the unique ID of the service updated</returns>
+		void DirectoryV3ServicesPatch(ServicesPatchRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get a list of specific services for an directory
+		/// </summary>
+		/// <param name="request">The list of services to fetch</param>
+		/// <param name="subject">The directory the services belong to</param>
+		/// <returns>the response from the LaunchKey API</returns>
+		ServicesListPostResponse DirectoryV3ServicesListPost(ServicesListPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get all services for an directory
+		/// </summary>
+		/// <param name="subject"></param>
+		/// <returns>the response from the LaunchKey API</returns>
+		ServicesGetResponse DirectoryV3ServicesGet(EntityIdentifier subject);
 	}
 }

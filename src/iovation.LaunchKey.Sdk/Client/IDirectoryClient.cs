@@ -6,7 +6,7 @@ using iovation.LaunchKey.Sdk.Domain.Directory;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
-	public interface IDirectoryClient
+	public interface IDirectoryClient : IServiceManagingClient
 	{
 		/// <summary>
 		/// Links a device to a user.
