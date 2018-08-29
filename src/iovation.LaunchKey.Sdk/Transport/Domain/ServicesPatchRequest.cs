@@ -6,22 +6,22 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 	public class ServicesPatchRequest
 	{
 		[JsonProperty("service_id")]
-		public Guid ServiceId { get; set; }
+		public Guid ServiceId { get; }
 
 		[JsonProperty("name")]
-		public string Name { get; set; }
+		public string Name { get; }
 
 		[JsonProperty("description")]
-		public string Description { get; set; }
+		public string Description { get; }
 
 		[JsonProperty("icon")]
-		public Uri Icon { get; set; }
+		public Uri Icon { get; }
 
 		[JsonProperty("callback_url")]
-		public Uri CallbackUrl { get; set; }
+		public Uri CallbackUrl { get; }
 
 		[JsonProperty("active")]
-		public bool Active { get; set; }
+		public bool Active { get; }
 
 		public ServicesPatchRequest(Guid serviceId, string name, string description, Uri icon, Uri callbackUrl, bool active)
 		{

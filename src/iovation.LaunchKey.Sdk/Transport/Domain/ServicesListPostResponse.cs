@@ -27,7 +27,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			public bool Active { get; set; }
 		}
 
-		public List<Service> Services { get; set; }
+		public List<Service> Services { get; }
 
 		public ServicesListPostResponse(List<Service> services)
 		{
