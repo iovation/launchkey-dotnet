@@ -92,6 +92,7 @@
     <Compile Include="Steps\CommonContext.cs" />
     <Compile Include="Steps\CommonSteps.cs" />
     <Compile Include="Steps\OrgClient\CreatedServiceInfo.cs" />
+    <Compile Include="Steps\OrgClient\DirectoryServiceSteps.cs" />
     <Compile Include="Steps\OrgClient\OrganizationServiceSteps.cs" />
     <Compile Include="Steps\OrgClient\ServiceDescriptionTable.cs" />
     <Compile Include="Steps\TestConfiguration.cs" />
