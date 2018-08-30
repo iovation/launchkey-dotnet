@@ -160,6 +160,11 @@
     <Compile Include="Transport\Domain\OrganizationV3DirectoriesPatchRequest.cs" />
     <Compile Include="Transport\Domain\OrganizationV3DirectoriesPostRequest.cs" />
     <Compile Include="Transport\Domain\OrganizationV3DirectoriesPostResponse.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysListPostRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysListPostResponse.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysPostRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysPostResponse.cs" />
     <Compile Include="Transport\WebClient\CachedKey.cs" />
     <Compile Include="Transport\WebClient\HttpClient.cs" />
     <Compile Include="Transport\WebClient\HttpMethod.cs" />

@@ -604,6 +604,25 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			return new ServicesListPostResponse(decryptedResponse);
 		}
 
+		public OrganizationV3DirectorySdkKeysPostResponse OrganizationV3DirectorySdkKeysPost(OrganizationV3DirectorySdkKeysPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directory/sdk-keys", subject, request, null);
+			var decryptedResponse = DecryptResponse<OrganizationV3DirectorySdkKeysPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void OrganizationV3DirectorySdkKeysDelete(OrganizationV3DirectorySdkKeysDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/organization/v3/directory/sdk-keys", subject, request, null);
+		}
+
+		public OrganizationV3DirectorySdkKeysListPostResponse OrganizationV3DirectorySdkKeysListPost(OrganizationV3DirectorySdkKeysListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directory/sdk-keys/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<Guid>>(response);
+			return new OrganizationV3DirectorySdkKeysListPostResponse(decryptedResponse);
+		}
+
 		public ServicesGetResponse DirectoryV3ServicesGet(EntityIdentifier subject)
 		{
 			var response = ExecuteRequest(HttpMethod.GET, "/directory/v3/services", subject, null, null);

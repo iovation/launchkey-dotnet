@@ -44,5 +44,27 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// </summary>
 		/// <returns>The directories for this organization</returns>
 		List<Directory> GetAllDirectories();
+
+		/// <summary>
+		/// Request the Platform API to generate a new Authenticator SDK Key and add to the Directory identified by the
+		/// provided Directory ID. One generated and added, it will be returned as the response.
+		/// </summary>
+		/// <param name="directoryId">The directory to create the SDK key for</param>
+		/// <returns></returns>
+		Guid GenerateAndAddDirectorySdkKey(Guid directoryId);
+
+		/// <summary>
+		/// Remove an SDK key from a directory within the organization
+		/// </summary>
+		/// <param name="directoryId">The directory to remove the SDK Key from</param>
+		/// <param name="sdkKey">The SDK Key to remove</param>
+		void RemoveDirectorySdkKey(Guid directoryId, Guid sdkKey);
+
+		/// <summary>
+		/// Get all SDK keys associated with a directory within this organization
+		/// </summary>
+		/// <param name="directoryId">The directory to query for SDK keys</param>
+		/// <returns>A list of SDK Keys</returns>
+		List<Guid> GetAllDirectorySdkKeys(Guid directoryId);
 	}
 }

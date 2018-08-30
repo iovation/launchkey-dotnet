@@ -226,7 +226,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 					p.OrganizationV3DirectoriesPost(
 						It.Is<OrganizationV3DirectoriesPostRequest>(x => x.Name == "x"),
 						It.IsAny<EntityIdentifier>()))
-				.Returns(new OrganizationV3DirectoriesPostResponse {Id = returnedId})
+				.Returns(new OrganizationV3DirectoriesPostResponse { Id = returnedId })
 				.Verifiable();
 
 			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
@@ -265,7 +265,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			var sid = Guid.NewGuid();
 			mock.Setup(
 				m => m.OrganizationV3DirectoriesListPost(
-					It.IsAny<OrganizationV3DirectoriesListPostRequest>(), 
+					It.IsAny<OrganizationV3DirectoriesListPostRequest>(),
 					It.IsAny<EntityIdentifier>()
 				))
 				.Returns(new OrganizationV3DirectoriesListPostResponse(new List<OrganizationV3DirectoriesListPostResponse.Directory>
@@ -393,6 +393,78 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			Assert.IsTrue(response[0].SdkKeys[0] == sdkid);
 			Assert.IsTrue(response[0].ServiceIds.Count == 1);
 			Assert.IsTrue(response[0].ServiceIds[0] == sid);
+		}
+
+		[TestMethod]
+		public void GenerateAndAddDirectorySdkKey_InteractsWithTransport()
+		{
+			var mock = new Mock<ITransport>();
+			var did = Guid.NewGuid();
+			var orgId = Guid.NewGuid();
+			var sdkKey = Guid.NewGuid();
+
+			mock.Setup(
+					m => m.OrganizationV3DirectorySdkKeysPost(
+						It.IsAny<OrganizationV3DirectorySdkKeysPostRequest>(),
+						It.IsAny<EntityIdentifier>()
+					)
+				)
+				.Returns(new OrganizationV3DirectorySdkKeysPostResponse {SdkKey = sdkKey})
+				.Verifiable();
+
+			var client = new BasicOrganizationClient(orgId, mock.Object);
+			var response = client.GenerateAndAddDirectorySdkKey(did);
+
+			mock.Verify();
+			Assert.AreEqual(sdkKey, response);
+		}
+
+		[TestMethod]
+		public void RemoveDirectorySdkKey_InteractsWithTransport()
+		{
+			var mock = new Mock<ITransport>();
+			var did = Guid.NewGuid();
+			var orgId = Guid.NewGuid();
+			var sdkKey = Guid.NewGuid();
+
+			mock.Setup(p => p.OrganizationV3DirectorySdkKeysDelete(
+				It.Is<OrganizationV3DirectorySdkKeysDeleteRequest>(e => e.DirectoryId == did && e.SdkKey == sdkKey),
+				It.Is<EntityIdentifier>(e => e.Id == orgId && e.Type == EntityType.Organization)
+			)).Verifiable();
+
+			var client = new BasicOrganizationClient(orgId, mock.Object);
+			client.RemoveDirectorySdkKey(did, sdkKey);
+
+			mock.Verify();
+		}
+
+		[TestMethod]
+		public void GetAllDirectorySdkKeys_InteractsWithTransport()
+		{
+			// setup
+			var mock = new Mock<ITransport>();
+			var did = Guid.NewGuid();
+			var sdkKey1 = Guid.NewGuid();
+			var sdkKey2 = Guid.NewGuid();
+			var orgId = Guid.NewGuid();
+
+			mock.Setup(p => p.OrganizationV3DirectorySdkKeysListPost(
+				It.Is<OrganizationV3DirectorySdkKeysListPostRequest>(e => e.DirectoryId == did),
+				It.Is<EntityIdentifier>(e => e.Id == orgId && e.Type == EntityType.Organization)
+			))
+			.Returns(new OrganizationV3DirectorySdkKeysListPostResponse(new List<Guid> { sdkKey1, sdkKey2 }))	
+			.Verifiable();
+
+			// exec
+			var client = new BasicOrganizationClient(orgId, mock.Object);
+			var response = client.GetAllDirectorySdkKeys(did);
+
+			// verify
+			mock.Verify();
+			Assert.IsNotNull(response);
+			Assert.IsTrue(response.Count == 2);
+			Assert.AreEqual(sdkKey1, response[0]);
+			Assert.AreEqual(sdkKey2, response[1]);
 		}
 	}
 }

@@ -188,6 +188,29 @@ namespace iovation.LaunchKey.Sdk.Transport
 		ServicesListPostResponse DirectoryV3ServicesListPost(ServicesListPostRequest request, EntityIdentifier subject);
 
 		/// <summary>
+		/// Create an Authenticator SDK Key for a directory
+		/// </summary>
+		/// <param name="request">The directory to add the key for</param>
+		/// <param name="subject">The organization the directory belongs to</param>
+		/// <returns>The response from the LaunchKey API</returns>
+		OrganizationV3DirectorySdkKeysPostResponse OrganizationV3DirectorySdkKeysPost(OrganizationV3DirectorySdkKeysPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Delete an Authenticator SDK Key for a directory
+		/// </summary>
+		/// <param name="request">Information identifying the key to delete</param>
+		/// <param name="subject">The organization the directory belongs to</param>
+		void OrganizationV3DirectorySdkKeysDelete(OrganizationV3DirectorySdkKeysDeleteRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get all SDK keys associated with a directory within the given organization
+		/// </summary>
+		/// <param name="request">The directory to retrieve keys for</param>
+		/// <param name="subject">The organization the directory being queried belongs to</param>
+		/// <returns>The response from the LaunchKey API</returns>
+		OrganizationV3DirectorySdkKeysListPostResponse OrganizationV3DirectorySdkKeysListPost(OrganizationV3DirectorySdkKeysListPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
 		/// Get all services for an directory
 		/// </summary>
 		/// <param name="subject"></param>

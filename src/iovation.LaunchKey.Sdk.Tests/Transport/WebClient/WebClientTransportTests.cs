@@ -640,6 +640,43 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 				"/organization/v3/directories/list"
 			);
 		}
+
+		[TestMethod]
+		public void DirectoryV3ServicesListPost_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3DirectorySdkKeysListPost(
+				new OrganizationV3DirectorySdkKeysListPostRequest(dirId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directory/sdk-keys/list"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectorySdkKeysPost_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3DirectorySdkKeysPost(
+				new OrganizationV3DirectorySdkKeysPostRequest(dirId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directory/sdk-keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectorySdkKeysDelete_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+			var keyId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3DirectorySdkKeysDelete(
+				new OrganizationV3DirectorySdkKeysDeleteRequest(dirId, keyId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/organization/v3/directory/sdk-keys"
+			);
+		}
 		
 		[TestMethod]
 		[ExpectedException(typeof(InvalidResponseException))]

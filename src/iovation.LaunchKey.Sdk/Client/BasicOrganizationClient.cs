@@ -141,5 +141,23 @@ namespace iovation.LaunchKey.Sdk.Client
 
 			return directories;
 		}
+
+		public Guid GenerateAndAddDirectorySdkKey(Guid directoryId)
+		{
+			var response = _transport.OrganizationV3DirectorySdkKeysPost(new OrganizationV3DirectorySdkKeysPostRequest(directoryId), _organizationId);
+			return response.SdkKey;
+		}
+
+		public void RemoveDirectorySdkKey(Guid directoryId, Guid sdkKey)
+		{
+			_transport.OrganizationV3DirectorySdkKeysDelete(new OrganizationV3DirectorySdkKeysDeleteRequest(directoryId, sdkKey), _organizationId);
+		}
+
+		public List<Guid> GetAllDirectorySdkKeys(Guid directoryId)
+		{
+			var request = new OrganizationV3DirectorySdkKeysListPostRequest(directoryId);
+			var response = _transport.OrganizationV3DirectorySdkKeysListPost(request, _organizationId);
+			return response.SdkKeys;
+		}
 	}
 }
