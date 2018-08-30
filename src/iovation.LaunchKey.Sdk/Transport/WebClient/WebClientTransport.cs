@@ -574,15 +574,15 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 		public OrganizationV3DirectoriesGetResponse OrganizationV3DirectoriesGet(EntityIdentifier subject)
 		{
 			var response = ExecuteRequest(HttpMethod.GET, "/organization/v3/directories", subject, null, null);
-			var decryptedResponse = DecryptResponse<OrganizationV3DirectoriesGetResponse>(response);
-			return decryptedResponse;
+			var decryptedResponse = DecryptResponse<List<OrganizationV3DirectoriesGetResponse.Directory>>(response);
+			return new OrganizationV3DirectoriesGetResponse(decryptedResponse);
 		}
 
 		public OrganizationV3DirectoriesListPostResponse OrganizationV3DirectoriesListPost(OrganizationV3DirectoriesListPostRequest request, EntityIdentifier subject)
 		{
 			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directories/list", subject, request, null);
-			var decryptedResponse = DecryptResponse<OrganizationV3DirectoriesListPostResponse>(response);
-			return decryptedResponse;
+			var decryptedResponse = DecryptResponse<List<OrganizationV3DirectoriesListPostResponse.Directory>>(response);
+			return new OrganizationV3DirectoriesListPostResponse(decryptedResponse);
 		}
 
 		public ServicesPostResponse DirectoryV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject)
