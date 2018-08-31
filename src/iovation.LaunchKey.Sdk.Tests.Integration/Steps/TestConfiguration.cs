@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using iovation.LaunchKey.Sdk.Client;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps
 {
@@ -18,6 +19,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps
 
 			OrgPrivateKey = File.ReadAllText(keyPath);
 			OrgId = File.ReadAllText(idPath);
+		}
+
+		public IOrganizationClient GetOrgClient()
+		{
+			var factory = new FactoryFactoryBuilder().Build();
+			var organizationFactory = factory.MakeOrganizationFactory(OrgId, OrgPrivateKey);
+			return organizationFactory.MakeOrganizationClient();
 		}
 	}
 }

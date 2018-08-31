@@ -28,21 +28,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		{
 			_config = config;
 			_commonContext = commonContext;
-			_orgClient = MakeOrgClient();
+			_orgClient = config.GetOrgClient();
 		}
-
-		private IOrganizationClient MakeOrgClient()
-		{
-			var factory = new FactoryFactoryBuilder().Build();
-			var organizationFactory = factory.MakeOrganizationFactory(_config.OrgId, _config.OrgPrivateKey);
-			return organizationFactory.MakeOrganizationClient();
-		}
-
-		private string RandomName()
-		{
-			return "Service" + Guid.NewGuid().ToString("n");
-		}
-
+		
 		private void CreateAService(string serviceName)
 		{
 			var serviceGuid = _orgClient.CreateService(
@@ -56,10 +44,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 			_ownedServices.Add(_lastCreatedService);
 		}
 
+		private void CreateAUniquelyNamedService()
+		{
+			CreateAService(Util.UniqueName("Service"));
+		}
+
 		[When(@"I create an Organization Service")]
 		public void WhenICreateAnOrganizationService()
 		{
-			CreateAService(RandomName());
+			CreateAUniquelyNamedService();
 		}
 
 		[When(@"I retrieve the created Organization Service")]
@@ -77,7 +70,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		[Given(@"I created an Organization Service")]
 		public void GivenICreatedAnOrganizationService()
 		{
-			CreateAService(RandomName());
+			CreateAUniquelyNamedService();
 		}
 
 		[Given(@"I attempt to create a Organization Service with the same name")]
@@ -140,7 +133,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		public void GivenICreatedAOrganizationServiceWithTheFollowing(Table table)
 		{
 			var userServiceInfo = TechTalk.SpecFlow.Assist.TableHelperExtensionMethods.CreateInstance<ServiceDescriptionTable>(table);
-			var serviceName = RandomName();
+			var serviceName = Util.UniqueName("service");
 			var serviceId = _orgClient.CreateService(
 				serviceName,
 				userServiceInfo.Description,
@@ -229,7 +222,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 				_commonContext.RecordException(be);
 			}
 		}
-
 
 		[After]
 		public void After()
