@@ -2,7 +2,7 @@
 using System.IO;
 using iovation.LaunchKey.Sdk.Client;
 
-namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps
+namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
 {
 	public class TestConfiguration
 	{

@@ -1,4 +1,4 @@
-﻿namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
+﻿namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 {
 	class ServiceDescriptionTable
 	{

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using iovation.LaunchKey.Sdk.Client;
 using iovation.LaunchKey.Sdk.Domain.Organization;
 using iovation.LaunchKey.Sdk.Error;
+using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
-namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
+namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 {
 	[Binding]
     public class OrganizationDirectorySteps
@@ -17,49 +16,32 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		private readonly TestConfiguration _config;
 		private readonly CommonContext _commonContext;
 		private readonly KeyManager _keyManager;
-		private readonly IOrganizationClient _orgClient;
+		private readonly OrgClientContext _orgClientContext;
 
-		private List<CreatedDirectoryInfo> _ownedDirectories = new List<CreatedDirectoryInfo>();
-		private Directory _lastRetrievedDirectory = null;
-		private List<Directory> _lastGetAllDirectories = null;
-		private List<Directory> _lastGetDirectoriesResponse = null;
-		private List<Guid> _addedSdkKeys = new List<Guid>();
-
-		public OrganizationDirectorySteps(TestConfiguration config, CommonContext commonContext, KeyManager keyManager)
+		public OrganizationDirectorySteps(TestConfiguration config, CommonContext commonContext, KeyManager keyManager, OrgClientContext orgClientContext)
 		{
 			_config = config;
 			_commonContext = commonContext;
 			_keyManager = keyManager;
-			_orgClient = config.GetOrgClient();
+			_orgClientContext = orgClientContext;
 		}
-
-		private void CreateDirectory(string name)
-		{
-			var id = _orgClient.CreateDirectory(name);
-			_ownedDirectories.Add(new CreatedDirectoryInfo(id, name));
-		}
-
-		private void CreateUniquelyNamedDirectory()
-		{
-			CreateDirectory(Util.UniqueName("Directory"));
-		}
-
+		
 		[When(@"I create a Directory with a unique name")]
 		public void WhenICreateADirectoryWithAUniqueName()
 		{
-			CreateUniquelyNamedDirectory();
+			_orgClientContext.CreateDirectory(Util.UniqueDirectoryName());
 		}
 		
 		[Then(@"the Directory name is the same as was sent")]
 		public void ThenTheDirectoryNameIsTheSameAsWasSent()
 		{
-			Assert.AreEqual(_ownedDirectories[0].Name, _lastRetrievedDirectory.Name);
+			Assert.AreEqual(_orgClientContext.LastCreatedDirectory.Name, _orgClientContext.LoadedDirectory.Name);
 		}
 
 		[Given(@"I created a Directory")]
 		public void GivenICreatedADirectory()
 		{
-			CreateUniquelyNamedDirectory();
+			WhenICreateADirectoryWithAUniqueName();
 		}
 
 		[Given(@"I attempt to create a Directory with the same name")]
@@ -67,7 +49,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		{
 			try
 			{
-				CreateDirectory(_ownedDirectories[0].Name);
+				_orgClientContext.CreateDirectory(_orgClientContext.LastCreatedDirectory.Name);
 			}
 			catch (BaseException e)
 			{
@@ -80,75 +62,101 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		public void WhenIUpdateTheDirectoryAsInactive(string activeStatus)
 		{
 			var active = activeStatus == "active";
-			var directory = _orgClient.GetDirectory(_ownedDirectories.Last().Id);
-			_orgClient.UpdateDirectory(directory.Id, active, directory.AndroidKey, directory.IosCertificateFingerprint);
+			_orgClientContext.LoadLastCreatedDirectory();
+			var directory = _orgClientContext.LoadedDirectory;
+			_orgClientContext.UpdateDirectory(
+				directory.Id,
+				active,
+				directory.AndroidKey,
+				_keyManager.GetP12ForFingerprint(directory.IosCertificateFingerprint)
+			);
 		}
 
 		[When(@"I retrieve the (?:created|updated|current) Directory")]
 		public void WhenIRetrieveTheUpdatedDirectory()
 		{
-			_lastRetrievedDirectory = _orgClient.GetDirectory(_ownedDirectories.Last().Id);
+			_orgClientContext.LoadLastCreatedDirectory();
 		}
 
 		[Then(@"the Directory is (not active|active)")]
 		public void ThenTheDirectoryIsNotActive(string activeStatus)
 		{
 			var shouldBeActive = activeStatus == "active";
-			Assert.AreEqual(shouldBeActive, _lastRetrievedDirectory.Active);
+			Assert.AreEqual(shouldBeActive, _orgClientContext.LoadedDirectory.Active);
 		}
 
 		[When(@"I updated? the Directory Android Key with ""(.*)""")]
 		[Given(@"I updated? the Directory Android Key with ""(.*)""")]
 		public void WhenIUpdateTheDirectoryAndroidKeyWith(string androidKey)
 		{
-			var directory = _orgClient.GetDirectory(_ownedDirectories.Last().Id);
-			_orgClient.UpdateDirectory(directory.Id, directory.Active, androidKey, directory.IosCertificateFingerprint);
+			_orgClientContext.LoadLastCreatedDirectory();
+			_orgClientContext.UpdateDirectory(
+				_orgClientContext.LoadedDirectory.Id,
+				_orgClientContext.LoadedDirectory.Active,
+				androidKey,
+				_keyManager.GetP12ForFingerprint(_orgClientContext.LoadedDirectory.IosCertificateFingerprint)
+			);
 		}
 
 		[Then(@"the Directory Android Key is ""(.*)""")]
 		public void ThenTheDirectoryAndroidKeyIs(string androidKey)
 		{
-			Assert.AreEqual(androidKey, _lastRetrievedDirectory.AndroidKey);
+			Assert.AreEqual(androidKey, _orgClientContext.LoadedDirectory.AndroidKey);
 		}
 
 		[When(@"I updated? the Directory Android Key with null")]
 		public void WhenIUpdateTheDirectoryAndroidKeyWithNull()
 		{
-			var directory = _orgClient.GetDirectory(_ownedDirectories.Last().Id);
-			_orgClient.UpdateDirectory(directory.Id, directory.Active, null, directory.IosCertificateFingerprint);
+			_orgClientContext.LoadLastCreatedDirectory();
+			_orgClientContext.UpdateDirectory(
+				_orgClientContext.LoadedDirectory.Id,
+				_orgClientContext.LoadedDirectory.Active, 
+				null,
+				_keyManager.GetP12ForFingerprint(_orgClientContext.LoadedDirectory.IosCertificateFingerprint)
+			);
 		}
 
 		[Then(@"the Directory has no Android Key")]
 		public void ThenTheDirectoryHasNoAndroidKey()
 		{
-			Assert.IsNull(_lastRetrievedDirectory.AndroidKey);
+			Assert.IsNull(_orgClientContext.LoadedDirectory.AndroidKey);
 		}
 
 		[When(@"I updated? the Directory iOS P12 with a valid certificate")]
 		[Given(@"I updated? the Directory iOS P12 with a valid certificate")]
 		public void WhenIUpdateTheDirectoryIOSPWithAValidCertificate()
 		{
-			var directory = _orgClient.GetDirectory(_ownedDirectories.Last().Id);
-			_orgClient.UpdateDirectory(directory.Id, directory.Active, directory.AndroidKey, _keyManager.GetBase64EncodedAlphaP12());
+			_orgClientContext.LoadLastCreatedDirectory();
+			_orgClientContext.UpdateDirectory(
+				_orgClientContext.LoadedDirectory.Id,
+				_orgClientContext.LoadedDirectory.Active,
+				_orgClientContext.LoadedDirectory.AndroidKey, 
+				_keyManager.GetBase64EncodedAlphaP12()
+			);
 		}
 
 		[Then(@"Directory the iOS Certificate Fingerprint matches the provided certificate")]
 		public void ThenDirectoryTheIOSCertificateFingerprintMatchesTheProvidedCertificate()
 		{
-			Assert.AreEqual(_keyManager.GetAlphaCertificateFingerprint(), _lastRetrievedDirectory.IosCertificateFingerprint);
+			Assert.AreEqual(_keyManager.GetAlphaCertificateFingerprint(), _orgClientContext.LoadedDirectory.IosCertificateFingerprint);
 		}
 
 		[When(@"I update the Directory iOS P12 with null")]
 		public void WhenIUpdateTheDirectoryIOSPWithNull()
 		{
-			var directory = _orgClient.GetDirectory(_ownedDirectories.Last().Id);
-			_orgClient.UpdateDirectory(directory.Id, directory.Active, directory.AndroidKey, null);
+			_orgClientContext.LoadLastCreatedDirectory();
+			_orgClientContext.UpdateDirectory(
+				_orgClientContext.LoadedDirectory.Id,
+				_orgClientContext.LoadedDirectory.Active,
+				_orgClientContext.LoadedDirectory.AndroidKey, 
+				null
+			);
 		}
 
 		[Then(@"the Directory has no IOS Certificate Fingerprint")]
 		public void ThenTheDirectoryHasNoIOSCertificateFingerprint()
 		{
-			Assert.IsNull(_lastRetrievedDirectory.IosCertificateFingerprint);
+			Assert.IsNull(_orgClientContext.LoadedDirectory.IosCertificateFingerprint);
 		}
 
 		[When(@"I attempt to update the active status of the Directory with the ID ""(.*)""")]
@@ -156,7 +164,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		{
 			try
 			{
-				_orgClient.UpdateDirectory(Guid.Parse(directoryId), true, null, null);
+				_orgClientContext.UpdateDirectory(Guid.Parse(directoryId), true, null, null);
 			}
 			catch (BaseException e)
 			{
@@ -167,24 +175,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		[Given(@"I generated and added (.*) SDK Keys? to the Directory")]
 		public void GivenIGeneratedAndAddedSDKKeysToTheDirectory(int numKeys)
 		{
-			var lastDirectory = _ownedDirectories[0].Id;
-			_addedSdkKeys = new List<Guid>();
-			for (var i = 0; i < numKeys; i++)
-			{
-				_addedSdkKeys.Add(_orgClient.GenerateAndAddDirectorySdkKey(lastDirectory));
-			}
+			_orgClientContext.GenerateDirectorySDKKeys(
+				_orgClientContext.LastCreatedDirectory.Id, 
+				numKeys
+			);
 		}
 
 		[When(@"I retrieve a list of all Directories")]
 		public void WhenIRetrieveAListOfAllDirectories()
 		{
-			_lastGetAllDirectories = _orgClient.GetAllDirectories();
+			_orgClientContext.LoadAllDirectories();
 		}
 
 		[Then(@"the current Directory is in the Directory list")]
 		public void ThenTheCurrentDirectoryIsInTheDirectoryList()
 		{
-			Assert.IsTrue(_lastGetAllDirectories.Any(e => e.Id == _ownedDirectories.Last().Id));
+			Assert.IsTrue(_orgClientContext.LoadedDirectories.Any(e => e.Id == _orgClientContext.LastCreatedDirectory.Id));
 		}
 
 		[Given(@"I added (.*) Services to the Directory")]
@@ -196,16 +202,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		[When(@"I retrieve a list of Directories with the created Directory's ID")]
 		public void WhenIRetrieveAListOfDirectoriesWithTheCreatedDirectorySID()
 		{
-			var lastDir = _ownedDirectories.Last().Id;
-			_lastGetDirectoriesResponse = _orgClient.GetDirectories(new List<Guid> {lastDir});
+			_orgClientContext.LoadDirectories(new List<Guid> {_orgClientContext.LastCreatedDirectory.Id});
 		}
 
 		[Then(@"the current Directory list is a list with only the current Directory")]
 		public void ThenTheCurrentDirectoryListIsAListWithOnlyTheCurrentDirectory()
 		{
-			var lastDir = _ownedDirectories.Last().Id;
-			Assert.IsTrue(_lastGetDirectoriesResponse.Count == 1);
-			Assert.IsTrue(_lastGetDirectoriesResponse[0].Id == lastDir);
+			Assert.IsTrue(_orgClientContext.LoadedDirectories.Count == 1);
+			Assert.IsTrue(_orgClientContext.LoadedDirectories[0].Id == _orgClientContext.LastCreatedDirectory.Id);
 		}
 
 		[When(@"I attempt retrieve a list of Directories with the Directory ID ""(.*)""")]
@@ -213,7 +217,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		{
 			try
 			{
-				_lastGetDirectoriesResponse = _orgClient.GetDirectories(new List<Guid> {Guid.Parse(directoryId)});
+				_orgClientContext.LoadDirectories(new List<Guid> {Guid.Parse(directoryId)});
 			}
 			catch (BaseException e)
 			{
@@ -224,16 +228,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		[Then(@"the ID matches the value returned when the Directory was created")]
 		public void ThenTheIDMatchesTheValueReturnedWhenTheDirectoryWasCreated()
 		{
-			var lastDir = _ownedDirectories.Last().Id;
-			Assert.AreEqual(lastDir, _lastRetrievedDirectory.Id);
+			Assert.AreEqual(_orgClientContext.LastCreatedDirectory.Id, _orgClientContext.LoadedDirectory.Id);
 		}
 
 		[Then(@"the Directory has the added SDK Key")]
 		public void ThenTheDirectoryHasTheAddedSDKKey()
 		{
-			foreach (var key in _addedSdkKeys)
+			foreach (var key in _orgClientContext.AddedSdkKeys)
 			{
-				Assert.IsTrue(_lastRetrievedDirectory.SdkKeys.Contains(key));
+				Assert.IsTrue(_orgClientContext.LoadedDirectory.SdkKeys.Contains(key));
 			}
 		}
 
@@ -248,7 +251,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		{
 			try
 			{
-				_orgClient.GetDirectory(Guid.Parse(directoryId));
+				_orgClientContext.LoadDirectory(Guid.Parse(directoryId));
 			}
 			catch (BaseException e)
 			{
@@ -259,16 +262,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		[When(@"I generate and add an SDK Key to the Directory")]
 		public void WhenIGenerateAndAddAnSDKKeyToTheDirectory()
 		{
-			_addedSdkKeys = new List<Guid>
-			{
-				_orgClient.GenerateAndAddDirectorySdkKey(_ownedDirectories[0].Id)
-			};
+			_orgClientContext.GenerateDirectorySDKKeys(
+				_orgClientContext.LastCreatedDirectory.Id,
+				1
+			);
 		}
 
 		[Then(@"the SDK Key is in the list for the Directory")]
 		public void ThenTheSDKKeyIsInTheListForTheDirectory()
 		{
-			Assert.IsTrue(_lastRetrievedDirectory.SdkKeys.Contains(_addedSdkKeys[0]));
+			Assert.IsTrue(_orgClientContext.LoadedDirectory.SdkKeys.Contains(_orgClientContext.AddedSdkKeys[0]));
 		}
 
 		[When(@"I attempt to generate and add an SDK Key to the Directory with the ID ""(.*)""")]
@@ -276,7 +279,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		{
 			try
 			{
-				_orgClient.GenerateAndAddDirectorySdkKey(Guid.Parse(directoryId));
+				_orgClientContext.GenerateDirectorySDKKeys(Guid.Parse(directoryId), 1);
 			}
 			catch (BaseException e)
 			{
@@ -284,20 +287,19 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 			}
 		}
 
-		private List<Guid> _lastRetrievedDirectorySdkKeys = null;
-
 		[When(@"I retrieve the current Directory's SDK Keys")]
 		public void WhenIRetrieveTheCurrentDirectorySSDKKeys()
 		{
-			var lastDir = _ownedDirectories.Last().Id;
-			_lastRetrievedDirectorySdkKeys = _orgClient.GetAllDirectorySdkKeys(lastDir);
+			_orgClientContext.LoadSdkKeys(
+				_orgClientContext.LastCreatedDirectory.Id
+			);
 		}
 
 		[Then(@"all of the SDK Keys for the Directory are in the SDK Keys list")]
 		public void ThenAllOfTheSDKKeysForTheDirectoryAreInTheSDKKeysList()
 		{
-			Assert.AreEqual(1, _lastRetrievedDirectorySdkKeys.Count);
-			Assert.AreEqual(_addedSdkKeys[0], _lastRetrievedDirectorySdkKeys[0]);
+			Assert.AreEqual(1, _orgClientContext.LoadedSdkKeys.Count);
+			Assert.AreEqual(_orgClientContext.AddedSdkKeys[0], _orgClientContext.LoadedSdkKeys[0]);
 		}
 
 		[When(@"I attempt to retrieve the current Directory SDK Keys for the Directory with the ID ""(.*)""")]
@@ -305,7 +307,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		{
 			try
 			{
-				_orgClient.GetAllDirectorySdkKeys(Guid.Parse(directoryId));
+				_orgClientContext.LoadSdkKeys(Guid.Parse(directoryId));
 			}
 			catch (BaseException e)
 			{
@@ -316,16 +318,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		[When(@"I remove the last generated SDK Key from the Directory")]
 		public void WhenIRemoveTheLastGeneratedSDKKeyFromTheDirectory()
 		{
-			var lastDir = _ownedDirectories.Last().Id;
-			var lastKeyAdded = _addedSdkKeys.Last();
-			_orgClient.RemoveDirectorySdkKey(lastDir, lastKeyAdded);
+			_orgClientContext.RemoveDirectorySdkKey(
+				_orgClientContext.LastCreatedDirectory.Id,
+				_orgClientContext.AddedSdkKeys.Last()
+			);
 		}
 
 		[Then(@"the last generated SDK Key is not in the list for the Directory")]
 		public void ThenTheLastGeneratedSDKKeyIsNotInTheListForTheDirectory()
 		{
-			var lastKeyAdded = _addedSdkKeys.Last();
-			Assert.IsFalse(_lastRetrievedDirectorySdkKeys.Contains(lastKeyAdded));
+			Assert.IsFalse(_orgClientContext.LoadedSdkKeys.Contains(_orgClientContext.AddedSdkKeys.Last()));
 		}
 
 		[When(@"I attempt to remove the last generated SDK Key from the Directory with the ID ""(.*)""")]
@@ -333,7 +335,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		{
 			try
 			{
-				_orgClient.RemoveDirectorySdkKey(Guid.Parse(directoryId), Guid.NewGuid());
+				_orgClientContext.RemoveDirectorySdkKey(Guid.Parse(directoryId), Guid.NewGuid());
 			}
 			catch (BaseException e)
 			{
@@ -344,10 +346,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		[When(@"I attempt to remove the last generated SDK Key ""(.*)"" from the Directory")]
 		public void WhenIAttemptToRemoveTheLastGeneratedSDKKeyFromTheDirectory(string sdkKeyId)
 		{
-			var directoryId = _ownedDirectories[0].Id;
+			var directoryId = _orgClientContext.LastCreatedDirectory.Id;
 			try
 			{
-				_orgClient.RemoveDirectorySdkKey(directoryId, Guid.Parse(sdkKeyId));
+				_orgClientContext.RemoveDirectorySdkKey(directoryId, Guid.Parse(sdkKeyId));
 			}
 			catch (BaseException e)
 			{
@@ -358,10 +360,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
 		[When(@"I attempt to remove the last generated SDK Key from the Directory")]
 		public void WhenIAttemptToRemoveTheLastGeneratedSDKKeyFromTheDirectory()
 		{
-			var directoryId = _ownedDirectories[0].Id;
+			var directoryId = _orgClientContext.LastCreatedDirectory.Id;
 			try
 			{
-				_orgClient.RemoveDirectorySdkKey(directoryId, _addedSdkKeys[0]);
+				_orgClientContext.RemoveDirectorySdkKey(directoryId, _orgClientContext.AddedSdkKeys.Last());
 			}
 			catch (BaseException e)
 			{

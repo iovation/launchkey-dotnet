@@ -1,7 +1,7 @@
 ﻿using System;
 using TechTalk.SpecFlow;
 
-namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps
+namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 {
 	public class CommonContext
 	{

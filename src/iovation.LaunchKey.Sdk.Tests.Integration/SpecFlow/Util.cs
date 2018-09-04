@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
+namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
 {
     public class Util
     {

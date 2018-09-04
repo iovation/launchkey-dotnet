@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using iovation.LaunchKey.Sdk.Client;
-using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 using iovation.LaunchKey.Sdk.Error;
+using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
-namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps.OrgClient
+namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 {
 	[Binding]
 	public class OrganizationServiceSteps

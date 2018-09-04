@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using iovation.LaunchKey.Sdk.Crypto;
 
-namespace iovation.LaunchKey.Sdk.Tests.Integration
+namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
 {
 	public class KeyManager
 	{
@@ -44,6 +40,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration
 		public string GetBetaCertificateFingerprint()
 		{
 			return ReadTextFile("beta-cert-sha256-fingerprint.txt");
+		}
+
+		public string GetP12ForFingerprint(string fingerprint)
+		{
+			if (GetAlphaCertificateFingerprint() == fingerprint) return GetBase64EncodedAlphaP12();
+			if (GetBetaCertificateFingerprint() == fingerprint) return GetBase64EncodedBetaP12();
+			if (fingerprint == null) return null;
+			throw new Exception("Unrecognized fingerprint");
 		}
 
 		public RSA GetAlphaPublicKey()

@@ -128,18 +128,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>org-client-service-update.feature</DependentUpon>
     </Compile>
-    <Compile Include="KeyManager.cs" />
+    <Compile Include="SpecFlow\KeyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Steps\CommonContext.cs" />
-    <Compile Include="Steps\CommonSteps.cs" />
-    <Compile Include="Steps\OrgClientContext.cs" />
-    <Compile Include="Steps\OrgClient\CreatedDirectoryInfo.cs" />
-    <Compile Include="Steps\OrgClient\CreatedServiceInfo.cs" />
-    <Compile Include="Steps\OrgClient\OrganizationDirectorySteps.cs" />
-    <Compile Include="Steps\OrgClient\OrganizationServiceSteps.cs" />
-    <Compile Include="Steps\OrgClient\ServiceDescriptionTable.cs" />
-    <Compile Include="Steps\OrgClient\Util.cs" />
-    <Compile Include="Steps\TestConfiguration.cs" />
+    <Compile Include="SpecFlow\Contexts\CommonContext.cs" />
+    <Compile Include="SpecFlow\Steps\CommonSteps.cs" />
+    <Compile Include="SpecFlow\Contexts\OrgClientContext.cs" />
+    <Compile Include="SpecFlow\Contexts\CreatedDirectoryInfo.cs" />
+    <Compile Include="SpecFlow\Contexts\CreatedServiceInfo.cs" />
+    <Compile Include="SpecFlow\Steps\OrganizationDirectorySteps.cs" />
+    <Compile Include="SpecFlow\Steps\OrganizationServiceSteps.cs" />
+    <Compile Include="SpecFlow\Steps\ServiceDescriptionTable.cs" />
+    <Compile Include="SpecFlow\Util.cs" />
+    <Compile Include="SpecFlow\TestConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

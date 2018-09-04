@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using iovation.LaunchKey.Sdk.Error;
+﻿using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
-namespace iovation.LaunchKey.Sdk.Tests.Integration.Steps
+namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 {
 	[Binding]
     public class CommonSteps
