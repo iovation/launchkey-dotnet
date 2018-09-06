@@ -630,6 +630,78 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			return new ServicesGetResponse(decryptedResponse);
 		}
 
+		public KeysListPostResponse OrganizationV3ServiceKeysListPost(ServiceKeysListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/service/keys/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<KeysListPostResponse.Key>>(response);
+			return new KeysListPostResponse(decryptedResponse);
+		}
+
+		public KeysPostResponse OrganizationV3ServiceKeysPost(ServiceKeysPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/service/keys", subject, request, null);
+			var decryptedResponse = DecryptResponse<KeysPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void OrganizationV3ServiceKeysPatch(ServiceKeysPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/organization/v3/service/keys", subject, request, null);
+		}
+
+		public void OrganizationV3ServiceKeysDelete(ServiceKeysDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/organization/v3/service/keys", subject, request, null);
+		}
+
+		public KeysListPostResponse OrganizationV3DirectoryKeysListPost(DirectoryKeysListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directory/keys/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<KeysListPostResponse.Key>>(response);
+			return new KeysListPostResponse(decryptedResponse);
+		}
+
+		public KeysPostResponse OrganizationV3DirectoryKeysPost(DirectoryKeysPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directory/keys", subject, request, null);
+			var decryptedResponse = DecryptResponse<KeysPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void OrganizationV3DirectoryKeysPatch(DirectoryKeysPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/organization/v3/directory/keys", subject, request, null);
+		}
+
+		public void OrganizationV3DirectoryKeysDelete(DirectoryKeysDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/organization/v3/directory/keys", subject, request, null);
+		}
+
+		public KeysListPostResponse DirectoryV3ServiceKeysListPost(ServiceKeysListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/service/keys/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<KeysListPostResponse.Key>>(response);
+			return new KeysListPostResponse(decryptedResponse);
+		}
+
+		public KeysPostResponse DirectoryV3ServiceKeysPost(ServiceKeysPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/service/keys", subject, request, null);
+			var decryptedResponse = DecryptResponse<KeysPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void DirectoryV3ServiceKeysPatch(ServiceKeysPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/directory/v3/service/keys", subject, request, null);
+		}
+
+		public void DirectoryV3ServiceKeysDelete(ServiceKeysDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/directory/v3/service/keys", subject, request, null);
+		}
+
 		private string GetFirstHeader(Dictionary<string, List<string>> headers, string headerKey)
 		{
 			foreach (var header in headers)

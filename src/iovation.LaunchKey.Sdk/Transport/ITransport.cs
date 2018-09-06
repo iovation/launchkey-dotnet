@@ -211,10 +211,100 @@ namespace iovation.LaunchKey.Sdk.Transport
 		OrganizationV3DirectorySdkKeysListPostResponse OrganizationV3DirectorySdkKeysListPost(OrganizationV3DirectorySdkKeysListPostRequest request, EntityIdentifier subject);
 
 		/// <summary>
-		/// Get all services for an directory
+		/// Get all services for a directory
 		/// </summary>
 		/// <param name="subject"></param>
 		/// <returns>the response from the LaunchKey API</returns>
 		ServicesGetResponse DirectoryV3ServicesGet(EntityIdentifier subject);
+
+		/// <summary>
+		/// Get all public keys for an organization service
+		/// </summary>
+		/// <param name="request">The service to request for</param>
+		/// <param name="subject">The organization the service belongs to</param>
+		/// <returns></returns>
+		KeysListPostResponse OrganizationV3ServiceKeysListPost(ServiceKeysListPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Add a public key for an organization service
+		/// </summary>
+		/// <param name="request">The request object with information about the service and key</param>
+		/// <param name="subject">The organization the service belongs to</param>
+		/// <returns></returns>
+		KeysPostResponse OrganizationV3ServiceKeysPost(ServiceKeysPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Create a key for an Organization Service
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="subject"></param>
+		void OrganizationV3ServiceKeysPatch(ServiceKeysPatchRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Remove a key from an Organization Service
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="subject"></param>
+		void OrganizationV3ServiceKeysDelete(ServiceKeysDeleteRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get all public keys for an organization directory
+		/// </summary>
+		/// <param name="request">The directory to request for</param>
+		/// <param name="subject">The organization the directory belongs to</param>
+		/// <returns></returns>
+		KeysListPostResponse OrganizationV3DirectoryKeysListPost(DirectoryKeysListPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Add a public key for an organization directory
+		/// </summary>
+		/// <param name="request">The request object with information about the directory and key</param>
+		/// <param name="subject">The organization the directory belongs to</param>
+		/// <returns></returns>
+		KeysPostResponse OrganizationV3DirectoryKeysPost(DirectoryKeysPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Create a key for an Organization Directory
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="subject"></param>
+		void OrganizationV3DirectoryKeysPatch(DirectoryKeysPatchRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Remove a key from an Organization Directory
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="subject"></param>
+		void OrganizationV3DirectoryKeysDelete(DirectoryKeysDeleteRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get all public keys for an directory service
+		/// </summary>
+		/// <param name="request">The service to request for</param>
+		/// <param name="subject">The directory the service belongs to</param>
+		/// <returns></returns>
+		KeysListPostResponse DirectoryV3ServiceKeysListPost(ServiceKeysListPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Add a public key for an directory service
+		/// </summary>
+		/// <param name="request">The request object with information about the service and key</param>
+		/// <param name="subject">The directory the service belongs to</param>
+		/// <returns></returns>
+		KeysPostResponse DirectoryV3ServiceKeysPost(ServiceKeysPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Create a key for an Directory Service
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="subject"></param>
+		void DirectoryV3ServiceKeysPatch(ServiceKeysPatchRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Remove a key from an Directory Service
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="subject"></param>
+		void DirectoryV3ServiceKeysDelete(ServiceKeysDeleteRequest request, EntityIdentifier subject);
 	}
 }

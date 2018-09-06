@@ -122,6 +122,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Time\IUnixTimeConverter.cs" />
     <Compile Include="Time\UnixTimeConverter.cs" />
+    <Compile Include="Transport\Domain\DirectoryKeysDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryKeysListPostRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryKeysPatchRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryKeysPostRequest.cs" />
     <Compile Include="Transport\Domain\AuthPolicy.cs" />
     <Compile Include="Transport\Domain\DirectoryV3DevicesDeleteRequest.cs" />
     <Compile Include="Transport\Domain\DirectoryV3DevicesListPostRequest.cs" />
@@ -165,6 +169,12 @@
     <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysListPostResponse.cs" />
     <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysPostRequest.cs" />
     <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysPostResponse.cs" />
+    <Compile Include="Transport\Domain\KeysListPostResponse.cs" />
+    <Compile Include="Transport\Domain\KeysPostResponse.cs" />
+    <Compile Include="Transport\Domain\ServiceKeysDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\ServiceKeysListPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServiceKeysPatchRequest.cs" />
+    <Compile Include="Transport\Domain\ServiceKeysPostRequest.cs" />
     <Compile Include="Transport\WebClient\CachedKey.cs" />
     <Compile Include="Transport\WebClient\HttpClient.cs" />
     <Compile Include="Transport\WebClient\HttpMethod.cs" />
