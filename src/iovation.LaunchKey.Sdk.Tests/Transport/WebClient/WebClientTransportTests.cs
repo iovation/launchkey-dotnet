@@ -677,7 +677,143 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 				"/organization/v3/directory/sdk-keys"
 			);
 		}
-		
+
+		[TestMethod]
+		public void OrganizationV3ServiceKeysListPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3ServiceKeysListPost(
+				new ServiceKeysListPostRequest(svcId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/service/keys/list"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServiceKeysPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServiceKeysPost(new ServiceKeysPostRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServiceKeysPatch_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServiceKeysPatch(new ServiceKeysPatchRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.PATCH,
+				"/organization/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServiceKeysDelete_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServiceKeysDelete(new ServiceKeysDeleteRequest(svcId, "key"), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/organization/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServiceKeysListPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.DirectoryV3ServiceKeysListPost(
+					new ServiceKeysListPostRequest(svcId), TestConsts.DefaultDirectoryEntity),
+				HttpMethod.POST,
+				"/directory/v3/service/keys/list"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServiceKeysPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServiceKeysPost(new ServiceKeysPostRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultDirectoryEntity),
+				HttpMethod.POST,
+				"/directory/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServiceKeysPatch_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServiceKeysPatch(new ServiceKeysPatchRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultDirectoryEntity),
+				HttpMethod.PATCH,
+				"/directory/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServiceKeysDelete_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServiceKeysDelete(new ServiceKeysDeleteRequest(svcId, "key"), TestConsts.DefaultDirectoryEntity),
+				HttpMethod.DELETE,
+				"/directory/v3/service/keys"
+			);
+		}
+
+
+		[TestMethod]
+		public void OrganizationV3DirectoryKeysListPost_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3DirectoryKeysListPost(
+					new DirectoryKeysListPostRequest(dirId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directory/keys/list"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoryKeysPost_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoryKeysPost(new DirectoryKeysPostRequest(dirId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directory/keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoryKeysPatch_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoryKeysPatch(new DirectoryKeysPatchRequest(dirId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.PATCH,
+				"/organization/v3/directory/keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoryKeysDelete_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoryKeysDelete(new DirectoryKeysDeleteRequest(dirId, "key"), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/organization/v3/directory/keys"
+			);
+		}
+
 		[TestMethod]
 		[ExpectedException(typeof(InvalidResponseException))]
 		public void PrivateClaims_VerifyResponseCode()
