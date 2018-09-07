@@ -60,10 +60,23 @@ namespace iovation.LaunchKey.Sdk
 		/// </summary>
 		/// <param name="currentPublicKeyTtl">The duration, in seconds, between public key refetches</param>
 		/// <returns>The builder</returns>
+		[Obsolete]
 		public FactoryFactoryBuilder SetCurrentPublicKeyTttl(int currentPublicKeyTtl)
+		{
+			return SetCurrentPublicKeyTtl(currentPublicKeyTtl);
+		}
+
+		/// <summary>
+		/// Sets the duration that the SDK will cache the server's public key. This saves on network traffic, server load and client load.
+		/// Default is 5 minutes.
+		/// </summary>
+		/// <param name="currentPublicKeyTtl">The duration, in seconds, between public key refetches</param>
+		/// <returns>The builder</returns>
+		public FactoryFactoryBuilder SetCurrentPublicKeyTtl(int currentPublicKeyTtl)
 		{
 			_currentPublicKeyTtl = currentPublicKeyTtl;
 			return this;
+
 		}
 
 		/// <summary>
