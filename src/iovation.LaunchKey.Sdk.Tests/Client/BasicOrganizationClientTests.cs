@@ -476,7 +476,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			mockTransport
 				.Setup(p => p.OrganizationV3ServiceKeysPost(It.Is<ServiceKeysPostRequest>(x =>
 					x.Active == true
-					&& x.Expires == new DateTime(2020, 1, 1)
+					&& x.Expires == new DateTime(2020, 1, 1).ToUniversalTime()
 					&& x.PublicKey == "keyhere"
 					&& x.ServiceId == serviceId), It.IsAny<EntityIdentifier>()))
 				.Returns(new KeysPostResponse { Id = "keyid" })
@@ -501,7 +501,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 				.Setup(p => p.OrganizationV3ServiceKeysPatch(
 					It.Is<ServiceKeysPatchRequest>(x =>
 						x.Active == true
-						&& x.Expires == new DateTime(2020, 1, 1)
+						&& x.Expires == new DateTime(2020, 1, 1).ToUniversalTime()
 						&& x.KeyId == "keyid"
 						&& x.ServiceId == serviceId
 					),
@@ -612,7 +612,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			mockTransport
 				.Setup(p => p.OrganizationV3DirectoryKeysPost(It.Is<DirectoryKeysPostRequest>(x =>
 					x.Active == true
-					&& x.Expires == new DateTime(2020, 1, 1)
+					&& x.Expires == new DateTime(2020, 1, 1).ToUniversalTime()
 					&& x.PublicKey == "keyhere"
 					&& x.DirectoryId == directoryId), It.IsAny<EntityIdentifier>()))
 				.Returns(new KeysPostResponse { Id = "keyid" })
@@ -637,7 +637,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 				.Setup(p => p.OrganizationV3DirectoryKeysPatch(
 					It.Is<DirectoryKeysPatchRequest>(x =>
 						x.Active == true
-						&& x.Expires == new DateTime(2020, 1, 1)
+						&& x.Expires == new DateTime(2020, 1, 1).ToUniversalTime()
 						&& x.KeyId == "keyid"
 						&& x.DirectoryId == directoryId
 					),

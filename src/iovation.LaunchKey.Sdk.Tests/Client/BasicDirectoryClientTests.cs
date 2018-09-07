@@ -343,7 +343,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			mockTransport
 				.Setup(p => p.DirectoryV3ServiceKeysPost(It.Is<ServiceKeysPostRequest>(x =>
 					x.Active == true
-					&& x.Expires == new DateTime(2020, 1, 1)
+					&& x.Expires == new DateTime(2020, 1, 1).ToUniversalTime()
 					&& x.PublicKey == "keyhere"
 					&& x.ServiceId == serviceId), It.IsAny<EntityIdentifier>()))
 				.Returns(new KeysPostResponse {Id = "keyid"})
@@ -368,7 +368,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 				.Setup(p => p.DirectoryV3ServiceKeysPatch(
 					It.Is<ServiceKeysPatchRequest>(x =>
 						x.Active == true
-						&& x.Expires == new DateTime(2020, 1, 1)
+						&& x.Expires == new DateTime(2020, 1, 1).ToUniversalTime()
 						&& x.KeyId == "keyid"
 						&& x.ServiceId == serviceId
 					),
