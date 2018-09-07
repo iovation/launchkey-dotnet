@@ -182,14 +182,14 @@ namespace iovation.LaunchKey.Sdk.Client
 			return keys;
 		}
 
-		public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime expires)
+		public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires)
 		{
 			var request = new ServiceKeysPostRequest(serviceId, publicKeyPem, expires, active);
 			var response = _transport.OrganizationV3ServiceKeysPost(request, _organizationId);
 			return response.Id;
 		}
 
-		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime expires)
+		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime? expires)
 		{
 			var request = new ServiceKeysPatchRequest(serviceId, keyId, expires, active);
 			_transport.OrganizationV3ServiceKeysPatch(request, _organizationId);
@@ -220,14 +220,14 @@ namespace iovation.LaunchKey.Sdk.Client
 			return keys;
 		}
 
-		public string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime expires)
+		public string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime? expires)
 		{
 			var request = new DirectoryKeysPostRequest(directoryId, publicKeyPem, expires, active);
 			var response = _transport.OrganizationV3DirectoryKeysPost(request, _organizationId);
 			return response.Id;
 		}
 
-		public void UpdateDirectoryPublicKey(Guid directoryId, string keyId, bool active, DateTime expires)
+		public void UpdateDirectoryPublicKey(Guid directoryId, string keyId, bool active, DateTime? expires)
 		{
 			var request = new DirectoryKeysPatchRequest(directoryId, keyId, expires, active);
 			_transport.OrganizationV3DirectoryKeysPatch(request, _organizationId);

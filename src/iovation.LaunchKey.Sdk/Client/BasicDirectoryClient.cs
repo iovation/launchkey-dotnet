@@ -163,14 +163,14 @@ namespace iovation.LaunchKey.Sdk.Client
 			return keys;
 		}
 
-		public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime expires)
+		public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires)
 		{
 			var request = new ServiceKeysPostRequest(serviceId, publicKeyPem, expires, active);
 			var response = _transport.DirectoryV3ServiceKeysPost(request, _directoryId);
 			return response.Id;
 		}
 		
-		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime expires)
+		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime? expires)
 		{
 			var request = new ServiceKeysPatchRequest(serviceId, keyId, expires, active);
 			_transport.DirectoryV3ServiceKeysPatch(request, _directoryId);

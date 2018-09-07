@@ -25,9 +25,9 @@ namespace iovation.LaunchKey.Sdk.Domain
 		/// <summary>
 		/// The date and time this key will expire
 		/// </summary>
-		public DateTime Expires { get; }
+		public DateTime? Expires { get; }
 
-		public PublicKey(string id, bool active, DateTime created, DateTime expires)
+		public PublicKey(string id, bool active, DateTime created, DateTime? expires)
 		{
 			Id = id;
 			Active = active;

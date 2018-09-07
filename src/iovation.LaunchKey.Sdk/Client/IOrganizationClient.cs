@@ -84,7 +84,7 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// <param name="active">Whether or not the key should be active</param>
 		/// <param name="expires">The time at which the key should no longer be active</param>
 		/// <returns>The key ID</returns>
-		string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime expires);
+		string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime? expires);
 
 		/// <summary>
 		/// Update a Public Key for a Directory
@@ -93,11 +93,11 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// <param name="keyId">The ID of the key to update</param>
 		/// <param name="active">Whether or not the key should be active</param>
 		/// <param name="expires">The time at which the key should no longer be active</param>
-		void UpdateDirectoryPublicKey(Guid directoryId, string keyId, bool active, DateTime expires);
+		void UpdateDirectoryPublicKey(Guid directoryId, string keyId, bool active, DateTime? expires);
 
 		/// <summary>
 		/// Remove a Public Key from a Service. You may not remove the only Public Key from a Service.
-		/// To deactivate a key, rather than remove, see <see cref="UpdateDirectoryPublicKey(Guid, string, bool, DateTime)"/>
+		/// To deactivate a key, rather than remove, see <see cref="UpdateDirectoryPublicKey(Guid, string, bool, DateTime?)"/>
 		/// </summary>
 		/// <param name="directoryId">The directory to remove a public key from</param>
 		/// <param name="keyId">The key to remove</param>

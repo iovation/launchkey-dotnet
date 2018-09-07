@@ -11,13 +11,13 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 		[JsonProperty("key_id")]
 		public string KeyId { get; }
 
-		[JsonProperty("expires")]
-		public DateTime Expires { get; }
+		[JsonProperty("date_expires")]
+		public DateTime? Expires { get; }
 
 		[JsonProperty("active")]
 		public bool Active { get; }
 
-		public DirectoryKeysPatchRequest(Guid serviceId, string keyId, DateTime expires, bool active)
+		public DirectoryKeysPatchRequest(Guid serviceId, string keyId, DateTime? expires, bool active)
 		{
 			DirectoryId = serviceId;
 			KeyId = keyId;

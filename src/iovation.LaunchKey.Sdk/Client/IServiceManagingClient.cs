@@ -68,7 +68,7 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// <param name="active">Whether or not the key should be active</param>
 		/// <param name="expires">The time at which the key should no longer be active</param>
 		/// <returns></returns>
-		string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime expires);
+		string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires);
 
 		/// <summary>
 		/// Update a public key for a service
@@ -77,11 +77,11 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// <param name="keyId">The public key to update</param>
 		/// <param name="active">Whether or not the key should be active</param>
 		/// <param name="expires">The time at which the key should no longer be active</param>
-		void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime expires);
+		void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime? expires);
 
 		/// <summary>
 		/// Remove a Public Key from a Service. You may not remove the only Public Key from a Service.
-		/// To deactivate a key, rather than remove, see <see cref="UpdateServicePublicKey(Guid, string, bool, DateTime)"/>
+		/// To deactivate a key, rather than remove, see <see cref="UpdateServicePublicKey(Guid, string, bool, DateTime?)"/>
 		/// </summary>
 		/// <param name="serviceId">The service to remove a public key from</param>
 		/// <param name="keyId">The key to remove</param>
