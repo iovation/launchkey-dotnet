@@ -50,16 +50,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
 			throw new Exception("Unrecognized fingerprint");
 		}
 
-		public RSA GetAlphaPublicKey()
+		public string GetAlphaPublicKey()
 		{
-			var crypto = new BouncyCastleCrypto();
-			return crypto.LoadRsaPublicKey(ReadTextFile("alpha-public-key.pem"));
+			return (ReadTextFile("alpha-public-key.pem"));
 		}
 
-		public RSA GetBetaPublicKey()
+		public string GetBetaPublicKey()
 		{
-			var crypto = new BouncyCastleCrypto();
-			return crypto.LoadRsaPublicKey(ReadTextFile("beta-public-key.pem"));
+			return (ReadTextFile("beta-public-key.pem"));
 		}
 	}
 }

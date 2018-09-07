@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using iovation.LaunchKey.Sdk.Client;
+using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Organization;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 
@@ -26,12 +27,24 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		private List<CreatedDirectoryInfo> _ownedDirectories = new List<CreatedDirectoryInfo>();
 		public List<Guid> AddedSdkKeys => _addedSdkKeys;
 		public List<Guid> LoadedSdkKeys => _loadedSdkKeys;
-		
+
+		// public keys-related contextual data
+		public List<PublicKey> LoadedServicePublicKeys => _loadedServicePublicKeys;
+		public List<PublicKey> LoadedDirectoryPublicKeys => _loadedDirectoryPublicKeys;
+		public List<string> AddedServicePublicKeys => _addedServicePublicKeys;
+		public List<string> AddedDirectoryPublicKeys => _addedDirectoryPublicKeys;
+
 
 		private readonly IOrganizationClient _orgClient;
 		private Directory _loadedDirectory;
 		private List<Directory> _loadedDirectories;
 		private List<Guid> _loadedSdkKeys = null;
+		private List<Guid> _addedSdkKeys = new List<Guid>();
+		private List<PublicKey> _loadedServicePublicKeys;
+		private List<PublicKey> _loadedDirectoryPublicKeys;
+		private List<string> _addedServicePublicKeys = new List<string>();
+		private List<string> _addedDirectoryPublicKeys = new List<string>();
+
 
 		public OrgClientContext(TestConfiguration config)
 		{
@@ -112,8 +125,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 			_loadedDirectory = _orgClient.GetDirectory(LastCreatedDirectory.Id);
 		}
 
-		private List<Guid> _addedSdkKeys = new List<Guid>();
-
 		public void GenerateDirectorySDKKeys(Guid directoryId, int quantity)
 		{
 			for (var i = 0; i < quantity; i++)
@@ -159,6 +170,69 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 			}
 		}
 
+		public void AddServicePublicKey(Guid serviceId, string key, bool active, DateTime? expire)
+		{
+			_addedServicePublicKeys.Add(_orgClient.AddServicePublicKey(serviceId, key, active, expire));
+		}
+
+		public void LoadServicePublicKeys(Guid serviceId)
+		{
+			_loadedServicePublicKeys = _orgClient.GetServicePublicKeys(serviceId);
+		}
+
+		public void RemoveServicePublicKey(Guid serviceId, string keyId)
+		{
+			_orgClient.RemoveServicePublicKey(serviceId, keyId);
+		}
 		
+		public void DeactivateServicePublicKey(Guid serviceId, string keyId)
+		{
+			var key = _orgClient.GetServicePublicKeys(serviceId).First(k => k.Id == keyId);
+			_orgClient.UpdateServicePublicKey(serviceId, keyId, false, key.Expires);
+		}
+
+		public void UpdateServicePublicKeyExpires(Guid serviceId, string keyId, DateTime? expires)
+		{
+			var key = _orgClient.GetServicePublicKeys(serviceId).First(k => k.Id == keyId);
+			_orgClient.UpdateServicePublicKey(serviceId, keyId, key.Active, expires);
+		}
+
+		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime? expires)
+		{
+			_orgClient.UpdateServicePublicKey(serviceId, keyId, active, expires);
+		}
+
+		public void AddDirectoryPublicKey(Guid directoryId, string key, bool active, DateTime? expires)
+		{
+			_addedDirectoryPublicKeys.Add(_orgClient.AddDirectoryPublicKey(directoryId, key, active, expires));
+		}
+
+		public void LoadDirectoryPublicKeys(Guid directoryId)
+		{
+			_loadedDirectoryPublicKeys = _orgClient.GetDirectoryPublicKeys(directoryId);
+		}
+
+		public void RemoveDirectoryPublicKey(Guid directoryId, string keyId)
+		{
+			_orgClient.RemoveDirectoryPublicKey(directoryId, keyId);
+		}
+
+		public void DeactivateDirectoryPublicKey(Guid directoryId, string keyId)
+		{
+			var key = _orgClient.GetDirectoryPublicKeys(directoryId).First(k => k.Id == keyId);
+			_orgClient.UpdateDirectoryPublicKey(directoryId, keyId, false, key.Expires);
+		}
+
+		public void UpdateDirectoryPublicKeyExpires(Guid directoryId, string keyId, DateTime? expires)
+		{
+			var key = _orgClient.GetDirectoryPublicKeys(directoryId).First(k => k.Id == keyId);
+			_orgClient.UpdateDirectoryPublicKey(directoryId, keyId, key.Active, expires);
+		}
+
+		public void UpdateDirectoryPublicKey(Guid directoryId, string keyId, bool active, DateTime? expires)
+		{
+			_orgClient.UpdateDirectoryPublicKey(directoryId, keyId, active, expires);
+		}
+
 	}
 }

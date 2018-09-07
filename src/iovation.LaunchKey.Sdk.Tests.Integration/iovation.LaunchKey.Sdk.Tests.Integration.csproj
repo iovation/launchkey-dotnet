@@ -88,6 +88,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>org-client-directory-update.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-add.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-directory-public-keys-add.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-get.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-directory-public-keys-get.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-remove.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-directory-public-keys-remove.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-update.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-directory-public-keys-update.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-generate-and-add.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -128,6 +148,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>org-client-service-update.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\org_client\services\public_keys\org-client-service-public-keys-add.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-public-keys-add.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\services\public_keys\org-client-service-public-keys-get.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-public-keys-get.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\services\public_keys\org-client-service-public-keys-remove.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-public-keys-remove.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\services\public_keys\org-client-service-public-keys-update.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-public-keys-update.feature</DependentUpon>
+    </Compile>
     <Compile Include="SpecFlow\KeyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFlow\Contexts\CommonContext.cs" />
@@ -135,7 +175,9 @@
     <Compile Include="SpecFlow\Contexts\OrgClientContext.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedDirectoryInfo.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedServiceInfo.cs" />
+    <Compile Include="SpecFlow\Steps\OrganizationDirectoryPublicKeySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectorySteps.cs" />
+    <Compile Include="SpecFlow\Steps\OrganizationServicePublicKeysSteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationServiceSteps.cs" />
     <Compile Include="SpecFlow\Steps\ServiceDescriptionTable.cs" />
     <Compile Include="SpecFlow\Util.cs" />
@@ -162,6 +204,22 @@
     <None Include="Features\org_client\directories\org-client-directory-update.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>org-client-directory-update.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-add.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-directory-public-keys-add.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-get.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-directory-public-keys-get.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-remove.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-directory-public-keys-remove.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-update.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-directory-public-keys-update.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-generate-and-add.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -194,6 +252,22 @@
     <None Include="Features\org_client\services\org-client-service-update.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>org-client-service-update.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-add.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-public-keys-add.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-get.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-public-keys-get.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-remove.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-public-keys-remove.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-update.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-public-keys-update.feature.cs</LastGenOutput>
     </None>
     <None Include="Keys\alpha-cert.crt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
