@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Organization;
 
 namespace iovation.LaunchKey.Sdk.Client
@@ -66,5 +68,39 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// <param name="directoryId">The directory to query for SDK keys</param>
 		/// <returns>A list of SDK Keys</returns>
 		List<Guid> GetAllDirectorySdkKeys(Guid directoryId);
+
+		/// <summary>
+		/// Get a list of Public Keys for a Directory
+		/// </summary>
+		/// <param name="directoryId">The directory to retrieve keys for</param>
+		/// <returns></returns>
+		List<PublicKey> GetDirectoryPublicKeys(Guid directoryId);
+
+		/// <summary>
+		/// Add a Public Key for a Directory
+		/// </summary>
+		/// <param name="directoryId">The directory to add the key for</param>
+		/// <param name="publicKeyPem">The public key (in PEM format) to add</param>
+		/// <param name="active">Whether or not the key should be active</param>
+		/// <param name="expires">The time at which the key should no longer be active</param>
+		/// <returns>The key ID</returns>
+		string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime expires);
+
+		/// <summary>
+		/// Update a Public Key for a Directory
+		/// </summary>
+		/// <param name="directoryId">The directory to update a key within</param>
+		/// <param name="keyId">The ID of the key to update</param>
+		/// <param name="active">Whether or not the key should be active</param>
+		/// <param name="expires">The time at which the key should no longer be active</param>
+		void UpdateDirectoryPublicKey(Guid directoryId, string keyId, bool active, DateTime expires);
+
+		/// <summary>
+		/// Remove a Public Key from a Service. You may not remove the only Public Key from a Service.
+		/// To deactivate a key, rather than remove, see <see cref="UpdateDirectoryPublicKey(Guid, string, bool, DateTime)"/>
+		/// </summary>
+		/// <param name="directoryId">The directory to remove a public key from</param>
+		/// <param name="keyId">The key to remove</param>
+		void RemoveDirectoryPublicKey(Guid directoryId, string keyId);
 	}
 }

@@ -143,5 +143,43 @@ namespace iovation.LaunchKey.Sdk.Client
 			}
 			return services;
 		}
+
+		public List<PublicKey> GetServicePublicKeys(Guid serviceId)
+		{
+			var request = new ServiceKeysListPostRequest(serviceId);
+			var response = _transport.DirectoryV3ServiceKeysListPost(request, _directoryId);
+			var keys = new List<PublicKey>();
+
+			foreach (var transportKey in response.PublicKeys)
+			{
+				keys.Add(new PublicKey(
+					transportKey.Id,
+					transportKey.Active,
+					transportKey.Created,
+					transportKey.Expires
+				));
+			}
+
+			return keys;
+		}
+
+		public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime expires)
+		{
+			var request = new ServiceKeysPostRequest(serviceId, publicKeyPem, expires, active);
+			var response = _transport.DirectoryV3ServiceKeysPost(request, _directoryId);
+			return response.Id;
+		}
+		
+		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime expires)
+		{
+			var request = new ServiceKeysPatchRequest(serviceId, keyId, expires, active);
+			_transport.DirectoryV3ServiceKeysPatch(request, _directoryId);
+		}
+
+		public void RemoveServicePublicKey(Guid serviceId, string keyId)
+		{
+			var request = new ServiceKeysDeleteRequest(serviceId, keyId);
+			_transport.DirectoryV3ServiceKeysDelete(request, _directoryId);
+		}
 	}
 }

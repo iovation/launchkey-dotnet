@@ -466,5 +466,211 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			Assert.AreEqual(sdkKey1, response[0]);
 			Assert.AreEqual(sdkKey2, response[1]);
 		}
+
+		[TestMethod]
+		public void AddServicePublicKey_ShouldCallTransportWithCorrectParams()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var serviceId = Guid.NewGuid();
+
+			mockTransport
+				.Setup(p => p.OrganizationV3ServiceKeysPost(It.Is<ServiceKeysPostRequest>(x =>
+					x.Active == true
+					&& x.Expires == new DateTime(2020, 1, 1)
+					&& x.PublicKey == "keyhere"
+					&& x.ServiceId == serviceId), It.IsAny<EntityIdentifier>()))
+				.Returns(new KeysPostResponse { Id = "keyid" })
+				.Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
+
+			var response = client.AddServicePublicKey(serviceId, "keyhere", true, new DateTime(2020, 1, 1));
+
+			mockTransport.Verify();
+
+			Assert.IsTrue(response == "keyid");
+		}
+
+		[TestMethod]
+		public void UpdateServicePublicKey_ShouldCallTransportWithCorrectParams()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var serviceId = Guid.NewGuid();
+
+			mockTransport
+				.Setup(p => p.OrganizationV3ServiceKeysPatch(
+					It.Is<ServiceKeysPatchRequest>(x =>
+						x.Active == true
+						&& x.Expires == new DateTime(2020, 1, 1)
+						&& x.KeyId == "keyid"
+						&& x.ServiceId == serviceId
+					),
+					TestConsts.DefaultOrganizationEntity
+				)).Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
+
+			client.UpdateServicePublicKey(serviceId, "keyid", true, new DateTime(2020, 1, 1));
+
+			mockTransport.Verify();
+		}
+
+		[TestMethod]
+		public void RemoveServicePublicKey_ShouldCallTransportWithCorrectParams()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var serviceId = Guid.NewGuid();
+
+			mockTransport
+				.Setup(p => p.OrganizationV3ServiceKeysDelete(
+					It.Is<ServiceKeysDeleteRequest>(x =>
+						x.KeyId == "keyid"
+						&& x.ServiceId == serviceId
+					),
+					TestConsts.DefaultOrganizationEntity
+				)).Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
+
+			client.RemoveServicePublicKey(serviceId, "keyid");
+
+			mockTransport.Verify();
+		}
+
+		[TestMethod]
+		public void GetServicePublicKeys_ShouldCallTransportWithCorrectParams()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var serviceId = Guid.NewGuid();
+
+			mockTransport
+				.Setup(p => p.OrganizationV3ServiceKeysListPost(
+					It.Is<ServiceKeysListPostRequest>(x => x.ServiceId == serviceId)
+					, TestConsts.DefaultOrganizationEntity))
+				.Returns(new KeysListPostResponse(new List<KeysListPostResponse.Key> { new KeysListPostResponse.Key
+				{
+					Active = true,
+					Created = new DateTime(2020, 1, 1),
+					Expires = new DateTime(2021, 1,1),
+					Id = "id",
+					PublicKey = "k"
+				}}))
+				.Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
+
+			var result = client.GetServicePublicKeys(serviceId);
+
+			mockTransport.Verify();
+
+			Assert.IsTrue(result.Count == 1);
+			Assert.IsTrue(result[0].Active == true);
+			Assert.IsTrue(result[0].Created == new DateTime(2020, 1, 1));
+			Assert.IsTrue(result[0].Expires == new DateTime(2021, 1, 1));
+			Assert.IsTrue(result[0].Id == "id");
+		}
+
+		[TestMethod]
+		public void GetDirectoryPublicKeys_ShouldCallTransportWithCorrectParams()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var directoryId = Guid.NewGuid();
+
+			mockTransport
+				.Setup(p => p.OrganizationV3DirectoryKeysListPost(
+					It.Is<DirectoryKeysListPostRequest>(x => x.DirectoryId == directoryId)
+					, TestConsts.DefaultOrganizationEntity))
+				.Returns(new KeysListPostResponse(new List<KeysListPostResponse.Key> { new KeysListPostResponse.Key
+				{
+					Active = true,
+					Created = new DateTime(2020, 1, 1),
+					Expires = new DateTime(2021, 1,1),
+					Id = "id",
+					PublicKey = "k"
+				}}))
+				.Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
+
+			var result = client.GetDirectoryPublicKeys(directoryId);
+
+			mockTransport.Verify();
+
+			Assert.IsTrue(result.Count == 1);
+			Assert.IsTrue(result[0].Active == true);
+			Assert.IsTrue(result[0].Created == new DateTime(2020, 1, 1));
+			Assert.IsTrue(result[0].Expires == new DateTime(2021, 1, 1));
+			Assert.IsTrue(result[0].Id == "id");
+		}
+
+		[TestMethod]
+		public void AddDirectoryPublicKey_ShouldCallTransportWithCorrectParams()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var directoryId = Guid.NewGuid();
+
+			mockTransport
+				.Setup(p => p.OrganizationV3DirectoryKeysPost(It.Is<DirectoryKeysPostRequest>(x =>
+					x.Active == true
+					&& x.Expires == new DateTime(2020, 1, 1)
+					&& x.PublicKey == "keyhere"
+					&& x.DirectoryId == directoryId), It.IsAny<EntityIdentifier>()))
+				.Returns(new KeysPostResponse { Id = "keyid" })
+				.Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
+
+			var response = client.AddDirectoryPublicKey(directoryId, "keyhere", true, new DateTime(2020, 1, 1));
+
+			mockTransport.Verify();
+
+			Assert.IsTrue(response == "keyid");
+		}
+
+		[TestMethod]
+		public void UpdateDirectoryPublicKey_ShouldCallTransportWithCorrectParams()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var directoryId = Guid.NewGuid();
+
+			mockTransport
+				.Setup(p => p.OrganizationV3DirectoryKeysPatch(
+					It.Is<DirectoryKeysPatchRequest>(x =>
+						x.Active == true
+						&& x.Expires == new DateTime(2020, 1, 1)
+						&& x.KeyId == "keyid"
+						&& x.DirectoryId == directoryId
+					),
+					TestConsts.DefaultOrganizationEntity
+				)).Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
+
+			client.UpdateDirectoryPublicKey(directoryId, "keyid", true, new DateTime(2020, 1, 1));
+
+			mockTransport.Verify();
+		}
+
+		[TestMethod]
+		public void RemoveDirectoryPublicKey_ShouldCallTransportWithCorrectParams()
+		{
+			var mockTransport = new Mock<ITransport>();
+			var directoryId = Guid.NewGuid();
+
+			mockTransport
+				.Setup(p => p.OrganizationV3DirectoryKeysDelete(
+					It.Is<DirectoryKeysDeleteRequest>(x =>
+						x.KeyId == "keyid"
+						&& x.DirectoryId == directoryId
+					),
+					TestConsts.DefaultOrganizationEntity
+				)).Verifiable();
+
+			var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mockTransport.Object);
+
+			client.RemoveDirectoryPublicKey(directoryId, "keyid");
+
+			mockTransport.Verify();
+		}
 	}
 }

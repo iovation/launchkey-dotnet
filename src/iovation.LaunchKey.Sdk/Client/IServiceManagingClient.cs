@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 
 namespace iovation.LaunchKey.Sdk.Client
@@ -50,5 +52,39 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// </summary>
 		/// <returns>A list of services</returns>
 		List<Service> GetAllServices();
+
+		/// <summary>
+		/// Get a list of Public Keys for a Service
+		/// </summary>
+		/// <param name="serviceId">The service to get the public keys for</param>
+		/// <returns>A list of public keys</returns>
+		List<PublicKey> GetServicePublicKeys(Guid serviceId);
+
+		/// <summary>
+		/// Add a public key to a service
+		/// </summary>
+		/// <param name="serviceId">The service to add the key to</param>
+		/// <param name="publicKeyPem">The public key (in PEM format) to add</param>
+		/// <param name="active">Whether or not the key should be active</param>
+		/// <param name="expires">The time at which the key should no longer be active</param>
+		/// <returns></returns>
+		string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime expires);
+
+		/// <summary>
+		/// Update a public key for a service
+		/// </summary>
+		/// <param name="serviceId">The service to update the key for</param>
+		/// <param name="keyId">The public key to update</param>
+		/// <param name="active">Whether or not the key should be active</param>
+		/// <param name="expires">The time at which the key should no longer be active</param>
+		void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime expires);
+
+		/// <summary>
+		/// Remove a Public Key from a Service. You may not remove the only Public Key from a Service.
+		/// To deactivate a key, rather than remove, see <see cref="UpdateServicePublicKey(Guid, string, bool, DateTime)"/>
+		/// </summary>
+		/// <param name="serviceId">The service to remove a public key from</param>
+		/// <param name="keyId">The key to remove</param>
+		void RemoveServicePublicKey(Guid serviceId, string keyId);
 	}
 }
