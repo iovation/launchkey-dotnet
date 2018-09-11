@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using iovation.LaunchKey.Sdk.Transport.Domain;
@@ -52,7 +53,6 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// <param name="subject">the service ID associated with the session end request</param>
 		void ServiceV3SessionsDelete(ServiceV3SessionsDeleteRequest request, EntityIdentifier subject);
 
-
 		/// <summary>
 		/// links a device to a directory user
 		/// </summary>
@@ -88,7 +88,7 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// ends all sessions associated with a directory user
 		/// </summary>
 		/// <param name="request">the request details</param>
-		/// <param name="subject">the directory ID associatd with the directory user</param>
+		/// <param name="subject">the directory ID associated with the directory user</param>
 		void DirectoryV3SessionsDelete(DirectoryV3SessionsDeleteRequest request, EntityIdentifier subject);
 
 		/// <summary>
@@ -222,7 +222,7 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// </summary>
 		/// <param name="request">The service to request for</param>
 		/// <param name="subject">The organization the service belongs to</param>
-		/// <returns></returns>
+		/// <returns>the response from the LaunchKey API</returns>
 		KeysListPostResponse OrganizationV3ServiceKeysListPost(ServiceKeysListPostRequest request, EntityIdentifier subject);
 
 		/// <summary>
@@ -230,21 +230,21 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// </summary>
 		/// <param name="request">The request object with information about the service and key</param>
 		/// <param name="subject">The organization the service belongs to</param>
-		/// <returns></returns>
+		/// <returns>the response from the LaunchKey API</returns>
 		KeysPostResponse OrganizationV3ServiceKeysPost(ServiceKeysPostRequest request, EntityIdentifier subject);
 
 		/// <summary>
 		/// Create a key for an Organization Service
 		/// </summary>
-		/// <param name="request"></param>
-		/// <param name="subject"></param>
+		/// <param name="request">The request object with information about the service and key to update</param>
+		/// <param name="subject">The organization the service belongs to</param>
 		void OrganizationV3ServiceKeysPatch(ServiceKeysPatchRequest request, EntityIdentifier subject);
 
 		/// <summary>
 		/// Remove a key from an Organization Service
 		/// </summary>
 		/// <param name="request"></param>
-		/// <param name="subject"></param>
+		/// <param name="subject">The organization the service belongs to</param>
 		void OrganizationV3ServiceKeysDelete(ServiceKeysDeleteRequest request, EntityIdentifier subject);
 
 		/// <summary>
@@ -252,7 +252,7 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// </summary>
 		/// <param name="request">The directory to request for</param>
 		/// <param name="subject">The organization the directory belongs to</param>
-		/// <returns></returns>
+		/// <returns>the response from the LaunchKey API</returns>
 		KeysListPostResponse OrganizationV3DirectoryKeysListPost(DirectoryKeysListPostRequest request, EntityIdentifier subject);
 
 		/// <summary>
@@ -260,7 +260,7 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// </summary>
 		/// <param name="request">The request object with information about the directory and key</param>
 		/// <param name="subject">The organization the directory belongs to</param>
-		/// <returns></returns>
+		/// <returns>the response from the LaunchKey API</returns>
 		KeysPostResponse OrganizationV3DirectoryKeysPost(DirectoryKeysPostRequest request, EntityIdentifier subject);
 
 		/// <summary>
@@ -282,7 +282,7 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// </summary>
 		/// <param name="request">The service to request for</param>
 		/// <param name="subject">The directory the service belongs to</param>
-		/// <returns></returns>
+		/// <returns>the response from the LaunchKey API</returns>
 		KeysListPostResponse DirectoryV3ServiceKeysListPost(ServiceKeysListPostRequest request, EntityIdentifier subject);
 
 		/// <summary>
@@ -290,21 +290,65 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// </summary>
 		/// <param name="request">The request object with information about the service and key</param>
 		/// <param name="subject">The directory the service belongs to</param>
-		/// <returns></returns>
+		/// <returns>the response from the LaunchKey API</returns>
 		KeysPostResponse DirectoryV3ServiceKeysPost(ServiceKeysPostRequest request, EntityIdentifier subject);
 
 		/// <summary>
 		/// Create a key for an Directory Service
 		/// </summary>
-		/// <param name="request"></param>
-		/// <param name="subject"></param>
+		/// <param name="request">The request object</param>
+		/// <param name="subject">The directory the service belongs to</param>
 		void DirectoryV3ServiceKeysPatch(ServiceKeysPatchRequest request, EntityIdentifier subject);
 
 		/// <summary>
 		/// Remove a key from an Directory Service
 		/// </summary>
-		/// <param name="request"></param>
-		/// <param name="subject"></param>
+		/// <param name="request">The request object</param>
+		/// <param name="subject">The directory the service belongs to</param>
 		void DirectoryV3ServiceKeysDelete(ServiceKeysDeleteRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Set the default Policy for an Organization Service
+		/// </summary>
+		/// <param name="request">The request object</param>
+		/// <param name="subject">The organization the service belongs to</param>
+		void OrganizationV3ServicePolicyPut(ServicePolicyPutRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get the default Policy of an Organization Service
+		/// </summary>
+		/// <param name="request">The request object</param>
+		/// <param name="subject">The organization the service belongs to</param>
+		/// <returns>The response from the API</returns>
+		AuthPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Delete the default Policy of an Organization Service
+		/// </summary>
+		/// <param name="request">The request object</param>
+		/// <param name="subject">The organization the service belongs to</param>
+		void OrganizationV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Set the default Policy for a Directory Service
+		/// </summary>
+		/// <param name="request">The request object</param>
+		/// <param name="subject">The directory the service belongs to</param>
+		void DirectoryV3ServicePolicyPut(ServicePolicyPutRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Get the default Policy of a Directory Service
+		/// </summary>
+		/// <param name="request">The request object</param>
+		/// <param name="subject">The directory the service belongs to</param>
+		/// <returns>the response from the LaunchKey API</returns>
+		AuthPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject);
+
+		/// <summary>
+		/// Delete the default Policy of a Directory Service
+		/// </summary>
+		/// <param name="request">The request object</param>
+		/// <param name="subject">The directory the service belongs to</param>
+		void DirectoryV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject);
 	}
 }

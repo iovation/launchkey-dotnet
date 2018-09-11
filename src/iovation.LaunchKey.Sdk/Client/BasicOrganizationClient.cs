@@ -211,6 +211,25 @@ namespace iovation.LaunchKey.Sdk.Client
 			_transport.OrganizationV3ServiceKeysDelete(request, _organizationId);
 		}
 
+		public ServicePolicy GetServicePolicy(Guid serviceId)
+		{
+			var request = new ServicePolicyItemPostRequest(serviceId);
+			var response = _transport.OrganizationV3ServicePolicyItemPost(request, _organizationId);
+			return ServicePolicy.FromTransport(response);
+		}
+
+		public void SetServicePolicy(Guid serviceId, ServicePolicy policy)
+		{
+			var request = new ServicePolicyPutRequest(serviceId, policy.ToTransport());
+			_transport.OrganizationV3ServicePolicyPut(request, _organizationId);
+		}
+
+		public void RemoveServicePolicy(Guid serviceId)
+		{
+			var request = new ServicePolicyDeleteRequest(serviceId);
+			_transport.OrganizationV3ServicePolicyDelete(request, _organizationId);
+		}
+
 		public List<PublicKey> GetDirectoryPublicKeys(Guid directoryId)
 		{
 			var request = new DirectoryKeysListPostRequest(directoryId);

@@ -815,6 +815,84 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		}
 
 		[TestMethod]
+		public void OrganizationV3ServicePolicyPut_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServicePolicyPut(
+					new ServicePolicyPutRequest(svcId, new AuthPolicy(null,null,null,null,null,null)),
+					TestConsts.DefaultOrganizationEntity
+				),
+				HttpMethod.PUT,
+				"/organization/v3/service/policy"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicePolicyItemPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServicePolicyItemPost(
+					new ServicePolicyItemPostRequest(svcId),
+					TestConsts.DefaultOrganizationEntity
+				),
+				HttpMethod.POST,
+				"/organization/v3/service/policy/item"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicePolicyDelete_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServicePolicyDelete(new ServicePolicyDeleteRequest(svcId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/organization/v3/service/policy"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServicePolicyPut_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServicePolicyPut(
+					new ServicePolicyPutRequest(svcId, new AuthPolicy(null, null, null, null, null, null)),
+					TestConsts.DefaultOrganizationEntity
+				),
+				HttpMethod.PUT,
+				"/directory/v3/service/policy"
+			);
+		}
+		
+		[TestMethod]
+		public void DirectoryV3ServicePolicyItemPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServicePolicyItemPost(
+					new ServicePolicyItemPostRequest(svcId),
+					TestConsts.DefaultOrganizationEntity
+				),
+				HttpMethod.POST,
+				"/directory/v3/service/policy/item"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServicePolicyDelete_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServicePolicyDelete(new ServicePolicyDeleteRequest(svcId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/directory/v3/service/policy"
+			);
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(InvalidResponseException))]
 		public void PrivateClaims_VerifyResponseCode()
 		{

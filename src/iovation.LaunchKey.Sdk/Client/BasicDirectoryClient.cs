@@ -191,5 +191,24 @@ namespace iovation.LaunchKey.Sdk.Client
 			var request = new ServiceKeysDeleteRequest(serviceId, keyId);
 			_transport.DirectoryV3ServiceKeysDelete(request, _directoryId);
 		}
+
+		public ServicePolicy GetServicePolicy(Guid serviceId)
+		{
+			var request = new ServicePolicyItemPostRequest(serviceId);
+			var response = _transport.DirectoryV3ServicePolicyItemPost(request, _directoryId);
+			return ServicePolicy.FromTransport(response);
+		}
+
+		public void SetServicePolicy(Guid serviceId, ServicePolicy policy)
+		{
+			var request = new ServicePolicyPutRequest(serviceId, policy.ToTransport());
+			_transport.DirectoryV3ServicePolicyPut(request, _directoryId);
+		}
+
+		public void RemoveServicePolicy(Guid serviceId)
+		{
+			var request = new ServicePolicyDeleteRequest(serviceId);
+			_transport.DirectoryV3ServicePolicyDelete(request, _directoryId);
+		}
 	}
 }

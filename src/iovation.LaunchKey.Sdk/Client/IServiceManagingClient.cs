@@ -86,5 +86,25 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// <param name="serviceId">The service to remove a public key from</param>
 		/// <param name="keyId">The key to remove</param>
 		void RemoveServicePublicKey(Guid serviceId, string keyId);
+
+		/// <summary>
+		/// Get the Default authorization policy for the Service
+		/// </summary>
+		/// <param name="serviceId">The service to retrieve the authorization policy for</param>
+		/// <returns></returns>
+		ServicePolicy GetServicePolicy(Guid serviceId);
+
+		/// <summary>
+		/// Update the default authorization policy for a Service
+		/// </summary>
+		/// <param name="serviceId">The service to update the authorization policy for</param>
+		/// <param name="policy">The new authorization policy</param>
+		void SetServicePolicy(Guid serviceId, ServicePolicy policy);
+
+		/// <summary>
+		/// Remove the default authorization policy for a Service
+		/// </summary>
+		/// <param name="serviceId">The service to remove the policy for</param>
+		void RemoveServicePolicy(Guid serviceId);
 	}
 }

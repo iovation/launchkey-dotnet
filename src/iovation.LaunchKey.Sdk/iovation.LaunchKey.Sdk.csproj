@@ -61,7 +61,10 @@
     <Compile Include="Domain\Organization\Directory.cs" />
     <Compile Include="Client\IOrganizationClient.cs" />
     <Compile Include="Client\IServiceManagingClient.cs" />
+    <Compile Include="Domain\ServiceManager\ServicePolicy.cs" />
+    <Compile Include="Domain\ServiceManager\Location.cs" />
     <Compile Include="Domain\ServiceManager\Service.cs" />
+    <Compile Include="Domain\ServiceManager\TimeFence.cs" />
     <Compile Include="Domain\Webhook\ServiceUserSessionEndWebhookPackage.cs" />
     <Compile Include="Error\CacheException.cs" />
     <Compile Include="Cache\HashCache.cs" />
@@ -176,6 +179,9 @@
     <Compile Include="Transport\Domain\ServiceKeysListPostRequest.cs" />
     <Compile Include="Transport\Domain\ServiceKeysPatchRequest.cs" />
     <Compile Include="Transport\Domain\ServiceKeysPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServicePolicyDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\ServicePolicyItemPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServicePolicyPutRequest.cs" />
     <Compile Include="Transport\WebClient\CachedKey.cs" />
     <Compile Include="Transport\WebClient\HttpClient.cs" />
     <Compile Include="Transport\WebClient\HttpMethod.cs" />

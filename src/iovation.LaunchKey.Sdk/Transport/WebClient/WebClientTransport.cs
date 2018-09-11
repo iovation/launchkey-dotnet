@@ -702,6 +702,38 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			ExecuteRequest(HttpMethod.DELETE, "/directory/v3/service/keys", subject, request, null);
 		}
 
+		public void OrganizationV3ServicePolicyPut(ServicePolicyPutRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PUT, "/organization/v3/service/policy", subject, request, null);
+		}
+
+		public AuthPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/service/policy/item", subject, request, null);
+			return DecryptResponse<AuthPolicy>(response);
+		}
+
+		public void OrganizationV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/organization/v3/service/policy", subject, request, null);
+		}
+
+		public void DirectoryV3ServicePolicyPut(ServicePolicyPutRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PUT, "/directory/v3/service/policy", subject, request, null);
+		}
+
+		public AuthPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/service/policy/item", subject, request, null);
+			return DecryptResponse<AuthPolicy>(response);
+		}
+
+		public void DirectoryV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/directory/v3/service/policy", subject, request, null);
+		}
+
 		private string GetFirstHeader(Dictionary<string, List<string>> headers, string headerKey)
 		{
 			foreach (var header in headers)
