@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
+using iovation.LaunchKey.Sdk.Transport.Domain;
 
 namespace iovation.LaunchKey.Sdk.Tests.Domain.ServiceManager
 {
@@ -99,6 +100,48 @@ namespace iovation.LaunchKey.Sdk.Tests.Domain.ServiceManager
 			Assert.IsTrue(result.Factors[0].Attributes.TimeFences[0].StartMinute == 1);
 			Assert.IsTrue(result.Factors[0].Attributes.TimeFences[0].EndMinute == 2);
 			Assert.IsTrue(result.Factors[0].Attributes.TimeFences[0].TimeZone == "America/New_York");
+		}
+
+		[TestMethod]
+		public void FromTransport_Variant1()
+		{
+			var authPolicy = new AuthPolicy(1, null, null, null, true, new List<AuthPolicy.Location>
+				{
+					new AuthPolicy.Location("n", 1, 2, 3),
+					new AuthPolicy.Location("x", 2, 4, 6)
+				},
+				new List<AuthPolicy.TimeFence>
+				{
+					new AuthPolicy.TimeFence("y", new List<string> { "Monday" }, 1, 2, 3, 4, "A")
+				});
+
+			var servicePolicy = ServicePolicy.FromTransport(authPolicy);
+
+			Assert.IsTrue(servicePolicy.RequiredFactors == 1);
+			Assert.IsTrue(servicePolicy.RequireInherenceFactor == false);
+			Assert.IsTrue(servicePolicy.RequireKnowledgeFactor == false);
+			Assert.IsTrue(servicePolicy.RequirePossessionFactor == false);
+			
+			Assert.IsTrue(servicePolicy.TimeFences.Count == 1);
+			Assert.IsTrue(servicePolicy.TimeFences[0].Days.Count == 1);
+			Assert.IsTrue(servicePolicy.TimeFences[0].Days[0] == DayOfWeek.Monday);
+			Assert.IsTrue(servicePolicy.TimeFences[0].Name == "y");
+			Assert.IsTrue(servicePolicy.TimeFences[0].TimeZone == "A");
+			Assert.IsTrue(servicePolicy.TimeFences[0].StartHour == 1);
+			Assert.IsTrue(servicePolicy.TimeFences[0].EndHour == 2);
+			Assert.IsTrue(servicePolicy.TimeFences[0].StartMinute == 3);
+			Assert.IsTrue(servicePolicy.TimeFences[0].EndMinute == 4);
+
+			Assert.IsTrue(servicePolicy.Locations.Count == 2);
+			Assert.IsTrue(servicePolicy.Locations[0].Name == "n");
+			Assert.AreEqual(servicePolicy.Locations[0].Latitude, 2, 0.01);
+			Assert.AreEqual(servicePolicy.Locations[0].Longitude, 3, 0.01);
+			Assert.AreEqual(servicePolicy.Locations[0].Radius, 1, 0.01);
+
+			Assert.IsTrue(servicePolicy.Locations[1].Name == "x");
+			Assert.AreEqual(servicePolicy.Locations[1].Latitude, 4, 0.01);
+			Assert.AreEqual(servicePolicy.Locations[1].Longitude, 6, 0.01);
+			Assert.AreEqual(servicePolicy.Locations[1].Radius, 2, 0.01);
 		}
 	}
 }

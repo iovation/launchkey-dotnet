@@ -34,6 +34,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		public List<string> AddedServicePublicKeys => _addedServicePublicKeys;
 		public List<string> AddedDirectoryPublicKeys => _addedDirectoryPublicKeys;
 
+		// policy-related contextual data
+		public ServicePolicy LoadedServicePolicy => _loadedServicePolicy;
+
 
 		private readonly IOrganizationClient _orgClient;
 		private Directory _loadedDirectory;
@@ -44,6 +47,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		private List<PublicKey> _loadedDirectoryPublicKeys;
 		private List<string> _addedServicePublicKeys = new List<string>();
 		private List<string> _addedDirectoryPublicKeys = new List<string>();
+		private ServicePolicy _loadedServicePolicy = new ServicePolicy();
 
 
 		public OrgClientContext(TestConfiguration config)
@@ -234,5 +238,17 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 			_orgClient.UpdateDirectoryPublicKey(directoryId, keyId, active, expires);
 		}
 
+		public void LoadServicePolicy(Guid serviceId)
+		{
+			_loadedServicePolicy = _orgClient.GetServicePolicy(serviceId);
+		}
+
+		public void SetServicePolicy(Guid serviceId, ServicePolicy servicePolicy)
+		{
+			_orgClient.SetServicePolicy(serviceId, servicePolicy);
+			
+			// clear the service policy so we don't accidentally inspect data we just sent.
+			_loadedServicePolicy = null;//new ServicePolicy();
+		}
 	}
 }

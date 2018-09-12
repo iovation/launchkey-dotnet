@@ -12,37 +12,37 @@ namespace iovation.LaunchKey.Sdk.Domain.ServiceManager
 		/// <summary>
 		/// Number of required factors, if any
 		/// </summary>
-		public int? RequiredFactors { get; }
+		public int? RequiredFactors { get; set; }
 
 		/// <summary>
 		/// Whether this policy requires the 'knowledge' factor
 		/// </summary>
-		public bool? RequireKnowledgeFactor { get; }
+		public bool? RequireKnowledgeFactor { get; set; }
 
 		/// <summary>
 		/// Whether this policy requires the 'inherence' factor
 		/// </summary>
-		public bool? RequireInherenceFactor { get; }
+		public bool? RequireInherenceFactor { get; set; }
 
 		/// <summary>
 		/// Whether this policy requires the 'posession' factor
 		/// </summary>
-		public bool? RequirePossessionFactor { get; }
+		public bool? RequirePossessionFactor { get; set; }
 
 		/// <summary>
 		/// A list of geofences this policy requires
 		/// </summary>
-		public List<Location> Locations { get; }
+		public List<Location> Locations { get; set; }
 
 		/// <summary>
 		/// Whether or not to enforce Jailbreak detection (device integrity) on this request
 		/// </summary>
-		public bool? JailbreakDetection { get; }
+		public bool? JailbreakDetection { get; set; }
 
 		/// <summary>
 		/// A list of time fences this policy requires
 		/// </summary>
-		public List<TimeFence> TimeFences { get; }
+		public List<TimeFence> TimeFences { get; set; }
 
 		/// <summary>
 		/// Create a service auth policy based on several options.
@@ -75,9 +75,6 @@ namespace iovation.LaunchKey.Sdk.Domain.ServiceManager
 			List<Location> locations = null,
 			List<TimeFence> timeFences = null)
 		{
-			if (requiredFactors.HasValue && (requireKnowledgeFactor.HasValue || requireInherenceFactor.HasValue || requirePossessionFactor.HasValue))
-				throw new ArgumentException($"Invalid argument combination; requiredFactors should only be set in absence of requireKnowledgeFactor, requireInherenceFactor and requirePosessionFactor, as they are mutually exclusive");
-
 			Locations = locations ?? new List<Location>();
 			TimeFences = timeFences ?? new List<TimeFence>();
 			RequiredFactors = requiredFactors;
@@ -144,7 +141,7 @@ namespace iovation.LaunchKey.Sdk.Domain.ServiceManager
 						);
 					}
 				}
-				else if (factor.Factor == Transport.Domain.AuthPolicy.FactorType.TimeFence)
+				else if (factor.Factor == Transport.Domain.AuthPolicy.FactorType.Geofence)
 				{
 					if (locations == null)
 						locations = new List<Location>();
@@ -164,16 +161,26 @@ namespace iovation.LaunchKey.Sdk.Domain.ServiceManager
 			}
 
 			var minRequirements = authPolicy.MinimumRequirements.FirstOrDefault();
-
-			return new ServicePolicy(
-				minRequirements?.Any,
-				minRequirements?.Knowledge == 1,
-				minRequirements?.Inherence == 1,
-				minRequirements?.Possession == 1,
-				jailbreakDetection,
-				locations,
-				timeFences
-			);
+			if (minRequirements != null)
+			{
+				return new ServicePolicy(
+					minRequirements.Any,
+					minRequirements.Knowledge == 1,
+					minRequirements.Inherence == 1,
+					minRequirements.Possession == 1,
+					jailbreakDetection,
+					locations,
+					timeFences
+				);
+			}
+			else
+			{
+				return new ServicePolicy(
+					jailbreakDetection: jailbreakDetection,
+					locations: locations,
+					timeFences: timeFences
+				);
+			}
 		}
 	}
 }

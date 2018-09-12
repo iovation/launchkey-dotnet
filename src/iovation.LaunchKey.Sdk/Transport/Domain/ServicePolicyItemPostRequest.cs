@@ -5,7 +5,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
 	public class ServicePolicyItemPostRequest
 	{
-		[JsonProperty]
+		[JsonProperty("service_id")]
 		public Guid ServiceId { get; }
 
 		public ServicePolicyItemPostRequest(Guid serviceId)

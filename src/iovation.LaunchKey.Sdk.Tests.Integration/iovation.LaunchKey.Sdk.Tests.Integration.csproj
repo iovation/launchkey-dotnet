@@ -41,6 +41,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=4.55.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
+      <HintPath>..\packages\CompareNETObjects.4.55.0.0\lib\net46\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.2.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -148,6 +151,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>org-client-service-update.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\org_client\services\policy\org-client-service-policy-get.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-policy-get.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\services\policy\org-client-service-policy-remove.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-policy-remove.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\org_client\services\policy\org-client-service-policy-set.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>org-client-service-policy-set.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\org_client\services\public_keys\org-client-service-public-keys-add.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -177,6 +195,7 @@
     <Compile Include="SpecFlow\Contexts\CreatedServiceInfo.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectoryPublicKeySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectorySteps.cs" />
+    <Compile Include="SpecFlow\Steps\OrganizationServicePolicySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationServicePublicKeysSteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationServiceSteps.cs" />
     <Compile Include="SpecFlow\Steps\ServiceDescriptionTable.cs" />
@@ -253,6 +272,18 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>org-client-service-update.feature.cs</LastGenOutput>
     </None>
+    <None Include="Features\org_client\services\policy\org-client-service-policy-get.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-policy-get.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\policy\org-client-service-policy-remove.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-policy-remove.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\org_client\services\policy\org-client-service-policy-set.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>org-client-service-policy-set.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-add.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>org-client-service-public-keys-add.feature.cs</LastGenOutput>
@@ -308,6 +339,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Readme\Compare-NET-Objects-Help.txt" />
     <Content Include="Keys\alpha-cert-sha256-fingerprint.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
