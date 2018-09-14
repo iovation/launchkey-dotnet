@@ -43,7 +43,7 @@ Feature: Organization Client can retrieve Organization Service Policy
       | Week Ends | Saturday,Sunday                          | 0          | 0            | 23       | 59         | America/New_York |
     And I set the Policy for the Current Organization Service
     When I retrieve the Policy for the Current Organization Service
-    Given the Organization Service Policy has the following Time Fences:
+    Then the Organization Service Policy has the following Time Fences:
       | Name      | Days                                     | Start Hour | Start Minute | End Hour | End Minute | Time Zone           |
       | Week Days | Monday,Tuesday,Wednesday,Thursday,Friday | 0          | 0            | 23       | 59         | America/Los_Angeles |
       | Week Ends | Saturday,Sunday                          | 0          | 0            | 23       | 59         | America/New_York |

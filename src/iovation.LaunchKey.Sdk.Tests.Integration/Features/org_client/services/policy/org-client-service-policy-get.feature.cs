@@ -267,7 +267,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "59",
                         "America/New_York"});
 #line 46
-    testRunner.Given("the Organization Service Policy has the following Time Fences:", ((string)(null)), table2, "Given ");
+    testRunner.Then("the Organization Service Policy has the following Time Fences:", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

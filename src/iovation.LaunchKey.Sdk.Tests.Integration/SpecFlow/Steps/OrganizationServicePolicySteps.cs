@@ -46,6 +46,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		}
 
 		[When(@"I retrieve the Policy for the Current Organization Service")]
+		[Given(@"I retrieve the Policy for the Current Organization Service")]
 		public void WhenIRetrieveThePolicyForTheCurrentOrganizationService()
 		{
 			_orgClientContext.LoadServicePolicy(_orgClientContext.LastCreatedService.Id);
@@ -81,7 +82,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 			_orgClientContext.LoadedServicePolicy.RequiredFactors = numFactors;
 		}
 
+		[Given(@"I set the Policy for the Organization Service")]
 		[Given(@"I set the Policy for the Current Organization Service")]
+		[When(@"I set the Policy for the Current Organization Service")]
 		public void GivenISetThePolicyForTheCurrentOrganizationService()
 		{
 			_orgClientContext.SetServicePolicy(
@@ -97,18 +100,21 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		}
 
 		[Given(@"the Organization Service Policy is set to require inherence")]
+		[When(@"the Organization Service Policy is set to require inherence")]
 		public void GivenTheOrganizationServicePolicyIsSetToRequireInherence()
 		{
 			_orgClientContext.LoadedServicePolicy.RequireInherenceFactor = true;
 		}
 
 		[Given(@"the Organization Service Policy is set to require knowledge")]
+		[When(@"the Organization Service Policy is set to require knowledge")]
 		public void GivenTheOrganizationServicePolicyIsSetToRequireKnowledge()
 		{
 			_orgClientContext.LoadedServicePolicy.RequireKnowledgeFactor = true;
 		}
 
 		[Given(@"the Organization Service Policy is set to require possession")]
+		[When(@"the Organization Service Policy is set to require possession")]
 		public void GivenTheOrganizationServicePolicyIsSetToRequirePossession()
 		{
 			_orgClientContext.LoadedServicePolicy.RequirePossessionFactor = true;
@@ -133,11 +139,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		}
 
 		[Given(@"the Organization Service Policy is set to require jail break protection")]
+		[When(@"the Organization Service Policy is set to require jail break protection")]
 		public void GivenTheOrganizationServicePolicyIsSetToRequireJailBreakProtection()
 		{
 			_orgClientContext.LoadedServicePolicy.JailbreakDetection = true;
 		}
-
+		
 		[Then(@"the Organization Service Policy does require jail break protection")]
 		public void ThenTheOrganizationServicePolicyDoesRequireJailBreakProtection()
 		{
@@ -177,12 +184,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		}
 
 		[Given(@"the Organization Service Policy is set to have the following Time Fences:")]
+		[When(@"the Organization Service Policy is set to have the following Time Fences:")]
 		public void GivenTheOrganizationServicePolicyIsSetToHaveTheFollowingTimeFences(Table table)
 		{
 			_orgClientContext.LoadedServicePolicy.TimeFences = TimeFencesFromTable(table);
 		}
 
-		[Given(@"the Organization Service Policy has the following Time Fences:")]
+		[Then(@"the Organization Service Policy has the following Time Fences:")]
 		public void GivenTheOrganizationServicePolicyHasTheFollowingTimeFences(Table table)
 		{
 			var timeFences = TimeFencesFromTable(table);
@@ -190,6 +198,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		}
 
 		[Given(@"the Organization Service Policy is set to have the following Geofence locations:")]
+		[When(@"the Organization Service Policy is set to have the following Geofence locations:")]
 		public void GivenTheOrganizationServicePolicyIsSetToHaveTheFollowingGeofenceLocations(Table table)
 		{
 			_orgClientContext.LoadedServicePolicy.Locations = LocationsFromTable(table);
@@ -216,6 +225,63 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 			{
 				_commonContext.RecordException(e);
 			}
+		}
+
+		[When(@"I remove the Policy for the Organization Service")]
+		public void WhenIRemoveThePolicyForTheOrganizationService()
+		{
+			_orgClientContext.RemoveServicePolicy(_orgClientContext.LastCreatedService.Id);
+		}
+
+		[Given(@"the Organization Service Policy is set to require (.*) factor")]
+		[When(@"the Organization Service Policy is set to require (.*) factors")]
+		public void GivenTheOrganizationServicePolicyIsSetToRequireFactor(int p0)
+		{
+			_orgClientContext.LoadedServicePolicy.RequiredFactors = p0;
+		}
+
+		[When(@"I attempt to remove the Policy for the Organization Service with the ID ""(.*)""")]
+		public void WhenIAttemptToRemoveThePolicyForTheOrganizationServiceWithTheID(string p0)
+		{
+			try
+			{
+				_orgClientContext.RemoveServicePolicy(Guid.Parse(p0));
+			}
+			catch (BaseException e)
+			{
+				_commonContext.RecordException(e);
+			}
+		}
+
+		[When(@"I attempt to set the Policy for the Organization Service with the ID ""(.*)""")]
+		public void WhenIAttemptToSetThePolicyForTheOrganizationServiceWithTheID(string p0)
+		{
+			try
+			{
+				_orgClientContext.SetServicePolicy(Guid.Parse(p0), new ServicePolicy());
+			}
+			catch (BaseException e)
+			{
+				_commonContext.RecordException(e);
+			}
+		}
+
+		[Then(@"the Organization Service Policy has (.*) locations")]
+		public void ThenTheOrganizationServicePolicyHasLocations(int p0)
+		{
+			Assert.AreEqual(p0, _orgClientContext.LoadedServicePolicy.Locations.Count);
+		}
+
+		[Then(@"the Organization Service Policy has (.*) time fences")]
+		public void ThenTheOrganizationServicePolicyHasTimeFences(int p0)
+		{
+			Assert.AreEqual(p0, _orgClientContext.LoadedServicePolicy.TimeFences.Count);
+		}
+
+		[Then(@"the Organization Service Policy has no requirement for jail break protection")]
+		public void ThenTheOrganizationServicePolicyHasNoRequirementForJailBreakProtection()
+		{
+			Assert.IsTrue(_orgClientContext.LoadedServicePolicy.JailbreakDetection == null);
 		}
 	}
 }

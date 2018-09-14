@@ -250,5 +250,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 			// clear the service policy so we don't accidentally inspect data we just sent.
 			_loadedServicePolicy = null;//new ServicePolicy();
 		}
+
+		public void RemoveServicePolicy(Guid serviceId)
+		{
+			_orgClient.RemoveServicePolicy(serviceId);
+		}
 	}
 }

@@ -36,8 +36,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Domain.ServiceManager
 			var result = servicePolicy.ToTransport();
 
 			Assert.IsTrue(result.MinimumRequirements[0].Knowledge == 1);
-			Assert.IsTrue(result.MinimumRequirements[0].Inherence == 0);
-			Assert.IsTrue(result.MinimumRequirements[0].Possession == 0);
+			Assert.IsTrue(result.MinimumRequirements[0].Inherence == null);
+			Assert.IsTrue(result.MinimumRequirements[0].Possession == null);
 			Assert.IsTrue(result.MinimumRequirements[0].Any == null);
 		}
 
@@ -118,9 +118,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Domain.ServiceManager
 			var servicePolicy = ServicePolicy.FromTransport(authPolicy);
 
 			Assert.IsTrue(servicePolicy.RequiredFactors == 1);
-			Assert.IsTrue(servicePolicy.RequireInherenceFactor == false);
-			Assert.IsTrue(servicePolicy.RequireKnowledgeFactor == false);
-			Assert.IsTrue(servicePolicy.RequirePossessionFactor == false);
+			Assert.IsTrue(servicePolicy.RequireInherenceFactor == null);
+			Assert.IsTrue(servicePolicy.RequireKnowledgeFactor == null);
+			Assert.IsTrue(servicePolicy.RequirePossessionFactor == null);
 			
 			Assert.IsTrue(servicePolicy.TimeFences.Count == 1);
 			Assert.IsTrue(servicePolicy.TimeFences[0].Days.Count == 1);

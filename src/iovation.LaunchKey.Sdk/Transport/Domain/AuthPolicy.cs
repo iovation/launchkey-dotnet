@@ -55,13 +55,13 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			public int? Any { get; set; }
 
 			[JsonProperty("knowledge")]
-			public int Knowledge { get; set; }
+			public int? Knowledge { get; set; }
 
 			[JsonProperty("inherence")]
-			public int Inherence { get; set; }
+			public int? Inherence { get; set; }
 
 			[JsonProperty("possession")]
-			public int Possession { get; set; }
+			public int? Possession { get; set; }
 		}
 
 		public class AuthPolicyFactor
@@ -153,9 +153,9 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			internal TimeFence() { }
 		}
 
-		private int IntFromNullableBool(bool? val)
+		private int? IntFromNullableBool(bool? val)
 		{
-			if (val == null) return 0;
+			if (val == null) return null;
 			return val.Value ? 1 : 0;
 		}
 

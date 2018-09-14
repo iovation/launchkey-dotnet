@@ -126,8 +126,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 			var policy = new AuthPolicy(null, null, true, null, null, null);
 
 			Assert.IsTrue(policy.MinimumRequirements[0].Inherence == 1);
-			Assert.IsTrue(policy.MinimumRequirements[0].Possession == 0);
-			Assert.IsTrue(policy.MinimumRequirements[0].Knowledge == 0);
+			Assert.IsTrue(policy.MinimumRequirements[0].Possession == null);
+			Assert.IsTrue(policy.MinimumRequirements[0].Knowledge == null);
 			Assert.IsTrue(!policy.MinimumRequirements[0].Any.HasValue);
 		}
 

@@ -158,7 +158,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
     testRunner.When("I attempt to remove the Policy for the Organization Service with the ID \"eba60cb8" +
                     "-c649-11e7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 23
-    testRunner.Then("a com.iovation.launchkey.sdk.error.ServiceNotFound exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("a ServiceNotFound error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

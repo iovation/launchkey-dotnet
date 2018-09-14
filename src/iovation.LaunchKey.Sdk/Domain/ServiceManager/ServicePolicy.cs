@@ -109,6 +109,12 @@ namespace iovation.LaunchKey.Sdk.Domain.ServiceManager
 			);
 		}
 
+		private static bool? ConvertNullableIntToBool(int? num)
+		{
+			if (num == null) return null;
+			return num == 1;
+		}
+
 		internal static ServicePolicy FromTransport(Transport.Domain.AuthPolicy authPolicy)
 		{
 			bool? jailbreakDetection = null;
@@ -165,9 +171,9 @@ namespace iovation.LaunchKey.Sdk.Domain.ServiceManager
 			{
 				return new ServicePolicy(
 					minRequirements.Any,
-					minRequirements.Knowledge == 1,
-					minRequirements.Inherence == 1,
-					minRequirements.Possession == 1,
+					ConvertNullableIntToBool(minRequirements.Knowledge),
+					ConvertNullableIntToBool(minRequirements.Inherence),
+					ConvertNullableIntToBool(minRequirements.Possession),
 					jailbreakDetection,
 					locations,
 					timeFences

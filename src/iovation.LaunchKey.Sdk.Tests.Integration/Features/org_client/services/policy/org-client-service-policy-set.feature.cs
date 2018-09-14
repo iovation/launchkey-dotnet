@@ -114,7 +114,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
     testRunner.And("I attempt to set the Policy for the Organization Service with the ID \"eba60cb8-c6" +
                     "49-11e7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
-    testRunner.Then("a com.iovation.launchkey.sdk.error.ServiceNotFound exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("a ServiceNotFound error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -180,7 +180,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 31
     testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 32
-    testRunner.And("the Organization Service Policy has no requirement for number of factors", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("the Organization Service Policy has no requirement for number of factors", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 33
     testRunner.And("the Organization Service Policy does require inherence", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 34
