@@ -18,5 +18,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
 		{
 			return UniqueName("Directory");
 		}
+
+		public static string UniqueUserName()
+		{
+			return UniqueName("User");
+		}
 	}
 }

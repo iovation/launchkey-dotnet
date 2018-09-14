@@ -11,6 +11,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 {
 	public class OrgClientContext : IDisposable
 	{
+		private readonly TestConfiguration _config;
+
 		// service-related contextual data
 		public Service LoadedService => _loadedService;
 		public CreatedServiceInfo LastCreatedService => _ownedServices.Last();
@@ -52,9 +54,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
 		public OrgClientContext(TestConfiguration config)
 		{
+			_config = config;
 			_orgClient = config.GetOrgClient();
 		}
-
+		
 		public void CreateService(string serviceName)
 		{
 			CreateService(

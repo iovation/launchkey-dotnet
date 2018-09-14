@@ -66,6 +66,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\directory_client\sessions\directory-client-service-sessions-delete.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-sessions-delete.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\sessions\directory-client-service-sessions-get.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-sessions-get.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\org_client\directories\org-client-directory-create.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,6 +196,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>org-client-service-public-keys-update.feature</DependentUpon>
     </Compile>
+    <Compile Include="SpecFlow\Contexts\DirectoryClientContext.cs" />
     <Compile Include="SpecFlow\KeyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFlow\Contexts\CommonContext.cs" />
@@ -193,6 +204,7 @@
     <Compile Include="SpecFlow\Contexts\OrgClientContext.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedDirectoryInfo.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedServiceInfo.cs" />
+    <Compile Include="SpecFlow\Steps\DirectorySessionSteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectoryPublicKeySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectorySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationServicePolicySteps.cs" />
@@ -204,6 +216,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Features\directory_client\sessions\directory-client-service-sessions-delete.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-sessions-delete.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\sessions\directory-client-service-sessions-get.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-sessions-get.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\org_client\directories\org-client-directory-create.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>org-client-directory-create.feature.cs</LastGenOutput>
@@ -358,6 +378,9 @@
     <Content Include="Secrets\OrgPrivateKey.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\directory_client\services\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
