@@ -132,7 +132,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
     testRunner.When("I attempt retrieve a list of Directory Services with the Service ID \"eba60cb8-c64" +
                     "9-11e7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
-    testRunner.Then("a com.iovation.launchkey.sdk.error.Forbidden exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("a Forbidden error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

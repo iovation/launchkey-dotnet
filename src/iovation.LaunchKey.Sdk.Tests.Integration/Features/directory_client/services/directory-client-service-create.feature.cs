@@ -109,6 +109,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
   this.FeatureBackground();
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "key",
+                        "value"});
+            table1.AddRow(new string[] {
                         "description",
                         "Super Awesome Service"});
             table1.AddRow(new string[] {
@@ -122,17 +125,17 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
                         "True"});
 #line 10
     testRunner.When("I create a Directory Service with the following:", ((string)(null)), table1, "When ");
-#line 15
-    testRunner.And("I retrieve the created Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
-    testRunner.Then("the Directory Service name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.And("I retrieve the created Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 17
-    testRunner.And("the Directory Service description is \"Super Awesome Service\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("the Directory Service name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 18
-    testRunner.And("the Directory Service icon is \"https://www.iovation.com/icon\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the Directory Service description is \"Super Awesome Service\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
-    testRunner.And("the Directory Service callback_url is \"https://www.iovation.com/callback\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the Directory Service icon is \"https://www.iovation.com/icon\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
+    testRunner.And("the Directory Service callback_url is \"https://www.iovation.com/callback\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 21
     testRunner.And("the Directory Service is active", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -144,17 +147,17 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
         public virtual void ClientSendingDuplicateServiceNameRaisesServiceNameInUse()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Client sending duplicate Service name raises ServiceNameInUse", null, ((string[])(null)));
-#line 22
+#line 23
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 23
-    testRunner.Given("I created a Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 24
-    testRunner.And("I attempt to create a Directory Service with the same name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Given("I created a Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 25
-    testRunner.Then("a com.iovation.launchkey.sdk.error.ServiceNameTaken exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.And("I attempt to create a Directory Service with the same name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
+    testRunner.Then("a ServiceNameTaken error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

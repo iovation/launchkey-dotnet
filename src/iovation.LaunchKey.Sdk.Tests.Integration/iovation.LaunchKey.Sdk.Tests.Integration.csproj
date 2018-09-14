@@ -66,6 +66,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\directory_client\services\directory-client-service-create.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-create.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\services\directory-client-service-get-all.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-get-all.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\services\directory-client-service-get-list.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-get-list.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\services\directory-client-service-get-one.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-get-one.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\services\directory-client-service-update.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-update.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\directory_client\sessions\directory-client-service-sessions-delete.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,18 +229,42 @@
     <Compile Include="SpecFlow\Contexts\OrgClientContext.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedDirectoryInfo.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedServiceInfo.cs" />
+    <Compile Include="SpecFlow\Steps\DirectoryServiceSteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectorySessionSteps.cs" />
+    <Compile Include="SpecFlow\Tables\GeofenceTableRow.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectoryPublicKeySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectorySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationServicePolicySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationServicePublicKeysSteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationServiceSteps.cs" />
-    <Compile Include="SpecFlow\Steps\ServiceDescriptionTable.cs" />
+    <Compile Include="SpecFlow\Tables\TimeFenceTableRow.cs" />
+    <Compile Include="SpecFlow\Tables\ServiceDescriptionTable.cs" />
+    <Compile Include="SpecFlow\TableUtils.cs" />
     <Compile Include="SpecFlow\Util.cs" />
     <Compile Include="SpecFlow\TestConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Features\directory_client\services\directory-client-service-create.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-create.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\directory-client-service-get-all.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-get-all.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\directory-client-service-get-list.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-get-list.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\directory-client-service-get-one.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-get-one.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\directory-client-service-update.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-update.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\directory_client\sessions\directory-client-service-sessions-delete.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>directory-client-service-sessions-delete.feature.cs</LastGenOutput>
@@ -379,9 +428,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Features\directory_client\services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

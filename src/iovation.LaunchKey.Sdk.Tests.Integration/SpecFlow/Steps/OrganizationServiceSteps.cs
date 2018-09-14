@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
+using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Tables;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 {
@@ -119,13 +121,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		[Given(@"I created a Organization Service with the following:")]
 		public void GivenICreatedAOrganizationServiceWithTheFollowing(Table table)
 		{
-			var userServiceInfo = TechTalk.SpecFlow.Assist.TableHelperExtensionMethods.CreateInstance<ServiceDescriptionTable>(table);
+			var serviceTable = table.CreateInstance<ServiceDescriptionTable>();
 			_orgClientContext.CreateService(
 				Util.UniqueServiceName(),
-				userServiceInfo.Description,
-				new Uri(userServiceInfo.Icon),
-				new Uri(userServiceInfo.CallbackUrl),
-				userServiceInfo.Active
+				serviceTable.Description,
+				new Uri(serviceTable.Icon),
+				new Uri(serviceTable.CallbackUrl),
+				serviceTable.Active
 			);
 		}
 
@@ -181,14 +183,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		[When(@"I update the Organization Service with the following:")]
 		public void WhenIUpdateTheOrganizationServiceWithTheFollowing(Table table)
 		{
-			var userServiceInfo = TechTalk.SpecFlow.Assist.TableHelperExtensionMethods.CreateInstance<ServiceDescriptionTable>(table);
+			var serviceTable = table.CreateInstance<ServiceDescriptionTable>();
 			_orgClientContext.UpdateService(
 				_orgClientContext.LastCreatedService.Id,
 				_orgClientContext.LastCreatedService.Name,
-				userServiceInfo.Description,
-				new Uri(userServiceInfo.Icon),
-				new Uri(userServiceInfo.CallbackUrl),
-				userServiceInfo.Active
+				serviceTable.Description,
+				new Uri(serviceTable.Icon),
+				new Uri(serviceTable.CallbackUrl),
+				serviceTable.Active
 			);
 		}
 

@@ -1,4 +1,7 @@
-﻿namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
+﻿using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Tables
 {
 	class ServiceDescriptionTable
 	{

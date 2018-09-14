@@ -95,6 +95,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
     testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "key",
+                        "value"});
+            table1.AddRow(new string[] {
                         "description",
                         "Super Awesome Service"});
             table1.AddRow(new string[] {
@@ -117,13 +120,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
         public virtual void ClientCanUpdateAllDirectoryAttributesOtherThanIDAndName()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Client can update all Directory attributes other than ID and name", null, ((string[])(null)));
-#line 14
+#line 15
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "key",
+                        "value"});
+            table2.AddRow(new string[] {
                         "description",
                         "So Much Awesome"});
             table2.AddRow(new string[] {
@@ -135,19 +141,19 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
             table2.AddRow(new string[] {
                         "active",
                         "False"});
-#line 15
+#line 16
     testRunner.When("I update the Directory Service with the following:", ((string)(null)), table2, "When ");
-#line 20
-    testRunner.And("I retrieve the created Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 21
-    testRunner.Then("the Directory Service name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 22
-    testRunner.And("the Directory Service description is \"So Much Awesome\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I retrieve the created Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 23
-    testRunner.And("the Directory Service icon is \"https://www.iovation.com/iconic\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("the Directory Service name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 24
-    testRunner.And("the Directory Service callback_url is \"https://www.iovation.com/callbackish\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the Directory Service description is \"So Much Awesome\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 25
+    testRunner.And("the Directory Service icon is \"https://www.iovation.com/iconic\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
+    testRunner.And("the Directory Service callback_url is \"https://www.iovation.com/callbackish\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 27
     testRunner.And("the Directory Service is not active", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -159,16 +165,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
         public virtual void AttemptingToUpdateAnInvalidDirectoryServiceThrowsAForbiddenException()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to update an invalid Directory Service throws a Forbidden exception", null, ((string[])(null)));
-#line 27
+#line 29
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 28
+#line 30
     testRunner.When("I attempt to update the active status of the Directory Service with the ID \"eba60" +
                     "cb8-c649-11e7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 29
-    testRunner.Then("a com.iovation.launchkey.sdk.error.Forbidden exception is thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 31
+    testRunner.Then("a Forbidden error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
