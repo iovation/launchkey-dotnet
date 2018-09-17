@@ -91,6 +91,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>directory-client-service-update.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\directory_client\services\policy\directory-client-service-policy-get.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-policy-get.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\services\policy\directory-client-service-policy-remove.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-policy-remove.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\services\policy\directory-client-service-policy-set.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-policy-set.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-add.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -252,6 +267,7 @@
     <Compile Include="SpecFlow\Steps\DirectoryServicePublicKeySteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectoryServiceSteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectorySessionSteps.cs" />
+    <Compile Include="SpecFlow\Steps\DirectoryServicePolicySteps.cs" />
     <Compile Include="SpecFlow\Tables\GeofenceTableRow.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectoryPublicKeySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectorySteps.cs" />
@@ -285,6 +301,18 @@
     <None Include="Features\directory_client\services\directory-client-service-update.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>directory-client-service-update.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\policy\directory-client-service-policy-get.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-policy-get.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\policy\directory-client-service-policy-remove.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-policy-remove.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\policy\directory-client-service-policy-set.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-policy-set.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-add.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

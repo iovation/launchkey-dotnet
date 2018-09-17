@@ -26,7 +26,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		public List<PublicKey> LoadedServicePublicKeys => _loadedServicePublicKeys;
 		public List<string> AddedServicePublicKeys => _addedServicePublicKeys;
 
-
+		// policy-related contextual data
+		public ServicePolicy LoadedServicePolicy => _loadedServicePolicy;
+		
 		private List<PublicKey> _loadedServicePublicKeys;
 		private List<string> _addedServicePublicKeys = new List<string>();
 		private string _currentUserId;
@@ -35,6 +37,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		private List<CreatedServiceInfo> _ownedServices = new List<CreatedServiceInfo>();
 		private Service _loadedService;
 		private List<Service> _loadedServices;
+		private ServicePolicy _loadedServicePolicy = new ServicePolicy();
 
 
 		public DirectoryClientContext(TestConfiguration testConfiguration, OrgClientContext orgClientContext)
@@ -157,6 +160,23 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime? expires)
 		{
 			GetDirectoryClient().UpdateServicePublicKey(serviceId, keyId, active, expires);
+		}
+		public void LoadServicePolicy(Guid serviceId)
+		{
+			_loadedServicePolicy = GetDirectoryClient().GetServicePolicy(serviceId);
+		}
+
+		public void SetServicePolicy(Guid serviceId, ServicePolicy servicePolicy)
+		{
+			GetDirectoryClient().SetServicePolicy(serviceId, servicePolicy);
+
+			// clear the service policy so we don't accidentally inspect data we just sent.
+			_loadedServicePolicy = null;
+		}
+
+		public void RemoveServicePolicy(Guid serviceId)
+		{
+			GetDirectoryClient().RemoveServicePolicy(serviceId);
 		}
 	}
 }
