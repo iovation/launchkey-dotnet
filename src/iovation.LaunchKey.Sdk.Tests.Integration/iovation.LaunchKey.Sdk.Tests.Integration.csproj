@@ -91,6 +91,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>directory-client-service-update.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-add.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-public-keys-add.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-get.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-public-keys-get.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-remove.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-public-keys-remove.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-update.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-service-public-keys-update.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\directory_client\sessions\directory-client-service-sessions-delete.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -229,6 +249,7 @@
     <Compile Include="SpecFlow\Contexts\OrgClientContext.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedDirectoryInfo.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedServiceInfo.cs" />
+    <Compile Include="SpecFlow\Steps\DirectoryServicePublicKeySteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectoryServiceSteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectorySessionSteps.cs" />
     <Compile Include="SpecFlow\Tables\GeofenceTableRow.cs" />
@@ -264,6 +285,22 @@
     <None Include="Features\directory_client\services\directory-client-service-update.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>directory-client-service-update.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-add.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-public-keys-add.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-get.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-public-keys-get.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-remove.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-public-keys-remove.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-update.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-service-public-keys-update.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\directory_client\sessions\directory-client-service-sessions-delete.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -408,7 +445,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Readme\Compare-NET-Objects-Help.txt" />
     <Content Include="Keys\alpha-cert-sha256-fingerprint.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

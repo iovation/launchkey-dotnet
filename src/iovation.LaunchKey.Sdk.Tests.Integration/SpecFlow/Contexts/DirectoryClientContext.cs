@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using iovation.LaunchKey.Sdk.Client;
+using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Directory;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 
@@ -15,17 +16,26 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		private readonly TestConfiguration _testConfiguration;
 		private readonly OrgClientContext _orgClientContext;
 
+		// session contextual data
 		public List<Session> LoadedSessions => _loadedSessions;
 		public CreatedServiceInfo LastCreatedService => _ownedServices.Last();
 		public Service LoadedService => _loadedService;
 		public List<Service> LoadedServices => _loadedServices;
 
+		// public key contextual data
+		public List<PublicKey> LoadedServicePublicKeys => _loadedServicePublicKeys;
+		public List<string> AddedServicePublicKeys => _addedServicePublicKeys;
+
+
+		private List<PublicKey> _loadedServicePublicKeys;
+		private List<string> _addedServicePublicKeys = new List<string>();
 		private string _currentUserId;
 		private List<Session> _loadedSessions;
 		private CreatedServiceInfo _lastCreatedService;
 		private List<CreatedServiceInfo> _ownedServices = new List<CreatedServiceInfo>();
 		private Service _loadedService;
 		private List<Service> _loadedServices;
+
 
 		public DirectoryClientContext(TestConfiguration testConfiguration, OrgClientContext orgClientContext)
 		{
@@ -117,5 +127,36 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 			GetDirectoryClient().UpdateService(serviceId, name, description, icon, callback, active);
 		}
 
+		public void AddServicePublicKey(Guid serviceId, string key, bool active, DateTime? expire)
+		{
+			_addedServicePublicKeys.Add(GetDirectoryClient().AddServicePublicKey(serviceId, key, active, expire));
+		}
+
+		public void LoadServicePublicKeys(Guid serviceId)
+		{
+			_loadedServicePublicKeys = GetDirectoryClient().GetServicePublicKeys(serviceId);
+		}
+
+		public void RemoveServicePublicKey(Guid serviceId, string keyId)
+		{
+			GetDirectoryClient().RemoveServicePublicKey(serviceId, keyId);
+		}
+
+		public void DeactivateServicePublicKey(Guid serviceId, string keyId)
+		{
+			var key = GetDirectoryClient().GetServicePublicKeys(serviceId).First(k => k.Id == keyId);
+			GetDirectoryClient().UpdateServicePublicKey(serviceId, keyId, false, key.Expires);
+		}
+
+		public void UpdateServicePublicKeyExpires(Guid serviceId, string keyId, DateTime? expires)
+		{
+			var key = GetDirectoryClient().GetServicePublicKeys(serviceId).First(k => k.Id == keyId);
+			GetDirectoryClient().UpdateServicePublicKey(serviceId, keyId, key.Active, expires);
+		}
+
+		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime? expires)
+		{
+			GetDirectoryClient().UpdateServicePublicKey(serviceId, keyId, active, expires);
+		}
 	}
 }
