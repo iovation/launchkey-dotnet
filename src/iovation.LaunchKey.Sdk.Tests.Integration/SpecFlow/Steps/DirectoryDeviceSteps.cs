@@ -23,6 +23,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		}
 
 		[When(@"I make a Device linking request")]
+		[Given(@"I have made a Device linking request")]
 		public void WhenIMakeADeviceLinkingRequest()
 		{
 			_directoryClientContext.LinkDevice(Util.UniqueUserName());
@@ -49,6 +50,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 			_directoryClientContext.LoadDevicesForCurrentUser();
 		}
 
+		[When(@"I retrieve the Devices list for the user ""(.*)""")]
+		public void WhenIRetrieveTheDevicesListForTheUser(string userId)
+		{
+			_directoryClientContext.LoadDevices(userId);
+		}
+
 		[Then(@"there should be (.*) Devices? in the Devices list")]
 		[Then(@"the Device List has (.*) Devices?")]
 		public void ThenThereShouldBeDeviceInTheDevicesList(int p0)
@@ -67,7 +74,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		{
 			try
 			{
-				_directoryClientContext.UnlinkDeviceForCurrentUser(deviceId);
+				_directoryClientContext.UnlinkDevice(_directoryClientContext.CurrentUserId, deviceId);
 			}
 			catch (BaseException e)
 			{
@@ -80,7 +87,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 		{
 			try
 			{
-				_directoryClientContext.UnlinkDevice(userId, Guid.NewGuid().ToString("n"));
+				_directoryClientContext.UnlinkDevice(userId, Guid.NewGuid().ToString());
 			}
 			catch (BaseException e)
 			{

@@ -6,15 +6,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 {
 	public class CommonContext
 	{
+		private Exception _exception;
+
 		public void RecordException(Exception ex)
 		{
-			ScenarioContext.Current.Add("LastException", ex);
+			_exception = ex;
 		}
 
 		public Exception GetLastException()
 		{
-			var exception = ScenarioContext.Current.Get<Exception>("LastException");
-			return exception;
+			return _exception;
 		}
 	}
 }

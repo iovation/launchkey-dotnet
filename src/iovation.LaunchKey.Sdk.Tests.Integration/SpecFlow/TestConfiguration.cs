@@ -34,5 +34,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
 			var orgFactory = factory.MakeOrganizationFactory(OrgId, OrgPrivateKey);
 			return orgFactory.MakeDirectoryClient(directoryId);
 		}
+
+		public IServiceClient GetServiceClient(string serviceId)
+		{
+			var factory = new FactoryFactoryBuilder().Build();
+			var orgFactory = factory.MakeOrganizationFactory(OrgId, OrgPrivateKey);
+			return orgFactory.MakeServiceClient(serviceId);
+		}
 	}
 }

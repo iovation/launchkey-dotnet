@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Devices
+namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_Request
 {
     using TechTalk.SpecFlow;
     
@@ -18,14 +18,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.4.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class DirectoryClientCanListDevicesFeature
+    public partial class ServiceClientAuthorizationRequestGetResponseFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private Microsoft.VisualStudio.TestTools.UnitTesting.TestContext _testContext;
         
-#line 1 "directory-client-device-list.feature"
+#line 1 "service-client-auth-request-get.feature"
 #line hidden
         
         public virtual Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext
@@ -44,8 +44,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner(null, 0);
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Directory Client can list devices", "  In order to manage User Devices\r\n  As a Directory Client\r\n  I can list the Devi" +
-                    "ces linked with a User Identifier", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Service Client Authorization Request: Get Response", "  In order to complete an authorization request\r\n  As a Directory Service\r\n  I ca" +
+                    "n retrieve an Authorization Request for a User", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -60,9 +60,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
         public virtual void TestInitialize()
         {
             if (((testRunner.FeatureContext != null) 
-                        && (testRunner.FeatureContext.FeatureInfo.Title != "Directory Client can list devices")))
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "Service Client Authorization Request: Get Response")))
             {
-                global::iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Devices.DirectoryClientCanListDevicesFeature.FeatureSetup(null);
+                global::iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_Request.ServiceClientAuthorizationRequestGetResponseFeature.FeatureSetup(null);
             }
         }
         
@@ -93,45 +93,29 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
 #line 6
   #line 7
     testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 8
+    testRunner.And("I created a Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Getting the Device list for a User with Devices returns a list of Devices")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Directory Client can list devices")]
-        public virtual void GettingTheDeviceListForAUserWithDevicesReturnsAListOfDevices()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Unknown auth request returns empty response")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Service Client Authorization Request: Get Response")]
+        public virtual void UnknownAuthRequestReturnsEmptyResponse()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Getting the Device list for a User with Devices returns a list of Devices", null, ((string[])(null)));
-#line 9
-  this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line 6
-  this.FeatureBackground();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Unknown auth request returns empty response", null, ((string[])(null)));
 #line 10
-    testRunner.Given("I made a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 11
-    testRunner.When("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 12
-    testRunner.Then("the Device List has 1 Device", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Getting the Device list for a User with no Devices returns an empty list")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Directory Client can list devices")]
-        public virtual void GettingTheDeviceListForAUserWithNoDevicesReturnsAnEmptyList()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Getting the Device list for a User with no Devices returns an empty list", null, ((string[])(null)));
-#line 14
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 15
-    testRunner.When("I retrieve the Devices list for the user \"I do not exist\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 16
-    testRunner.Then("the Device List has 0 Devices", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
+    testRunner.Given("I made a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 12
+    testRunner.When("I get the response for Authorization request \"eba60cb8-c649-11e7-abc4-cec278b6b50" +
+                    "a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 13
+    testRunner.Then("the Authorization response is not returned", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

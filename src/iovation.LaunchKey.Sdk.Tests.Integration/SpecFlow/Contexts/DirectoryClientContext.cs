@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using iovation.LaunchKey.Sdk.Client;
 using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Directory;
+using iovation.LaunchKey.Sdk.Domain.Service;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
@@ -22,6 +23,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		public Service LoadedService => _loadedService;
 		public List<Service> LoadedServices => _loadedServices;
 		public DirectoryUserDeviceLinkData LastLinkResponse => _linkData;
+		public string CurrentUserId => _currentUserId;
 
 		// public key contextual data
 		public List<PublicKey> LoadedServicePublicKeys => _loadedServicePublicKeys;
@@ -187,6 +189,11 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		public void UnlinkCurrentDevice()
 		{
 			GetDirectoryClient().UnlinkDevice(_currentUserId, _loadedDevices[0].Id);
+		}
+
+		public void LoadDevices(string userId)
+		{
+			_loadedDevices = GetDirectoryClient().GetLinkedDevices(userId);
 		}
 
 		public void LoadDevicesForCurrentUser()

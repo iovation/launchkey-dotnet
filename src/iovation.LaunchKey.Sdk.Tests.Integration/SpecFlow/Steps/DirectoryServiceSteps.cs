@@ -191,7 +191,5 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 				_commonContext.RecordException(e);
 			}
 		}
-
-
 	}
 }

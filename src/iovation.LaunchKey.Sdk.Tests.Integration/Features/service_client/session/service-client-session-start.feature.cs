@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Devices
+namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Session
 {
     using TechTalk.SpecFlow;
     
@@ -18,14 +18,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.4.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class DirectoryClientCanUnlinkDevicesFeature
+    public partial class ServiceSessionStartFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
         private Microsoft.VisualStudio.TestTools.UnitTesting.TestContext _testContext;
         
-#line 1 "directory-client-device-unlink.feature"
+#line 1 "service-client-session-start.feature"
 #line hidden
         
         public virtual Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext
@@ -44,8 +44,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner(null, 0);
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Directory Client can unlink devices", "  In order to manage User Devices\r\n  As a Directory Client\r\n  I can unlink a Devi" +
-                    "ce from a User Identifier", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Service Session Start", "  In order to manager User Service Sessions\r\n  As a Service Client\r\n  I can start" +
+                    " User Service Sessions", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -60,9 +60,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
         public virtual void TestInitialize()
         {
             if (((testRunner.FeatureContext != null) 
-                        && (testRunner.FeatureContext.FeatureInfo.Title != "Directory Client can unlink devices")))
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "Service Session Start")))
             {
-                global::iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Devices.DirectoryClientCanUnlinkDevicesFeature.FeatureSetup(null);
+                global::iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Session.ServiceSessionStartFeature.FeatureSetup(null);
             }
         }
         
@@ -93,70 +93,66 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
 #line 6
   #line 7
     testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Unlinking current Device removes it from the Device list")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Directory Client can unlink devices")]
-        public virtual void UnlinkingCurrentDeviceRemovesItFromTheDeviceList()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Unlinking current Device removes it from the Device list", null, ((string[])(null)));
+#line 8
+    testRunner.And("I created a Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
-  this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line 6
-  this.FeatureBackground();
-#line 10
-    testRunner.Given("I made a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.And("I made a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Sending Session Start with valid user and no auth request succeeds")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Service Session Start")]
+        public virtual void SendingSessionStartWithValidUserAndNoAuthRequestSucceeds()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sending Session Start with valid user and no auth request succeeds", null, ((string[])(null)));
 #line 11
-    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 6
+  this.FeatureBackground();
 #line 12
-    testRunner.When("I unlink the current Device", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I send a Session Start request with no Auth Request ID", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 13
-    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 14
-    testRunner.Then("there should be 0 Devices in the Devices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("there are no errors", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Unlinking invalid Device throws NotFoundException")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Directory Client can unlink devices")]
-        public virtual void UnlinkingInvalidDeviceThrowsNotFoundException()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Sending Session Start with valid user and some auth request succeeds")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Service Session Start")]
+        public virtual void SendingSessionStartWithValidUserAndSomeAuthRequestSucceeds()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Unlinking invalid Device throws NotFoundException", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sending Session Start with valid user and some auth request succeeds", null, ((string[])(null)));
+#line 15
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 6
+  this.FeatureBackground();
 #line 16
-  this.ScenarioInitialize(scenarioInfo);
-            this.ScenarioStart();
-#line 6
-  this.FeatureBackground();
+    testRunner.When("I send a Session Start request with Auth Request ID \"824d59a4-ffec-47b3-b5e0-54e3" +
+                    "2777f879\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
-    testRunner.Given("I have made a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 18
-    testRunner.When("I attempt to unlink the device with the ID \"67c87654-aed9-11e7-98e9-0469f8dc10a5\"" +
-                    "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 19
-    testRunner.Then("a EntityNotFound error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("there are no errors", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Unlinking Device from invalid User throws NotFoundException")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Directory Client can unlink devices")]
-        public virtual void UnlinkingDeviceFromInvalidUserThrowsNotFoundException()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Sending Session Start with invalid user raise No Such User error")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Service Session Start")]
+        public virtual void SendingSessionStartWithInvalidUserRaiseNoSuchUserError()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Unlinking Device from invalid User throws NotFoundException", null, ((string[])(null)));
-#line 21
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Sending Session Start with invalid user raise No Such User error", null, ((string[])(null)));
+#line 19
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 22
-    testRunner.When("I attempt to unlink the device from the User Identifier \"Invalid User\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 23
+#line 20
+    testRunner.When("I attempt to send a Session Start request for user \"This is not a valid User\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
     testRunner.Then("a EntityNotFound error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

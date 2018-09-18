@@ -271,7 +271,33 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>org-client-service-public-keys-update.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\service_client\auth_request\service-client-auth-request-get.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>service-client-auth-request-get.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\service_client\auth_request\service-client-auth-request-send-policy.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>service-client-auth-request-send-policy.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\service_client\auth_request\service-client-auth-request-send.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>service-client-auth-request-send.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\service_client\session\service-client-session-end.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>service-client-session-end.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\service_client\session\service-client-session-start.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>service-client-session-start.feature</DependentUpon>
+    </Compile>
     <Compile Include="SpecFlow\Contexts\DirectoryClientContext.cs" />
+    <Compile Include="SpecFlow\Contexts\DirectoryServiceClientContext.cs" />
     <Compile Include="SpecFlow\KeyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFlow\Contexts\CommonContext.cs" />
@@ -280,10 +306,13 @@
     <Compile Include="SpecFlow\Contexts\CreatedDirectoryInfo.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedServiceInfo.cs" />
     <Compile Include="SpecFlow\Steps\DirectoryDeviceSteps.cs" />
+    <Compile Include="SpecFlow\Steps\DirectoryServiceAuthSteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectoryServicePublicKeySteps.cs" />
+    <Compile Include="SpecFlow\Steps\DirectoryServiceSessionSteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectoryServiceSteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectorySessionSteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectoryServicePolicySteps.cs" />
+    <Compile Include="SpecFlow\Steps\ServiceAuthSteps.cs" />
     <Compile Include="SpecFlow\Tables\GeofenceTableRow.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectoryPublicKeySteps.cs" />
     <Compile Include="SpecFlow\Steps\OrganizationDirectorySteps.cs" />
@@ -461,6 +490,26 @@
     <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-update.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>org-client-service-public-keys-update.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\service_client\auth_request\service-client-auth-request-get.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>service-client-auth-request-get.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\service_client\auth_request\service-client-auth-request-send-policy.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>service-client-auth-request-send-policy.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\service_client\auth_request\service-client-auth-request-send.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>service-client-auth-request-send.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\service_client\session\service-client-session-end.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>service-client-session-end.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\service_client\session\service-client-session-start.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>service-client-session-start.feature.cs</LastGenOutput>
     </None>
     <None Include="Keys\alpha-cert.crt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
