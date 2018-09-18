@@ -5,7 +5,7 @@ using TechTalk.SpecFlow;
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 {
 	[Binding]
-    public class CommonSteps
+	public class CommonSteps
 	{
 		private readonly CommonContext _commonContext;
 

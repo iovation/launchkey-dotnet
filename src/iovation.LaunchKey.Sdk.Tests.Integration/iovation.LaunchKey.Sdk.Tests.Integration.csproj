@@ -66,6 +66,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\directory_client\devices\directory-client-device-link.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-device-link.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\devices\directory-client-device-list.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-device-list.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\directory_client\devices\directory-client-device-unlink.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>directory-client-device-unlink.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\directory_client\services\directory-client-service-create.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -264,6 +279,7 @@
     <Compile Include="SpecFlow\Contexts\OrgClientContext.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedDirectoryInfo.cs" />
     <Compile Include="SpecFlow\Contexts\CreatedServiceInfo.cs" />
+    <Compile Include="SpecFlow\Steps\DirectoryDeviceSteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectoryServicePublicKeySteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectoryServiceSteps.cs" />
     <Compile Include="SpecFlow\Steps\DirectorySessionSteps.cs" />
@@ -282,6 +298,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Features\directory_client\devices\directory-client-device-link.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-device-link.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\devices\directory-client-device-list.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-device-list.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\directory_client\devices\directory-client-device-unlink.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>directory-client-device-unlink.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\directory_client\services\directory-client-service-create.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>directory-client-service-create.feature.cs</LastGenOutput>

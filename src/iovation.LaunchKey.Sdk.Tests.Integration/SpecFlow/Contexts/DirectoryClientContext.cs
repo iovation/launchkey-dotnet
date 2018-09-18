@@ -21,6 +21,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		public CreatedServiceInfo LastCreatedService => _ownedServices.Last();
 		public Service LoadedService => _loadedService;
 		public List<Service> LoadedServices => _loadedServices;
+		public DirectoryUserDeviceLinkData LastLinkResponse => _linkData;
 
 		// public key contextual data
 		public List<PublicKey> LoadedServicePublicKeys => _loadedServicePublicKeys;
@@ -29,6 +30,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		// policy-related contextual data
 		public ServicePolicy LoadedServicePolicy => _loadedServicePolicy;
 		
+		// device-related contextual data
+		public List<Device> LoadedDevices => _loadedDevices;
+
 		private List<PublicKey> _loadedServicePublicKeys;
 		private List<string> _addedServicePublicKeys = new List<string>();
 		private string _currentUserId;
@@ -38,7 +42,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		private Service _loadedService;
 		private List<Service> _loadedServices;
 		private ServicePolicy _loadedServicePolicy = new ServicePolicy();
-
+		private DirectoryUserDeviceLinkData _linkData;
+		private List<Device> _loadedDevices;
 
 		public DirectoryClientContext(TestConfiguration testConfiguration, OrgClientContext orgClientContext)
 		{
@@ -53,7 +58,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
 		public void LinkDevice(string userId)
 		{
-			GetDirectoryClient().LinkDevice(userId);
+			_linkData = GetDirectoryClient().LinkDevice(userId);
 			_currentUserId = userId;
 		}
 
@@ -177,6 +182,26 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		public void RemoveServicePolicy(Guid serviceId)
 		{
 			GetDirectoryClient().RemoveServicePolicy(serviceId);
+		}
+
+		public void UnlinkCurrentDevice()
+		{
+			GetDirectoryClient().UnlinkDevice(_currentUserId, _loadedDevices[0].Id);
+		}
+
+		public void LoadDevicesForCurrentUser()
+		{
+			_loadedDevices = GetDirectoryClient().GetLinkedDevices(_currentUserId);
+		}
+
+		public void UnlinkDeviceForCurrentUser(string deviceId)
+		{
+			GetDirectoryClient().UnlinkDevice(_currentUserId, deviceId);
+		}
+
+		public void UnlinkDevice(string userId, string deviceId)
+		{
+			GetDirectoryClient().UnlinkDevice(userId, deviceId);
 		}
 	}
 }
