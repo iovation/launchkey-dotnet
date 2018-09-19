@@ -44,6 +44,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					).ToList()
 				);
 			}
+
 			var request = new ServiceV3AuthsPostRequest(user, requestPolicy, context);
 			var response = _transport.ServiceV3AuthsPost(request, _serviceId);
 			return response.AuthRequest.ToString("D");
@@ -64,6 +65,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					new List<string>(response.DevicePins)
 				);
 			}
+
 			return null;
 		}
 
@@ -93,7 +95,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			var serverSentEvent = _transport.HandleServerSentEvent(headers, body, method, path);
 			if (serverSentEvent is ServerSentEventAuthorizationResponse)
 			{
-				var authEvent = (ServerSentEventAuthorizationResponse)serverSentEvent;
+				var authEvent = (ServerSentEventAuthorizationResponse) serverSentEvent;
 				return new AuthorizationResponseWebhookPackage(
 					new AuthorizationResponse(
 						authEvent.AuthorizationRequestId.ToString("D"),

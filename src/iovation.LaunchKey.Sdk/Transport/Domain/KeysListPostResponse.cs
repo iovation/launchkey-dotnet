@@ -19,7 +19,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 
 			[JsonProperty("date_expires")]
 			public DateTime? Expires { get; set; }
-			
+
 			[JsonProperty("active")]
 			public bool Active { get; set; }
 		}

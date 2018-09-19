@@ -11,6 +11,5 @@ namespace iovation.LaunchKey.Sdk.Domain.Webhook
 	/// </summary>
 	public interface IWebhookPackage
 	{
-
 	}
 }

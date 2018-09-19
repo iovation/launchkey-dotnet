@@ -16,13 +16,13 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwt
 		private readonly Dictionary<string, RSA> _privateKeys;
 		private readonly string _currentPrivateKeyId;
 		private readonly int _requestExpireSeconds;
-		private readonly string[] AcceptableAlgorithms = { "RS256", "RS384", "RS512" };
+		private readonly string[] AcceptableAlgorithms = {"RS256", "RS384", "RS512"};
 
 		public JwtService(
 			IUnixTimeConverter timestampConverter,
 			string apiIdentifier,
 			Dictionary<string, RSA> privateKeys,
-			string currentPrivateKeyId, 
+			string currentPrivateKeyId,
 			int requestExpireSeconds)
 		{
 			_timestampConverter = timestampConverter;
@@ -36,24 +36,25 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwt
 			string jti,
 			string issuer,
 			string subject,
-			DateTime currentTime, 
-			string method, 
-			string path, 
-			string contentHashAlgorithm, 
+			DateTime currentTime,
+			string method,
+			string path,
+			string contentHashAlgorithm,
 			string contentHash)
 		{
 			var now = _timestampConverter.GetUnixTimestamp(currentTime);
 			var expire = now + _requestExpireSeconds;
 			var requestPayload = new Dictionary<string, object>
 			{
-				{"meth", method },
-				{"path", path }
+				{"meth", method},
+				{"path", path}
 			};
 			if (contentHashAlgorithm != null)
 			{
 				requestPayload["func"] = contentHashAlgorithm;
 				requestPayload["hash"] = contentHash;
 			}
+
 			var payload = new Dictionary<string, object>
 			{
 				{"jti", jti},
@@ -66,7 +67,7 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwt
 				{"request", requestPayload}
 			};
 			return Jose.JWT.Encode(
-				payload: payload, 
+				payload: payload,
 				key: _privateKeys[_currentPrivateKeyId],
 				algorithm: Jose.JwsAlgorithm.RS256,
 				extraHeaders: new Dictionary<string, object>
@@ -86,7 +87,7 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwt
 			if (alg == null) throw new JwtError("alg is not a string");
 
 			if (!AcceptableAlgorithms.Contains(alg)) throw new JwtError("alg is not of expected set: RS256, RS384 or RS512");
-			
+
 			try
 			{
 				var decoded = Jose.JWT.Decode(jwt, publicKey);

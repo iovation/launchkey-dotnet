@@ -58,7 +58,7 @@ namespace iovation.LaunchKey.Sdk.Client
 						serviceItem.Icon,
 						serviceItem.CallbackUrl,
 						serviceItem.Active
-				));
+					));
 			}
 
 			return services;
@@ -81,6 +81,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					)
 				);
 			}
+
 			return services;
 		}
 

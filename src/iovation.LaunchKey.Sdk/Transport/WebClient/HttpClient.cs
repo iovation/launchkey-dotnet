@@ -15,7 +15,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 
 		public WebRequestHttpClient(TimeSpan timeout)
 		{
-			_timeout = (int)timeout.TotalMilliseconds;
+			_timeout = (int) timeout.TotalMilliseconds;
 		}
 
 		public HttpResponse ExecuteRequest(
@@ -30,7 +30,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 
 		private HttpWebRequest CreateRequest(HttpMethod method, string url, Dictionary<string, string> headers)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
+			var request = (HttpWebRequest) WebRequest.Create(url);
 
 			request.Method = method.ToString();
 			request.Timeout = _timeout;
@@ -86,6 +86,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 						return ResponseFromFrameworkResponse(response);
 					}
 				}
+
 				throw;
 			}
 			finally

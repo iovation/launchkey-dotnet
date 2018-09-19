@@ -46,6 +46,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					)
 				);
 			}
+
 			return devices;
 		}
 
@@ -75,6 +76,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					)
 				);
 			}
+
 			return sessions;
 		}
 
@@ -99,7 +101,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
 		public Service GetService(Guid serviceId)
 		{
-			return GetServices(new List<Guid> { serviceId }).First();
+			return GetServices(new List<Guid> {serviceId}).First();
 		}
 
 		public List<Service> GetServices(List<Guid> serviceIds)
@@ -141,6 +143,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					)
 				);
 			}
+
 			return services;
 		}
 
@@ -174,7 +177,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			var response = _transport.DirectoryV3ServiceKeysPost(request, _directoryId);
 			return response.Id;
 		}
-		
+
 		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime? expires)
 		{
 			var request = new ServiceKeysPatchRequest(

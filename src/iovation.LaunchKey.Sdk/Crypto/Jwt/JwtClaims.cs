@@ -38,7 +38,6 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwt
 	}
 
 
-
 	public class JwtClaims
 	{
 		[JsonProperty("jti")]

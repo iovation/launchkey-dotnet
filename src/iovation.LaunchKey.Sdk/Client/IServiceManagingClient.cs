@@ -9,7 +9,7 @@ using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
-    public interface IServiceManagingClient
+	public interface IServiceManagingClient
 	{
 		/// <summary>
 		/// Create a new service

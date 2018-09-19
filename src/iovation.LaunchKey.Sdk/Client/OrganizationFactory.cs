@@ -20,7 +20,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			_transport = transport;
 			_organizationId = organizationId;
 		}
-		
+
 		/// <summary>
 		/// Create a service client for a child service within this organization or one of its child directories.
 		/// </summary>

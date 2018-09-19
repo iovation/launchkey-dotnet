@@ -2,7 +2,7 @@
 using System.Text;
 
 namespace iovation.LaunchKey.Sdk.Cache
-{	
+{
 	/// <summary>
 	/// A simple key-value caching interface
 	/// </summary>

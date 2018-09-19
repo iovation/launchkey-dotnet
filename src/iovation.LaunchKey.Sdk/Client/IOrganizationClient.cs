@@ -9,7 +9,7 @@ using iovation.LaunchKey.Sdk.Domain.Organization;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
-    public interface IOrganizationClient : IServiceManagingClient
+	public interface IOrganizationClient : IServiceManagingClient
 	{
 		/// <summary>
 		/// Creates a directory within the organization

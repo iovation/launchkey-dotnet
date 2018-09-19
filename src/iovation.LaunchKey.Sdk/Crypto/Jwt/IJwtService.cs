@@ -28,7 +28,7 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwt
 			DateTime currentTime,
 			string method,
 			string path,
-			string contentHashAlgorithm, 
+			string contentHashAlgorithm,
 			string contentHash
 		);
 

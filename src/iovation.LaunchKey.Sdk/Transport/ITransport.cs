@@ -38,7 +38,7 @@ namespace iovation.LaunchKey.Sdk.Transport
 		/// <param name="subject">the service ID associated with the auth request</param>
 		/// <returns>response details if the request is complete, null if it is pending</returns>
 		ServiceV3AuthsGetResponse ServiceV3AuthsGet(Guid authRequestId, EntityIdentifier subject);
-		
+
 		/// <summary>
 		/// Starts a session for a user with the service ID specified
 		/// </summary>

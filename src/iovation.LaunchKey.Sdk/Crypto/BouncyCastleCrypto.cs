@@ -72,7 +72,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
 		{
 			return DoHash(data, new Sha512Digest());
 		}
-		
+
 		public RSA LoadRsaPrivateKey(string keyContents)
 		{
 			if (keyContents == null) throw new ArgumentNullException(nameof(keyContents));

@@ -137,7 +137,7 @@ namespace iovation.LaunchKey.Sdk.Domain.ServiceManager
 						timeFences.Add(
 							new TimeFence(
 								timeFence.Name,
-								timeFence.Days.Select(day => (DayOfWeek)Enum.Parse(typeof(DayOfWeek), day, true)).ToList(),
+								timeFence.Days.Select(day => (DayOfWeek) Enum.Parse(typeof(DayOfWeek), day, true)).ToList(),
 								timeFence.StartHour,
 								timeFence.StartMinute,
 								timeFence.EndHour,
