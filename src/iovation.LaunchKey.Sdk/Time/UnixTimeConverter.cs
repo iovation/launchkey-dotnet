@@ -16,7 +16,7 @@ namespace iovation.LaunchKey.Sdk.Time
 				time = time.ToUniversalTime();
 
 			var elapsed = time.Subtract(_epoch);
-			return (long) elapsed.TotalSeconds;
+			return (long)elapsed.TotalSeconds;
 		}
 
 		public DateTime GetDateTime(long unixTimestamp)

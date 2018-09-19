@@ -61,14 +61,14 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != this.GetType()) return false;
-			return Equals((EntityIdentifier) obj);
+			return Equals((EntityIdentifier)obj);
 		}
 
 		public override int GetHashCode()
 		{
 			unchecked
 			{
-				return (Id.GetHashCode() * 397) ^ (int) Type;
+				return (Id.GetHashCode() * 397) ^ (int)Type;
 			}
 		}
 	}

@@ -33,7 +33,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 		private readonly IJsonEncoder _jsonDecoder;
 		private const string IOV_JWT_HEADER = "X-IOV-JWT";
 		private const string LAUNCHKEY_CACHE_PREFIX = "LaunchKeyPublicKey:";
-		
+
 		// key caching
 		private DateTime? _currentKeyExpires = null;
 		private CachedKey _currentKey = null;
@@ -62,10 +62,10 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 
 				// try to load it
 				var key = _crypto.LoadRsaPublicKey(serverResponse.PublicKey);
-				
+
 				// load ok, cache it 
 				_publicKeyCache.Put(
-					LAUNCHKEY_CACHE_PREFIX + serverResponse.PublicKeyFingerPrint, 
+					LAUNCHKEY_CACHE_PREFIX + serverResponse.PublicKeyFingerPrint,
 					serverResponse.PublicKey
 				);
 
@@ -87,6 +87,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 				_currentKey = FetchPublicKeyWithId(null);
 				_currentKeyExpires = DateTime.Now.AddSeconds(_currentPublicKeyTtl);
 			}
+
 			return _currentKey;
 		}
 
@@ -102,6 +103,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 					_serverTimeOffsetExpires = DateTime.Now.AddSeconds(_offsetTtl);
 				}
 			}
+
 			return DateTime.UtcNow.Add(_serverTimeOffset);
 		}
 
@@ -156,7 +158,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 				throw new CommunicationErrorException("A connection timeout occurred, see inner exception.", ex);
 			}
 		}
-		
+
 		private HttpResponse ExecuteRequest(
 			HttpMethod method,
 			string path,
@@ -187,6 +189,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 					hashString = ByteArrayUtils.ByteArrayToHexString(hash);
 					hashFunction = "S256";
 				}
+
 				var requestId = Guid.NewGuid().ToString("D");
 
 				// sign the encrypted payload and turn it into a JWT token ... this is sent as the header
@@ -246,7 +249,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 
 		private void ThrowForStatus(HttpResponse response, RSA publicKey, string requestId, List<int> httpStatusCodeWhiteList)
 		{
-			var code = (int) response.StatusCode;
+			var code = (int)response.StatusCode;
 			var name = response.StatusDescription;
 
 			// whitelisted HTTP code, ignore it
@@ -339,7 +342,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			if (response.Headers[HttpResponseHeader.CacheControl] != jwt.Response.CacheControlHeader)
 				throw new JwtError("Cache-Control header of response content does not match JWT response cache");
 
-			if ((int) response.StatusCode != jwt.Response.StatusCode)
+			if ((int)response.StatusCode != jwt.Response.StatusCode)
 			{
 				throw new JwtError("Status code of response content does not match JWT response status code");
 			}
@@ -415,16 +418,19 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			{
 				path += "/" + publicKeyFingerprint;
 			}
+
 			var response = ExecutePublicRequest(HttpMethod.GET, path);
 			var keyHeader = response.Headers["X-IOV-KEY-ID"];
 			if (keyHeader == null)
 			{
 				throw new InvalidResponseException("Public Key ID header X-IOV-KEY-ID not found in response");
 			}
+
 			if (string.IsNullOrWhiteSpace(response.ResponseBody))
 			{
 				throw new InvalidResponseException("Public key returned from server was empty or missing.");
 			}
+
 			return new PublicV3PublicKeyGetResponse(response.ResponseBody, keyHeader);
 		}
 
@@ -444,13 +450,13 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 		{
 			var response = ExecuteRequest(HttpMethod.GET, $"/service/v3/auths/{authRequestId}", subject, null, new List<int> {408});
 
-			if ((int) response.StatusCode == 204)
+			if ((int)response.StatusCode == 204)
 			{
 				// user has not responded yet
 				return null;
 			}
 
-			if ((int) response.StatusCode == 408)
+			if ((int)response.StatusCode == 408)
 			{
 				throw new AuthorizationRequestTimedOutError();
 			}

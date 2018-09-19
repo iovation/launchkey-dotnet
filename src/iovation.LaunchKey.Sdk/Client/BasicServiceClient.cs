@@ -95,7 +95,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			var serverSentEvent = _transport.HandleServerSentEvent(headers, body, method, path);
 			if (serverSentEvent is ServerSentEventAuthorizationResponse)
 			{
-				var authEvent = (ServerSentEventAuthorizationResponse) serverSentEvent;
+				var authEvent = (ServerSentEventAuthorizationResponse)serverSentEvent;
 				return new AuthorizationResponseWebhookPackage(
 					new AuthorizationResponse(
 						authEvent.AuthorizationRequestId.ToString("D"),
@@ -111,7 +111,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
 			if (serverSentEvent is ServerSentEventUserServiceSessionEnd)
 			{
-				var sessionEvent = (ServerSentEventUserServiceSessionEnd) serverSentEvent;
+				var sessionEvent = (ServerSentEventUserServiceSessionEnd)serverSentEvent;
 				return new ServiceUserSessionEndWebhookPackage(
 					sessionEvent.UserHash,
 					sessionEvent.ApiTime
