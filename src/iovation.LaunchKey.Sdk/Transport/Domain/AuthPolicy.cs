@@ -10,20 +10,24 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 		[JsonConverter(typeof(StringEnumConverter))]
 		public enum MinimumRequirementType
 		{
-			[EnumMember(Value = "authenticated")] Authenticated,
+			[EnumMember(Value = "authenticated")]
+			Authenticated,
 
-			[EnumMember(Value = "enabled")] Enabled
+			[EnumMember(Value = "enabled")]
+			Enabled
 		}
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public enum FactorType
 		{
-			[EnumMember(Value = "geofence")] Geofence,
+			[EnumMember(Value = "geofence")]
+			Geofence,
 
 			[EnumMember(Value = "device integrity")]
 			DeviceIntegrity,
 
-			[EnumMember(Value = "timefence")] TimeFence
+			[EnumMember(Value = "timefence")]
+			TimeFence
 		}
 
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -32,7 +36,8 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			[EnumMember(Value = "forced requirement")]
 			ForcedRequirement,
 
-			[EnumMember(Value = "allowed")] Allowed
+			[EnumMember(Value = "allowed")]
+			Allowed
 		}
 
 		[JsonProperty("minimum_requirements")]
