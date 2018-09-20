@@ -89,7 +89,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 			try
 			{
-				serviceClient.Authorize(username);
+				serviceClient.CreateAuthorizationRequest(username);
 				var webhookPackage = WaitForWebhookResponse(serviceClient);
 				var authPackage = webhookPackage as AuthorizationResponseWebhookPackage;
 				if (authPackage != null)
@@ -123,13 +123,13 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 			try
 			{
-				var authId = serviceClient.Authorize(username);
+				var authorizationRequest = serviceClient.CreateAuthorizationRequest(username);
 				while (true)
 				{
 					Console.WriteLine("checking auth");
 
 					// poll for a response
-					var authResponse = serviceClient.GetAuthorizationResponse(authId);
+					var authResponse = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
 
 					// if we got one, process it
 					if (authResponse != null)
@@ -194,13 +194,13 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 					locations: locations,
 					requiredFactors: factors
 				);
-				var authId = serviceClient.Authorize(username, null,  policy);
+				var authorizationRequest = serviceClient.CreateAuthorizationRequest(username, null,  policy);
 				while (true)
 				{
 					Console.WriteLine("checking auth");
 
 					// poll for a response
-					var authResponse = serviceClient.GetAuthorizationResponse(authId);
+					var authResponse = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
 
 					// if we got one, process it
 					if (authResponse != null)

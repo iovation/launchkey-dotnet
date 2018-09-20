@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk", "Iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj", "{A477BF92-ADD7-4737-A4A6-1192C81E3C53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk", "iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj", "{A477BF92-ADD7-4737-A4A6-1192C81E3C53}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk.Tests", "iovation.LaunchKey.Sdk.Tests\iovation.LaunchKey.Sdk.Tests.csproj", "{5C3CED1A-52D7-497E-BF4D-EDB2A9F1C72C}"
 EndProject
