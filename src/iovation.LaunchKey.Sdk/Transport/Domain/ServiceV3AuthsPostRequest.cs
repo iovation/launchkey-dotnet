@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+	using Newtonsoft.Json;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
@@ -13,11 +13,19 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 		[JsonProperty("context")]
 		public string Context { get; }
 
-		public ServiceV3AuthsPostRequest(string username, AuthPolicy authPolicy, string context)
+		[JsonProperty("title")]
+		public string Title { get; }
+
+		[JsonProperty("ttl")]
+		public int? TTL { get; }
+
+		public ServiceV3AuthsPostRequest(string username, AuthPolicy authPolicy, string context, string title, int? ttl)
 		{
 			Username = username;
 			AuthPolicy = authPolicy;
 			Context = context;
+			Title = title;
+			TTL = ttl;
 		}
 	}
 }

@@ -15,12 +15,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		/// <summary>
 		/// Start a session for a directory service and user
 		/// </summary>
-		public static int DoDirectoryServiceSessionStart(string directoryId, string privateKey, string serviceId, string userId)
+		public static int DoDirectoryServiceSessionStart(string directoryId, string privateKey, string serviceId, string userId, string APIURL)
 		{
 			try
 			{
 				var serviceKeyContents = File.ReadAllText(privateKey);
-				var factory = new FactoryFactoryBuilder().Build();
+				var factoryFactoryBuilder = new FactoryFactoryBuilder();
+				if (APIURL != null)
+				{
+					factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+				}
+				var factory = factoryFactoryBuilder.Build();
 				var directoryFactory = factory.MakeDirectoryFactory(directoryId, serviceKeyContents);
 				var serviceClient = directoryFactory.MakeServiceClient(serviceId);
 
@@ -38,12 +43,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		/// <summary>
 		/// End a session for a directory service and user
 		/// </summary>
-		public static int DoDirectoryServiceSessionEnd(string directoryId, string privateKey, string serviceId, string userId)
+		public static int DoDirectoryServiceSessionEnd(string directoryId, string privateKey, string serviceId, string userId, string APIURL)
 		{
 			try
 			{
 				var serviceKeyContents = File.ReadAllText(privateKey);
-				var factory = new FactoryFactoryBuilder().Build();
+				var factoryFactoryBuilder = new FactoryFactoryBuilder();
+				if (APIURL != null)
+				{
+					factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+				}
+				var factory = factoryFactoryBuilder.Build();
 				var directoryFactory = factory.MakeDirectoryFactory(directoryId, serviceKeyContents);
 				var serviceClient = directoryFactory.MakeServiceClient(serviceId);
 
@@ -61,17 +71,22 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		/// <summary>
 		/// Authorize a directory user against a directory service
 		/// </summary>
-		public static int DoDirectoryServiceAuth(string directoryId, string privateKey, string serviceId, string userId)
+		public static int DoDirectoryServiceAuth(string directoryId, string privateKey, string serviceId, string userId, string APIURL)
 		{
 			try
 			{
 				var serviceKeyContents = File.ReadAllText(privateKey);
-				var factory = new FactoryFactoryBuilder().Build();
+				var factoryFactoryBuilder = new FactoryFactoryBuilder();
+				if (APIURL != null)
+				{
+					factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+				}
+				var factory = factoryFactoryBuilder.Build();
 				var directoryFactory = factory.MakeDirectoryFactory(directoryId, serviceKeyContents);
 				var serviceClient = directoryFactory.MakeServiceClient(serviceId);
 
 				Console.WriteLine("Sending service auth request ... ");
-				var authorizationRequest = serviceClient.CreateAuthorizationRequest(userId);
+				var authorizationRequest = serviceClient.CreateAuthorizationRequest(userId, context: "This is a 60 second auth", title: ".NET Service SDK Test Directory Service Auth", ttl: 60);
 				while (true)
 				{
 					Console.WriteLine("checking auth");
@@ -105,12 +120,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		/// <summary>
 		/// List all devices associated with a user for the given directory and user id
 		/// </summary>
-		public static int DoDeviceList(string directoryId, string privateKey, string userId)
+		public static int DoDeviceList(string directoryId, string privateKey, string userId, string APIURL)
 		{
 			try
 			{
 				var serviceKeyContents = File.ReadAllText(privateKey);
-				var factory = new FactoryFactoryBuilder().Build();
+				var factoryFactoryBuilder = new FactoryFactoryBuilder();
+				if (APIURL != null)
+				{
+					factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+				}
+				var factory = factoryFactoryBuilder.Build();
 				var directoryFactory = factory.MakeDirectoryFactory(directoryId, serviceKeyContents);
 				var directoryClient = directoryFactory.MakeDirectoryClient();
 
@@ -142,12 +162,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		/// <summary>
 		/// Unlink a device from a user
 		/// </summary>
-		public static int DoDeviceUnlink(string directoryId, string privateKey, string userId, string deviceId)
+		public static int DoDeviceUnlink(string directoryId, string privateKey, string userId, string deviceId, string APIURL)
 		{
 			try
 			{
 				var serviceKeyContents = File.ReadAllText(privateKey);
-				var factory = new FactoryFactoryBuilder().Build();
+				var factoryFactoryBuilder = new FactoryFactoryBuilder();
+				if (APIURL != null)
+				{
+					factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+				}
+				var factory = factoryFactoryBuilder.Build();
 				var directoryFactory = factory.MakeDirectoryFactory(directoryId, serviceKeyContents);
 				var directoryClient = directoryFactory.MakeDirectoryClient();
 
@@ -166,12 +191,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		/// <summary>
 		/// Link a device to a user. This starts the process which must be completed via the authenticator app for this directory
 		/// </summary>
-		public static int DoDeviceLink(string directoryId, string privateKey, string userId)
+		public static int DoDeviceLink(string directoryId, string privateKey, string userId, string APIURL)
 		{
 			try
 			{
 				var serviceKeyContents = File.ReadAllText(privateKey);
-				var factory = new FactoryFactoryBuilder().Build();
+				var factoryFactoryBuilder = new FactoryFactoryBuilder();
+				if (APIURL != null)
+				{
+					factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+				}
+				var factory = factoryFactoryBuilder.Build();
 				var directoryFactory = factory.MakeDirectoryFactory(directoryId, serviceKeyContents);
 				var directoryClient = directoryFactory.MakeDirectoryClient();
 
@@ -190,12 +220,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		/// <summary>
 		/// List all active sessions across all services for a user within this directory
 		/// </summary>
-		public static int DoSessionList(string directoryId, string privateKey, string userId)
+		public static int DoSessionList(string directoryId, string privateKey, string userId, string APIURL)
 		{
 			try
 			{
 				var serviceKeyContents = File.ReadAllText(privateKey);
-				var factory = new FactoryFactoryBuilder().Build();
+				var factoryFactoryBuilder = new FactoryFactoryBuilder();
+				if (APIURL != null)
+				{
+					factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+				}
+				var factory = factoryFactoryBuilder.Build();
 				var directoryFactory = factory.MakeDirectoryFactory(directoryId, serviceKeyContents);
 				var directoryClient = directoryFactory.MakeDirectoryClient();
 
@@ -223,12 +258,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		/// <summary>
 		/// Purges all user sessions across all services for a user within this directory
 		/// </summary>
-		public static int DoSessionPurge(string directoryId, string privateKey, string userId)
+		public static int DoSessionPurge(string directoryId, string privateKey, string userId, string APIURL)
 		{
 			try
 			{
 				var serviceKeyContents = File.ReadAllText(privateKey);
-				var factory = new FactoryFactoryBuilder().Build();
+				var factoryFactoryBuilder = new FactoryFactoryBuilder();
+				if (APIURL != null)
+				{
+					factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+				}
+				var factory = factoryFactoryBuilder.Build();
 				var directoryFactory = factory.MakeDirectoryFactory(directoryId, serviceKeyContents);
 				var directoryClient = directoryFactory.MakeDirectoryClient();
 
