@@ -1,4 +1,4 @@
-	using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
