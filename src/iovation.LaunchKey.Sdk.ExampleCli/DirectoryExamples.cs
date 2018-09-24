@@ -71,15 +71,15 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		/// <summary>
 		/// Authorize a directory user against a directory service
 		/// </summary>
-		public static int DoDirectoryServiceAuth(string directoryId, string privateKey, string serviceId, string userId, string APIURL)
+		public static int DoDirectoryServiceAuth(string directoryId, string privateKey, string serviceId, string userId, string apiURL)
 		{
 			try
 			{
 				var serviceKeyContents = File.ReadAllText(privateKey);
 				var factoryFactoryBuilder = new FactoryFactoryBuilder();
-				if (APIURL != null)
+				if (apiURL != null)
 				{
-					factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+					factoryFactoryBuilder.SetApiBaseUrl(apiURL);
 				}
 				var factory = factoryFactoryBuilder.Build();
 				var directoryFactory = factory.MakeDirectoryFactory(directoryId, serviceKeyContents);
