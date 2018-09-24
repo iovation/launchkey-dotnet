@@ -14,6 +14,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		[Option('p', "private-key", HelpText = "Path to a file containing your LaunchKey private key for the organization", Required = true)]
 		public string PrivateKeyPath { get; set; }
+
+		[Option('a', "api-url", HelpText = "URL of the API", Required = false)]
+		public string APIURL { get; set; }
 	}
 
 	[Verb("org-directory-device-list", HelpText = "(Using Organization Credentials) List all devices linked to a directory user")]
@@ -44,8 +47,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		[Option('p', "private-key", HelpText = "Path to a file containing your LaunchKey private key for the directory", Required = true)]
 		public string PrivateKeyPath { get; set; }
+
+		[Option('a', "api-url", HelpText = "URL of the API", Required = false)]
+		public string APIURL { get; set; }
 	}
-	
+
 	[Verb("directory-device-link", HelpText = "Link a device for a directory user")]
 	class DirectoryLinkDeviceOptions : DirectoryOptions
 	{
@@ -121,6 +127,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		[Option('s', "service-id", HelpText = "The unique ID of the service", Required = true)]
 		public string ServiceId { get; set; }
+
+		[Option('a', "api-url", HelpText = "URL of the API", Required = false)]
+		public string APIURL { get; set; }
 	}
 
 	[Verb("service-auth-policy", HelpText = "Authorize a user against a service with an auth policy")]

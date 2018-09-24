@@ -26,7 +26,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			return CreateAuthorizationRequest(user, context, policy).Id;
 		}
 		
-		public AuthorizationRequest CreateAuthorizationRequest(string user, string context = null, AuthPolicy policy = null)
+		public AuthorizationRequest CreateAuthorizationRequest(string user, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null)
 		{
 			Transport.Domain.AuthPolicy requestPolicy = null;
 			if (policy != null)
@@ -47,7 +47,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					).ToList()
 				);
 			}
-			var request = new ServiceV3AuthsPostRequest(user, requestPolicy, context);
+			var request = new ServiceV3AuthsPostRequest(user, requestPolicy, context, title, ttl);
 			var response = _transport.ServiceV3AuthsPost(request, _serviceId);
 			var authRequest = new AuthorizationRequest(response.AuthRequest.ToString("D"), response.PushPackage);
 			return authRequest;

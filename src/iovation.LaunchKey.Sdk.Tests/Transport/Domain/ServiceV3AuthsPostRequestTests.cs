@@ -12,36 +12,56 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 		public void Constructor_ShouldSetProperties()
 		{
 			var authPolicy = new AuthPolicy(null, null, null, null, null, null);
-			var o = new ServiceV3AuthsPostRequest("un", authPolicy, "ctx");
+			var o = new ServiceV3AuthsPostRequest("un", authPolicy, "ctx", "title", 999);
 
 			Assert.AreSame(o.AuthPolicy, authPolicy);
 			Assert.AreEqual(o.Context, "ctx");
 			Assert.AreEqual(o.Username, "un");
+			Assert.AreEqual(o.Title, "title");
+			Assert.AreEqual(o.TTL, 999);
 		}
 
 		[TestMethod]
 		public void ShouldSerializeCorrectly_JustUserId()
 		{
 			var encoder = new JsonNetJsonEncoder();
-			var o = new ServiceV3AuthsPostRequest("my-unique-user-identifier", null, null);
+			var o = new ServiceV3AuthsPostRequest("my-unique-user-identifier", null, null, null, null);
 			var json = encoder.EncodeObject(o);
-			Assert.AreEqual("{\"username\":\"my-unique-user-identifier\"}",json);
+			Assert.AreEqual("{\"username\":\"my-unique-user-identifier\"}", json);
 		}
 
 		[TestMethod]
 		public void ShouldSerializeCorrectly_WithContext()
 		{
 			var encoder = new JsonNetJsonEncoder();
-			var o = new ServiceV3AuthsPostRequest("my-unique-user-identifier", null, "Authorizing charge for $12.34 at iovation.com");
+			var o = new ServiceV3AuthsPostRequest("my-unique-user-identifier", null, "Authorizing charge for $12.34 at iovation.com", null, null);
 			var json = encoder.EncodeObject(o);
-			Assert.AreEqual("{\"username\":\"my-unique-user-identifier\",\"context\":\"Authorizing charge for $12.34 at iovation.com\"}",json);
+			Assert.AreEqual("{\"username\":\"my-unique-user-identifier\",\"context\":\"Authorizing charge for $12.34 at iovation.com\"}", json);
 		}
 
 		[TestMethod]
-		public void ShouldSerializeCorrectly_WithContextAndPolicy()
+		public void ShouldSerializeCorrectly_WithTitle()
 		{
 			var encoder = new JsonNetJsonEncoder();
-			var policy = new AuthPolicy(2, null, null, null, null, 
+			var o = new ServiceV3AuthsPostRequest("my-unique-user-identifier", null, null, "Title", null);
+			var json = encoder.EncodeObject(o);
+			Assert.AreEqual("{\"username\":\"my-unique-user-identifier\",\"title\":\"Title\"}", json);
+		}
+
+		[TestMethod]
+		public void ShouldSerializeCorrectly_WithTTL()
+		{
+			var encoder = new JsonNetJsonEncoder();
+			var o = new ServiceV3AuthsPostRequest("my-unique-user-identifier", null, null, null, 999);
+			var json = encoder.EncodeObject(o);
+			Assert.AreEqual("{\"username\":\"my-unique-user-identifier\",\"ttl\":999}", json);
+		}
+
+		[TestMethod]
+		public void ShouldSerializeCorrectly_WithPolicy()
+		{
+			var encoder = new JsonNetJsonEncoder();
+			var policy = new AuthPolicy(2, null, null, null, null,
 				new System.Collections.Generic.List<AuthPolicy.Location>
 				{
 					new AuthPolicy.Location
@@ -52,7 +72,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 					}
 				}
 			);
-			var o = new ServiceV3AuthsPostRequest("my-unique-user-identifier", policy, null);
+			var o = new ServiceV3AuthsPostRequest("my-unique-user-identifier", policy, null, null, null);
 			var json = encoder.EncodeObject(o);
 			var expected = "{\"username\":\"my-unique-user-identifier\",\"policy\":{\"minimum_requirements\":[{\"requirement\":\"authenticated\",\"any\":2,\"knowledge\":0,\"inherence\":0,\"possession\":0}],\"factors\":[{\"factor\":\"geofence\",\"requirement\":\"forced requirement\",\"priority\":1,\"attributes\":{\"locations\":[{\"radius\":60.0,\"latitude\":27.175,\"longitude\":78.0422}]}}]}}";
 
