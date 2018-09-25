@@ -112,6 +112,46 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 		}
 
 		[TestMethod]
+		public void CreateAuthorizationRequest_ShouldCallTransportWithTitle()
+		{
+			var mockTransport = new Mock<ITransport>();
+			mockTransport.Setup(p => p.ServiceV3AuthsPost(
+				It.Is<ServiceV3AuthsPostRequest>(req => req.Username == "name" && req.Title == "title"),
+				It.IsAny<EntityIdentifier>()))
+				.Returns(new ServiceV3AuthsPostResponse
+				{
+					AuthRequest = TestConsts.DefaultAuthenticationId
+				})
+				.Verifiable();
+
+			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+
+			client.CreateAuthorizationRequest("name", title: "title");
+
+			mockTransport.Verify();
+		}
+
+		[TestMethod]
+		public void CreateAuthorizationRequest_ShouldCallTransportWithTtl()
+		{
+			var mockTransport = new Mock<ITransport>();
+			mockTransport.Setup(p => p.ServiceV3AuthsPost(
+				It.Is<ServiceV3AuthsPostRequest>(req => req.Username == "name" && req.TTL == 999),
+				It.IsAny<EntityIdentifier>()))
+				.Returns(new ServiceV3AuthsPostResponse
+				{
+					AuthRequest = TestConsts.DefaultAuthenticationId
+				})
+				.Verifiable();
+
+			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+
+			client.CreateAuthorizationRequest("name", ttl: 999);
+
+			mockTransport.Verify();
+		}
+
+		[TestMethod]
 		public void CreateAuthorizationRequest_ShouldCallTransportWithPolicy()
 		{
 			var mockTransport = new Mock<ITransport>();

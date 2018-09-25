@@ -8,10 +8,15 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 {
 	class OrgExamples
 	{
-		public static int DoServiceAuth(string orgId, string privateKey, string serviceId, string userId)
+		public static int DoServiceAuth(string orgId, string privateKey, string serviceId, string userId, string APIURL)
 		{
 			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factory = new FactoryFactoryBuilder().Build();
+			var factoryFactoryBuilder = new FactoryFactoryBuilder();
+			if (APIURL != null)
+			{
+				factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+			}
+			var factory = factoryFactoryBuilder.Build();
 			var organizationFactory = factory.MakeOrganizationFactory(orgId, serviceKeyContents);
 			var serviceClient = organizationFactory.MakeServiceClient(serviceId);
 			try
@@ -47,10 +52,15 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			}
 		}
 
-		public static int DoDirectoryDeviceList(string orgId, string privateKey, string directoryId, string userId)
+		public static int DoDirectoryDeviceList(string orgId, string privateKey, string directoryId, string userId, string APIURL)
 		{
 			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factory = new FactoryFactoryBuilder().Build();
+			var factoryFactoryBuilder = new FactoryFactoryBuilder();
+			if (APIURL != null)
+			{
+				factoryFactoryBuilder.SetApiBaseUrl(APIURL);
+			}
+			var factory = factoryFactoryBuilder.Build();
 			var organizationFactory = factory.MakeOrganizationFactory(orgId, serviceKeyContents);
 			var directoryClient = organizationFactory.MakeDirectoryClient(directoryId);
 			try
