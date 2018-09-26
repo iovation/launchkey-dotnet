@@ -8,7 +8,7 @@ Feature: Directory clients can create Directory Services
 
   Scenario: Client can send unique Service name and successfully create a Service
     When I create a Directory Service with the following:
-	  | key          | value                             |
+      | key          | value                             |
       | description  | Super Awesome Service             |
       | icon         | https://www.iovation.com/icon     |
       | callback_url | https://www.iovation.com/callback |

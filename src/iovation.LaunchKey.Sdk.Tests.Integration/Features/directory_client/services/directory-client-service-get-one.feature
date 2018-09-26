@@ -8,7 +8,7 @@ Feature: Directory clients can get an Directory Service
 
   Scenario: Client can retrieve a single Service
     Given I created a Directory Service with the following:
-	  | key          | value                             |
+      | key          | value                             |
       | description  | Super Awesome Service             |
       | icon         | https://www.iovation.com/icon     |
       | callback_url | https://www.iovation.com/callback |
