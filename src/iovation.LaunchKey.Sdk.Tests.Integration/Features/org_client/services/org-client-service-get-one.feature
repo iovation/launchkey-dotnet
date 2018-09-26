@@ -5,7 +5,7 @@ Feature: Organization clients can get an Organization Services
 
   Scenario: Client can retrieve a single Service
     Given I created a Organization Service with the following:
-	  | key          | value                             |
+      | key          | value                             |
       | description  | Super Awesome Service             |
       | icon         | https://www.iovation.com/icon     |
       | callback_url | https://www.iovation.com/callback |

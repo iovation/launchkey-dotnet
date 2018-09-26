@@ -20,7 +20,7 @@ Feature: Organization clients can add a Public Key to a Organization Service
 
   Scenario: Attempting to add a Public Key to an invalid Organization Service throws a Forbidden exception
     When I attempt to add a Public Key to the Organization Service with the ID "eba60cb8-c649-11e7-abc4-cec278b6b50a"
-	Then a Forbidden error occurs
+    Then a Forbidden error occurs
 
   Scenario: Attempting to add the same Public Key twice to the same Organization Service throws a PublicKeyAlreadyInUse exception
     When I add a Public Key to the Organization Service
