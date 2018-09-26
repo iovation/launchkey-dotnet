@@ -1,6 +1,6 @@
 ﻿version: 3.0.0.{build}
 
-configuration: Release
+configuration: Release_AppVeyor
 
 branches:
   only:
