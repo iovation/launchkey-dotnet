@@ -22,8 +22,8 @@ namespace iovation.LaunchKey.Sdk.Client
 		/// <param name="user">The username or directory user ID to authorize</param>
 		/// <param name="context">The message to display on the device during authorization request</param>
 		/// <param name="policy">The authorization policy to use when authorizing the user</param>
-		/// <param name="title">Time to live in seconds for the authorization request. If not provided or null, the system default will be used</param>
-		/// <param name="ttl">The title do display on the device during authorization request</param>
+		/// <param name="title">The title to display on the device during authorization request</param>
+		/// <param name="ttl">Time to live in seconds for the authorization request. If not provided or null, the system default will be used</param>
 		/// <returns>Information regarding the authorization request.</returns>
 		AuthorizationRequest CreateAuthorizationRequest(string user, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null);
 
