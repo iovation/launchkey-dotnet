@@ -1,24 +1,14 @@
 using System;
-using System.IO;
 using System.Threading;
-using iovation.LaunchKey.Sdk.Client;
 using iovation.LaunchKey.Sdk.Error;
 
 namespace iovation.LaunchKey.Sdk.ExampleCli
 {
 	class OrgExamples
 	{
-		public static int DoServiceAuth(string orgId, string privateKey, string serviceId, string userId, string APIURL)
+		public static int DoServiceAuth(string orgId, string privateKey, string serviceId, string userId, string apiURL)
 		{
-			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factoryFactoryBuilder = new FactoryFactoryBuilder();
-			if (APIURL != null)
-			{
-				factoryFactoryBuilder.SetApiBaseUrl(APIURL);
-			}
-			var factory = factoryFactoryBuilder.Build();
-			var organizationFactory = factory.MakeOrganizationFactory(orgId, serviceKeyContents);
-			var serviceClient = organizationFactory.MakeServiceClient(serviceId);
+			var serviceClient = ClientFactories.MakeOrganizationServiceClient(orgId, privateKey, serviceId, apiURL);
 			try
 			{
 				var authorizationRequest = serviceClient.CreateAuthorizationRequest(userId);
@@ -52,17 +42,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			}
 		}
 
-		public static int DoDirectoryDeviceList(string orgId, string privateKey, string directoryId, string userId, string APIURL)
+		public static int DoDirectoryDeviceList(string orgId, string privateKey, string directoryId, string userId, string apiURL)
 		{
-			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factoryFactoryBuilder = new FactoryFactoryBuilder();
-			if (APIURL != null)
-			{
-				factoryFactoryBuilder.SetApiBaseUrl(APIURL);
-			}
-			var factory = factoryFactoryBuilder.Build();
-			var organizationFactory = factory.MakeOrganizationFactory(orgId, serviceKeyContents);
-			var directoryClient = organizationFactory.MakeDirectoryClient(directoryId);
+			var directoryClient = ClientFactories.MakeOrganizationDirectoryClient(orgId, privateKey, directoryId, apiURL);
 			try
 			{
 				var deviceListResponse = directoryClient.GetLinkedDevices(userId);

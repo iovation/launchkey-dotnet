@@ -13,17 +13,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 {
 	class ServiceExamples
 	{
-		public static int DoSessionStart(string username, string serviceId, string privateKey, string APIURL)
+		public static int DoSessionStart(string username, string serviceId, string privateKey, string apiURL)
 		{
-			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factoryFactoryBuilder = new FactoryFactoryBuilder();
-			if (APIURL != null)
-			{
-				factoryFactoryBuilder.SetApiBaseUrl(APIURL);
-			}
-			var factory = factoryFactoryBuilder.Build();
-			var serviceFactory = factory.MakeServiceFactory(serviceId, serviceKeyContents);
-			var serviceClient = serviceFactory.MakeServiceClient();
+			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 			try
 			{
 				serviceClient.SessionStart(username);
@@ -36,17 +28,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			return 0;
 		}
 
-		public static int DoSessionEnd(string username, string serviceId, string privateKey, string APIURL)
+		public static int DoSessionEnd(string username, string serviceId, string privateKey, string apiURL)
 		{
-			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factoryFactoryBuilder = new FactoryFactoryBuilder();
-			if (APIURL != null)
-			{
-				factoryFactoryBuilder.SetApiBaseUrl(APIURL);
-			}
-			var factory = factoryFactoryBuilder.Build();
-			var serviceFactory = factory.MakeServiceFactory(serviceId, serviceKeyContents);
-			var serviceClient = serviceFactory.MakeServiceClient();
+			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 			try
 			{
 				serviceClient.SessionEnd(username);
@@ -90,17 +74,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			}
 		}
 
-		public static int DoServiceAuthorizationWebhook(string username, string serviceId, string privateKey, string APIURL)
+		public static int DoServiceAuthorizationWebhook(string username, string serviceId, string privateKey, string apiURL)
 		{
-			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factoryFactoryBuilder = new FactoryFactoryBuilder();
-			if (APIURL != null)
-			{
-				factoryFactoryBuilder.SetApiBaseUrl(APIURL);
-			}
-			var factory = factoryFactoryBuilder.Build();
-			var serviceFactory = factory.MakeServiceFactory(serviceId, serviceKeyContents);
-			var serviceClient = serviceFactory.MakeServiceClient();
+			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
 			try
 			{
@@ -129,17 +105,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			}
 		}
 
-		public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string APIURL)
+		public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL)
 		{
-			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factoryFactoryBuilder = new FactoryFactoryBuilder();
-			if (APIURL != null)
-			{
-				factoryFactoryBuilder.SetApiBaseUrl(APIURL);
-			}
-			var factory = factoryFactoryBuilder.Build();
-			var serviceFactory = factory.MakeServiceFactory(serviceId, serviceKeyContents);
-			var serviceClient = serviceFactory.MakeServiceClient();
+			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
 			try
 			{
@@ -174,17 +142,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			}
 		}
 
-		public static int DoServiceAuthorizationWithPolicy(string username, string serviceId, string privateKey, bool jailbreakDetection, int? factors, string geofence, string APIURL)
+		public static int DoServiceAuthorizationWithPolicy(string username, string serviceId, string privateKey, bool jailbreakDetection, int? factors, string geofence, string apiURL)
 		{
-			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factoryFactoryBuilder = new FactoryFactoryBuilder();
-			if (APIURL != null)
-			{
-				factoryFactoryBuilder.SetApiBaseUrl(APIURL);
-			}
-			var factory = factoryFactoryBuilder.Build();
-			var serviceFactory = factory.MakeServiceFactory(serviceId, serviceKeyContents);
-			var serviceClient = serviceFactory.MakeServiceClient();
+			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
 			List<Location> locations = null;
 			// parse geofence input

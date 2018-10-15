@@ -58,6 +58,7 @@
     <Compile Include="ProgramOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceExamples.cs" />
+    <Compile Include="ClientFactories.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj">
