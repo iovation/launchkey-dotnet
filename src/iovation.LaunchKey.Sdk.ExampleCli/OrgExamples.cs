@@ -70,25 +70,5 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 			return 0;
 		}
-
-		public static int DoCreateService(string orgId, string privateKey, string name)
-		{
-			var serviceKeyContents = File.ReadAllText(privateKey);
-			var factory = new FactoryFactoryBuilder().Build();
-			var organizationFactory = factory.MakeOrganizationFactory(orgId, serviceKeyContents);
-			var orgClient = organizationFactory.MakeOrganizationClient();
-			try
-			{
-				var svcId = orgClient.CreateService(name, "Example", new Uri("http://example.com"), new Uri("http://example.com/callback"), true);
-				Console.WriteLine($"Service created with ID {svcId}");
-			}
-			catch (BaseException e)
-			{
-				Console.WriteLine("There was an error creating the service: " + e.Message);
-			}
-
-			return 0;
-		}
-		
 	}
 }
