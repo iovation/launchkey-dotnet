@@ -49,7 +49,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
 		/// <summary>
 		/// Request the Platform API to generate a new Authenticator SDK Key and add to the Directory identified by the
-		/// provided Directory ID. One generated and added, it will be returned as the response.
+		/// provided Directory ID. Once generated and added, it will be returned as the response.
 		/// </summary>
 		/// <param name="directoryId">The directory to create the SDK key for</param>
 		/// <returns></returns>
