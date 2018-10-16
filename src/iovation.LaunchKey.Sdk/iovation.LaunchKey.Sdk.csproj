@@ -34,6 +34,9 @@
     <DocumentationFile>bin\Release\iovation.LaunchKey.Sdk.XML</DocumentationFile>
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_AppVeyor|AnyCPU'">
+    <OutputPath>bin\Release_AppVeyor\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
@@ -56,6 +59,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Client\BasicOrganizationClient.cs" />
+    <Compile Include="Domain\PublicKey.cs" />
+    <Compile Include="Domain\Organization\Directory.cs" />
+    <Compile Include="Client\IOrganizationClient.cs" />
+    <Compile Include="Client\IServiceManagingClient.cs" />
+    <Compile Include="Domain\ServiceManager\ServicePolicy.cs" />
+    <Compile Include="Domain\ServiceManager\Location.cs" />
+    <Compile Include="Domain\ServiceManager\Service.cs" />
+    <Compile Include="Domain\ServiceManager\TimeFence.cs" />
     <Compile Include="Domain\Webhook\ServiceUserSessionEndWebhookPackage.cs" />
     <Compile Include="Error\CacheException.cs" />
     <Compile Include="Cache\HashCache.cs" />
@@ -77,6 +89,13 @@
     <Compile Include="Crypto\BouncyCastleCrypto.cs" />
     <Compile Include="Crypto\Jwt\JwtClaims.cs" />
     <Compile Include="Crypto\Jwt\JwtData.cs" />
+    <Compile Include="Error\DirectoryNameInUse.cs" />
+    <Compile Include="Error\InvalidDirectoryIdentifier.cs" />
+    <Compile Include="Error\InvalidParameters.cs" />
+    <Compile Include="Error\InvalidPolicyInput.cs" />
+    <Compile Include="Error\InvalidPublicKey.cs" />
+    <Compile Include="Error\InvalidRoute.cs" />
+    <Compile Include="Error\InvalidSDKKey.cs" />
     <Compile Include="Error\JwtError.cs" />
     <Compile Include="Crypto\Jwt\JwtService.cs" />
     <Compile Include="Domain\Error.cs" />
@@ -92,8 +111,15 @@
     <Compile Include="Domain\Webhook\AuthorizationResponseWebhookPackage.cs" />
     <Compile Include="Domain\Webhook\IWebhookPackage.cs" />
     <Compile Include="Error\InvalidResponseException.cs" />
+    <Compile Include="Error\LastRemainingKey.cs" />
+    <Compile Include="Error\LastRemainingSDKKey.cs" />
+    <Compile Include="Error\PolicyFailure.cs" />
+    <Compile Include="Error\PublicKeyAlreadyInUse.cs" />
+    <Compile Include="Error\PublicKeyDoesNotExist.cs" />
     <Compile Include="Error\RateLimited.cs" />
     <Compile Include="Error\RequestTimedOut.cs" />
+    <Compile Include="Error\ServiceNameTaken.cs" />
+    <Compile Include="Error\ServiceNotFound.cs" />
     <Compile Include="Error\Unauthorized.cs" />
     <Compile Include="FactoryFactory.cs" />
     <Compile Include="FactoryFactoryBuilder.cs" />
@@ -104,6 +130,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Time\IUnixTimeConverter.cs" />
     <Compile Include="Time\UnixTimeConverter.cs" />
+    <Compile Include="Transport\Domain\DirectoryKeysDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryKeysListPostRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryKeysPatchRequest.cs" />
+    <Compile Include="Transport\Domain\DirectoryKeysPostRequest.cs" />
     <Compile Include="Transport\Domain\AuthPolicy.cs" />
     <Compile Include="Transport\Domain\DirectoryV3DevicesDeleteRequest.cs" />
     <Compile Include="Transport\Domain\DirectoryV3DevicesListPostRequest.cs" />
@@ -117,6 +147,8 @@
     <Compile Include="Transport\Domain\EntityKeyMap.cs" />
     <Compile Include="Transport\Domain\EntityType.cs" />
     <Compile Include="Error\NoKeyFoundException.cs" />
+    <Compile Include="Transport\Domain\ServicesPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServicesPostResponse.cs" />
     <Compile Include="Transport\ITransport.cs" />
     <Compile Include="Error\CommunicationErrorException.cs" />
     <Compile Include="Transport\Domain\PublicV3PingGetResponse.cs" />
@@ -130,6 +162,30 @@
     <Compile Include="Transport\Domain\ServiceV3SessionsDeleteRequest.cs" />
     <Compile Include="Transport\Domain\ServiceV3SessionsPostRequest.cs" />
     <Compile Include="Error\AuthorizationRequestTimedOutError.cs" />
+    <Compile Include="Transport\Domain\ServicesGetResponse.cs" />
+    <Compile Include="Transport\Domain\ServicesListPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServicesListPostResponse.cs" />
+    <Compile Include="Transport\Domain\ServicesPatchRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesGetResponse.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesListPostRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesListPostResponse.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesPatchRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesPostRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectoriesPostResponse.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysListPostRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysListPostResponse.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysPostRequest.cs" />
+    <Compile Include="Transport\Domain\OrganizationV3DirectorySdkKeysPostResponse.cs" />
+    <Compile Include="Transport\Domain\KeysListPostResponse.cs" />
+    <Compile Include="Transport\Domain\KeysPostResponse.cs" />
+    <Compile Include="Transport\Domain\ServiceKeysDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\ServiceKeysListPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServiceKeysPatchRequest.cs" />
+    <Compile Include="Transport\Domain\ServiceKeysPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServicePolicyDeleteRequest.cs" />
+    <Compile Include="Transport\Domain\ServicePolicyItemPostRequest.cs" />
+    <Compile Include="Transport\Domain\ServicePolicyPutRequest.cs" />
     <Compile Include="Transport\WebClient\CachedKey.cs" />
     <Compile Include="Transport\WebClient\HttpClient.cs" />
     <Compile Include="Transport\WebClient\HttpMethod.cs" />

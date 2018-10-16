@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
 	public class AuthPolicy
 	{
+		[JsonConverter(typeof(StringEnumConverter))]
 		public enum MinimumRequirementType
 		{
 			[EnumMember(Value = "authenticated")]
@@ -15,15 +17,20 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			Enabled
 		}
 
+		[JsonConverter(typeof(StringEnumConverter))]
 		public enum FactorType
 		{
 			[EnumMember(Value = "geofence")]
 			Geofence,
 
 			[EnumMember(Value = "device integrity")]
-			DeviceIntegrity
+			DeviceIntegrity,
+
+			[EnumMember(Value = "timefence")]
+			TimeFence
 		}
 
+		[JsonConverter(typeof(StringEnumConverter))]
 		public enum FactorRequirementType
 		{
 			[EnumMember(Value = "forced requirement")]
@@ -32,7 +39,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			[EnumMember(Value = "allowed")]
 			Allowed
 		}
-		
+
 		[JsonProperty("minimum_requirements")]
 		public List<MinimumRequirement> MinimumRequirements { get; set; }
 
@@ -48,13 +55,13 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			public int? Any { get; set; }
 
 			[JsonProperty("knowledge")]
-			public int Knowledge { get; set; }
+			public int? Knowledge { get; set; }
 
 			[JsonProperty("inherence")]
-			public int Inherence { get; set; }
+			public int? Inherence { get; set; }
 
 			[JsonProperty("possession")]
-			public int Possession { get; set; }
+			public int? Possession { get; set; }
 		}
 
 		public class AuthPolicyFactor
@@ -65,9 +72,9 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			[JsonProperty("requirement")]
 			public FactorRequirementType Requirement { get; set; }
 
-			[JsonProperty("priority")]
-			public int Priority { get; set; }
-			
+			[JsonProperty("priority", NullValueHandling = NullValueHandling.Ignore)]
+			public int? Priority { get; set; }
+
 			[JsonProperty("attributes")]
 			public AuthPolicyFactorAttributes Attributes { get; set; }
 		}
@@ -79,10 +86,16 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 
 			[JsonProperty("locations", NullValueHandling = NullValueHandling.Ignore)]
 			public List<Location> Locations { get; set; }
+
+			[JsonProperty("time fences", NullValueHandling = NullValueHandling.Ignore)]
+			public List<TimeFence> TimeFences { get; set; }
 		}
 
 		public class Location
 		{
+			[JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+			public string Name { get; set; }
+
 			[JsonProperty("radius")]
 			public double Radius { get; set; }
 
@@ -91,11 +104,62 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 
 			[JsonProperty("longitude")]
 			public double Longitude { get; set; }
+
+			public Location(string name, double radius, double latitude, double longitude)
+			{
+				Name = name;
+				Radius = radius;
+				Latitude = latitude;
+				Longitude = longitude;
+			}
+
+			public Location()
+			{
+			}
 		}
 
-		private int IntFromNullableBool(bool? val)
+		public class TimeFence
 		{
-			if (val == null) return 0;
+			[JsonProperty("name")]
+			public string Name { get; set; }
+
+			[JsonProperty("days")]
+			public List<string> Days { get; set; }
+
+			[JsonProperty("start hour")]
+			public int StartHour { get; set; }
+
+			[JsonProperty("end hour")]
+			public int EndHour { get; set; }
+
+			[JsonProperty("start minute")]
+			public int StartMinute { get; set; }
+
+			[JsonProperty("end minute")]
+			public int EndMinute { get; set; }
+
+			[JsonProperty("timezone")]
+			public string TimeZone { get; set; }
+
+			public TimeFence(string name, List<string> days, int startHour, int endHour, int startMinute, int endMinute, string timeZone)
+			{
+				Name = name;
+				Days = days;
+				StartHour = startHour;
+				EndHour = endHour;
+				StartMinute = startMinute;
+				EndMinute = endMinute;
+				TimeZone = timeZone;
+			}
+
+			internal TimeFence()
+			{
+			}
+		}
+
+		private int? IntFromNullableBool(bool? val)
+		{
+			if (val == null) return null;
 			return val.Value ? 1 : 0;
 		}
 
@@ -103,14 +167,15 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			int? any,
 			bool? requireKnowledgeFactor,
 			bool? requireInherenceFactor,
-			bool? requirePosessionFactor,
+			bool? requirePossessionFactor,
 			bool? deviceIntegrity,
-			List<Location> locations)
+			List<Location> locations,
+			List<TimeFence> timeFences = null)
 		{
 			MinimumRequirements = new List<MinimumRequirement>();
 			Factors = new List<AuthPolicyFactor>();
 
-			if (any != null || requireKnowledgeFactor != null || requireInherenceFactor != null || requirePosessionFactor != null)
+			if (any != null || requireKnowledgeFactor != null || requireInherenceFactor != null || requirePossessionFactor != null)
 			{
 				MinimumRequirements.Add(new MinimumRequirement
 				{
@@ -118,23 +183,10 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 					Any = any,
 					Knowledge = IntFromNullableBool(requireKnowledgeFactor),
 					Inherence = IntFromNullableBool(requireInherenceFactor),
-					Possession = IntFromNullableBool(requirePosessionFactor)
+					Possession = IntFromNullableBool(requirePossessionFactor)
 				});
 			}
-			if (deviceIntegrity != null)
-			{
-				Factors.Add(new AuthPolicyFactor
-				{
-					Factor = FactorType.DeviceIntegrity,
-					Priority = 1,
-					Requirement = FactorRequirementType.ForcedRequirement,
-					Attributes = new AuthPolicyFactorAttributes
-					{
-						FactorEnabled = deviceIntegrity.Value ? 1 : 0,
-						Locations = null
-					}
-				});
-			}
+
 			if (locations != null && locations.Count > 0)
 			{
 				Factors.Add(new AuthPolicyFactor
@@ -145,6 +197,34 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 					Attributes = new AuthPolicyFactorAttributes
 					{
 						Locations = locations
+					}
+				});
+			}
+
+			if (deviceIntegrity != null)
+			{
+				Factors.Add(new AuthPolicyFactor
+				{
+					Factor = FactorType.DeviceIntegrity,
+					Requirement = FactorRequirementType.ForcedRequirement,
+					Attributes = new AuthPolicyFactorAttributes
+					{
+						FactorEnabled = deviceIntegrity.Value ? 1 : 0,
+						Locations = null
+					}
+				});
+			}
+
+			if (timeFences != null && timeFences.Count > 0)
+			{
+				Factors.Add(new AuthPolicyFactor
+				{
+					Factor = FactorType.TimeFence,
+					Priority = 1,
+					Requirement = FactorRequirementType.ForcedRequirement,
+					Attributes = new AuthPolicyFactorAttributes
+					{
+						TimeFences = timeFences
 					}
 				});
 			}

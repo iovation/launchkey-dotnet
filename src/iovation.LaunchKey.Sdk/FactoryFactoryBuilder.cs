@@ -28,7 +28,7 @@ namespace iovation.LaunchKey.Sdk
 		private int _currentPublicKeyTtl = 300;
 		private string _apiBaseUrl = "https://api.launchkey.com";
 		private string _apiIdentifier = "lka";
-		
+
 		/// <summary>
 		/// Sets the TTL of requests in-flight. Should allow for some time in-flight, as well as processing time.
 		/// The SDK detects time drift between the server and the client, so this value should not have to compensate for that.
@@ -60,7 +60,19 @@ namespace iovation.LaunchKey.Sdk
 		/// </summary>
 		/// <param name="currentPublicKeyTtl">The duration, in seconds, between public key refetches</param>
 		/// <returns>The builder</returns>
+		[Obsolete]
 		public FactoryFactoryBuilder SetCurrentPublicKeyTttl(int currentPublicKeyTtl)
+		{
+			return SetCurrentPublicKeyTtl(currentPublicKeyTtl);
+		}
+
+		/// <summary>
+		/// Sets the duration that the SDK will cache the server's public key. This saves on network traffic, server load and client load.
+		/// Default is 5 minutes.
+		/// </summary>
+		/// <param name="currentPublicKeyTtl">The duration, in seconds, between public key refetches</param>
+		/// <returns>The builder</returns>
+		public FactoryFactoryBuilder SetCurrentPublicKeyTtl(int currentPublicKeyTtl)
 		{
 			_currentPublicKeyTtl = currentPublicKeyTtl;
 			return this;
@@ -144,7 +156,7 @@ namespace iovation.LaunchKey.Sdk
 			);
 			return this;
 		}
-		
+
 		/// <summary>
 		/// Adds an additional RSA private key for a known directory. Useful if you plan to process Webhook requests for a directory.
 		/// </summary>
@@ -196,8 +208,8 @@ namespace iovation.LaunchKey.Sdk
 		{
 			return new FactoryFactory(
 				GetCrypto(),
-				_httpClient??new WebRequestHttpClient(TimeSpan.FromSeconds(30)),
-				_cache??new HashCache(),
+				_httpClient ?? new WebRequestHttpClient(TimeSpan.FromSeconds(30)),
+				_cache ?? new HashCache(),
 				_apiBaseUrl,
 				_apiIdentifier,
 				_requestExpireSeconds,

@@ -4,3 +4,4 @@ obj
 .vs
 TestResults
 dist
+src/iovation.LaunchKey.Sdk.Tests.Integration/Secrets

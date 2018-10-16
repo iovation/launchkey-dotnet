@@ -6,9 +6,9 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 	{
 		public ServiceV3AuthsGetResponse(
 			EntityIdentifier requestingEntity,
-			Guid serviceId, 
-			string serviceUserHash, 
-			string organizationUserHash, 
+			Guid serviceId,
+			string serviceUserHash,
+			string organizationUserHash,
 			string userPushId,
 			Guid authorizationRequestId,
 			bool response,
@@ -35,6 +35,5 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 		public bool Response { get; }
 		public string DeviceId { get; }
 		public string[] DevicePins { get; }
-
 	}
 }

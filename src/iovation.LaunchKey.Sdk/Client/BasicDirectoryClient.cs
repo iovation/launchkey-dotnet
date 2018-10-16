@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Directory;
+using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 using iovation.LaunchKey.Sdk.Transport;
 using iovation.LaunchKey.Sdk.Transport.Domain;
 
@@ -42,6 +46,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					)
 				);
 			}
+
 			return devices;
 		}
 
@@ -71,6 +76,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					)
 				);
 			}
+
 			return sessions;
 		}
 
@@ -78,6 +84,134 @@ namespace iovation.LaunchKey.Sdk.Client
 		{
 			var request = new DirectoryV3SessionsDeleteRequest(userId);
 			_transport.DirectoryV3SessionsDelete(request, _directoryId);
+		}
+
+		public Guid CreateService(string name, string description, Uri icon, Uri callbackUrl, bool active)
+		{
+			var request = new ServicesPostRequest(name, description, icon, callbackUrl, active);
+			var response = _transport.DirectoryV3ServicesPost(request, _directoryId);
+			return response.Id;
+		}
+
+		public void UpdateService(Guid serviceId, string name, string description, Uri icon, Uri callbackUrl, bool active)
+		{
+			var request = new ServicesPatchRequest(serviceId, name, description, icon, callbackUrl, active);
+			_transport.DirectoryV3ServicesPatch(request, _directoryId);
+		}
+
+		public Service GetService(Guid serviceId)
+		{
+			return GetServices(new List<Guid> {serviceId}).First();
+		}
+
+		public List<Service> GetServices(List<Guid> serviceIds)
+		{
+			var request = new ServicesListPostRequest(serviceIds);
+			var response = _transport.DirectoryV3ServicesListPost(request, _directoryId);
+			var services = new List<Service>();
+
+			foreach (var serviceItem in response.Services)
+			{
+				services.Add(
+					new Service(
+						serviceItem.Id,
+						serviceItem.Name,
+						serviceItem.Description,
+						serviceItem.Icon,
+						serviceItem.CallbackUrl,
+						serviceItem.Active
+					));
+			}
+
+			return services;
+		}
+
+		public List<Service> GetAllServices()
+		{
+			var response = _transport.DirectoryV3ServicesGet(_directoryId);
+			var services = new List<Service>();
+			foreach (var serviceItem in response.Services)
+			{
+				services.Add(
+					new Service(
+						serviceItem.Id,
+						serviceItem.Name,
+						serviceItem.Description,
+						serviceItem.Icon,
+						serviceItem.CallbackUrl,
+						serviceItem.Active
+					)
+				);
+			}
+
+			return services;
+		}
+
+		public List<PublicKey> GetServicePublicKeys(Guid serviceId)
+		{
+			var request = new ServiceKeysListPostRequest(serviceId);
+			var response = _transport.DirectoryV3ServiceKeysListPost(request, _directoryId);
+			var keys = new List<PublicKey>();
+
+			foreach (var transportKey in response.PublicKeys)
+			{
+				keys.Add(new PublicKey(
+					transportKey.Id,
+					transportKey.Active,
+					transportKey.Created,
+					transportKey.Expires
+				));
+			}
+
+			return keys;
+		}
+
+		public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires)
+		{
+			var request = new ServiceKeysPostRequest(
+				serviceId,
+				publicKeyPem,
+				expires?.ToUniversalTime(),
+				active
+			);
+			var response = _transport.DirectoryV3ServiceKeysPost(request, _directoryId);
+			return response.Id;
+		}
+
+		public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime? expires)
+		{
+			var request = new ServiceKeysPatchRequest(
+				serviceId,
+				keyId,
+				expires?.ToUniversalTime(),
+				active
+			);
+			_transport.DirectoryV3ServiceKeysPatch(request, _directoryId);
+		}
+
+		public void RemoveServicePublicKey(Guid serviceId, string keyId)
+		{
+			var request = new ServiceKeysDeleteRequest(serviceId, keyId);
+			_transport.DirectoryV3ServiceKeysDelete(request, _directoryId);
+		}
+
+		public ServicePolicy GetServicePolicy(Guid serviceId)
+		{
+			var request = new ServicePolicyItemPostRequest(serviceId);
+			var response = _transport.DirectoryV3ServicePolicyItemPost(request, _directoryId);
+			return ServicePolicy.FromTransport(response);
+		}
+
+		public void SetServicePolicy(Guid serviceId, ServicePolicy policy)
+		{
+			var request = new ServicePolicyPutRequest(serviceId, policy.ToTransport());
+			_transport.DirectoryV3ServicePolicyPut(request, _directoryId);
+		}
+
+		public void RemoveServicePolicy(Guid serviceId)
+		{
+			var request = new ServicePolicyDeleteRequest(serviceId);
+			_transport.DirectoryV3ServicePolicyDelete(request, _directoryId);
 		}
 	}
 }

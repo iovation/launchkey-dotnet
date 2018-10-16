@@ -450,7 +450,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 
 			Assert.IsNull(response);
 		}
-
+		
 		[TestMethod]
 		[ExpectedException(typeof(AuthorizationRequestTimedOutError))]
 		public void ServiceV3AuthsGet_ShouldThrowIfTimedOut()
@@ -460,6 +460,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 			var transport = MakeMockedTransport(httpClient, MakeMockedJsonService().Object, 408);
 			transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
 		}
+
 
 		[TestMethod]
 		public void ServiceV3AuthsPost_ShouldCallApi()
@@ -552,6 +553,346 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		}
 
 		[TestMethod]
+		public void OrganizationV3ServicesPost_ShouldCallApi()
+		{
+			var request = new ServicesPostRequest(
+				"Super service",
+				"Description", 
+				new Uri("http://moreimportanter.tld/icon.ico"), 
+				new Uri("http://veryimportanturl.tld"),
+				true
+			);
+			DoApiCallTest(
+				t => t.OrganizationV3ServicesPost(request, TestConsts.DefaultOrganizationEntity), 
+				HttpMethod.POST, 
+				"/organization/v3/services"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicesPatch_ShouldCallApi()
+		{
+			var request = new ServicesPatchRequest(TestConsts.DefaultServiceId, "Test service", "Test desc", new Uri("http://e.com/i"), new Uri("http://e.com/cb"), true);
+			DoApiCallTest(
+				t => t.OrganizationV3ServicesPatch(request, TestConsts.DefaultOrganizationEntity),
+				HttpMethod.PATCH,
+				"/organization/v3/services"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicesListPost_ShouldCallApi()
+		{
+			var request = new ServicesListPostRequest(new List<Guid>{Guid.NewGuid()});
+			DoApiCallTest(
+				t => t.OrganizationV3ServicesListPost(request, TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/services/list"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicesGet_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3ServicesGet(TestConsts.DefaultOrganizationEntity),
+				HttpMethod.GET,
+				"/organization/v3/services"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoriesPost_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoriesPost(new OrganizationV3DirectoriesPostRequest("dir name"), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directories"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoriesListPatch_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoriesPatch(new OrganizationV3DirectoriesPatchRequest(TestConsts.DefaultDirectoryId, true, "android", "ioskey"), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.PATCH,
+				"/organization/v3/directories"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoriesGet_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoriesGet(TestConsts.DefaultOrganizationEntity),
+				HttpMethod.GET,
+				"/organization/v3/directories"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoriesListPost_ShouldCallApi()
+		{
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoriesListPost(new OrganizationV3DirectoriesListPostRequest(new List<Guid> {Guid.NewGuid()}), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directories/list"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServicesListPost_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3DirectorySdkKeysListPost(
+				new OrganizationV3DirectorySdkKeysListPostRequest(dirId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directory/sdk-keys/list"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectorySdkKeysPost_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3DirectorySdkKeysPost(
+				new OrganizationV3DirectorySdkKeysPostRequest(dirId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directory/sdk-keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectorySdkKeysDelete_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+			var keyId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3DirectorySdkKeysDelete(
+				new OrganizationV3DirectorySdkKeysDeleteRequest(dirId, keyId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/organization/v3/directory/sdk-keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServiceKeysListPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3ServiceKeysListPost(
+				new ServiceKeysListPostRequest(svcId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/service/keys/list"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServiceKeysPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServiceKeysPost(new ServiceKeysPostRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServiceKeysPatch_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServiceKeysPatch(new ServiceKeysPatchRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.PATCH,
+				"/organization/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServiceKeysDelete_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServiceKeysDelete(new ServiceKeysDeleteRequest(svcId, "key"), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/organization/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServiceKeysListPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.DirectoryV3ServiceKeysListPost(
+					new ServiceKeysListPostRequest(svcId), TestConsts.DefaultDirectoryEntity),
+				HttpMethod.POST,
+				"/directory/v3/service/keys/list"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServiceKeysPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServiceKeysPost(new ServiceKeysPostRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultDirectoryEntity),
+				HttpMethod.POST,
+				"/directory/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServiceKeysPatch_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServiceKeysPatch(new ServiceKeysPatchRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultDirectoryEntity),
+				HttpMethod.PATCH,
+				"/directory/v3/service/keys"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServiceKeysDelete_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServiceKeysDelete(new ServiceKeysDeleteRequest(svcId, "key"), TestConsts.DefaultDirectoryEntity),
+				HttpMethod.DELETE,
+				"/directory/v3/service/keys"
+			);
+		}
+
+
+		[TestMethod]
+		public void OrganizationV3DirectoryKeysListPost_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+
+			DoApiCallTest(t => t.OrganizationV3DirectoryKeysListPost(
+					new DirectoryKeysListPostRequest(dirId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directory/keys/list"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoryKeysPost_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoryKeysPost(new DirectoryKeysPostRequest(dirId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.POST,
+				"/organization/v3/directory/keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoryKeysPatch_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoryKeysPatch(new DirectoryKeysPatchRequest(dirId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.PATCH,
+				"/organization/v3/directory/keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3DirectoryKeysDelete_ShouldCallApi()
+		{
+			var dirId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3DirectoryKeysDelete(new DirectoryKeysDeleteRequest(dirId, "key"), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/organization/v3/directory/keys"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicePolicyPut_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServicePolicyPut(
+					new ServicePolicyPutRequest(svcId, new AuthPolicy(null,null,null,null,null,null)),
+					TestConsts.DefaultOrganizationEntity
+				),
+				HttpMethod.PUT,
+				"/organization/v3/service/policy"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicePolicyItemPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServicePolicyItemPost(
+					new ServicePolicyItemPostRequest(svcId),
+					TestConsts.DefaultOrganizationEntity
+				),
+				HttpMethod.POST,
+				"/organization/v3/service/policy/item"
+			);
+		}
+
+		[TestMethod]
+		public void OrganizationV3ServicePolicyDelete_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.OrganizationV3ServicePolicyDelete(new ServicePolicyDeleteRequest(svcId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/organization/v3/service/policy"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServicePolicyPut_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServicePolicyPut(
+					new ServicePolicyPutRequest(svcId, new AuthPolicy(null, null, null, null, null, null)),
+					TestConsts.DefaultOrganizationEntity
+				),
+				HttpMethod.PUT,
+				"/directory/v3/service/policy"
+			);
+		}
+		
+		[TestMethod]
+		public void DirectoryV3ServicePolicyItemPost_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServicePolicyItemPost(
+					new ServicePolicyItemPostRequest(svcId),
+					TestConsts.DefaultOrganizationEntity
+				),
+				HttpMethod.POST,
+				"/directory/v3/service/policy/item"
+			);
+		}
+
+		[TestMethod]
+		public void DirectoryV3ServicePolicyDelete_ShouldCallApi()
+		{
+			var svcId = Guid.NewGuid();
+			DoApiCallTest(
+				t => t.DirectoryV3ServicePolicyDelete(new ServicePolicyDeleteRequest(svcId), TestConsts.DefaultOrganizationEntity),
+				HttpMethod.DELETE,
+				"/directory/v3/service/policy"
+			);
+		}
+
+		[TestMethod]
 		[ExpectedException(typeof(InvalidResponseException))]
 		public void PrivateClaims_VerifyResponseCode()
 		{
@@ -598,7 +939,6 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 				Assert.AreEqual(e.InnerException.Message, "Hash of response content does not match JWT response hash");
 			}
 		}
-
 
 		[TestMethod]
 		public void PrivateClaims_VerifyHash512()

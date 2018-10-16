@@ -28,7 +28,7 @@ namespace iovation.LaunchKey.Sdk.Error
 			ErrorCode = errorCode;
 		}
 
-		public BaseException(SerializationInfo info, StreamingContext context) 
+		public BaseException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{
 			ErrorCode = info.GetString("ErrorCode");
@@ -43,6 +43,13 @@ namespace iovation.LaunchKey.Sdk.Error
 		public override string ToString()
 		{
 			return $"{GetType().Name}{{message='{Message}', ErrorCode='{ErrorCode}'}}";
+		}
+
+		public override bool Equals(object obj)
+		{
+			var exception = obj as BaseException;
+			return exception != null &&
+					ErrorCode == exception.ErrorCode;
 		}
 	}
 }

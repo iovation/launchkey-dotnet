@@ -70,6 +70,5 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 			return 0;
 		}
-		
 	}
 }

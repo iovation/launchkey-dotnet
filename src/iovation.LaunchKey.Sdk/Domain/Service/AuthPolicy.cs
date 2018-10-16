@@ -56,7 +56,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
 		/// <param name="requiredFactors">The minimum number of factors to allow. Note: this cannot be set when <paramref name="requireKnowledgeFactor"/>, <paramref name="requireInherenceFactor" /> or <paramref name="requirePosessionFactor"/> is set.</param>
 		/// <param name="requireKnowledgeFactor">Whether this request should enforce the knowledge factor</param>
 		/// <param name="requireInherenceFactor">Whether this request should enforce the inherence factor</param>
-		/// <param name="requirePosessionFactor">Whether this request should enforce the posession factor</param>
+		/// <param name="requirePosessionFactor">Whether this request should enforce the possession factor</param>
 		/// <param name="jailbreakDetection">Whether the service should enforce device integrity on this request (i.e. device has been jailbroken or the application pirated)</param>
 		/// <param name="locations">A list of valid geofences for this request</param>
 		public AuthPolicy(

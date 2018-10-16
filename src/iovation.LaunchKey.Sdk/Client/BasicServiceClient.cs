@@ -69,6 +69,7 @@ namespace iovation.LaunchKey.Sdk.Client
 					new List<string>(response.DevicePins)
 				);
 			}
+
 			return null;
 		}
 

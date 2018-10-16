@@ -41,7 +41,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 					(DirectoryServiceAuthOptions opts) => DirectoryExamples.DoDirectoryServiceAuth(opts.DirectoryId, opts.PrivateKeyPath, opts.ServiceId, opts.UserId, opts.APIURL),
 					(DirectoryServiceSessionStartOptions opts) => DirectoryExamples.DoDirectoryServiceSessionStart(opts.DirectoryId, opts.PrivateKeyPath, opts.ServiceId, opts.UserId, opts.APIURL),
 					(DirectoryServiceSessionEndOptions opts) => DirectoryExamples.DoDirectoryServiceSessionEnd(opts.DirectoryId, opts.PrivateKeyPath, opts.ServiceId, opts.UserId, opts.APIURL),
-					
+
+
 					// org functions
 					(OrgDirectoryListDevicesOptions opts) => OrgExamples.DoDirectoryDeviceList(opts.OrganizationId, opts.PrivateKeyPath, opts.DirectoryId, opts.UserId, opts.APIURL),
 					(OrgServiceAuthOptions opts) => OrgExamples.DoServiceAuth(opts.OrganizationId, opts.PrivateKeyPath, opts.ServiceId, opts.UserId, opts.APIURL),

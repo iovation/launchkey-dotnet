@@ -20,7 +20,7 @@ namespace iovation.LaunchKey.Sdk.Client
 			_transport = transport;
 			_organizationId = organizationId;
 		}
-		
+
 		/// <summary>
 		/// Create a service client for a child service within this organization or one of its child directories.
 		/// </summary>
@@ -39,6 +39,15 @@ namespace iovation.LaunchKey.Sdk.Client
 		public IDirectoryClient MakeDirectoryClient(string directoryId)
 		{
 			return new BasicDirectoryClient(Guid.Parse(directoryId), _transport);
+		}
+
+		/// <summary>
+		/// Creates an organization client for managing the organization, its services and directories
+		/// </summary>
+		/// <returns></returns>
+		public IOrganizationClient MakeOrganizationClient()
+		{
+			return new BasicOrganizationClient(_organizationId, _transport);
 		}
 	}
 }

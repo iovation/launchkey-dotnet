@@ -8,7 +8,12 @@ namespace iovation.LaunchKey.Sdk.Error
 	[Serializable]
 	public class JwtError : BaseException
 	{
-		public JwtError(string message) : base(message) { }
-		public JwtError(string message, Exception innerException) : base(message, innerException) { }
+		public JwtError(string message) : base(message)
+		{
+		}
+
+		public JwtError(string message, Exception innerException) : base(message, innerException)
+		{
+		}
 	}
 }

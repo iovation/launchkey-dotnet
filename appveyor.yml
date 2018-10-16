@@ -1,6 +1,6 @@
-﻿version: 3.0.0.{build}
+﻿version: 3.1.0.{build}
 
-configuration: Release
+configuration: Release_AppVeyor
 
 branches:
   only:
@@ -18,3 +18,8 @@ assembly_info:
   assembly_version: '{version}'
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
+
+test:
+  assemblies:
+    only:
+      - iovation.LaunchKey.Sdk.Tests.dll

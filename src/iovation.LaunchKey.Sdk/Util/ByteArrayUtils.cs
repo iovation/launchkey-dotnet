@@ -19,6 +19,7 @@ namespace iovation.LaunchKey.Sdk.Util
 					buffer.Append(separator);
 				buffer.Append(b.ToString("x2"));
 			}
+
 			return buffer.ToString();
 		}
 
@@ -28,10 +29,10 @@ namespace iovation.LaunchKey.Sdk.Util
 				throw new ArgumentException("data should be of length of a multiple of 2");
 
 			var buffer = new byte[data.Length / 2];
-			
+
 			for (var i = 0; i < data.Length / 2; i++)
 			{
-				var c = data.Substring(i*2, 2);
+				var c = data.Substring(i * 2, 2);
 				buffer[i] = Convert.ToByte(c, 16);
 			}
 
@@ -45,7 +46,8 @@ namespace iovation.LaunchKey.Sdk.Util
 			if (a == null || b == null) return false;
 			if (a.Length != b.Length) return false;
 			for (var i = 0; i < a.Length; i++)
-				if (a[i] != b[i]) return false;
+				if (a[i] != b[i])
+					return false;
 			return true;
 		}
 	}

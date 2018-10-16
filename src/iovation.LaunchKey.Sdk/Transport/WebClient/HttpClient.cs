@@ -71,7 +71,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 					}
 				}
 
-				using (var httpWebResponse = (HttpWebResponse) request.GetResponse())
+				using (var httpWebResponse = (HttpWebResponse)request.GetResponse())
 				{
 					return ResponseFromFrameworkResponse(httpWebResponse);
 				}
@@ -86,6 +86,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 						return ResponseFromFrameworkResponse(response);
 					}
 				}
+
 				throw;
 			}
 			finally

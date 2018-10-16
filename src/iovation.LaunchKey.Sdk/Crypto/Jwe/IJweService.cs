@@ -45,4 +45,3 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwe
 		Dictionary<string, string> GetHeaders(string data);
 	}
 }
-

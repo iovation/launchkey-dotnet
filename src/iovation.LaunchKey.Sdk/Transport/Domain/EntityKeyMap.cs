@@ -20,6 +20,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 				{
 					_store[entityIdentifier] = new Dictionary<string, RSA>();
 				}
+
 				_store[entityIdentifier][publicKeyFingerprint] = privateKey;
 			}
 		}

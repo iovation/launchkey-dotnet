@@ -14,7 +14,7 @@ namespace iovation.LaunchKey.Sdk.Client
 	{
 		private ITransport _transport;
 		private Guid _directoryId;
-		
+
 		/// <summary>
 		/// Creates a new instance
 		/// </summary>

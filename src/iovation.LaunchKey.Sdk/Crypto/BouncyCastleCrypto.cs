@@ -28,7 +28,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
 			var pemObject = pemReader.ReadObject();
 			if (pemObject is RsaKeyParameters)
 			{
-				return DotNetUtilities.ToRSA((RsaKeyParameters) pemObject);
+				return DotNetUtilities.ToRSA((RsaKeyParameters)pemObject);
 			}
 
 			throw new CryptographyError($"Failed to load public key from PEM file.");
@@ -72,7 +72,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
 		{
 			return DoHash(data, new Sha512Digest());
 		}
-		
+
 		public RSA LoadRsaPrivateKey(string keyContents)
 		{
 			if (keyContents == null) throw new ArgumentNullException(nameof(keyContents));
@@ -83,10 +83,10 @@ namespace iovation.LaunchKey.Sdk.Crypto
 				var pemObject = pemReader.ReadObject();
 				if (pemObject is AsymmetricCipherKeyPair)
 				{
-					var cipherPair = (AsymmetricCipherKeyPair) pemObject;
+					var cipherPair = (AsymmetricCipherKeyPair)pemObject;
 					if (cipherPair.Private == null) throw new CryptographyError("No private key found in PEM object");
 					if (!(cipherPair.Private is RsaPrivateCrtKeyParameters)) throw new CryptographyError("Private key is not RSA");
-					return DotNetUtilities.ToRSA((RsaPrivateCrtKeyParameters) cipherPair.Private);
+					return DotNetUtilities.ToRSA((RsaPrivateCrtKeyParameters)cipherPair.Private);
 				}
 
 				throw new CryptographyError($"Failed to load public key from PEM file. Object was not of type expected. ({pemObject})");

@@ -37,7 +37,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
 		public string UserPushId { get; }
 
 		/// <summary>
-		/// Unique identifier for the device the user used to respond to the Authorzation Request
+		/// Unique identifier for the device the user used to respond to the Authorization Request
 		/// </summary>
 		public string DeviceId { get; }
 

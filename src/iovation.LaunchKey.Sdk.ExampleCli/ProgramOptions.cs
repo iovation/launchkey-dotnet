@@ -175,5 +175,4 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('u', "username", HelpText = "The username to end the session for", Required = true)]
 		public string Username { get; set; }
 	}
-
 }

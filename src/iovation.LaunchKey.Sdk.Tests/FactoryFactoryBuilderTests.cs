@@ -84,10 +84,20 @@ namespace iovation.LaunchKey.Sdk.Tests
 		}
 
 		[TestMethod]
+		public void SetCurrentPublicKeyTttl_ShouldReturnSelf()
+		{
+			var ffb = new FactoryFactoryBuilder();
+#pragma warning disable CS0612
+			var result = ffb.SetCurrentPublicKeyTttl(10);
+#pragma warning restore
+			Assert.AreSame(ffb, result);
+		}
+
+		[TestMethod]
 		public void SetCurrentPublicKeyTtl_ShouldReturnSelf()
 		{
 			var ffb = new FactoryFactoryBuilder();
-			var result = ffb.SetCurrentPublicKeyTttl(10);
+			var result = ffb.SetCurrentPublicKeyTtl(10);
 			Assert.AreSame(ffb, result);
 		}
 

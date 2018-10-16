@@ -40,7 +40,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
 		/// <param name="data">the data to hash</param>
 		/// <returns>the computed hash</returns>
 		byte[] Sha384(byte[] data);
-		
+
 		/// <summary>
 		/// computes a SHA-512 hash
 		/// </summary>

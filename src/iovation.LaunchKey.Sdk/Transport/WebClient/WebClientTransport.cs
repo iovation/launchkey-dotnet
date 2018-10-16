@@ -33,7 +33,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 		private readonly IJsonEncoder _jsonDecoder;
 		private const string IOV_JWT_HEADER = "X-IOV-JWT";
 		private const string LAUNCHKEY_CACHE_PREFIX = "LaunchKeyPublicKey:";
-		
+
 		// key caching
 		private DateTime? _currentKeyExpires = null;
 		private CachedKey _currentKey = null;
@@ -62,10 +62,10 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 
 				// try to load it
 				var key = _crypto.LoadRsaPublicKey(serverResponse.PublicKey);
-				
+
 				// load ok, cache it 
 				_publicKeyCache.Put(
-					LAUNCHKEY_CACHE_PREFIX + serverResponse.PublicKeyFingerPrint, 
+					LAUNCHKEY_CACHE_PREFIX + serverResponse.PublicKeyFingerPrint,
 					serverResponse.PublicKey
 				);
 
@@ -87,6 +87,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 				_currentKey = FetchPublicKeyWithId(null);
 				_currentKeyExpires = DateTime.Now.AddSeconds(_currentPublicKeyTtl);
 			}
+
 			return _currentKey;
 		}
 
@@ -102,6 +103,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 					_serverTimeOffsetExpires = DateTime.Now.AddSeconds(_offsetTtl);
 				}
 			}
+
 			return DateTime.UtcNow.Add(_serverTimeOffset);
 		}
 
@@ -156,7 +158,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 				throw new CommunicationErrorException("A connection timeout occurred, see inner exception.", ex);
 			}
 		}
-		
+
 		private HttpResponse ExecuteRequest(
 			HttpMethod method,
 			string path,
@@ -187,6 +189,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 					hashString = ByteArrayUtils.ByteArrayToHexString(hash);
 					hashFunction = "S256";
 				}
+
 				var requestId = Guid.NewGuid().ToString("D");
 
 				// sign the encrypted payload and turn it into a JWT token ... this is sent as the header
@@ -246,7 +249,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 
 		private void ThrowForStatus(HttpResponse response, RSA publicKey, string requestId, List<int> httpStatusCodeWhiteList)
 		{
-			var code = (int) response.StatusCode;
+			var code = (int)response.StatusCode;
 			var name = response.StatusDescription;
 
 			// whitelisted HTTP code, ignore it
@@ -264,7 +267,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 				{
 					ValidateEncryptedResponse(response, publicKey, requestId);
 					var errorResponse = DecryptResponse<Sdk.Domain.Error>(response);
-					throw new InvalidRequestException($"An invalid request error from the API: {errorResponse.ErrorCode}:{errorResponse.ErrorDetail}", null, errorResponse.ErrorCode);
+					throw InvalidRequestException.FromErrorCode(errorResponse.ErrorCode, _jsonDecoder.EncodeObject(errorResponse.ErrorDetail));
 				}
 			}
 
@@ -339,7 +342,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			if (response.Headers[HttpResponseHeader.CacheControl] != jwt.Response.CacheControlHeader)
 				throw new JwtError("Cache-Control header of response content does not match JWT response cache");
 
-			if ((int) response.StatusCode != jwt.Response.StatusCode)
+			if ((int)response.StatusCode != jwt.Response.StatusCode)
 			{
 				throw new JwtError("Status code of response content does not match JWT response status code");
 			}
@@ -415,16 +418,19 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			{
 				path += "/" + publicKeyFingerprint;
 			}
+
 			var response = ExecutePublicRequest(HttpMethod.GET, path);
 			var keyHeader = response.Headers["X-IOV-KEY-ID"];
 			if (keyHeader == null)
 			{
 				throw new InvalidResponseException("Public Key ID header X-IOV-KEY-ID not found in response");
 			}
+
 			if (string.IsNullOrWhiteSpace(response.ResponseBody))
 			{
 				throw new InvalidResponseException("Public key returned from server was empty or missing.");
 			}
+
 			return new PublicV3PublicKeyGetResponse(response.ResponseBody, keyHeader);
 		}
 
@@ -444,13 +450,13 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 		{
 			var response = ExecuteRequest(HttpMethod.GET, $"/service/v3/auths/{authRequestId}", subject, null, new List<int> {408});
 
-			if ((int) response.StatusCode == 204)
+			if ((int)response.StatusCode == 204)
 			{
 				// user has not responded yet
 				return null;
 			}
 
-			if ((int) response.StatusCode == 408)
+			if ((int)response.StatusCode == 408)
 			{
 				throw new AuthorizationRequestTimedOutError();
 			}
@@ -531,6 +537,207 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 		public void DirectoryV3SessionsDelete(DirectoryV3SessionsDeleteRequest request, EntityIdentifier subject)
 		{
 			ExecuteRequest(HttpMethod.DELETE, "/directory/v3/sessions", subject, request, null);
+		}
+
+		public ServicesPostResponse OrganizationV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/services", subject, request, null);
+			var serviceResponse = DecryptResponse<ServicesPostResponse>(response);
+			return serviceResponse;
+		}
+
+		public void OrganizationV3ServicesPatch(ServicesPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/organization/v3/services", subject, request, null);
+		}
+
+		public ServicesListPostResponse OrganizationV3ServicesListPost(ServicesListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/services/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<ServicesListPostResponse.Service>>(response);
+			return new ServicesListPostResponse(decryptedResponse);
+		}
+
+		public ServicesGetResponse OrganizationV3ServicesGet(EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.GET, "/organization/v3/services", subject, null, null);
+			var decryptedResponse = DecryptResponse<List<ServicesGetResponse.Service>>(response);
+			return new ServicesGetResponse(decryptedResponse);
+		}
+
+		public OrganizationV3DirectoriesPostResponse OrganizationV3DirectoriesPost(OrganizationV3DirectoriesPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directories", subject, request, null);
+			var decryptedResponse = DecryptResponse<OrganizationV3DirectoriesPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void OrganizationV3DirectoriesPatch(OrganizationV3DirectoriesPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/organization/v3/directories", subject, request, null);
+		}
+
+		public OrganizationV3DirectoriesGetResponse OrganizationV3DirectoriesGet(EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.GET, "/organization/v3/directories", subject, null, null);
+			var decryptedResponse = DecryptResponse<List<OrganizationV3DirectoriesGetResponse.Directory>>(response);
+			return new OrganizationV3DirectoriesGetResponse(decryptedResponse);
+		}
+
+		public OrganizationV3DirectoriesListPostResponse OrganizationV3DirectoriesListPost(OrganizationV3DirectoriesListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directories/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<OrganizationV3DirectoriesListPostResponse.Directory>>(response);
+			return new OrganizationV3DirectoriesListPostResponse(decryptedResponse);
+		}
+
+		public ServicesPostResponse DirectoryV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/services", subject, request, null);
+			var serviceResponse = DecryptResponse<ServicesPostResponse>(response);
+			return serviceResponse;
+		}
+
+		public void DirectoryV3ServicesPatch(ServicesPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/directory/v3/services", subject, request, null);
+		}
+
+		public ServicesListPostResponse DirectoryV3ServicesListPost(ServicesListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/services/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<ServicesListPostResponse.Service>>(response);
+			return new ServicesListPostResponse(decryptedResponse);
+		}
+
+		public OrganizationV3DirectorySdkKeysPostResponse OrganizationV3DirectorySdkKeysPost(OrganizationV3DirectorySdkKeysPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directory/sdk-keys", subject, request, null);
+			var decryptedResponse = DecryptResponse<OrganizationV3DirectorySdkKeysPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void OrganizationV3DirectorySdkKeysDelete(OrganizationV3DirectorySdkKeysDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/organization/v3/directory/sdk-keys", subject, request, null);
+		}
+
+		public OrganizationV3DirectorySdkKeysListPostResponse OrganizationV3DirectorySdkKeysListPost(OrganizationV3DirectorySdkKeysListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directory/sdk-keys/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<Guid>>(response);
+			return new OrganizationV3DirectorySdkKeysListPostResponse(decryptedResponse);
+		}
+
+		public ServicesGetResponse DirectoryV3ServicesGet(EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.GET, "/directory/v3/services", subject, null, null);
+			var decryptedResponse = DecryptResponse<List<ServicesGetResponse.Service>>(response);
+			return new ServicesGetResponse(decryptedResponse);
+		}
+
+		public KeysListPostResponse OrganizationV3ServiceKeysListPost(ServiceKeysListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/service/keys/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<KeysListPostResponse.Key>>(response);
+			return new KeysListPostResponse(decryptedResponse);
+		}
+
+		public KeysPostResponse OrganizationV3ServiceKeysPost(ServiceKeysPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/service/keys", subject, request, null);
+			var decryptedResponse = DecryptResponse<KeysPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void OrganizationV3ServiceKeysPatch(ServiceKeysPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/organization/v3/service/keys", subject, request, null);
+		}
+
+		public void OrganizationV3ServiceKeysDelete(ServiceKeysDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/organization/v3/service/keys", subject, request, null);
+		}
+
+		public KeysListPostResponse OrganizationV3DirectoryKeysListPost(DirectoryKeysListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directory/keys/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<KeysListPostResponse.Key>>(response);
+			return new KeysListPostResponse(decryptedResponse);
+		}
+
+		public KeysPostResponse OrganizationV3DirectoryKeysPost(DirectoryKeysPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/directory/keys", subject, request, null);
+			var decryptedResponse = DecryptResponse<KeysPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void OrganizationV3DirectoryKeysPatch(DirectoryKeysPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/organization/v3/directory/keys", subject, request, null);
+		}
+
+		public void OrganizationV3DirectoryKeysDelete(DirectoryKeysDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/organization/v3/directory/keys", subject, request, null);
+		}
+
+		public KeysListPostResponse DirectoryV3ServiceKeysListPost(ServiceKeysListPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/service/keys/list", subject, request, null);
+			var decryptedResponse = DecryptResponse<List<KeysListPostResponse.Key>>(response);
+			return new KeysListPostResponse(decryptedResponse);
+		}
+
+		public KeysPostResponse DirectoryV3ServiceKeysPost(ServiceKeysPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/service/keys", subject, request, null);
+			var decryptedResponse = DecryptResponse<KeysPostResponse>(response);
+			return decryptedResponse;
+		}
+
+		public void DirectoryV3ServiceKeysPatch(ServiceKeysPatchRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PATCH, "/directory/v3/service/keys", subject, request, null);
+		}
+
+		public void DirectoryV3ServiceKeysDelete(ServiceKeysDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/directory/v3/service/keys", subject, request, null);
+		}
+
+		public void OrganizationV3ServicePolicyPut(ServicePolicyPutRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PUT, "/organization/v3/service/policy", subject, request, null);
+		}
+
+		public AuthPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/service/policy/item", subject, request, null);
+			return DecryptResponse<AuthPolicy>(response);
+		}
+
+		public void OrganizationV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/organization/v3/service/policy", subject, request, null);
+		}
+
+		public void DirectoryV3ServicePolicyPut(ServicePolicyPutRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.PUT, "/directory/v3/service/policy", subject, request, null);
+		}
+
+		public AuthPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
+		{
+			var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/service/policy/item", subject, request, null);
+			return DecryptResponse<AuthPolicy>(response);
+		}
+
+		public void DirectoryV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject)
+		{
+			ExecuteRequest(HttpMethod.DELETE, "/directory/v3/service/policy", subject, request, null);
 		}
 
 		private string GetFirstHeader(Dictionary<string, List<string>> headers, string headerKey)

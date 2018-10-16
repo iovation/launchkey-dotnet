@@ -11,7 +11,7 @@ namespace iovation.LaunchKey.Sdk.Json
 	class UnixTimestampJsonDateConverter : Newtonsoft.Json.Converters.DateTimeConverterBase
 	{
 		private static readonly UnixTimeConverter _converter = new UnixTimeConverter();
-			
+
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
 			if (value == null) return;

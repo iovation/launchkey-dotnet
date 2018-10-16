@@ -106,14 +106,15 @@ namespace iovation.LaunchKey.Sdk
 		}
 
 		private ITransport MakeTransport(
-			EntityIdentifier issuer, 
-			Dictionary<string, RSA> privateKeys, 
+			EntityIdentifier issuer,
+			Dictionary<string, RSA> privateKeys,
 			string currentPrivateKey)
 		{
 			foreach (var key in privateKeys)
 			{
 				_entityKeyMap.AddKey(issuer, key.Key, key.Value);
 			}
+
 			return new WebClientTransport(
 				_httpClient,
 				_crypto,
