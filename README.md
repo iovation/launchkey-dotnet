@@ -7,7 +7,9 @@ This SDK is targeted toward:
 
 - Windows 2008 R2 and above
 - Windows 7 and above
-- .NET 4.0+
+- .NET Framework 4.0+
+- .NET Standard 2.0 (.NET 4.6.1+, .NET Core 2.0+, Mono 5.4, etc.) See .NET Standard compatibility here: https://docs.microsoft.com/en-us/dotnet/standard/net-standard
+
 
 ## Building
 The solution file is for Visual Studio 2015. The project should build out of the box. Simply clone, open in VS, compile.
