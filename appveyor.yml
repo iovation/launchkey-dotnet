@@ -4,6 +4,9 @@ image: Visual Studio 2017
 
 configuration: Release_AppVeyor
 
+before_build:
+  - cmd: dotnet restore src\iovation.LaunchKey.Sdk.sln
+
 branches:
   only:
     - master
