@@ -44,7 +44,6 @@ Global
 		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Release_AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
-		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Release_AppVeyor|Any CPU.Build.0 = Release|Any CPU
 		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
