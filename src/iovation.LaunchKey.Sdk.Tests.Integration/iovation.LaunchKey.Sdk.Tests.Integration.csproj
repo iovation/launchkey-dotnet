@@ -1,557 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\MSTest.TestAdapter.1.2.1\build\net45\MSTest.TestAdapter.props" Condition="Exists('..\packages\MSTest.TestAdapter.1.2.1\build\net45\MSTest.TestAdapter.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6A1A3977-7D8C-48F0-9625-23B55AAC54DB}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>iovation.LaunchKey.Sdk.Tests.Integration</RootNamespace>
-    <AssemblyName>iovation.LaunchKey.Sdk.Tests.Integration</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>netcoreapp2.1;net45</TargetFrameworks>
+
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_AppVeyor|AnyCPU'">
-    <OutputPath>bin\Release_AppVeyor\</OutputPath>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=4.55.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
-      <HintPath>..\packages\CompareNETObjects.4.55.0.0\lib\net46\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MSTest.TestFramework.1.2.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MSTest.TestFramework.1.2.1\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="TechTalk.SpecFlow, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.2.4.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <None Remove="Keys\alpha-cert-sha256-fingerprint.txt" />
+    <None Remove="Keys\alpha-public-key-md5-fingerprint.txt" />
+    <None Remove="Keys\beta-cert-sha256-fingerprint.txt" />
+    <None Remove="Keys\beta-public-key-md5-fingerprint.txt" />
+    <None Remove="Secrets\OrgId.txt" />
+    <None Remove="Secrets\OrgPrivateKey.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Features\directory_client\devices\directory-client-device-link.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-device-link.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\devices\directory-client-device-list.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-device-list.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\devices\directory-client-device-unlink.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-device-unlink.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\directory-client-service-create.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-create.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\directory-client-service-get-all.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-get-all.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\directory-client-service-get-list.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-get-list.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\directory-client-service-get-one.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-get-one.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\directory-client-service-update.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-update.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\policy\directory-client-service-policy-get.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-policy-get.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\policy\directory-client-service-policy-remove.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-policy-remove.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\policy\directory-client-service-policy-set.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-policy-set.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-add.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-public-keys-add.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-get.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-public-keys-get.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-remove.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-public-keys-remove.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-update.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-public-keys-update.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\sessions\directory-client-service-sessions-delete.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-sessions-delete.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\directory_client\sessions\directory-client-service-sessions-get.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>directory-client-service-sessions-get.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\org-client-directory-create.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-create.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\org-client-directory-get-all.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-get-all.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\org-client-directory-get-list.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-get-list.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\org-client-directory-get-one.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-get-one.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\org-client-directory-update.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-update.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-add.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-public-keys-add.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-get.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-public-keys-get.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-remove.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-public-keys-remove.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-update.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-public-keys-update.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-generate-and-add.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-sdk-keys-generate-and-add.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-list.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-sdk-keys-list.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-remove.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-directory-sdk-keys-remove.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\org-client-service-create.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-create.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\org-client-service-get-all.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-get-all.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\org-client-service-get-list.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-get-list.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\org-client-service-get-one.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-get-one.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\org-client-service-update.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-update.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\policy\org-client-service-policy-get.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-policy-get.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\policy\org-client-service-policy-remove.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-policy-remove.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\policy\org-client-service-policy-set.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-policy-set.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\public_keys\org-client-service-public-keys-add.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-public-keys-add.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\public_keys\org-client-service-public-keys-get.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-public-keys-get.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\public_keys\org-client-service-public-keys-remove.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-public-keys-remove.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\org_client\services\public_keys\org-client-service-public-keys-update.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>org-client-service-public-keys-update.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\service_client\auth_request\service-client-auth-request-get.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>service-client-auth-request-get.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\service_client\auth_request\service-client-auth-request-send-policy.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>service-client-auth-request-send-policy.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\service_client\auth_request\service-client-auth-request-send.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>service-client-auth-request-send.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\service_client\session\service-client-session-end.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>service-client-session-end.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\service_client\session\service-client-session-start.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>service-client-session-start.feature</DependentUpon>
-    </Compile>
-    <Compile Include="SpecFlow\Contexts\DirectoryClientContext.cs" />
-    <Compile Include="SpecFlow\Contexts\DirectoryServiceClientContext.cs" />
-    <Compile Include="SpecFlow\KeyManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpecFlow\Contexts\CommonContext.cs" />
-    <Compile Include="SpecFlow\Steps\CommonSteps.cs" />
-    <Compile Include="SpecFlow\Contexts\OrgClientContext.cs" />
-    <Compile Include="SpecFlow\Contexts\CreatedDirectoryInfo.cs" />
-    <Compile Include="SpecFlow\Contexts\CreatedServiceInfo.cs" />
-    <Compile Include="SpecFlow\Steps\DirectoryDeviceSteps.cs" />
-    <Compile Include="SpecFlow\Steps\DirectoryServiceAuthSteps.cs" />
-    <Compile Include="SpecFlow\Steps\DirectoryServicePublicKeySteps.cs" />
-    <Compile Include="SpecFlow\Steps\DirectoryServiceSessionSteps.cs" />
-    <Compile Include="SpecFlow\Steps\DirectoryServiceSteps.cs" />
-    <Compile Include="SpecFlow\Steps\DirectorySessionSteps.cs" />
-    <Compile Include="SpecFlow\Steps\DirectoryServicePolicySteps.cs" />
-    <Compile Include="SpecFlow\Steps\ServiceAuthSteps.cs" />
-    <Compile Include="SpecFlow\Tables\GeofenceTableRow.cs" />
-    <Compile Include="SpecFlow\Steps\OrganizationDirectoryPublicKeySteps.cs" />
-    <Compile Include="SpecFlow\Steps\OrganizationDirectorySteps.cs" />
-    <Compile Include="SpecFlow\Steps\OrganizationServicePolicySteps.cs" />
-    <Compile Include="SpecFlow\Steps\OrganizationServicePublicKeysSteps.cs" />
-    <Compile Include="SpecFlow\Steps\OrganizationServiceSteps.cs" />
-    <Compile Include="SpecFlow\Tables\TimeFenceTableRow.cs" />
-    <Compile Include="SpecFlow\Tables\ServiceDescriptionTable.cs" />
-    <Compile Include="SpecFlow\TableUtils.cs" />
-    <Compile Include="SpecFlow\Util.cs" />
-    <Compile Include="SpecFlow\TestConfiguration.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Features\directory_client\devices\directory-client-device-link.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-device-link.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\devices\directory-client-device-list.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-device-list.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\devices\directory-client-device-unlink.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-device-unlink.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\directory-client-service-create.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-create.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\directory-client-service-get-all.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-get-all.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\directory-client-service-get-list.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-get-list.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\directory-client-service-get-one.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-get-one.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\directory-client-service-update.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-update.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\policy\directory-client-service-policy-get.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-policy-get.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\policy\directory-client-service-policy-remove.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-policy-remove.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\policy\directory-client-service-policy-set.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-policy-set.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-add.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-public-keys-add.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-get.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-public-keys-get.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-remove.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-public-keys-remove.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\services\public_keys\directory-client-service-public-keys-update.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-public-keys-update.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\sessions\directory-client-service-sessions-delete.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-sessions-delete.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\directory_client\sessions\directory-client-service-sessions-get.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>directory-client-service-sessions-get.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\org-client-directory-create.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-create.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\org-client-directory-get-all.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-get-all.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\org-client-directory-get-list.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-get-list.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\org-client-directory-get-one.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-get-one.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\org-client-directory-update.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-update.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-add.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-public-keys-add.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-get.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-public-keys-get.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-remove.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-public-keys-remove.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\public_keys\org-client-directory-public-keys-update.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-public-keys-update.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-generate-and-add.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-sdk-keys-generate-and-add.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-list.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-sdk-keys-list.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-remove.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-directory-sdk-keys-remove.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\org-client-service-create.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-create.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\org-client-service-get-all.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-get-all.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\org-client-service-get-list.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-get-list.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\org-client-service-get-one.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-get-one.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\org-client-service-update.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-update.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\policy\org-client-service-policy-get.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-policy-get.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\policy\org-client-service-policy-remove.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-policy-remove.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\policy\org-client-service-policy-set.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-policy-set.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-add.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-public-keys-add.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-get.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-public-keys-get.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-remove.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-public-keys-remove.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\org_client\services\public_keys\org-client-service-public-keys-update.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>org-client-service-public-keys-update.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\service_client\auth_request\service-client-auth-request-get.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>service-client-auth-request-get.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\service_client\auth_request\service-client-auth-request-send-policy.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>service-client-auth-request-send-policy.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\service_client\auth_request\service-client-auth-request-send.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>service-client-auth-request-send.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\service_client\session\service-client-session-end.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>service-client-session-end.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\service_client\session\service-client-session-start.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>service-client-session-start.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Keys\alpha-cert.crt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Keys\alpha-cert.csr">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Keys\alpha-cert.p12">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Keys\alpha-private-key.pem">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Keys\alpha-public-key.pem">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Keys\beta-cert.crt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Keys\beta-cert.csr">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Keys\beta-cert.p12">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Keys\beta-private-key.pem">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Keys\beta-public-key.pem">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj">
-      <Project>{A477BF92-ADD7-4737-A4A6-1192C81E3C53}</Project>
-      <Name>iovation.LaunchKey.Sdk</Name>
-    </ProjectReference>
-  </ItemGroup>
+
   <ItemGroup>
     <Content Include="Keys\alpha-cert-sha256-fingerprint.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -572,17 +35,543 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.2.1\build\net45\MSTest.TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.2.1\build\net45\MSTest.TestAdapter.props'))" />
-    <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.2.1\build\net45\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.2.1\build\net45\MSTest.TestAdapter.targets'))" />
-    <Error Condition="!Exists('..\packages\SpecFlow.2.4.0\build\SpecFlow.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SpecFlow.2.4.0\build\SpecFlow.targets'))" />
-  </Target>
-  <Import Project="..\packages\MSTest.TestAdapter.1.2.1\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.2.1\build\net45\MSTest.TestAdapter.targets')" />
-  <Import Project="..\packages\SpecFlow.2.4.0\build\SpecFlow.targets" Condition="Exists('..\packages\SpecFlow.2.4.0\build\SpecFlow.targets')" />
+
+  <ItemGroup>
+    <PackageReference Include="CompareNETObjects" Version="4.57.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Include="SpecFlow" Version="2.4.0" />
+    <PackageReference Include="SpecFlow.MsTest" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TechTalk.SpecFlow">
+      <HintPath>C:\Users\jharg\.nuget\packages\specflow\2.4.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Features\directory_client\devices\directory-client-device-link.feature.cs">
+      <DependentUpon>directory-client-device-link.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\devices\directory-client-device-list.feature.cs">
+      <DependentUpon>directory-client-device-list.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\devices\directory-client-device-unlink.feature.cs">
+      <DependentUpon>directory-client-device-unlink.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\directory-client-service-create.feature.cs">
+      <DependentUpon>directory-client-service-create.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\directory-client-service-get-all.feature.cs">
+      <DependentUpon>directory-client-service-get-all.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\directory-client-service-get-list.feature.cs">
+      <DependentUpon>directory-client-service-get-list.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\directory-client-service-get-one.feature.cs">
+      <DependentUpon>directory-client-service-get-one.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\directory-client-service-update.feature.cs">
+      <DependentUpon>directory-client-service-update.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\policy\directory-client-service-policy-get.feature.cs">
+      <DependentUpon>directory-client-service-policy-get.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\policy\directory-client-service-policy-remove.feature.cs">
+      <DependentUpon>directory-client-service-policy-remove.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\policy\directory-client-service-policy-set.feature.cs">
+      <DependentUpon>directory-client-service-policy-set.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\public_keys\directory-client-service-public-keys-add.feature.cs">
+      <DependentUpon>directory-client-service-public-keys-add.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\public_keys\directory-client-service-public-keys-get.feature.cs">
+      <DependentUpon>directory-client-service-public-keys-get.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\public_keys\directory-client-service-public-keys-remove.feature.cs">
+      <DependentUpon>directory-client-service-public-keys-remove.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\services\public_keys\directory-client-service-public-keys-update.feature.cs">
+      <DependentUpon>directory-client-service-public-keys-update.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\sessions\directory-client-service-sessions-delete.feature.cs">
+      <DependentUpon>directory-client-service-sessions-delete.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\directory_client\sessions\directory-client-service-sessions-get.feature.cs">
+      <DependentUpon>directory-client-service-sessions-get.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\org-client-directory-create.feature.cs">
+      <DependentUpon>org-client-directory-create.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\org-client-directory-get-all.feature.cs">
+      <DependentUpon>org-client-directory-get-all.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\org-client-directory-get-list.feature.cs">
+      <DependentUpon>org-client-directory-get-list.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\org-client-directory-get-one.feature.cs">
+      <DependentUpon>org-client-directory-get-one.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\org-client-directory-update.feature.cs">
+      <DependentUpon>org-client-directory-update.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\public_keys\org-client-directory-public-keys-add.feature.cs">
+      <DependentUpon>org-client-directory-public-keys-add.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\public_keys\org-client-directory-public-keys-get.feature.cs">
+      <DependentUpon>org-client-directory-public-keys-get.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\public_keys\org-client-directory-public-keys-remove.feature.cs">
+      <DependentUpon>org-client-directory-public-keys-remove.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\public_keys\org-client-directory-public-keys-update.feature.cs">
+      <DependentUpon>org-client-directory-public-keys-update.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-generate-and-add.feature.cs">
+      <DependentUpon>org-client-directory-sdk-keys-generate-and-add.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-list.feature.cs">
+      <DependentUpon>org-client-directory-sdk-keys-list.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-remove.feature.cs">
+      <DependentUpon>org-client-directory-sdk-keys-remove.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\org-client-service-create.feature.cs">
+      <DependentUpon>org-client-service-create.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\org-client-service-get-all.feature.cs">
+      <DependentUpon>org-client-service-get-all.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\org-client-service-get-list.feature.cs">
+      <DependentUpon>org-client-service-get-list.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\org-client-service-get-one.feature.cs">
+      <DependentUpon>org-client-service-get-one.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\org-client-service-update.feature.cs">
+      <DependentUpon>org-client-service-update.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\policy\org-client-service-policy-get.feature.cs">
+      <DependentUpon>org-client-service-policy-get.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\policy\org-client-service-policy-remove.feature.cs">
+      <DependentUpon>org-client-service-policy-remove.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\policy\org-client-service-policy-set.feature.cs">
+      <DependentUpon>org-client-service-policy-set.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\public_keys\org-client-service-public-keys-add.feature.cs">
+      <DependentUpon>org-client-service-public-keys-add.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\public_keys\org-client-service-public-keys-get.feature.cs">
+      <DependentUpon>org-client-service-public-keys-get.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\public_keys\org-client-service-public-keys-remove.feature.cs">
+      <DependentUpon>org-client-service-public-keys-remove.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\org_client\services\public_keys\org-client-service-public-keys-update.feature.cs">
+      <DependentUpon>org-client-service-public-keys-update.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\service_client\auth_request\service-client-auth-request-get.feature.cs">
+      <DependentUpon>service-client-auth-request-get.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\service_client\auth_request\service-client-auth-request-send-policy.feature.cs">
+      <DependentUpon>service-client-auth-request-send-policy.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\service_client\auth_request\service-client-auth-request-send.feature.cs">
+      <DependentUpon>service-client-auth-request-send.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\service_client\session\service-client-session-end.feature.cs">
+      <DependentUpon>service-client-session-end.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\service_client\session\service-client-session-start.feature.cs">
+      <DependentUpon>service-client-session-start.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Keys\alpha-cert.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>alpha-cert.crt</DependentUpon>
+    </Compile>
+    <Compile Update="Keys\alpha-private-key.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>alpha-private-key.pem</DependentUpon>
+    </Compile>
+    <Compile Update="Keys\alpha-public-key.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>alpha-public-key.pem</DependentUpon>
+    </Compile>
+    <Compile Update="Keys\beta-cert.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>beta-cert.p12</DependentUpon>
+    </Compile>
+    <Compile Update="Keys\beta-private-key.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>beta-private-key.pem</DependentUpon>
+    </Compile>
+    <Compile Update="Keys\beta-public-key.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>beta-public-key.pem</DependentUpon>
+    </Compile>
+    <Compile Update="packages.feature.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>packages.config</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.config">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>App.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Features\directory_client\devices\directory-client-device-link.feature">
+      <LastGenOutput>directory-client-device-link.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\devices\directory-client-device-list.feature">
+      <LastGenOutput>directory-client-device-list.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\devices\directory-client-device-unlink.feature">
+      <LastGenOutput>directory-client-device-unlink.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\directory-client-service-create.feature">
+      <LastGenOutput>directory-client-service-create.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\directory-client-service-get-all.feature">
+      <LastGenOutput>directory-client-service-get-all.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\directory-client-service-get-list.feature">
+      <LastGenOutput>directory-client-service-get-list.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\directory-client-service-get-one.feature">
+      <LastGenOutput>directory-client-service-get-one.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\directory-client-service-update.feature">
+      <LastGenOutput>directory-client-service-update.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\policy\directory-client-service-policy-get.feature">
+      <LastGenOutput>directory-client-service-policy-get.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\policy\directory-client-service-policy-remove.feature">
+      <LastGenOutput>directory-client-service-policy-remove.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\policy\directory-client-service-policy-set.feature">
+      <LastGenOutput>directory-client-service-policy-set.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\public_keys\directory-client-service-public-keys-add.feature">
+      <LastGenOutput>directory-client-service-public-keys-add.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\public_keys\directory-client-service-public-keys-get.feature">
+      <LastGenOutput>directory-client-service-public-keys-get.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\public_keys\directory-client-service-public-keys-remove.feature">
+      <LastGenOutput>directory-client-service-public-keys-remove.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\services\public_keys\directory-client-service-public-keys-update.feature">
+      <LastGenOutput>directory-client-service-public-keys-update.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\sessions\directory-client-service-sessions-delete.feature">
+      <LastGenOutput>directory-client-service-sessions-delete.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\directory_client\sessions\directory-client-service-sessions-get.feature">
+      <LastGenOutput>directory-client-service-sessions-get.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\org-client-directory-create.feature">
+      <LastGenOutput>org-client-directory-create.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\org-client-directory-get-all.feature">
+      <LastGenOutput>org-client-directory-get-all.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\org-client-directory-get-list.feature">
+      <LastGenOutput>org-client-directory-get-list.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\org-client-directory-get-one.feature">
+      <LastGenOutput>org-client-directory-get-one.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\org-client-directory-update.feature">
+      <LastGenOutput>org-client-directory-update.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\public_keys\org-client-directory-public-keys-add.feature">
+      <LastGenOutput>org-client-directory-public-keys-add.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\public_keys\org-client-directory-public-keys-get.feature">
+      <LastGenOutput>org-client-directory-public-keys-get.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\public_keys\org-client-directory-public-keys-remove.feature">
+      <LastGenOutput>org-client-directory-public-keys-remove.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\public_keys\org-client-directory-public-keys-update.feature">
+      <LastGenOutput>org-client-directory-public-keys-update.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-generate-and-add.feature">
+      <LastGenOutput>org-client-directory-sdk-keys-generate-and-add.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-list.feature">
+      <LastGenOutput>org-client-directory-sdk-keys-list.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\directories\sdk-keys\org-client-directory-sdk-keys-remove.feature">
+      <LastGenOutput>org-client-directory-sdk-keys-remove.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\org-client-service-create.feature">
+      <LastGenOutput>org-client-service-create.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\org-client-service-get-all.feature">
+      <LastGenOutput>org-client-service-get-all.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\org-client-service-get-list.feature">
+      <LastGenOutput>org-client-service-get-list.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\org-client-service-get-one.feature">
+      <LastGenOutput>org-client-service-get-one.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\org-client-service-update.feature">
+      <LastGenOutput>org-client-service-update.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\policy\org-client-service-policy-get.feature">
+      <LastGenOutput>org-client-service-policy-get.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\policy\org-client-service-policy-remove.feature">
+      <LastGenOutput>org-client-service-policy-remove.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\policy\org-client-service-policy-set.feature">
+      <LastGenOutput>org-client-service-policy-set.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\public_keys\org-client-service-public-keys-add.feature">
+      <LastGenOutput>org-client-service-public-keys-add.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\public_keys\org-client-service-public-keys-get.feature">
+      <LastGenOutput>org-client-service-public-keys-get.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\public_keys\org-client-service-public-keys-remove.feature">
+      <LastGenOutput>org-client-service-public-keys-remove.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\org_client\services\public_keys\org-client-service-public-keys-update.feature">
+      <LastGenOutput>org-client-service-public-keys-update.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\service_client\auth_request\service-client-auth-request-get.feature">
+      <LastGenOutput>service-client-auth-request-get.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\service_client\auth_request\service-client-auth-request-send-policy.feature">
+      <LastGenOutput>service-client-auth-request-send-policy.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\service_client\auth_request\service-client-auth-request-send.feature">
+      <LastGenOutput>service-client-auth-request-send.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\service_client\session\service-client-session-end.feature">
+      <LastGenOutput>service-client-session-end.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Features\service_client\session\service-client-session-start.feature">
+      <LastGenOutput>service-client-session-start.feature.cs</LastGenOutput>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Update="Keys\alpha-cert.crt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>alpha-cert.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Keys\alpha-cert.csr">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>alpha-cert.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Keys\alpha-cert.p12">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>alpha-cert.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Keys\alpha-private-key.pem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>alpha-private-key.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Keys\alpha-public-key.pem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>alpha-public-key.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Keys\beta-cert.crt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>beta-cert.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Keys\beta-cert.csr">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>beta-cert.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Keys\beta-cert.p12">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>beta-cert.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Keys\beta-private-key.pem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>beta-private-key.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Keys\beta-public-key.pem">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>beta-public-key.feature.cs</LastGenOutput>
+    </None>
+    <None Update="packages.config">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>packages.feature.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
+    <PackageReference Include="System.Configuration.ConfigurationManager">
+      <Version>4.5.0</Version>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>

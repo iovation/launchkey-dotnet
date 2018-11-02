@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk", "iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj", "{A477BF92-ADD7-4737-A4A6-1192C81E3C53}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk.Tests", "iovation.LaunchKey.Sdk.Tests\iovation.LaunchKey.Sdk.Tests.csproj", "{5C3CED1A-52D7-497E-BF4D-EDB2A9F1C72C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk.ExampleCli", "iovation.LaunchKey.Sdk.ExampleCli\iovation.LaunchKey.Sdk.ExampleCli.csproj", "{98609471-5035-4A52-893C-8A156FC8751B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0297C3A8-E07B-45D8-9C3E-24C3A2FFFE1E}"
@@ -14,7 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\appveyor.yml = ..\appveyor.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk.Tests.Integration", "iovation.LaunchKey.Sdk.Tests.Integration\iovation.LaunchKey.Sdk.Tests.Integration.csproj", "{6A1A3977-7D8C-48F0-9625-23B55AAC54DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iovation.LaunchKey.Sdk", "iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj", "{7429B6AD-791E-4953-A67A-D4CEB3E8C38B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iovation.LaunchKey.Sdk.Tests", "iovation.LaunchKey.Sdk.Tests\iovation.LaunchKey.Sdk.Tests.csproj", "{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk.Tests.Integration", "iovation.LaunchKey.Sdk.Tests.Integration\iovation.LaunchKey.Sdk.Tests.Integration.csproj", "{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,29 +23,30 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A477BF92-ADD7-4737-A4A6-1192C81E3C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A477BF92-ADD7-4737-A4A6-1192C81E3C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A477BF92-ADD7-4737-A4A6-1192C81E3C53}.Release_AppVeyor|Any CPU.ActiveCfg = Release_AppVeyor|Any CPU
-		{A477BF92-ADD7-4737-A4A6-1192C81E3C53}.Release_AppVeyor|Any CPU.Build.0 = Release_AppVeyor|Any CPU
-		{A477BF92-ADD7-4737-A4A6-1192C81E3C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A477BF92-ADD7-4737-A4A6-1192C81E3C53}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C3CED1A-52D7-497E-BF4D-EDB2A9F1C72C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C3CED1A-52D7-497E-BF4D-EDB2A9F1C72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C3CED1A-52D7-497E-BF4D-EDB2A9F1C72C}.Release_AppVeyor|Any CPU.ActiveCfg = Release_AppVeyor|Any CPU
-		{5C3CED1A-52D7-497E-BF4D-EDB2A9F1C72C}.Release_AppVeyor|Any CPU.Build.0 = Release_AppVeyor|Any CPU
-		{5C3CED1A-52D7-497E-BF4D-EDB2A9F1C72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C3CED1A-52D7-497E-BF4D-EDB2A9F1C72C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{98609471-5035-4A52-893C-8A156FC8751B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{98609471-5035-4A52-893C-8A156FC8751B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98609471-5035-4A52-893C-8A156FC8751B}.Release_AppVeyor|Any CPU.ActiveCfg = Release_AppVeyor|Any CPU
 		{98609471-5035-4A52-893C-8A156FC8751B}.Release_AppVeyor|Any CPU.Build.0 = Release_AppVeyor|Any CPU
 		{98609471-5035-4A52-893C-8A156FC8751B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98609471-5035-4A52-893C-8A156FC8751B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A1A3977-7D8C-48F0-9625-23B55AAC54DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A1A3977-7D8C-48F0-9625-23B55AAC54DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A1A3977-7D8C-48F0-9625-23B55AAC54DB}.Release_AppVeyor|Any CPU.ActiveCfg = Release_AppVeyor|Any CPU
-		{6A1A3977-7D8C-48F0-9625-23B55AAC54DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A1A3977-7D8C-48F0-9625-23B55AAC54DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7429B6AD-791E-4953-A67A-D4CEB3E8C38B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7429B6AD-791E-4953-A67A-D4CEB3E8C38B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7429B6AD-791E-4953-A67A-D4CEB3E8C38B}.Release_AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{7429B6AD-791E-4953-A67A-D4CEB3E8C38B}.Release_AppVeyor|Any CPU.Build.0 = Release|Any CPU
+		{7429B6AD-791E-4953-A67A-D4CEB3E8C38B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7429B6AD-791E-4953-A67A-D4CEB3E8C38B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}.Release_AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}.Release_AppVeyor|Any CPU.Build.0 = Release|Any CPU
+		{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Release_AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Release_AppVeyor|Any CPU.Build.0 = Release|Any CPU
+		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

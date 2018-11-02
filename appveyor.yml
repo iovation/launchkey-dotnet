@@ -1,4 +1,4 @@
-﻿version: 3.1.0.{build}
+﻿version: 3.2.0.{build}
 
 configuration: Release_AppVeyor
 
@@ -12,12 +12,14 @@ build:
   verbosity: minimal
   publish_nuget: true
 
-assembly_info:
+dotnet_csproj:
   patch: true
-  file: AssemblyInfo.*
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
   assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 
 test:
   assemblies:

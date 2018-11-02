@@ -35,10 +35,6 @@
     <OutputPath>bin\Release_AppVeyor\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="CommandLine, Version=2.0.275.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.1.1-beta\lib\net40\CommandLine.dll</HintPath>
       <Private>True</Private>
@@ -61,18 +57,18 @@
     <Compile Include="ClientFactories.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj">
-      <Project>{a477bf92-add7-4737-a4a6-1192c81e3c53}</Project>
-      <Name>iovation.LaunchKey.Sdk</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="demo-examples.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj">
+      <Project>{7429b6ad-791e-4953-a67a-d4ceb3e8c38b}</Project>
+      <Name>iovation.LaunchKey.Sdk</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
