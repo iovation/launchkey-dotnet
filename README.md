@@ -14,7 +14,17 @@ This SDK is targeted toward:
 
 
 ## Building
-The solution file is for Visual Studio 2015. The project should build out of the box. Simply clone, open in VS, compile.
+The solution file is for Visual Studio 2017, and the projects are multi-targeting .NET 4.0 and .NET Standard 2.0. The project should build out of the box. Simply clone, open in VS, compile.
+
+## Tests
+The test projects use multi-targeting as well. The best way to run these tests is using the command line:
+
+```
+cd iovation.LaunchKey.Sdk.Tests
+dotnet test
+```
+
+This method results in both the .NET 4.0 and .NET Core runtimes being used for test execution. Currently, VS 2017's IDE-based test runner does *not* properly run all targets.
 
 ## Example & Usage
 The primary entry point to the SDK is a class named `FactoryFactoryBuilder`. This class, located in the `iovation.LaunchKey.Sdk` namespace provides factories for instantiating API clients which can be used to consume the LaunchKey platform API. The `FactoryFactoryBuilder` is designed to simplify creating the rather complex (and highly customizable!) object model that drives the LaunchKey .NET SDK.
