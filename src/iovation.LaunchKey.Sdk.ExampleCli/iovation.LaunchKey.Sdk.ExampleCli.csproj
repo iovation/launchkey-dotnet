@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.1;net40</TargetFrameworks>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <Authors>iovation, Inc</Authors>
     <Company>iovation, Inc</Company>
     <Product>LaunchKey CLI Example</Product>

@@ -562,10 +562,6 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>beta-public-key.feature.cs</LastGenOutput>
     </None>
-    <None Update="packages.config">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>packages.feature.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
