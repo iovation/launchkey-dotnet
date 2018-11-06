@@ -38,7 +38,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		public static Client.IDirectoryClient MakeDirectoryClient(string directoryId, string privateKeyLocation, string apiURL)
 		{
-			var directoryClient = MakeDirectoryFactory(directoryId, apiURL, privateKeyLocation).MakeDirectoryClient();
+			var directoryClient = MakeDirectoryFactory(directoryId, privateKeyLocation, apiURL).MakeDirectoryClient();
 			return directoryClient;
 		}
 
