@@ -24,15 +24,21 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			return factory;
 		}
 
-		private static Client.DirectoryFactory MakeDirectoryFactory(string directoryId, string apiURL, string directoryKey)
+		private static Client.DirectoryFactory MakeDirectoryFactory(string directoryId, string privateKeyLocation, string apiURL)
 		{
-			return MakeFactoryFactory(apiURL).MakeDirectoryFactory(directoryId, directoryKey);
+			var privateKey = File.ReadAllText(privateKeyLocation);
+			return MakeFactoryFactory(apiURL).MakeDirectoryFactory(directoryId, privateKey);
+		}
+
+		private static Client.ServiceFactory MakeServiceFactory(string serviceId, string privateKeyLocation, string apiURL)
+		{
+			var privateKey = File.ReadAllText(privateKeyLocation);
+			return MakeFactoryFactory(apiURL).MakeServiceFactory(serviceId, privateKey);
 		}
 
 		public static Client.IDirectoryClient MakeDirectoryClient(string directoryId, string privateKeyLocation, string apiURL)
 		{
-			var privateKey = File.ReadAllText(privateKeyLocation);
-			var directoryClient = MakeDirectoryFactory(directoryId, apiURL, privateKey).MakeDirectoryClient();
+			var directoryClient = MakeDirectoryFactory(directoryId, apiURL, privateKeyLocation).MakeDirectoryClient();
 			return directoryClient;
 		}
 
@@ -56,9 +62,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		public static Client.IServiceClient MakeServiceClient(string serviceId, string privateKeyLocation, string apiURL)
 		{
-			var privateKey = File.ReadAllText(privateKeyLocation);
-			var serviceClient = MakeFactoryFactory(apiURL).MakeServiceFactory(serviceId, privateKey).MakeServiceClient();
-			return serviceClient;
+			return MakeServiceFactory(serviceId, privateKeyLocation, apiURL).MakeServiceClient();
 		}
 	}
 }
