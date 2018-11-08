@@ -28,7 +28,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
 			var pemObject = pemReader.ReadObject();
 			if (pemObject is RsaKeyParameters)
 			{
-				return DotNetUtilities.ToRSA((RsaKeyParameters)pemObject);
+				return BouncyCastleUtilities.ToRSA((RsaKeyParameters)pemObject);
 			}
 
 			throw new CryptographyError($"Failed to load public key from PEM file.");
@@ -45,7 +45,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
 		public byte[] DecryptRSA(byte[] data, RSA privateKey)
 		{
 			var cipher = CipherUtilities.GetCipher(RSA_CRYPTO_CIPHER);
-			cipher.Init(false, DotNetUtilities.GetRsaKeyPair(privateKey).Private);
+			cipher.Init(false, BouncyCastleUtilities.GetRsaKeyPair(privateKey).Private);
 			cipher.ProcessBytes(data);
 			return cipher.DoFinal();
 		}
@@ -53,7 +53,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
 		public byte[] EncryptRSA(byte[] data, RSA publicKey)
 		{
 			var cipher = CipherUtilities.GetCipher(RSA_CRYPTO_CIPHER);
-			cipher.Init(true, DotNetUtilities.GetRsaPublicKey(publicKey));
+			cipher.Init(true, BouncyCastleUtilities.GetRsaPublicKey(publicKey));
 			cipher.ProcessBytes(data);
 			return cipher.DoFinal();
 		}
@@ -86,7 +86,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
 					var cipherPair = (AsymmetricCipherKeyPair)pemObject;
 					if (cipherPair.Private == null) throw new CryptographyError("No private key found in PEM object");
 					if (!(cipherPair.Private is RsaPrivateCrtKeyParameters)) throw new CryptographyError("Private key is not RSA");
-					return DotNetUtilities.ToRSA((RsaPrivateCrtKeyParameters)cipherPair.Private);
+					return BouncyCastleUtilities.ToRSA((RsaPrivateCrtKeyParameters)cipherPair.Private);
 				}
 
 				throw new CryptographyError($"Failed to load public key from PEM file. Object was not of type expected. ({pemObject})");
@@ -104,7 +104,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
 		public string GeneratePublicKeyFingerprintFromPrivateKey(RSA privateKey)
 		{
 			if (privateKey == null) throw new ArgumentNullException(nameof(privateKey));
-			var keyInfo = SubjectPublicKeyInfoFactory.CreateSubjectPublicKeyInfo(DotNetUtilities.GetRsaPublicKey(privateKey));
+			var keyInfo = SubjectPublicKeyInfoFactory.CreateSubjectPublicKeyInfo(BouncyCastleUtilities.GetRsaPublicKey(privateKey));
 			var keyBytes = keyInfo.ToAsn1Object().GetDerEncoded();
 			var hash = DoHash(keyBytes, new MD5Digest());
 			var hashString = ByteArrayUtils.ByteArrayToHexString(hash, ":");
