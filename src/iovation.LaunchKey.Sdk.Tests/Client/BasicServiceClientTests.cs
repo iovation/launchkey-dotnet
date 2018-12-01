@@ -172,6 +172,26 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 		}
 
 		[TestMethod]
+		public void CreateAuthorizationRequest_ShouldCallTransportWithPushTitleAndBody()
+		{
+			var mockTransport = new Mock<ITransport>();
+			mockTransport.Setup(p => p.ServiceV3AuthsPost(
+					It.Is<ServiceV3AuthsPostRequest>(req => req.Username == "name" && req.PushTitle == "Push Title" && req.PushBody == "Push Body"),
+					It.IsAny<EntityIdentifier>()))
+				.Returns(new ServiceV3AuthsPostResponse
+				{
+					AuthRequest = TestConsts.DefaultAuthenticationId
+				})
+				.Verifiable();
+
+			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+
+			client.CreateAuthorizationRequest("name", pushTitle: "Push Title", pushBody: "Push Body");
+
+			mockTransport.Verify();
+		}
+
+		[TestMethod]
 		public void GetAuthorizationResponse_ShouldReturnNullIfTransportDoes()
 		{
 			var mockTransport = new Mock<ITransport>();

@@ -130,7 +130,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		{
 			// setup
 			var transport = GetTransport(GetBadNetworkHttpClient().Object);
-			var request = new ServiceV3AuthsPostRequest(null, null, null, null, null);
+			var request = new ServiceV3AuthsPostRequest(null, null, null, null, null, null, null);
 			var id = Guid.NewGuid();
 			var entity = new EntityIdentifier(EntityType.Service, id);
 
@@ -466,7 +466,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		public void ServiceV3AuthsPost_ShouldCallApi()
 		{
 			DoApiCallTest(
-				t => t.ServiceV3AuthsPost(new ServiceV3AuthsPostRequest("john", null, null, null, null), DefaultSubject),
+				t => t.ServiceV3AuthsPost(new ServiceV3AuthsPostRequest("john", null, null, null, null, null, null), DefaultSubject),
 				HttpMethod.POST,
 				"/service/v3/auths"
 			);

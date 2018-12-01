@@ -19,13 +19,21 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 		[JsonProperty("ttl")]
 		public int? TTL { get; }
 
-		public ServiceV3AuthsPostRequest(string username, AuthPolicy authPolicy, string context, string title, int? ttl)
+		[JsonProperty("push_title")]
+		public string PushTitle { get; }
+
+		[JsonProperty("push_body")]
+		public string PushBody { get; }
+
+		public ServiceV3AuthsPostRequest(string username, AuthPolicy authPolicy, string context, string title, int? ttl, string pushTitle, string pushBody)
 		{
 			Username = username;
 			AuthPolicy = authPolicy;
 			Context = context;
 			Title = title;
 			TTL = ttl;
+			PushTitle = pushTitle;
+			PushBody = pushBody;
 		}
 	}
 }
