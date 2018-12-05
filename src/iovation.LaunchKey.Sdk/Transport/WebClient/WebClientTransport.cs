@@ -267,7 +267,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 				{
 					ValidateEncryptedResponse(response, publicKey, requestId);
 					var errorResponse = DecryptResponse<Sdk.Domain.Error>(response);
-					throw InvalidRequestException.FromErrorCode(errorResponse.ErrorCode, _jsonDecoder.EncodeObject(errorResponse.ErrorDetail));
+					throw InvalidRequestException.FromErrorCode(errorResponse.ErrorCode, _jsonDecoder.EncodeObject(errorResponse.ErrorDetail), errorResponse.ErrorData);
 				}
 			}
 

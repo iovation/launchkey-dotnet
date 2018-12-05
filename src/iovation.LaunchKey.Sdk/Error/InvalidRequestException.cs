@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace iovation.LaunchKey.Sdk.Error
 {
@@ -20,7 +21,7 @@ namespace iovation.LaunchKey.Sdk.Error
 		{
 		}
 
-		public static InvalidRequestException FromErrorCode(string errorCode, string errorMessage)
+		public static InvalidRequestException FromErrorCode(string errorCode, string errorMessage, IDictionary<String, Object> errorData = null)
 		{
 			switch (errorCode)
 			{
@@ -30,6 +31,43 @@ namespace iovation.LaunchKey.Sdk.Error
 				case "SVC-002": return new InvalidPolicyInput(errorMessage, null, errorCode);
 				case "SVC-003": return new PolicyFailure(errorMessage, null, errorCode);
 				case "SVC-004": return new ServiceNotFound(errorMessage, null, errorCode);
+				case "SVC-005":
+					string authorizationRequestId;
+					bool myAuthorizationRequest;
+					DateTime? expires;
+
+					if (errorData == null)
+					{
+						authorizationRequestId = null;
+						myAuthorizationRequest = false;
+						expires = null;
+					}
+					else
+					{
+						authorizationRequestId = errorData.ContainsKey("auth_request") ? (string) errorData["auth_request"] : null;
+						try
+						{
+							myAuthorizationRequest = errorData.ContainsKey("my_auth") ? (bool) errorData["my_auth"] : false;
+						}
+						catch
+						{
+							myAuthorizationRequest = false;
+						}
+						try
+						{
+							expires = (DateTime) (errorData.ContainsKey("expires") ? errorData["expires"] : null);
+						}
+						catch
+						{
+							expires = null;
+						}
+						
+					}
+					return new AuthorizationInProgress(
+						errorMessage, null, errorCode,
+						authorizationRequestId,
+						myAuthorizationRequest,
+						expires);
 				case "DIR-001": return new InvalidDirectoryIdentifier(errorMessage, null, errorCode);
 				case "KEY-001": return new InvalidPublicKey(errorMessage, null, errorCode);
 				case "KEY-002": return new PublicKeyAlreadyInUse(errorMessage, null, errorCode);
