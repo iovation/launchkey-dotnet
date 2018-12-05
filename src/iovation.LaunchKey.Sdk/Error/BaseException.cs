@@ -47,9 +47,17 @@ namespace iovation.LaunchKey.Sdk.Error
 
 		public override bool Equals(object obj)
 		{
+			if (obj == null) return false;
+			if (this.GetType() != obj.GetType()) return false;
 			var exception = obj as BaseException;
-			return exception != null &&
-					ErrorCode == exception.ErrorCode;
+			return (this.ErrorCode == exception.ErrorCode);
+		}
+
+		public override int GetHashCode()
+		{
+			int hashCode = base.GetHashCode() ^ GetType().GetHashCode();
+			if (ErrorCode != null) hashCode = hashCode ^ ErrorCode.GetHashCode();
+			return hashCode;
 		}
 	}
 }
