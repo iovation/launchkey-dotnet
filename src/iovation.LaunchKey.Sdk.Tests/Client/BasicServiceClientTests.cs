@@ -215,7 +215,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			mockTransport.Setup(p => p.ServiceV3AuthsGet(
 					TestConsts.DefaultAuthenticationId,
 					It.IsAny<EntityIdentifier>()))
-				.Returns(new ServiceV3AuthsGetResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "deviceid", new string[] { }))
+				.Returns(new ServiceV3AuthsGetResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "deviceid", new string[] { "123", "abc" }, "AUTHORIZED", "APPROVED", "Denial Reason"))
 				.Verifiable();
 
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
@@ -223,7 +223,36 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
 			mockTransport.Verify();
 
-			Assert.IsTrue(response != null);
+			Assert.AreEqual(response.AuthorizationRequestId, TestConsts.DefaultAuthenticationId.ToString("D"));
+			Assert.AreEqual(response.Authorized, true);
+			Assert.AreEqual(response.DeviceId, "deviceid");
+			Assert.AreEqual(response.DevicePins[0], "123");
+			Assert.AreEqual(response.DevicePins[1], "abc");
+			Assert.AreEqual(response.OrganizationUserHash, "ohash");
+			Assert.AreEqual(response.ServiceUserHash, "shash");
+			Assert.AreEqual(response.UserPushId, "push");
+			Assert.AreEqual(Sdk.Domain.Service.AuthorizationResponseType.AUTHORIZED, response.Type);
+			Assert.AreEqual(Sdk.Domain.Service.AuthorizationResponseReason.APPROVED, response.Reason);
+			Assert.AreEqual("Denial Reason", response.DenialReason);
+			Assert.AreEqual(false, response.Fraud);
+		}
+
+		[TestMethod]
+		public void GetAuthorizationResponse_ShouldReturnFraudTrueForFraudulentReason()
+		{
+			var mockTransport = new Mock<ITransport>();
+			mockTransport.Setup(p => p.ServiceV3AuthsGet(
+					TestConsts.DefaultAuthenticationId,
+					It.IsAny<EntityIdentifier>()))
+				.Returns(new ServiceV3AuthsGetResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "deviceid", new string[] { "123", "abc" }, "AUTHORIZED", "FRAUDULENT", "Denial Reason"))
+				.Verifiable();
+
+			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+			var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+
+			mockTransport.Verify();
+
+			Assert.AreEqual(true, response.Fraud);
 		}
 
 		[TestMethod]
@@ -264,7 +293,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 		{
 			var testHeaders = new Dictionary<string, List<string>>();
 			var testBody = "body";
-			var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] { "1234" });
+			var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] { "1234" }, "AUTHORIZED", "APPROVED", "Denial Reason");
 			var mockTransport = new Mock<ITransport>();
 			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
 			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
@@ -285,6 +314,31 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 			Assert.AreEqual(authResponse.OrganizationUserHash, "ohash");
 			Assert.AreEqual(authResponse.ServiceUserHash, "shash");
 			Assert.AreEqual(authResponse.UserPushId, "push");
+			Assert.AreEqual(Sdk.Domain.Service.AuthorizationResponseType.AUTHORIZED, authResponse.Type);
+			Assert.AreEqual(Sdk.Domain.Service.AuthorizationResponseReason.APPROVED, authResponse.Reason);
+			Assert.AreEqual("Denial Reason", authResponse.DenialReason);
+			Assert.AreEqual(false, authResponse.Fraud);
+		}
+
+		[TestMethod]
+		public void HandleWebhook_AuthPackage_ShouldSetFraudTrueForFraudulentReason()
+		{
+			var testHeaders = new Dictionary<string, List<string>>();
+			var testBody = "body";
+			var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] { "1234" }, "DENIED", "FRAUDULENT", "Denial Reason");
+			var mockTransport = new Mock<ITransport>();
+			mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
+			var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+			var response = client.HandleWebhook(testHeaders, testBody);
+
+			// verify the call worked
+			mockTransport.Verify();
+
+			// verify we got the right response
+			Assert.IsTrue(response is AuthorizationResponseWebhookPackage);
+
+			var authResponse = ((AuthorizationResponseWebhookPackage)response).AuthorizationResponse;
+			Assert.AreEqual(true, authResponse.Fraud);
 		}
 
 		[TestMethod]

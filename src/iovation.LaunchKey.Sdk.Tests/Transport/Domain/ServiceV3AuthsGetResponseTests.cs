@@ -27,7 +27,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 				authorizationRequestId,
 				true,
 				"deviceId",
-				devicePins
+				devicePins,
+				null,
+				null,
+				null
 			);
 
 			Assert.AreSame(requestingEntity, o.RequestingEntity);

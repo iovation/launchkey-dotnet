@@ -11,7 +11,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			var factoryFactoryBuilder = new FactoryFactoryBuilder();
 			if (apiURL != null)
 			{
-				factoryFactoryBuilder.SetApiBaseUrl(apiURL);
+				factoryFactoryBuilder.SetApiBaseUrl(apiURL).SetOffsetTtl(60);
 			}
 			var factory = factoryFactoryBuilder.Build();
 			return factory;

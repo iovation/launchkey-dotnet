@@ -43,6 +43,41 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			return 0;
 		}
 
+		private static void PrintAuthorizationResponse(AuthorizationResponse authResponse)
+		{
+			Console.WriteLine($"Auth response was:");
+			Console.WriteLine($"    Authorized:     {authResponse.Authorized}");
+			Console.WriteLine($"    Type:           {authResponse.Type}");
+			Console.WriteLine($"    Reason:         {authResponse.Reason}");
+			Console.WriteLine($"    Denial Reason:  {authResponse.DenialReason}");
+			Console.WriteLine($"    Auth Request:   {authResponse.AuthorizationRequestId}");
+			Console.WriteLine($"    Device Pins:    {String.Join(", ", authResponse.DevicePins)}");
+			Console.WriteLine($"    User User Hash: {authResponse.OrganizationUserHash}");
+			Console.WriteLine($"    Svc User Hash:  {authResponse.ServiceUserHash}");
+			Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
+			Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
+		}
+
+		private static IList<DenialReason> GetDenialReasons(int fraud, int nonFraud)
+		{
+			var denialReasons = new List<DenialReason>();
+			for (int i = 0; i < Math.Max(fraud, nonFraud); i++)
+			{
+				if (i < fraud)
+				{
+					var reason = Path.GetRandomFileName().Replace(".", "");
+					var id = $"F{i}";
+					denialReasons.Add(new DenialReason(id, $"{reason} - {id}", true));
+				}
+				if (i < nonFraud)
+				{
+					var reason = Path.GetRandomFileName().Replace(".", "");
+					var id = $"NF{i}";
+					denialReasons.Add(new DenialReason(id, $"{reason} - {id}", false));
+				}
+			}
+			return denialReasons;
+		}
 		private static IWebhookPackage WaitForWebhookResponse(IServiceClient serviceClient)
 		{
 			if (!HttpListener.IsSupported)
@@ -74,18 +109,18 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			}
 		}
 
-		public static int DoServiceAuthorizationWebhook(string username, string serviceId, string privateKey, string apiURL)
+		public static int DoServiceAuthorizationWebhook(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int fraudDenialreasons, int nonFraudDenialreasons)
 		{
 			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
 			try
 			{
-				serviceClient.CreateAuthorizationRequest(username);
+				serviceClient.CreateAuthorizationRequest(username, context: context, title: title, ttl: ttl, pushTitle: pushTitle, pushBody: pushBody, denialReasons: GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons));
 				var webhookPackage = WaitForWebhookResponse(serviceClient);
 				var authPackage = webhookPackage as AuthorizationResponseWebhookPackage;
 				if (authPackage != null)
 				{
-					Console.WriteLine($"Authorization webhook received: {authPackage.AuthorizationResponse.Authorized}");
+					PrintAuthorizationResponse(authPackage.AuthorizationResponse);
 				}
 				else
 				{
@@ -105,13 +140,13 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			}
 		}
 
-		public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL)
+		public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int fraudDenialreasons, int nonFraudDenialreasons)
 		{
 			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
 			try
 			{
-				var authorizationRequest = serviceClient.CreateAuthorizationRequest(username);
+				var authorizationRequest = serviceClient.CreateAuthorizationRequest(username, context: context, title: title, ttl: ttl, pushTitle: pushTitle, pushBody: pushBody, denialReasons: GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons));
 				while (true)
 				{
 					Console.WriteLine("checking auth");
@@ -122,7 +157,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 					// if we got one, process it
 					if (authResponse != null)
 					{
-						Console.WriteLine($"Auth response was {authResponse.Authorized}");
+						PrintAuthorizationResponse(authResponse);
 						return 0;
 					}
 
@@ -190,7 +225,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 					// if we got one, process it
 					if (authResponse != null)
 					{
-						Console.WriteLine($"Auth response was {authResponse.Authorized}");
+						PrintAuthorizationResponse(authResponse);
 						return 0;
 					}
 

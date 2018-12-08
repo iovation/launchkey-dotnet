@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using iovation.LaunchKey.Sdk.Cache;
 using iovation.LaunchKey.Sdk.Crypto;
 using iovation.LaunchKey.Sdk.Crypto.Jwe;
@@ -15,19 +13,15 @@ using iovation.LaunchKey.Sdk.Time;
 using iovation.LaunchKey.Sdk.Transport;
 using iovation.LaunchKey.Sdk.Transport.Domain;
 using iovation.LaunchKey.Sdk.Transport.WebClient;
-using iovation.LaunchKey.Sdk.Util;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 {
-	/// <summary>
-	/// webhooks test, separated from main tests because that was getting cluttered.
-	/// </summary>
 	[TestClass]
-	public class WebClientTransport_WebhookTests
+	public class WebClientTransport_ServiceV3AuthsGetTests
 	{
-		private readonly string BaseUrl = "https://api.launchkey.com";
+		private string BaseUrl = "https://api.launchkey.com";
 		private ITransport Transport;
 		private Mock<ICache> PublicKeyCache;
 		private Mock<IHttpClient> HttpClient;
@@ -40,17 +34,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 		private Mock<HttpResponse> HttpResponse;
 		private Mock<JwtClaims> JwtClaims;
 		private Mock<JwtClaimsResponse> JwtClaimsResponse;
-		private Mock<JwtClaimsRequest> JwtClaimsRequest;
 		private Mock<ServiceV3AuthsGetResponseDevice> DeviceResponse;
 		private Mock<ServiceV3AuthsGetResponseCore> AuthsGetResponseCore;
-		private Mock<ServerSentEventUserServiceSessionEnd> ServiceSessionEnd;
-		private Dictionary<String, String> JweHeaders;
 
 		[TestInitialize]
 		public void Initialize()
 		{
 			HttpResponse = new Mock<HttpResponse>();
-			HttpResponse.Object.StatusCode = HttpStatusCode.OK;
+			HttpResponse.Object.StatusCode = HttpStatusCode.NoContent;
 			HttpResponse.Object.Headers = new WebHeaderCollection
 			{
 				["X-IOV-JWT"] = "IOV JWT"
@@ -60,7 +51,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 				.Returns(HttpResponse.Object);
 			Crypto = new Mock<ICrypto>();
 			Crypto.Setup(c => c.DecryptRSA(It.IsAny<byte[]>(), It.IsAny<RSA>())).Returns(System.Text.Encoding.ASCII.GetBytes("Decrypted"));
-			Crypto.Setup(c => c.Sha256(It.IsAny<byte[]>())).Returns(new byte[]{255});
+			Crypto.Setup(c => c.Sha256(It.IsAny<byte[]>())).Returns(System.Text.Encoding.ASCII.GetBytes("Hash"));
 			PublicKeyCache = new Mock<ICache>();
 			PublicKeyCache.Setup(c => c.Get(It.IsAny<String>())).Returns("Public Key");
 			Issuer = new EntityIdentifier(EntityType.Directory, default(Guid));
@@ -69,21 +60,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 				.Returns("JWT Encoded");
 			JwtClaims = new Mock<JwtClaims>();
 			JwtClaimsResponse = new Mock<JwtClaimsResponse>();
-			JwtClaimsResponse.Object.StatusCode = 200;
+			JwtClaimsResponse.Object.StatusCode = 204;
 			JwtClaimsResponse.Object.LocationHeader = null;
 			JwtClaimsResponse.Object.CacheControlHeader = null;
-			JwtClaimsResponse.Object.ContentHash = "ff";
+			JwtClaimsResponse.Object.ContentHash = "Hash";
 			JwtClaimsResponse.Object.ContentHashAlgorithm = "S256";
 
-			JwtClaimsRequest = new Mock<JwtClaimsRequest>();
-			JwtClaimsRequest.Object.ContentHash = "ff";
-			JwtClaimsRequest.Object.ContentHashAlgorithm = "S256";
-			JwtClaimsRequest.Object.Method = "POST";
-			JwtClaimsRequest.Object.Path = "/webhook";
-
-
 			JwtClaims.Object.Response = JwtClaimsResponse.Object;
-			JwtClaims.Object.Request = JwtClaimsRequest.Object;
 
 			JwtService.Setup(s => s.Decode(It.IsAny<RSA>(), It.IsAny<string>(), It.IsAny<String>(), It.IsAny<DateTime>(), It.IsAny<String>()))
 				.Returns(JwtClaims.Object);
@@ -93,11 +76,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 			JweService.Setup(s => s.Decrypt(It.IsAny<String>())).Returns("Decrypted JWE");
 			JweService.Setup(s => s.Encrypt(It.IsAny<String>(), It.IsAny<RSA>(), It.IsAny<String>(), It.IsAny<String>()))
 				.Returns("Encrypted JWE");
-			JweHeaders = new Dictionary<string, string>
-			{
-				["kid"] = "Public Key ID"
-			};
-			JweService.Setup(s => s.GetHeaders(It.IsAny<String>())).Returns(JweHeaders);
 			JsonEncoder = new Mock<IJsonEncoder>();
 			JsonEncoder.Setup(e => e.EncodeObject(It.IsAny<Object>())).Returns("JSON Encoded");
 			JsonEncoder.Setup(e => e.DecodeObject<PublicV3PingGetResponse>(It.IsAny<String>())).Returns(new Mock<PublicV3PingGetResponse>().Object);
@@ -107,106 +85,75 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 			AuthsGetResponseCore.Object.ServiceUserHash = "Service User Hash";
 			AuthsGetResponseCore.Object.OrgUserHash = "Org User Hash";
 			AuthsGetResponseCore.Object.UserPushId = "User Push ID";
-			AuthsGetResponseCore.Object.PublicKeyId = "Public Key ID";
+			AuthsGetResponseCore.Object.PublicKeyId = "Response Public Key";
 			JsonEncoder.Setup(e => e.DecodeObject<ServiceV3AuthsGetResponseCore>(It.IsAny<String>())).Returns(AuthsGetResponseCore.Object);
 			DeviceResponse = new Mock<ServiceV3AuthsGetResponseDevice>();
 			JsonEncoder.Setup(e => e.DecodeObject<ServiceV3AuthsGetResponseDevice>(It.IsAny<String>())).Returns(DeviceResponse.Object);
-			ServiceSessionEnd = new Mock<ServerSentEventUserServiceSessionEnd>();
-			JsonEncoder.Setup(e => e.DecodeObject<ServerSentEventUserServiceSessionEnd>(It.IsAny<String>())).Returns(ServiceSessionEnd.Object);
 			KeyMap = new Mock<EntityKeyMap>();
-			KeyMap.Object.AddKey(EntityIdentifier.FromString("svc:8c3c0268-f692-11e7-bd2e-7692096aba47"), "Public Key ID", new Mock<RSA>().Object);
+			KeyMap.Object.AddKey(EntityIdentifier.FromString("svc:8c3c0268-f692-11e7-bd2e-7692096aba47"), "Response Public Key", new Mock<RSA>().Object);
 			Transport = new WebClientTransport(
-				HttpClient.Object,
+				HttpClient.Object, 
 				Crypto.Object,
-				PublicKeyCache.Object,
-				BaseUrl,
-				Issuer,
+				PublicKeyCache.Object, 
+				BaseUrl, 
+				Issuer, 
 				JwtService.Object,
 				JweService.Object,
-				0,
-				0,
-				KeyMap.Object,
+				0, 
+				0, 
+				KeyMap.Object, 
 				JsonEncoder.Object);
 		}
 
+		[TestCleanup]
+		public void Cleanup()
+		{
+			BaseUrl = null;
+			Transport = null;
+			PublicKeyCache = null;
+			HttpClient = null;
+			JweService = null;
+			Crypto = null;
+			JsonEncoder = null;
+			Issuer = null;
+			JwtService = null;
+			KeyMap = null;
+			HttpResponse = null;
+	}
 
 		[TestMethod]
-		public void HandleServerSentEvent_ShouldHandleAuthPackage()
+		public void ServiceV3AuthsGet_ShouldReturnNullIfPending()
 		{
-			
-
-			var response = Transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { "jwt" }},
-				{"Content-Type", new List<string> {"application/jose" }}
-			}, "body");
-
-			Assert.IsTrue(response is ServerSentEventAuthorizationResponse);
+			HttpResponse.Object.StatusCode = HttpStatusCode.NoContent;
+			var response = Transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
+			Assert.IsNull(response);
+		}
+		
+		[TestMethod]
+		[ExpectedException(typeof(AuthorizationRequestTimedOutError))]
+		public void ServiceV3AuthsGet_ShouldThrowIfTimedOut()
+		{
+			HttpResponse.Object.StatusCode = HttpStatusCode.RequestTimeout;
+			JwtClaimsResponse.Object.StatusCode = 408;
+			Transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
 		}
 
 		[TestMethod]
-		public void HandleServerSentEvent_ShouldHandleSessionEnd()
+		public void ServiceV3AuthsGet_ShouldCallApi()
 		{
-			
-			var response = Transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { "jwt" }},
-				{"Content-Type", new List<string> {"application/json" }}
-			}, "body");
-
-			Assert.IsTrue(response is ServerSentEventUserServiceSessionEnd);
+			Transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
+			HttpClient.Verify(client => client.ExecuteRequest(
+				HttpMethod.GET,
+				BaseUrl + "/service/v3/auths/" + TestConsts.DefaultAuthenticationId,
+				It.IsAny<String>(),
+				It.IsAny<Dictionary<string, string>>()));
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidRequestException))]
-		public void HandleServerSentEvent_PrivateClaims_ShouldValidateHash()
+		public void ServiceV3AuthsGet_ShouldReturnJweResponseDataIfPresent()
 		{
-			JwtClaimsRequest.Object.ContentHash = "Not the same";
-			Transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { "my-jwt" }},
-				{"Content-Type", new List<string> {"application/json" }}
-			}, "body");
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(InvalidRequestException))]
-		public void HandleServerSentEvent_PrivateClaims_ShouldValidateMethod()
-		{
-			var response = Transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { "my-jwt" }},
-				{"Content-Type", new List<string> {"application/json" }}
-			}, "body", "GET", "/webhook");
-		}
-
-
-		[TestMethod]
-		[ExpectedException(typeof(InvalidRequestException))]
-		public void HandleServerSentEvent_PrivateClaims_ShouldValidatePath()
-		{
-			var response = Transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { "my-jwt" }},
-				{"Content-Type", new List<string> {"application/json" }}
-			}, "body", "POST", "/webhookwrong");
-		}
-
-		[TestMethod]
-		public void HandleServerSentEvent_PrivateClaims_ShouldIgnoreNullParameters()
-		{
-			var response = Transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { "my-jwt" }},
-				{"Content-Type", new List<string> {"application/json" }}
-			}, "body", null, null);
-
-			Assert.IsTrue(response is ServerSentEventUserServiceSessionEnd);
-		}
-
-		[TestMethod]
-		public void HandleServerSentEvent_ShouldReturnJweResponseDataIfPresent()
-		{
+			HttpResponse.Object.StatusCode = HttpStatusCode.OK;
+			JwtClaimsResponse.Object.StatusCode = 200;
 			Mock<ServiceV3AuthsGetResponseDeviceJWE> deviceResponse = new Mock<ServiceV3AuthsGetResponseDeviceJWE>();
 			deviceResponse.Object.DeviceId = "Device ID";
 			deviceResponse.Object.ServicePins = new string[] { "PIN1", "PIN2" };
@@ -215,11 +162,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 			deviceResponse.Object.DenialReason = "DEN1";
 			AuthsGetResponseCore.Object.JweEncryptedDeviceResponse = "Encrypted Device JWE Response";
 			JsonEncoder.Setup(d => d.DecodeObject<ServiceV3AuthsGetResponseDeviceJWE>(It.IsAny<String>())).Returns(deviceResponse.Object);
-			var actual = (ServerSentEventAuthorizationResponse) Transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { "jwt" }},
-				{"Content-Type", new List<string> {"application/jose" }}
-			}, "body");
+			var actual = Transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
 			Assert.AreEqual("Service User Hash", actual.ServiceUserHash);
 			Assert.AreEqual("Org User Hash", actual.OrganizationUserHash);
 			Assert.AreEqual("User Push ID", actual.UserPushId);
@@ -234,8 +177,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 
 
 		[TestMethod]
-		public void HandleServerSentEvent_ShouldReturnFalseForResponseIfJweResponseReDataIfPresentAndTypeIsNotAuthorized()
+		public void ServiceV3AuthsGet_ShouldReturnFalseForResponseIfJweResponseReDataIfPresentAndTypeIsNotAuthorized()
 		{
+			HttpResponse.Object.StatusCode = HttpStatusCode.OK;
+			JwtClaimsResponse.Object.StatusCode = 200;
 			Mock<ServiceV3AuthsGetResponseDeviceJWE> deviceResponse = new Mock<ServiceV3AuthsGetResponseDeviceJWE>();
 			deviceResponse.Object.DeviceId = "Device ID";
 			deviceResponse.Object.ServicePins = new string[] { "PIN1", "PIN2" };
@@ -244,25 +189,19 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 			deviceResponse.Object.DenialReason = "DEN1";
 			AuthsGetResponseCore.Object.JweEncryptedDeviceResponse = "Encrypted Device JWE Response";
 			JsonEncoder.Setup(d => d.DecodeObject<ServiceV3AuthsGetResponseDeviceJWE>(It.IsAny<String>())).Returns(deviceResponse.Object);
-			var actual = (ServerSentEventAuthorizationResponse) Transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { "jwt" }},
-				{"Content-Type", new List<string> {"application/jose" }}
-			}, "body");
+			var actual = Transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
 			Assert.IsFalse(actual.Response);
 		}
 
 		[TestMethod]
-		public void HandleServerSentEvent_ShouldReturnNonJweResponseIfJweResponseNotPresent()
+		public void ServiceV3AuthsGet_ShouldReturnNonJweResponseIfJweResponseNotPresent()
 		{
+			HttpResponse.Object.StatusCode = HttpStatusCode.OK;
+			JwtClaimsResponse.Object.StatusCode = 200;
 			DeviceResponse.Object.DeviceId = "Device ID";
 			DeviceResponse.Object.ServicePins = new string[] { "PIN1", "PIN2" };
 			DeviceResponse.Object.Response = true;
-			var actual = (ServerSentEventAuthorizationResponse) Transport.HandleServerSentEvent(new Dictionary<string, List<string>>
-			{
-				{"X-IOV-JWT", new List<string> { "jwt" }},
-				{"Content-Type", new List<string> {"application/jose" }}
-			}, "body");
+			var actual = Transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
 			Assert.AreEqual("Service User Hash", actual.ServiceUserHash);
 			Assert.AreEqual("Org User Hash", actual.OrganizationUserHash);
 			Assert.AreEqual("User Push ID", actual.UserPushId);
@@ -276,4 +215,3 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
 		}
 	}
 }
-

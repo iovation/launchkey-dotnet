@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
@@ -25,7 +26,10 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 		[JsonProperty("push_body")]
 		public string PushBody { get; }
 
-		public ServiceV3AuthsPostRequest(string username, AuthPolicy authPolicy, string context, string title, int? ttl, string pushTitle, string pushBody)
+		[JsonProperty("denial_reasons")]
+		public IList<DenialReason> DenialReasons { get; }
+
+		public ServiceV3AuthsPostRequest(string username, AuthPolicy authPolicy, string context, string title, int? ttl, string pushTitle, string pushBody, IList<DenialReason> denialReasons)
 		{
 			Username = username;
 			AuthPolicy = authPolicy;
@@ -34,6 +38,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			TTL = ttl;
 			PushTitle = pushTitle;
 			PushBody = pushBody;
+			DenialReasons = denialReasons;
 		}
 	}
 }

@@ -4,6 +4,9 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
 	public class ServiceV3AuthsGetResponseCore
 	{
+		[JsonProperty("auth_jwe")]
+		public string JweEncryptedDeviceResponse { get; set; }
+
 		[JsonProperty("auth", Required = Required.Always)]
 		public string EncryptedDeviceResponse { get; set; }
 

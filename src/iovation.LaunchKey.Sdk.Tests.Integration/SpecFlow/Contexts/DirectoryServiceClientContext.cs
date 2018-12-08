@@ -40,7 +40,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 		public void Authorize(string userId, string context, AuthPolicy authPolicy)
 		{
 			GetServiceClientForCurrentService()
-				.Authorize(userId, context, authPolicy);
+				.CreateAuthorizationRequest(userId, context, authPolicy);
 		}
 
 		public void SessionStart(string userId, string requestId)
