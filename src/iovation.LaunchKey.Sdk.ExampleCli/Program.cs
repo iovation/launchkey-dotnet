@@ -26,8 +26,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 					OrgServiceAuthOptions>(args)
 				.MapResult(
 					// service functions
-					(ServiceAuthOptions opts) => ServiceExamples.DoServiceAuthorization(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL),
-					(ServiceAuthWebhookOptions opts) => ServiceExamples.DoServiceAuthorizationWebhook(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL),
+					(ServiceAuthOptions opts) => ServiceExamples.DoServiceAuthorization(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL, opts.Context, opts.TTL, opts.AuthTitle, opts.PushTitle, opts.PushBody, opts.FraudDenialReasons, opts.NonFraudDenialReasons),
+					(ServiceAuthWebhookOptions opts) => ServiceExamples.DoServiceAuthorizationWebhook(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL, opts.Context, opts.TTL, opts.AuthTitle, opts.PushTitle, opts.PushBody, opts.FraudDenialReasons, opts.NonFraudDenialReasons),
 					(ServiceAuthWithPolicy opts) => ServiceExamples.DoServiceAuthorizationWithPolicy(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.JailbreakDetection, opts.Factors, opts.Geofence, opts.APIURL),
 					(ServiceSessionStartOptions opts) => ServiceExamples.DoSessionStart(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL),
 					(ServiceSessionEndOptions opts) => ServiceExamples.DoSessionEnd(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL),

@@ -27,7 +27,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 				authorizationRequestId,
 				true,
 				"deviceId",
-				devicePins
+				devicePins,
+				"Type",
+				"Reason",
+				"Denial Reason"
 			);
 
 			Assert.AreSame(requestingEntity, o.RequestingEntity);
@@ -39,6 +42,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 			Assert.AreEqual(true, o.Response);
 			Assert.AreEqual("deviceId", o.DeviceId);
 			Assert.AreSame(devicePins, o.DevicePins);
+			Assert.AreEqual("Type", o.Type);
+			Assert.AreEqual("Reason", o.Reason);
+			Assert.AreEqual("Denial Reason", o.DenialReason);
 		}
 	}
 }

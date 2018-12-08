@@ -148,18 +148,43 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		public string Username { get; set; }
 	}
 
-	[Verb("service-auth", HelpText = "Authorize a user against a service using a polling method")]
-	class ServiceAuthOptions : ServiceOptions
-	{
+	class AuthOptions : ServiceOptions
+	{ 
 		[Option('u', "username", HelpText = "The username to authorize", Required = true)]
 		public string Username { get; set; }
+
+		[Option('c', "context", HelpText = "The context value of the authorizaton request.")]
+		public string Context { get; set; }
+
+		[Option('l', "ttl", HelpText = "[Directory Service Only] Time to Live in seconds for the request. This must be between 30 and 600.")]
+		public int? TTL { get; set; }
+
+		[Option('t', "title", HelpText = "[Directory Service Only] Title of the authorization request.")]
+		public string AuthTitle { get; set; }
+
+		[Option('h', "push-title", HelpText = "[Directory Service Only] Title of the push message for the authorization request.")]
+		public string PushTitle { get; set; }
+
+		[Option('b', "push-body", HelpText = "[Directory Service Only] Body of the push message for the authorization request.")]
+		public string PushBody { get; set; }
+
+		[Option('f', "fraud-denial-reasons", Default = 0, HelpText = "[Directory Service Only] The number of denial reasons flagged as fraud for the authorization request.")]
+		public int FraudDenialReasons { get; set; }
+
+		[Option('n', "non-fraud-denial-reasons", Default = 0, HelpText = "[Directory Service Only] The number of denial reasons not flagged as fraud for the authorization request.")]
+		public int NonFraudDenialReasons { get; set; }
+	}
+
+	[Verb("service-auth", HelpText = "Authorize a user against a service using a polling method")]
+	class ServiceAuthOptions : AuthOptions
+	{
+		// This left intentionally blank
 	}
 
 	[Verb("service-auth-webhook", HelpText = "Authorize a user against a service using the Webhook method.")]
-	class ServiceAuthWebhookOptions : ServiceOptions
+	class ServiceAuthWebhookOptions : AuthOptions
 	{
-		[Option('u', "username", HelpText = "The username to authorize", Required = true)]
-		public string Username { get; set; }
+		// This left intentionally blank
 	}
 
 	[Verb("service-session-start", HelpText = "Start a session for a user")]

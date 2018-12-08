@@ -24,6 +24,8 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwt
 
 	public class JwtClaimsRequest
 	{
+		internal static object Object;
+
 		[JsonProperty("func")]
 		public string ContentHashAlgorithm { get; set; }
 

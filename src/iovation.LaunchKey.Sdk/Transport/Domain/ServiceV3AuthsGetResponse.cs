@@ -13,7 +13,10 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			Guid authorizationRequestId,
 			bool response,
 			string deviceId,
-			string[] devicePins)
+			string[] devicePins,
+			string type,
+			string reason,
+			string denialReason)
 		{
 			RequestingEntity = requestingEntity;
 			ServiceId = serviceId;
@@ -24,6 +27,9 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 			Response = response;
 			DeviceId = deviceId;
 			DevicePins = devicePins;
+			Type = type;
+			Reason = reason;
+			DenialReason = denialReason;
 		}
 
 		public EntityIdentifier RequestingEntity { get; }
@@ -35,5 +41,8 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 		public bool Response { get; }
 		public string DeviceId { get; }
 		public string[] DevicePins { get; }
+		public string Type { get; }
+		public string Reason { get; }
+		public string DenialReason { get; }
 	}
 }

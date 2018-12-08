@@ -130,7 +130,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		{
 			// setup
 			var transport = GetTransport(GetBadNetworkHttpClient().Object);
-			var request = new ServiceV3AuthsPostRequest(null, null, null, null, null, null, null);
+			var request = new ServiceV3AuthsPostRequest(null, null, null, null, null, null, null, null);
 			var id = Guid.NewGuid();
 			var entity = new EntityIdentifier(EntityType.Service, id);
 
@@ -441,44 +441,12 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 		private readonly Guid DefaultDeviceId = new Guid("00000000-0000-0000-0000-000000000004");
 
 		[TestMethod]
-		public void ServiceV3AuthsGet_ShouldReturnNullIfPending()
-		{
-			var httpClientMock = MakeMockHttpClient(responseCode: 204);
-			var httpClient = httpClientMock.Object;
-			var transport = MakeMockedTransport(httpClient, MakeMockedJsonService().Object, 204);
-			var response = transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
-
-			Assert.IsNull(response);
-		}
-		
-		[TestMethod]
-		[ExpectedException(typeof(AuthorizationRequestTimedOutError))]
-		public void ServiceV3AuthsGet_ShouldThrowIfTimedOut()
-		{
-			var httpClientMock = MakeMockHttpClient(responseCode: 408);
-			var httpClient = httpClientMock.Object;
-			var transport = MakeMockedTransport(httpClient, MakeMockedJsonService().Object, 408);
-			transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
-		}
-
-
-		[TestMethod]
 		public void ServiceV3AuthsPost_ShouldCallApi()
 		{
 			DoApiCallTest(
-				t => t.ServiceV3AuthsPost(new ServiceV3AuthsPostRequest("john", null, null, null, null, null, null), DefaultSubject),
+				t => t.ServiceV3AuthsPost(new ServiceV3AuthsPostRequest("john", null, null, null, null, null, null, null), DefaultSubject),
 				HttpMethod.POST,
 				"/service/v3/auths"
-			);
-		}
-
-		[TestMethod]
-		public void ServiceV3AuthsGet_ShouldCallApi()
-		{
-			DoApiCallTest(
-				t => t.ServiceV3AuthsGet(DefaultAuthId, DefaultSubject),
-				HttpMethod.GET, 
-				"/service/v3/auths/"+DefaultAuthId
 			);
 		}
 

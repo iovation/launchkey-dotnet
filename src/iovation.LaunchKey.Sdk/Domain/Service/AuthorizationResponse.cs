@@ -46,7 +46,27 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
 		/// </summary>
 		public List<string> DevicePins { get; }
 
-		public AuthorizationResponse(string authorizationRequestId, bool authorized, string serviceUserHash, string organizationUserHash, string userPushId, string deviceId, List<string> devicePins)
+		/// <summary>
+		/// The response type. This is a general categorization of the response.
+		/// </summary>
+		public AuthorizationResponseType? Type { get; }
+
+		/// <summary>
+		/// The reason for the response value.
+		/// </summary>
+		public AuthorizationResponseReason? Reason { get; }
+
+		/// <summary>
+		/// ID for DenialReason in list provided to createAuthorizationRequest which was selected by the user when denying the request.
+		/// </summary>
+		public string DenialReason { get; }
+
+		/// <summary>
+		/// Was the authorization request identified as fraudulent?
+		/// </summary>
+		public bool? Fraud { get; }
+
+		public AuthorizationResponse(string authorizationRequestId, bool authorized, string serviceUserHash, string organizationUserHash, string userPushId, string deviceId, List<string> devicePins, AuthorizationResponseType? type, AuthorizationResponseReason? reason, string denialReason, bool? fraud)
 		{
 			AuthorizationRequestId = authorizationRequestId;
 			Authorized = authorized;
@@ -55,6 +75,92 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
 			UserPushId = userPushId;
 			DeviceId = deviceId;
 			DevicePins = devicePins;
+			Type = type;
+			Reason = reason;
+			DenialReason = denialReason;
+			Fraud = fraud;
 		}
+	}
+
+	/// <summary>
+	/// The response type. This is a general categorization of the response.
+	/// </summary>
+	public enum AuthorizationResponseType
+	{
+		/// <summary>
+		/// The user authorized the authorization request
+		/// </summary>
+		AUTHORIZED,
+
+		/// <summary>
+		/// The use denied the authorization request
+		/// </summary>
+		DENIED,
+
+		/// <summary>
+		/// The user failed to complete the authentication request
+		/// </summary>
+		FAILED,
+
+		/// <summary>
+		/// Other exists only to allow for forward compatibility to future response types
+		/// </summary>
+		OTHER
+	}
+
+	/// <summary>
+	/// The reason for the response value.
+	/// </summary>
+	public enum AuthorizationResponseReason
+	{
+		/// <summary>
+		/// User satisfies all request policy requirements; successfully authenticates with all applicable methods
+		/// </summary>
+		APPROVED,
+
+		/// <summary>
+		/// User satisfies all request policy requirements; chooses to deny request rather than proceed with
+		/// authentication
+		/// </summary>
+		DISAPPROVED,
+
+		/// <summary>
+		/// User satisfies all request policy requirements; chooses to deny request because they believe it to be
+		/// fraudulent in some manner
+		/// </summary>
+		FRAUDULENT,
+
+		/// <summary>
+		/// Authenticator fails to satisfy request policy; authentication not allowed
+		/// </summary>
+		POLICY,
+
+		/// <summary>
+		/// Authenticator satisfies all request policy requirements, but permission on device prevents auth method
+		/// verification
+		/// </summary>
+		PERMISSION,
+
+		/// <summary>
+		/// Authenticator satisfies all request policy requirements, but user fails to successfully authenticate with
+		/// all required authentication methods
+		/// </summary>
+		AUTHENTICATION,
+
+		/// <summary>
+		/// Authenticator fails to satisfy request policy because authenticator configuration is incompatible with the
+		/// request policy (i.e. requiring an auth method that is configured to be unavailable to end users)
+		/// </summary>
+		CONFIGURATION,
+
+		/// <summary>
+		/// User can't receive or respond to request because a Local Auth Request is pending authorization
+		/// </summary>
+		BUSY_LOCAL,
+
+		/// <summary>
+		/// Other exists only to allow for forward compatibility to future response reasons
+		/// </summary>
+		OTHER
 	}
 }
