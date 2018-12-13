@@ -18,17 +18,17 @@ namespace iovation.LaunchKey.Sdk.Error
 		/// Is the authorization in progress from the same Service requesting the new
 		/// Authorization Request
 		/// </summary>
-		public bool MyAuthorizationRequest { get; }
+		public bool FromSameService { get; }
 
 		/// <summary>
 		///  When the Authorization Request identified by authorizationRequestId will expire.
 		/// </summary>
 		public DateTime? Expires { get; }
 
-		public AuthorizationInProgress(string message, Exception innerException, string errorCode, string authorizationrequestId, Boolean myAuthorizarionRequest, DateTime? expires) : base(message, innerException, errorCode)
+		public AuthorizationInProgress(string message, Exception innerException, string errorCode, string authorizationrequestId, Boolean fromSameService, DateTime? expires) : base(message, innerException, errorCode)
 		{
 			AuthorizationRequestId = authorizationrequestId;
-			MyAuthorizationRequest = myAuthorizarionRequest;
+			FromSameService = fromSameService;
 			Expires = expires;
 		}
 
@@ -38,14 +38,14 @@ namespace iovation.LaunchKey.Sdk.Error
 			if (this.GetType() != obj.GetType()) return false;
 			var exception = obj as AuthorizationInProgress;
 			return (this.AuthorizationRequestId == exception.AuthorizationRequestId 
-				&& this.MyAuthorizationRequest == exception.MyAuthorizationRequest 
+				&& this.FromSameService == exception.FromSameService 
 				&& this.Expires == exception.Expires);
 		}
 
 		public override int GetHashCode()
 		{
 			int hashCode = base.GetHashCode() ^ GetType().GetHashCode();
-			hashCode = hashCode ^ MyAuthorizationRequest.GetHashCode();
+			hashCode = hashCode ^ FromSameService.GetHashCode();
 			if (AuthorizationRequestId != null) hashCode = hashCode ^ AuthorizationRequestId.GetHashCode();
 			if (Expires != null) hashCode = hashCode ^ Expires.GetHashCode();
 			return hashCode;
@@ -53,7 +53,7 @@ namespace iovation.LaunchKey.Sdk.Error
 
 		public override string ToString()
 		{
-			return $"{GetType().Name}{{message='{Message}', ErrorCode='{ErrorCode}', AuthorizationRequestId='{AuthorizationRequestId}', MyAuthorizationRequest={MyAuthorizationRequest}, Expires='{Expires}'}}";
+			return $"{GetType().Name}{{message='{Message}', ErrorCode='{ErrorCode}', AuthorizationRequestId='{AuthorizationRequestId}', FromSameService={FromSameService}, Expires='{Expires}'}}";
 		}
 	}
 }

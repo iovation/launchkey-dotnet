@@ -35,7 +35,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Error
 		{
 			IDictionary<string, Object> errorData = new Dictionary<string, object>();
 			errorData["auth_request"] = "adc0d351-d8a8-11e8-9fe8-acde48001122";
-			errorData["my_auth"] = true;
+			errorData["from_same_service"] = true;
 			errorData["expires"] = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 			Assert.AreEqual(InvalidRequestException.FromErrorCode("SVC-005", "Important error", errorData), new AuthorizationInProgress("Important error", null, "SVC-005", "adc0d351-d8a8-11e8-9fe8-acde48001122", true, new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)));
 		}
@@ -51,7 +51,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Error
 		{
 			IDictionary<string, Object> errorData = new Dictionary<string, object>();
 			errorData["auth_request"] = "adc0d351-d8a8-11e8-9fe8-acde48001122";
-			errorData["my_auth"] = true;
+			errorData["from_same_service"] = true;
 			errorData["expires"] = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 			Assert.AreEqual(InvalidRequestException.FromErrorCode("SVC-005", "Important error", errorData), new AuthorizationInProgress("Important error", null, "SVC-005", "adc0d351-d8a8-11e8-9fe8-acde48001122", true, new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)));
 		}
@@ -70,7 +70,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Error
 		{
 			IDictionary<string, Object> errorData = new Dictionary<string, object>();
 			errorData["auth_request"] = "adc0d351-d8a8-11e8-9fe8-acde48001122";
-			errorData["my_auth"] = "Not a boolean";
+			errorData["from_same_service"] = "Not a boolean";
 			errorData["expires"] = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 			Assert.AreEqual(InvalidRequestException.FromErrorCode("SVC-005", "Important error", errorData), new AuthorizationInProgress("Important error", null, "SVC-005", "adc0d351-d8a8-11e8-9fe8-acde48001122", false, new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)));
 		}
@@ -80,7 +80,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Error
 		{
 			IDictionary<string, Object> errorData = new Dictionary<string, object>();
 			errorData["auth_request"] = "adc0d351-d8a8-11e8-9fe8-acde48001122";
-			errorData["my_auth"] = true;
+			errorData["from_same_service"] = true;
 			errorData["expires"] = null;
 			Assert.AreEqual(InvalidRequestException.FromErrorCode("SVC-005", "Important error", errorData), new AuthorizationInProgress("Important error", null, "SVC-005", "adc0d351-d8a8-11e8-9fe8-acde48001122", true, null));
 		}
@@ -90,7 +90,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Error
 		{
 			IDictionary<string, Object> errorData = new Dictionary<string, object>();
 			errorData["auth_request"] = "adc0d351-d8a8-11e8-9fe8-acde48001122";
-			errorData["my_auth"] = true;
+			errorData["from_same_service"] = true;
 			errorData["expires"] = "Not a Date";
 			Assert.AreEqual(InvalidRequestException.FromErrorCode("SVC-005", "Important error", errorData), new AuthorizationInProgress("Important error", null, "SVC-005", "adc0d351-d8a8-11e8-9fe8-acde48001122", true, null));
 		}
