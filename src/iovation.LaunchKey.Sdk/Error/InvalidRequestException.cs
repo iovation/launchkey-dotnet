@@ -33,13 +33,13 @@ namespace iovation.LaunchKey.Sdk.Error
 				case "SVC-004": return new ServiceNotFound(errorMessage, null, errorCode);
 				case "SVC-005":
 					string authorizationRequestId;
-					bool myAuthorizationRequest;
+					bool fromSameService;
 					DateTime? expires;
 
 					if (errorData == null)
 					{
 						authorizationRequestId = null;
-						myAuthorizationRequest = false;
+						fromSameService = false;
 						expires = null;
 					}
 					else
@@ -47,11 +47,11 @@ namespace iovation.LaunchKey.Sdk.Error
 						authorizationRequestId = errorData.ContainsKey("auth_request") ? (string) errorData["auth_request"] : null;
 						try
 						{
-							myAuthorizationRequest = errorData.ContainsKey("my_auth") ? (bool) errorData["my_auth"] : false;
+							fromSameService = errorData.ContainsKey("from_same_service") ? (bool) errorData["from_same_service"] : false;
 						}
 						catch
 						{
-							myAuthorizationRequest = false;
+							fromSameService = false;
 						}
 						try
 						{
@@ -66,7 +66,7 @@ namespace iovation.LaunchKey.Sdk.Error
 					return new AuthorizationInProgress(
 						errorMessage, null, errorCode,
 						authorizationRequestId,
-						myAuthorizationRequest,
+						fromSameService,
 						expires);
 				case "DIR-001": return new InvalidDirectoryIdentifier(errorMessage, null, errorCode);
 				case "KEY-001": return new InvalidPublicKey(errorMessage, null, errorCode);
