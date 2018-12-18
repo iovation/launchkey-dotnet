@@ -156,7 +156,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('c', "context", HelpText = "The context value of the authorization request.")]
 		public string Context { get; set; }
 
-		[Option('l', "ttl", HelpText = "[Directory Service Only] Time to Live in seconds for the request. This must be between 30 and 600.")]
+		[Option('l', "ttl", HelpText = "Time to Live in seconds for the request. This must be between 30 and 600.")]
 		public int? TTL { get; set; }
 
 		[Option('t', "title", HelpText = "[Directory Service Only] Title of the authorization request.")]
