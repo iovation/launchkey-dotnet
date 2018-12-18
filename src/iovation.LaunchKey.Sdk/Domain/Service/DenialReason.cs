@@ -23,7 +23,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
 		public string Id { get; }
 
 		/// <summary>
-		/// Reason test for the reason
+		/// Text for the reason
 		/// </summary>
 		public string Reason { get; }
 
