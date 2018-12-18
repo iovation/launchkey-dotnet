@@ -153,7 +153,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('u', "username", HelpText = "The username to authorize", Required = true)]
 		public string Username { get; set; }
 
-		[Option('c', "context", HelpText = "The context value of the authorizaton request.")]
+		[Option('c', "context", HelpText = "The context value of the authorization request.")]
 		public string Context { get; set; }
 
 		[Option('l', "ttl", HelpText = "[Directory Service Only] Time to Live in seconds for the request. This must be between 30 and 600.")]
@@ -168,11 +168,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('b', "push-body", HelpText = "[Directory Service Only] Body of the push message for the authorization request.")]
 		public string PushBody { get; set; }
 
-		[Option('f', "fraud-denial-reasons", Default = 0, HelpText = "[Directory Service Only] The number of denial reasons flagged as fraud for the authorization request.")]
-		public int FraudDenialReasons { get; set; }
+		[Option('f', "fraud-denial-reasons", HelpText = "[Directory Service Only] The number of denial reasons flagged as fraud for the authorization request.")]
+		public int? FraudDenialReasons { get; set; }
 
-		[Option('n', "non-fraud-denial-reasons", Default = 0, HelpText = "[Directory Service Only] The number of denial reasons not flagged as fraud for the authorization request.")]
-		public int NonFraudDenialReasons { get; set; }
+		[Option('n', "non-fraud-denial-reasons", HelpText = "[Directory Service Only] The number of denial reasons not flagged as fraud for the authorization request.")]
+		public int? NonFraudDenialReasons { get; set; }
 	}
 
 	[Verb("service-auth", HelpText = "Authorize a user against a service using a polling method")]

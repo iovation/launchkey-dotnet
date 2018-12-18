@@ -58,25 +58,36 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
 		}
 
-		private static IList<DenialReason> GetDenialReasons(int fraud, int nonFraud)
+		private static IList<DenialReason> GetDenialReasons(int? fraud, int? nonFraud)
 		{
-			var denialReasons = new List<DenialReason>();
-			for (int i = 0; i < Math.Max(fraud, nonFraud); i++)
-			{
-				if (i < fraud)
-				{
-					var reason = Path.GetRandomFileName().Replace(".", "");
-					var id = $"F{i}";
-					denialReasons.Add(new DenialReason(id, $"{reason} - {id}", true));
-				}
-				if (i < nonFraud)
-				{
-					var reason = Path.GetRandomFileName().Replace(".", "");
-					var id = $"NF{i}";
-					denialReasons.Add(new DenialReason(id, $"{reason} - {id}", false));
-				}
-			}
-			return denialReasons;
+            List<DenialReason> denialReasons;
+
+            if (fraud == null && nonFraud == null)
+            {
+                denialReasons = null;
+            }
+            else
+            {
+                fraud = fraud == null ? 0 : fraud;
+                nonFraud = nonFraud == null ? 0 : nonFraud;
+                denialReasons = new List<DenialReason>();
+                for (int i = 0; i < Math.Max((int) fraud, (int) nonFraud); i++)
+                {
+                    if (i < fraud)
+                    {
+                        var reason = Path.GetRandomFileName().Replace(".", "");
+                        var id = $"F{i}";
+                        denialReasons.Add(new DenialReason(id, $"{reason} - {id}", true));
+                    }
+                    if (i < nonFraud)
+                    {
+                        var reason = Path.GetRandomFileName().Replace(".", "");
+                        var id = $"NF{i}";
+                        denialReasons.Add(new DenialReason(id, $"{reason} - {id}", false));
+                    }
+                }
+            }
+            return denialReasons;
 		}
 		private static IWebhookPackage WaitForWebhookResponse(IServiceClient serviceClient)
 		{
@@ -109,7 +120,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			}
 		}
 
-		public static int DoServiceAuthorizationWebhook(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int fraudDenialreasons, int nonFraudDenialreasons)
+		public static int DoServiceAuthorizationWebhook(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons)
 		{
 			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
@@ -140,7 +151,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			}
 		}
 
-		public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int fraudDenialreasons, int nonFraudDenialreasons)
+		public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons)
 		{
 			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
