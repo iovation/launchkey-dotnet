@@ -74,8 +74,12 @@ namespace iovation.LaunchKey.Sdk.Client
 			var response = _transport.ServiceV3AuthsGet(Guid.Parse(authorizationRequestId), _serviceId);
 			if (response != null)
 			{
-				AuthorizationResponseType type;
-				if (response.Type == "AUTHORIZED")
+				AuthorizationResponseType? type;
+				if (response.Type == null)
+				{
+					type = null;
+				}
+				else if (response.Type == "AUTHORIZED")
 				{
 					type = AuthorizationResponseType.AUTHORIZED;
 				}
@@ -92,8 +96,12 @@ namespace iovation.LaunchKey.Sdk.Client
 					type = AuthorizationResponseType.OTHER;
 				}
 
-				AuthorizationResponseReason reason;
-				if (response.Reason == "APPROVED")
+				AuthorizationResponseReason? reason;
+				if (response.Reason == null)
+				{
+					reason = null;
+				}
+				else if (response.Reason == "APPROVED")
 				{
 					reason = AuthorizationResponseReason.APPROVED;
 				}

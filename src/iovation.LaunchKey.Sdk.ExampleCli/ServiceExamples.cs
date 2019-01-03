@@ -13,6 +13,21 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 {
 	class ServiceExamples
 	{
+		private static String naForNull(AuthorizationResponseType? value)
+		{
+			return naForNull(value.ToString());
+		}
+
+		private static String naForNull(AuthorizationResponseReason? value)
+		{
+			return naForNull(value.ToString());
+		}
+
+		private static String naForNull(String value)
+		{
+			return String.IsNullOrEmpty(value) ? "N/A" : value;
+		}
+
 		public static int DoSessionStart(string username, string serviceId, string privateKey, string apiURL)
 		{
 			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
@@ -47,9 +62,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		{
 			Console.WriteLine($"Auth response was:");
 			Console.WriteLine($"    Authorized:     {authResponse.Authorized}");
-			Console.WriteLine($"    Type:           {authResponse.Type}");
-			Console.WriteLine($"    Reason:         {authResponse.Reason}");
-			Console.WriteLine($"    Denial Reason:  {authResponse.DenialReason}");
+			Console.WriteLine($"    Type:           {naForNull(authResponse.Type)}");
+			Console.WriteLine($"    Reason:         {naForNull(authResponse.Reason)}");
+			Console.WriteLine($"    Denial Reason:  {naForNull(authResponse.DenialReason)}");
 			Console.WriteLine($"    Fraud:          {authResponse.Fraud}");
 			Console.WriteLine($"    Auth Request:   {authResponse.AuthorizationRequestId}");
 			Console.WriteLine($"    Device Pins:    {String.Join(", ", authResponse.DevicePins)}");
@@ -61,34 +76,34 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		private static IList<DenialReason> GetDenialReasons(int? fraud, int? nonFraud)
 		{
-            List<DenialReason> denialReasons;
+			List<DenialReason> denialReasons;
 
-            if (fraud == null && nonFraud == null)
-            {
-                denialReasons = null;
-            }
-            else
-            {
-                fraud = fraud == null ? 0 : fraud;
-                nonFraud = nonFraud == null ? 0 : nonFraud;
-                denialReasons = new List<DenialReason>();
-                for (int i = 0; i < Math.Max((int) fraud, (int) nonFraud); i++)
-                {
-                    if (i < fraud)
-                    {
-                        var reason = Path.GetRandomFileName().Replace(".", "");
-                        var id = $"F{i}";
-                        denialReasons.Add(new DenialReason(id, $"{reason} - {id}", true));
-                    }
-                    if (i < nonFraud)
-                    {
-                        var reason = Path.GetRandomFileName().Replace(".", "");
-                        var id = $"NF{i}";
-                        denialReasons.Add(new DenialReason(id, $"{reason} - {id}", false));
-                    }
-                }
-            }
-            return denialReasons;
+			if (fraud == null && nonFraud == null)
+			{
+				denialReasons = null;
+			}
+			else
+			{
+				fraud = fraud == null ? 0 : fraud;
+				nonFraud = nonFraud == null ? 0 : nonFraud;
+				denialReasons = new List<DenialReason>();
+				for (int i = 0; i < Math.Max((int) fraud, (int) nonFraud); i++)
+				{
+					if (i < fraud)
+					{
+						var reason = Path.GetRandomFileName().Replace(".", "");
+						var id = $"F{i}";
+						denialReasons.Add(new DenialReason(id, $"{reason} - {id}", true));
+					}
+					if (i < nonFraud)
+					{
+						var reason = Path.GetRandomFileName().Replace(".", "");
+						var id = $"NF{i}";
+						denialReasons.Add(new DenialReason(id, $"{reason} - {id}", false));
+					}
+				}
+			}
+			return denialReasons;
 		}
 		private static IWebhookPackage WaitForWebhookResponse(IServiceClient serviceClient)
 		{
