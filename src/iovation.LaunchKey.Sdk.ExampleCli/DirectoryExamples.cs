@@ -85,6 +85,14 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 				Console.WriteLine("user never replied.");
 				return 1;
 			}
+			catch(AuthorizationInProgress e)
+			{
+				Console.WriteLine(e.Message);
+				Console.WriteLine($"    Auth Request: {e.AuthorizationRequestId}");
+				Console.WriteLine($"    Expires: {e.Expires}");
+				Console.WriteLine($"    Same Service: {e.FromSameService}");
+				return 1;
+			}
 			catch (BaseException e)
 			{
 				Console.WriteLine($"Error while authorizing directory user {userId} within directory {directoryId} against service ID {serviceId}. Error: {e.Message}");

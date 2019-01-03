@@ -50,9 +50,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			Console.WriteLine($"    Type:           {authResponse.Type}");
 			Console.WriteLine($"    Reason:         {authResponse.Reason}");
 			Console.WriteLine($"    Denial Reason:  {authResponse.DenialReason}");
+			Console.WriteLine($"    Fraud:          {authResponse.Fraud}");
 			Console.WriteLine($"    Auth Request:   {authResponse.AuthorizationRequestId}");
 			Console.WriteLine($"    Device Pins:    {String.Join(", ", authResponse.DevicePins)}");
-			Console.WriteLine($"    User User Hash: {authResponse.OrganizationUserHash}");
+			Console.WriteLine($"    Org User Hash:  {authResponse.OrganizationUserHash}");
 			Console.WriteLine($"    Svc User Hash:  {authResponse.ServiceUserHash}");
 			Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
 			Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
@@ -144,6 +145,14 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 				Console.WriteLine("user never replied.");
 				return 1;
 			}
+			catch(AuthorizationInProgress e)
+			{
+				Console.WriteLine(e.Message);
+				Console.WriteLine($"    Auth Request: {e.AuthorizationRequestId}");
+				Console.WriteLine($"    Expires: {e.Expires}");
+				Console.WriteLine($"    Same Service: {e.FromSameService}");
+				return 1;
+			}
 			catch (BaseException e)
 			{
 				Console.WriteLine($"Error while authorizing user {username} against service ID {serviceId}. Error: {e.Message}");
@@ -179,6 +188,14 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 			catch (AuthorizationRequestTimedOutError)
 			{
 				Console.WriteLine("user never replied.");
+				return 1;
+			}
+			catch(AuthorizationInProgress e)
+			{
+				Console.WriteLine(e.Message);
+				Console.WriteLine($"    Auth Request: {e.AuthorizationRequestId}");
+				Console.WriteLine($"    Expires: {e.Expires}");
+				Console.WriteLine($"    Same Service: {e.FromSameService}");
 				return 1;
 			}
 			catch (BaseException e)
