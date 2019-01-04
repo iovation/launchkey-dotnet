@@ -256,7 +256,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 			if (httpStatusCodeWhiteList != null && httpStatusCodeWhiteList.Contains((int)response.StatusCode)) return;
 
 			// server didn't like our request
-			if (response.StatusCode == HttpStatusCode.BadRequest)
+			if (response.StatusCode == HttpStatusCode.BadRequest || response.StatusCode == HttpStatusCode.Conflict)
 			{
 				// no body came back ... throw generic http 400 exception
 				if (string.IsNullOrWhiteSpace(response.ResponseBody))
