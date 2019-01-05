@@ -183,8 +183,12 @@ namespace iovation.LaunchKey.Sdk.Client
 			if (serverSentEvent is ServerSentEventAuthorizationResponse)
 			{
 				var authEvent = (ServerSentEventAuthorizationResponse)serverSentEvent;
-				AuthorizationResponseType type;
-				if (authEvent.Type == "AUTHORIZED")
+				AuthorizationResponseType? type;
+				if (authEvent.Type == null)
+				{
+					type = null;
+				}
+				else if (authEvent.Type == "AUTHORIZED")
 				{
 					type = AuthorizationResponseType.AUTHORIZED;
 				}
@@ -201,8 +205,12 @@ namespace iovation.LaunchKey.Sdk.Client
 					type = AuthorizationResponseType.OTHER;
 				}
 
-				AuthorizationResponseReason reason;
-				if (authEvent.Reason == "APPROVED")
+				AuthorizationResponseReason? reason;
+				if (authEvent.Reason == null)
+				{
+					reason = null;
+				}
+				else if (authEvent.Reason == "APPROVED")
 				{
 					reason = AuthorizationResponseReason.APPROVED;
 				}
