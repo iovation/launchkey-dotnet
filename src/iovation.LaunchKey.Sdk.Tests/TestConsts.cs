@@ -1,27 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using iovation.LaunchKey.Sdk.Transport.Domain;
 
 namespace iovation.LaunchKey.Sdk.Tests
 {
-	public class TestConsts
-	{
-		public static readonly Guid DefaultAuthenticationId = new Guid("00000000-0000-0000-0000-000000000007");
-		public static readonly Guid DefaultDirectoryId = new Guid("00000000-0000-0000-0000-000000000002");
-		public static readonly Guid DefaultServiceId = new Guid("00000000-0000-0000-0000-000000000009");
-		public static readonly Guid DefaultOrgId = new Guid("00000000-0000-0000-0000-000000000012");
-		public static readonly EntityIdentifier DefaultServiceEntity = new EntityIdentifier(EntityType.Service, TestConsts.DefaultServiceId);
-		public static readonly EntityIdentifier DefaultOrganizationEntity = new EntityIdentifier(EntityType.Organization, TestConsts.DefaultOrgId);
-		public static readonly EntityIdentifier DefaultDirectoryEntity = new EntityIdentifier(EntityType.Directory, TestConsts.DefaultDirectoryId);
-		public static readonly Guid DefaultDeviceId = new Guid("00000000-0000-0000-0000-000000000005");
-		public static readonly DateTime DefaultTime = new DateTime(2015, 1, 1);
+    public class TestConsts
+    {
+        public static readonly Guid DefaultAuthenticationId = new Guid("00000000-0000-0000-0000-000000000007");
+        public static readonly Guid DefaultDirectoryId = new Guid("00000000-0000-0000-0000-000000000002");
+        public static readonly Guid DefaultServiceId = new Guid("00000000-0000-0000-0000-000000000009");
+        public static readonly Guid DefaultOrgId = new Guid("00000000-0000-0000-0000-000000000012");
+        public static readonly EntityIdentifier DefaultServiceEntity = new EntityIdentifier(EntityType.Service, TestConsts.DefaultServiceId);
+        public static readonly EntityIdentifier DefaultOrganizationEntity = new EntityIdentifier(EntityType.Organization, TestConsts.DefaultOrgId);
+        public static readonly EntityIdentifier DefaultDirectoryEntity = new EntityIdentifier(EntityType.Directory, TestConsts.DefaultDirectoryId);
+        public static readonly Guid DefaultDeviceId = new Guid("00000000-0000-0000-0000-000000000005");
+        public static readonly DateTime DefaultTime = new DateTime(2015, 1, 1);
 
 
-		public static readonly string DefaultPrivateKey = @"-----BEGIN RSA PRIVATE KEY-----
+        public static readonly string DefaultPrivateKey = @"-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEA7fEWbTsSs1+QYFP2pGJFyFb/fPO90jGV5rRE5FRbdinH7KDA
 Q1CbX7Tr7lalIWrDzIw3u0BCN33qoXRIcXS1aSsodf4OOkATZiWSfJs7u4BZowT4
 eNLq9iDjrKG7+n4kh83hKobVP6+ftUVqzvF+nlddZCoVEKGO8hiEEJcULJ+dJtq/
@@ -49,7 +44,7 @@ lcal1kPurB1lu6lp4ElN5D2vQ/djtJykA8/ELPIk3InXZGtE+kZodlGtVyS/r742
 aTNSDG8Bvrs4PkTJ4DWBisxmkYYvIQKjStezao06x2Wkr7CS8gd3
 -----END RSA PRIVATE KEY-----";
 
-		public static readonly string DefaultPublicKey = @"-----BEGIN PUBLIC KEY-----
+        public static readonly string DefaultPublicKey = @"-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7fEWbTsSs1+QYFP2pGJF
 yFb/fPO90jGV5rRE5FRbdinH7KDAQ1CbX7Tr7lalIWrDzIw3u0BCN33qoXRIcXS1
 aSsodf4OOkATZiWSfJs7u4BZowT4eNLq9iDjrKG7+n4kh83hKobVP6+ftUVqzvF+
@@ -58,5 +53,5 @@ gX00CGgHZzPF/AnSh16jXCgrgf9oQQvY9ZaIPCnzawJDNfI2s7MeWYCItxypO8Tm
 T+UFcA5oqu4D4I7In+QICIuZIm1jQxDVXiNVgcUFeAFSiBAU5WEvPT+DGPMI5xZx
 DwIDAQAB
 -----END PUBLIC KEY-----";
-	}
+    }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using iovation.LaunchKey.Sdk.Error;
-using TechTalk.SpecFlow;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 {

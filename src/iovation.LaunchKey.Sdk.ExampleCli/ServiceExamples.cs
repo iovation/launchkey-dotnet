@@ -11,281 +11,281 @@ using iovation.LaunchKey.Sdk.Error;
 
 namespace iovation.LaunchKey.Sdk.ExampleCli
 {
-	class ServiceExamples
-	{
-		private static String naForNull(AuthorizationResponseType? value)
-		{
-			return naForNull(value.ToString());
-		}
+    class ServiceExamples
+    {
+        private static String naForNull(AuthorizationResponseType? value)
+        {
+            return naForNull(value.ToString());
+        }
 
-		private static String naForNull(AuthorizationResponseReason? value)
-		{
-			return naForNull(value.ToString());
-		}
+        private static String naForNull(AuthorizationResponseReason? value)
+        {
+            return naForNull(value.ToString());
+        }
 
-		private static String naForNull(String value)
-		{
-			return String.IsNullOrEmpty(value) ? "N/A" : value;
-		}
+        private static String naForNull(String value)
+        {
+            return String.IsNullOrEmpty(value) ? "N/A" : value;
+        }
 
-		public static int DoSessionStart(string username, string serviceId, string privateKey, string apiURL)
-		{
-			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
-			try
-			{
-				serviceClient.SessionStart(username);
-			}
-			catch (BaseException e)
-			{
-				Console.WriteLine($"There was an error starting the session for user {username} and service id {serviceId}. Error: {e.Message}");
-			}
+        public static int DoSessionStart(string username, string serviceId, string privateKey, string apiURL)
+        {
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            try
+            {
+                serviceClient.SessionStart(username);
+            }
+            catch (BaseException e)
+            {
+                Console.WriteLine($"There was an error starting the session for user {username} and service id {serviceId}. Error: {e.Message}");
+            }
 
-			return 0;
-		}
+            return 0;
+        }
 
-		public static int DoSessionEnd(string username, string serviceId, string privateKey, string apiURL)
-		{
-			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
-			try
-			{
-				serviceClient.SessionEnd(username);
-			}
-			catch (BaseException e)
-			{
-				Console.WriteLine($"There was an error ending the session for user {username} and service id {serviceId}. Error: {e.Message}");
-			}
+        public static int DoSessionEnd(string username, string serviceId, string privateKey, string apiURL)
+        {
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            try
+            {
+                serviceClient.SessionEnd(username);
+            }
+            catch (BaseException e)
+            {
+                Console.WriteLine($"There was an error ending the session for user {username} and service id {serviceId}. Error: {e.Message}");
+            }
 
-			return 0;
-		}
+            return 0;
+        }
 
-		private static void PrintAuthorizationResponse(AuthorizationResponse authResponse)
-		{
-			Console.WriteLine($"Auth response was:");
-			Console.WriteLine($"    Authorized:     {authResponse.Authorized}");
-			Console.WriteLine($"    Type:           {naForNull(authResponse.Type)}");
-			Console.WriteLine($"    Reason:         {naForNull(authResponse.Reason)}");
-			Console.WriteLine($"    Denial Reason:  {naForNull(authResponse.DenialReason)}");
-			Console.WriteLine($"    Fraud:          {authResponse.Fraud}");
-			Console.WriteLine($"    Auth Request:   {authResponse.AuthorizationRequestId}");
-			Console.WriteLine($"    Device Pins:    {String.Join(", ", authResponse.DevicePins)}");
-			Console.WriteLine($"    Org User Hash:  {authResponse.OrganizationUserHash}");
-			Console.WriteLine($"    Svc User Hash:  {authResponse.ServiceUserHash}");
-			Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
-			Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
-		}
+        private static void PrintAuthorizationResponse(AuthorizationResponse authResponse)
+        {
+            Console.WriteLine($"Auth response was:");
+            Console.WriteLine($"    Authorized:     {authResponse.Authorized}");
+            Console.WriteLine($"    Type:           {naForNull(authResponse.Type)}");
+            Console.WriteLine($"    Reason:         {naForNull(authResponse.Reason)}");
+            Console.WriteLine($"    Denial Reason:  {naForNull(authResponse.DenialReason)}");
+            Console.WriteLine($"    Fraud:          {authResponse.Fraud}");
+            Console.WriteLine($"    Auth Request:   {authResponse.AuthorizationRequestId}");
+            Console.WriteLine($"    Device Pins:    {String.Join(", ", authResponse.DevicePins)}");
+            Console.WriteLine($"    Org User Hash:  {authResponse.OrganizationUserHash}");
+            Console.WriteLine($"    Svc User Hash:  {authResponse.ServiceUserHash}");
+            Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
+            Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
+        }
 
-		private static IList<DenialReason> GetDenialReasons(int? fraud, int? nonFraud)
-		{
-			List<DenialReason> denialReasons;
+        private static IList<DenialReason> GetDenialReasons(int? fraud, int? nonFraud)
+        {
+            List<DenialReason> denialReasons;
 
-			if (fraud == null && nonFraud == null)
-			{
-				denialReasons = null;
-			}
-			else
-			{
-				fraud = fraud == null ? 0 : fraud;
-				nonFraud = nonFraud == null ? 0 : nonFraud;
-				denialReasons = new List<DenialReason>();
-				for (int i = 0; i < Math.Max((int) fraud, (int) nonFraud); i++)
-				{
-					if (i < fraud)
-					{
-						var reason = Path.GetRandomFileName().Replace(".", "");
-						var id = $"F{i}";
-						denialReasons.Add(new DenialReason(id, $"{reason} - {id}", true));
-					}
-					if (i < nonFraud)
-					{
-						var reason = Path.GetRandomFileName().Replace(".", "");
-						var id = $"NF{i}";
-						denialReasons.Add(new DenialReason(id, $"{reason} - {id}", false));
-					}
-				}
-			}
-			return denialReasons;
-		}
-		private static IWebhookPackage WaitForWebhookResponse(IServiceClient serviceClient)
-		{
-			if (!HttpListener.IsSupported)
-			{
-				Console.WriteLine("Sorry, your OS does not support the default windows HTTP listener. Webhook demo cannot proceed.");
-				Environment.Exit(1);
-			}
-			Console.WriteLine("Webhook: Starting HTTP listener.");
-			var listener = new HttpListener();
-			listener.Prefixes.Add("http://localhost:9876/");
-			listener.Start();
-			
-			Console.WriteLine("Webhook: Waiting for a request ... ");
-			var context = listener.GetContext();
-			Console.WriteLine("Webhook: Request received");
-			using (var reader = new StreamReader(context.Request.InputStream, Encoding.UTF8))
-			{
-				var body = reader.ReadToEnd();
-				var headers = new Dictionary<string, List<string>>();
-				foreach (var headerName in context.Request.Headers.AllKeys)
-				{
-					headers.Add(headerName, new List<string>());
-					foreach (var headerValue in context.Request.Headers.GetValues(headerName))
-					{
-						headers[headerName].Add(headerValue);
-					}
-				}
-				return serviceClient.HandleWebhook(headers, body);
-			}
-		}
+            if (fraud == null && nonFraud == null)
+            {
+                denialReasons = null;
+            }
+            else
+            {
+                fraud = fraud == null ? 0 : fraud;
+                nonFraud = nonFraud == null ? 0 : nonFraud;
+                denialReasons = new List<DenialReason>();
+                for (int i = 0; i < Math.Max((int)fraud, (int)nonFraud); i++)
+                {
+                    if (i < fraud)
+                    {
+                        var reason = Path.GetRandomFileName().Replace(".", "");
+                        var id = $"F{i}";
+                        denialReasons.Add(new DenialReason(id, $"{reason} - {id}", true));
+                    }
+                    if (i < nonFraud)
+                    {
+                        var reason = Path.GetRandomFileName().Replace(".", "");
+                        var id = $"NF{i}";
+                        denialReasons.Add(new DenialReason(id, $"{reason} - {id}", false));
+                    }
+                }
+            }
+            return denialReasons;
+        }
+        private static IWebhookPackage WaitForWebhookResponse(IServiceClient serviceClient)
+        {
+            if (!HttpListener.IsSupported)
+            {
+                Console.WriteLine("Sorry, your OS does not support the default windows HTTP listener. Webhook demo cannot proceed.");
+                Environment.Exit(1);
+            }
+            Console.WriteLine("Webhook: Starting HTTP listener.");
+            var listener = new HttpListener();
+            listener.Prefixes.Add("http://localhost:9876/");
+            listener.Start();
 
-		public static int DoServiceAuthorizationWebhook(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons)
-		{
-			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            Console.WriteLine("Webhook: Waiting for a request ... ");
+            var context = listener.GetContext();
+            Console.WriteLine("Webhook: Request received");
+            using (var reader = new StreamReader(context.Request.InputStream, Encoding.UTF8))
+            {
+                var body = reader.ReadToEnd();
+                var headers = new Dictionary<string, List<string>>();
+                foreach (var headerName in context.Request.Headers.AllKeys)
+                {
+                    headers.Add(headerName, new List<string>());
+                    foreach (var headerValue in context.Request.Headers.GetValues(headerName))
+                    {
+                        headers[headerName].Add(headerValue);
+                    }
+                }
+                return serviceClient.HandleWebhook(headers, body);
+            }
+        }
 
-			try
-			{
-				serviceClient.CreateAuthorizationRequest(username, context: context, title: title, ttl: ttl, pushTitle: pushTitle, pushBody: pushBody, denialReasons: GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons));
-				var webhookPackage = WaitForWebhookResponse(serviceClient);
-				var authPackage = webhookPackage as AuthorizationResponseWebhookPackage;
-				if (authPackage != null)
-				{
-					PrintAuthorizationResponse(authPackage.AuthorizationResponse);
-				}
-				else
-				{
-					Console.WriteLine($"Error: received a webhook package but it was not for an authorization!");
-				}
-				return 0;
-			}
-			catch (AuthorizationRequestTimedOutError)
-			{
-				Console.WriteLine("user never replied.");
-				return 1;
-			}
-			catch(AuthorizationInProgress e)
-			{
-				Console.WriteLine(e.Message);
-				Console.WriteLine($"    Auth Request: {e.AuthorizationRequestId}");
-				Console.WriteLine($"    Expires: {e.Expires}");
-				Console.WriteLine($"    Same Service: {e.FromSameService}");
-				return 1;
-			}
-			catch (BaseException e)
-			{
-				Console.WriteLine($"Error while authorizing user {username} against service ID {serviceId}. Error: {e.Message}");
-				return 1;
-			}
-		}
+        public static int DoServiceAuthorizationWebhook(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons)
+        {
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
-		public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons)
-		{
-			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            try
+            {
+                serviceClient.CreateAuthorizationRequest(username, context: context, title: title, ttl: ttl, pushTitle: pushTitle, pushBody: pushBody, denialReasons: GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons));
+                var webhookPackage = WaitForWebhookResponse(serviceClient);
+                var authPackage = webhookPackage as AuthorizationResponseWebhookPackage;
+                if (authPackage != null)
+                {
+                    PrintAuthorizationResponse(authPackage.AuthorizationResponse);
+                }
+                else
+                {
+                    Console.WriteLine($"Error: received a webhook package but it was not for an authorization!");
+                }
+                return 0;
+            }
+            catch (AuthorizationRequestTimedOutError)
+            {
+                Console.WriteLine("user never replied.");
+                return 1;
+            }
+            catch (AuthorizationInProgress e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine($"    Auth Request: {e.AuthorizationRequestId}");
+                Console.WriteLine($"    Expires: {e.Expires}");
+                Console.WriteLine($"    Same Service: {e.FromSameService}");
+                return 1;
+            }
+            catch (BaseException e)
+            {
+                Console.WriteLine($"Error while authorizing user {username} against service ID {serviceId}. Error: {e.Message}");
+                return 1;
+            }
+        }
 
-			try
-			{
-				var authorizationRequest = serviceClient.CreateAuthorizationRequest(username, context: context, title: title, ttl: ttl, pushTitle: pushTitle, pushBody: pushBody, denialReasons: GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons));
-				while (true)
-				{
-					Console.WriteLine("checking auth");
+        public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons)
+        {
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
-					// poll for a response
-					var authResponse = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
+            try
+            {
+                var authorizationRequest = serviceClient.CreateAuthorizationRequest(username, context: context, title: title, ttl: ttl, pushTitle: pushTitle, pushBody: pushBody, denialReasons: GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons));
+                while (true)
+                {
+                    Console.WriteLine("checking auth");
 
-					// if we got one, process it
-					if (authResponse != null)
-					{
-						PrintAuthorizationResponse(authResponse);
-						return 0;
-					}
+                    // poll for a response
+                    var authResponse = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
 
-					// if not, we are still waiting on the user. wait a bit ... 
-					Thread.Sleep(1000);
-				}
-			}
-			catch (AuthorizationRequestTimedOutError)
-			{
-				Console.WriteLine("user never replied.");
-				return 1;
-			}
-			catch(AuthorizationInProgress e)
-			{
-				Console.WriteLine(e.Message);
-				Console.WriteLine($"    Auth Request: {e.AuthorizationRequestId}");
-				Console.WriteLine($"    Expires: {e.Expires}");
-				Console.WriteLine($"    Same Service: {e.FromSameService}");
-				return 1;
-			}
-			catch (BaseException e)
-			{
-				Console.WriteLine($"Error while authorizing user {username} against service ID {serviceId}. Error: {e.Message}");
-				return 1;
-			}
-		}
+                    // if we got one, process it
+                    if (authResponse != null)
+                    {
+                        PrintAuthorizationResponse(authResponse);
+                        return 0;
+                    }
 
-		public static int DoServiceAuthorizationWithPolicy(string username, string serviceId, string privateKey, bool jailbreakDetection, int? factors, string geofence, string apiURL)
-		{
-			var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+                    // if not, we are still waiting on the user. wait a bit ... 
+                    Thread.Sleep(1000);
+                }
+            }
+            catch (AuthorizationRequestTimedOutError)
+            {
+                Console.WriteLine("user never replied.");
+                return 1;
+            }
+            catch (AuthorizationInProgress e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine($"    Auth Request: {e.AuthorizationRequestId}");
+                Console.WriteLine($"    Expires: {e.Expires}");
+                Console.WriteLine($"    Same Service: {e.FromSameService}");
+                return 1;
+            }
+            catch (BaseException e)
+            {
+                Console.WriteLine($"Error while authorizing user {username} against service ID {serviceId}. Error: {e.Message}");
+                return 1;
+            }
+        }
 
-			List<Location> locations = null;
-			// parse geofence input
-			if (!string.IsNullOrWhiteSpace(geofence))
-			{
-				try
-				{
-					var parts = geofence.Split(':');
-					if (parts.Length != 3)
-					{
-						Console.WriteLine("geofence should be in the format lat:lon:radius");
-						return 1;
-					}
-					var lat = double.Parse(parts[0]);
-					var lon = double.Parse(parts[1]);
-					var rad = double.Parse(parts[2]);
+        public static int DoServiceAuthorizationWithPolicy(string username, string serviceId, string privateKey, bool jailbreakDetection, int? factors, string geofence, string apiURL)
+        {
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
 
-					locations = new List<Location>();
-					locations.Add(new Location(rad, lat, lon));
-				}
-				catch (FormatException)
-				{
-					Console.WriteLine("geofence parsing failed");
-					return 1;
-				}
-			}
-			Console.WriteLine($"Using policy: factors: {factors}, locations: {locations?.Count}, geofence: {geofence}, jailbreak: {jailbreakDetection}");
-			try
-			{
-				var policy = new AuthPolicy(
-					jailbreakDetection: jailbreakDetection,
-					locations: locations,
-					requiredFactors: factors
-				);
-				var authorizationRequest = serviceClient.CreateAuthorizationRequest(username, null,  policy);
-				while (true)
-				{
-					Console.WriteLine("checking auth");
+            List<Location> locations = null;
+            // parse geofence input
+            if (!string.IsNullOrWhiteSpace(geofence))
+            {
+                try
+                {
+                    var parts = geofence.Split(':');
+                    if (parts.Length != 3)
+                    {
+                        Console.WriteLine("geofence should be in the format lat:lon:radius");
+                        return 1;
+                    }
+                    var lat = double.Parse(parts[0]);
+                    var lon = double.Parse(parts[1]);
+                    var rad = double.Parse(parts[2]);
 
-					// poll for a response
-					var authResponse = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
+                    locations = new List<Location>();
+                    locations.Add(new Location(rad, lat, lon));
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("geofence parsing failed");
+                    return 1;
+                }
+            }
+            Console.WriteLine($"Using policy: factors: {factors}, locations: {locations?.Count}, geofence: {geofence}, jailbreak: {jailbreakDetection}");
+            try
+            {
+                var policy = new AuthPolicy(
+                    jailbreakDetection: jailbreakDetection,
+                    locations: locations,
+                    requiredFactors: factors
+                );
+                var authorizationRequest = serviceClient.CreateAuthorizationRequest(username, null, policy);
+                while (true)
+                {
+                    Console.WriteLine("checking auth");
 
-					// if we got one, process it
-					if (authResponse != null)
-					{
-						PrintAuthorizationResponse(authResponse);
-						return 0;
-					}
+                    // poll for a response
+                    var authResponse = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
 
-					// if not, we are still waiting on the user. wait a bit ... 
-					Thread.Sleep(1000);
-				}
-			}
-			catch (AuthorizationRequestTimedOutError)
-			{
-				Console.WriteLine("user never replied.");
-				return 1;
-			}
-			catch (BaseException e)
-			{
-				Console.WriteLine($"Error while authorizing user {username} against service ID {serviceId}. Error: {e.Message}");
-				return 1;
-			}
-		}
-	}
+                    // if we got one, process it
+                    if (authResponse != null)
+                    {
+                        PrintAuthorizationResponse(authResponse);
+                        return 0;
+                    }
+
+                    // if not, we are still waiting on the user. wait a bit ... 
+                    Thread.Sleep(1000);
+                }
+            }
+            catch (AuthorizationRequestTimedOutError)
+            {
+                Console.WriteLine("user never replied.");
+                return 1;
+            }
+            catch (BaseException e)
+            {
+                Console.WriteLine($"Error while authorizing user {username} against service ID {serviceId}. Error: {e.Message}");
+                return 1;
+            }
+        }
+    }
 }
