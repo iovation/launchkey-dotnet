@@ -4,32 +4,32 @@ using Newtonsoft.Json;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
-	public class DirectoryV3SessionsListPostResponse
-	{
-		[JsonProperty("sessions")]
-		public List<Session> Sessions { get; set; }
+    public class DirectoryV3SessionsListPostResponse
+    {
+        [JsonProperty("sessions")]
+        public List<Session> Sessions { get; set; }
 
-		public DirectoryV3SessionsListPostResponse(List<Session> sessions)
-		{
-			Sessions = sessions;
-		}
+        public DirectoryV3SessionsListPostResponse(List<Session> sessions)
+        {
+            Sessions = sessions;
+        }
 
-		public class Session
-		{
-			[JsonProperty("service_id")]
-			public Guid ServiceId { get; set; }
+        public class Session
+        {
+            [JsonProperty("service_id")]
+            public Guid ServiceId { get; set; }
 
-			[JsonProperty("service_name")]
-			public string ServiceName { get; set; }
+            [JsonProperty("service_name")]
+            public string ServiceName { get; set; }
 
-			[JsonProperty("service_icon")]
-			public string ServiceIcon { get; set; }
+            [JsonProperty("service_icon")]
+            public string ServiceIcon { get; set; }
 
-			[JsonProperty("auth_request")]
-			public Guid? AuthRequest { get; set; }
+            [JsonProperty("auth_request")]
+            public Guid? AuthRequest { get; set; }
 
-			[JsonProperty("date_created")]
-			public DateTime Created { get; set; }
-		}
-	}
+            [JsonProperty("date_created")]
+            public DateTime Created { get; set; }
+        }
+    }
 }

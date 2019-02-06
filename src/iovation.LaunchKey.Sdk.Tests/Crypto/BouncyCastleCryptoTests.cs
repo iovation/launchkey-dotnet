@@ -9,25 +9,25 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace iovation.LaunchKey.Sdk.Tests.Crypto
 {
-	[TestClass]
-	public class CryptoTests
-	{
-		private ICrypto _crypto;
-		private RSA _privateKey;
-		private RSA _publicKey;
+    [TestClass]
+    public class CryptoTests
+    {
+        private ICrypto _crypto;
+        private RSA _privateKey;
+        private RSA _publicKey;
 
-		[TestInitialize]
-		public void Setup()
-		{
-			_crypto = new BouncyCastleCrypto();
-			_publicKey = _crypto.LoadRsaPublicKey(File.ReadAllText("test-public.key"));
-			_privateKey = _crypto.LoadRsaPrivateKey(File.ReadAllText("test-private.key"));
-		}
+        [TestInitialize]
+        public void Setup()
+        {
+            _crypto = new BouncyCastleCrypto();
+            _publicKey = _crypto.LoadRsaPublicKey(File.ReadAllText("test-public.key"));
+            _privateKey = _crypto.LoadRsaPrivateKey(File.ReadAllText("test-private.key"));
+        }
 
-		[TestMethod]
-		public void TestLoadPrivateKey()
-		{
-			var pkey = @"-----BEGIN RSA PRIVATE KEY-----
+        [TestMethod]
+        public void TestLoadPrivateKey()
+        {
+            var pkey = @"-----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEAkWY1n5mCrzLjys1zijQwhTeZwXMajWg7kE4KD6m7KBCtkqoO
 nL6rnlRELsWpKsKujFjWIqE4V2rJEV+ctZK/xThFgEURYQ8Tl5QLJN8anp+9eot8
 E9s5A8zjfBf3lq+BmzDJDOaCg+ZgmoPbx6t0t6Y76kSMuP1UoRp4B/OFB1WETDQM
@@ -54,18 +54,18 @@ mJzrUQKBgQCkUZ3gzA90Pf3dogYn0mGfTj4hY/+qn3tGtc0CFrzGHdIEFnJi5WlO
 r+ppoKXL4tSFNDsShVSQBgEAZU9F/F7wUgCXqBMnHu574fpKakiNpeTmLnQ4JNn4
 PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 -----END RSA PRIVATE KEY-----";
-			var key = _crypto.LoadRsaPrivateKey(pkey);
-			var csp = key as RSACryptoServiceProvider;
+            var key = _crypto.LoadRsaPrivateKey(pkey);
+            var csp = key as RSACryptoServiceProvider;
 
-			Assert.IsTrue(csp != null);
-			Assert.AreEqual(2048, csp.KeySize);
-			Assert.AreEqual(false, csp.PublicOnly);
-		}
+            Assert.IsTrue(csp != null);
+            Assert.AreEqual(2048, csp.KeySize);
+            Assert.AreEqual(false, csp.PublicOnly);
+        }
 
-		[TestMethod]
-		public void TestLoadPublicKey()
-		{
-			var pemkey = @"-----BEGIN PUBLIC KEY-----
+        [TestMethod]
+        public void TestLoadPublicKey()
+        {
+            var pemkey = @"-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAinATCdbqz0oDfcUtjzrx
 vF9JNJOrZzBNCmTUpOz/VptDWpraj040eoywD3VRklmMVFt0e77Hs34BsrhchCav
 mzlQmYYjL4zIzRX4B0l+U/PhC6p6RIL8D/TSk11u11sHtBycSOThYDeoPRuBo/Zq
@@ -79,91 +79,91 @@ TxrmsAS6Onkyjhl/+ihxJasCTpN69jmwqxSFNmStzXFz6LjqUtiPIeMdiCn9dFrD
 Gb2x+XCOpvFR9q+9RPP/bZxnJPmSPbQEcrjwhLerDL9qbwgHnGYXdlM9JaYYkG5y
 2ZzlVAZOwr81Y9KxOGFq+w8CAwEAAQ==
 -----END PUBLIC KEY-----";
-			var loader = new BouncyCastleCrypto();
-			var key = loader.LoadRsaPublicKey(pemkey);
-			var csp = key as RSACryptoServiceProvider;
+            var loader = new BouncyCastleCrypto();
+            var key = loader.LoadRsaPublicKey(pemkey);
+            var csp = key as RSACryptoServiceProvider;
 
-			Assert.IsTrue(csp != null);
-			Assert.AreEqual(4096, csp.KeySize);
-			Assert.AreEqual(true, csp.PublicOnly);
-		}
+            Assert.IsTrue(csp != null);
+            Assert.AreEqual(4096, csp.KeySize);
+            Assert.AreEqual(true, csp.PublicOnly);
+        }
 
-		[TestMethod]
-		[ExpectedException(typeof(CryptographyError))]
-		public void LoadRsaPrivateKey_ShouldThrowOnBadData()
-		{
-			var pemKey = @"total gibbberish, i mean this doesn't look like a key AT ALL";
-			_crypto.LoadRsaPrivateKey(pemKey);
-		}
+        [TestMethod]
+        [ExpectedException(typeof(CryptographyError))]
+        public void LoadRsaPrivateKey_ShouldThrowOnBadData()
+        {
+            var pemKey = @"total gibbberish, i mean this doesn't look like a key AT ALL";
+            _crypto.LoadRsaPrivateKey(pemKey);
+        }
 
-		[TestMethod]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void LoadRsaPrivateKey_ShouldThrowOnNull()
-		{
-			_crypto.LoadRsaPrivateKey(null);
-		}
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LoadRsaPrivateKey_ShouldThrowOnNull()
+        {
+            _crypto.LoadRsaPrivateKey(null);
+        }
 
-		[TestMethod]
-		[ExpectedException(typeof(CryptographyError))]
-		public void LoadRsaPublicKey_ShouldThrowOnBadData()
-		{
-			var pemKey = @"total gibbberish, i mean this doesn't look like a key AT ALL";
-			_crypto.LoadRsaPublicKey(pemKey);
-		}
+        [TestMethod]
+        [ExpectedException(typeof(CryptographyError))]
+        public void LoadRsaPublicKey_ShouldThrowOnBadData()
+        {
+            var pemKey = @"total gibbberish, i mean this doesn't look like a key AT ALL";
+            _crypto.LoadRsaPublicKey(pemKey);
+        }
 
-		[TestMethod]
-		[ExpectedException(typeof(ArgumentNullException))]
-		public void LoadRsaPublicKey_ShouldThrowOnNull()
-		{
-			_crypto.LoadRsaPublicKey(null);
-		}
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LoadRsaPublicKey_ShouldThrowOnNull()
+        {
+            _crypto.LoadRsaPublicKey(null);
+        }
 
-		[TestMethod]
-		public void Sha256_ShouldProduceValidHash()
-		{
-			var sourceData = "Hello crazy world";
-			var sourceDataBinary = Encoding.UTF8.GetBytes(sourceData);
+        [TestMethod]
+        public void Sha256_ShouldProduceValidHash()
+        {
+            var sourceData = "Hello crazy world";
+            var sourceDataBinary = Encoding.UTF8.GetBytes(sourceData);
 
-			var resultHash = _crypto.Sha256(sourceDataBinary);
-			var resultHashString = ByteArrayUtils.ByteArrayToHexString(resultHash);
+            var resultHash = _crypto.Sha256(sourceDataBinary);
+            var resultHashString = ByteArrayUtils.ByteArrayToHexString(resultHash);
 
-			Assert.AreEqual(resultHashString, "2907d7ba4e806c96a8ab89b03be1745b5beb5568a109af9287acd71707e79f2d");
-		}
+            Assert.AreEqual(resultHashString, "2907d7ba4e806c96a8ab89b03be1745b5beb5568a109af9287acd71707e79f2d");
+        }
 
-		[TestMethod]
-		public void Sha384_ShouldProduceValidHash()
-		{
-			var sourceData = "Hello crazy world";
-			var sourceDataBinary = Encoding.UTF8.GetBytes(sourceData);
+        [TestMethod]
+        public void Sha384_ShouldProduceValidHash()
+        {
+            var sourceData = "Hello crazy world";
+            var sourceDataBinary = Encoding.UTF8.GetBytes(sourceData);
 
-			var resultHash = _crypto.Sha384(sourceDataBinary);
-			var resultHashString = ByteArrayUtils.ByteArrayToHexString(resultHash);
+            var resultHash = _crypto.Sha384(sourceDataBinary);
+            var resultHashString = ByteArrayUtils.ByteArrayToHexString(resultHash);
 
-			Assert.AreEqual(resultHashString, "00d025cd5118e8b21b7b01142e59d37cbeac7db6e75a3ae41795f07bbb4f8dfd0bce48f81a0b0b3df50c8b6e05c37eea");
-		}
+            Assert.AreEqual(resultHashString, "00d025cd5118e8b21b7b01142e59d37cbeac7db6e75a3ae41795f07bbb4f8dfd0bce48f81a0b0b3df50c8b6e05c37eea");
+        }
 
-		[TestMethod]
-		public void Sha512_ShouldProduceValidHash()
-		{
-			var sourceData = "Hello crazy world";
-			var sourceDataBinary = Encoding.UTF8.GetBytes(sourceData);
+        [TestMethod]
+        public void Sha512_ShouldProduceValidHash()
+        {
+            var sourceData = "Hello crazy world";
+            var sourceDataBinary = Encoding.UTF8.GetBytes(sourceData);
 
-			var resultHash = _crypto.Sha512(sourceDataBinary);
-			var resultHashString = ByteArrayUtils.ByteArrayToHexString(resultHash);
+            var resultHash = _crypto.Sha512(sourceDataBinary);
+            var resultHashString = ByteArrayUtils.ByteArrayToHexString(resultHash);
 
-			Assert.AreEqual(resultHashString, "9f9ddccd74997c8fe237d5fb20b92b57503f17a7d26c5a7dac50fe51c4f78f85a83dc9db9f0ddc02e46434ff2c645feae646102e01dbb65833189a8ba1e3e5df");
-		}
+            Assert.AreEqual(resultHashString, "9f9ddccd74997c8fe237d5fb20b92b57503f17a7d26c5a7dac50fe51c4f78f85a83dc9db9f0ddc02e46434ff2c645feae646102e01dbb65833189a8ba1e3e5df");
+        }
 
-		[TestMethod]
-		public void RSAFunctions_ShouldEncryptAndDecryptBackToSame()
-		{
-			var sourceData = "Hello crazy world";
-			var sourceDataBinary = Encoding.UTF8.GetBytes(sourceData);
-			var encryptedData = _crypto.EncryptRSA(sourceDataBinary, _publicKey);
-			var decryptedData = _crypto.DecryptRSA(encryptedData, _privateKey);
-			var decryptedDataString = Encoding.UTF8.GetString(decryptedData);
+        [TestMethod]
+        public void RSAFunctions_ShouldEncryptAndDecryptBackToSame()
+        {
+            var sourceData = "Hello crazy world";
+            var sourceDataBinary = Encoding.UTF8.GetBytes(sourceData);
+            var encryptedData = _crypto.EncryptRSA(sourceDataBinary, _publicKey);
+            var decryptedData = _crypto.DecryptRSA(encryptedData, _privateKey);
+            var decryptedDataString = Encoding.UTF8.GetString(decryptedData);
 
-			Assert.AreEqual(sourceData, decryptedDataString);
-		}
-	}
+            Assert.AreEqual(sourceData, decryptedDataString);
+        }
+    }
 }
