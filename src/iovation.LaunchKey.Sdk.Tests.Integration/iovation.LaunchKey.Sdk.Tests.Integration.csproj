@@ -4,7 +4,6 @@
     <TargetFrameworks>netcoreapp21;net45</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
-    <ReleaseVersion>3.4.0</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +13,7 @@
     <None Remove="Keys\beta-public-key-md5-fingerprint.txt" />
     <None Remove="Secrets\OrgId.txt" />
     <None Remove="Secrets\OrgPrivateKey.txt" />
+    <None Remove="Secrets\ApiUrl.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +33,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Secrets\OrgPrivateKey.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Secrets\ApiUrl.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

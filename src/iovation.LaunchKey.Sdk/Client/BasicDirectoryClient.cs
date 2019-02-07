@@ -20,9 +20,9 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport = transport;
         }
 
-        public DirectoryUserDeviceLinkData LinkDevice(string userId)
+        public DirectoryUserDeviceLinkData LinkDevice(string userId, int? ttl = null)
         {
-            var request = new DirectoryV3DevicesPostRequest(userId);
+            var request = new DirectoryV3DevicesPostRequest(userId, ttl);
             var response = _transport.DirectoryV3DevicesPost(request, _directoryId);
             return new DirectoryUserDeviceLinkData(response.Code, response.QrCode);
         }

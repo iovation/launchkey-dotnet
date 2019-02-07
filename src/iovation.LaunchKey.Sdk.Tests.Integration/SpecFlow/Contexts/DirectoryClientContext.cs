@@ -55,9 +55,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
             return _testConfiguration.GetDirectoryClient(_orgClientContext.LastCreatedDirectory.Id.ToString());
         }
 
-        public void LinkDevice(string userId)
+        public void LinkDevice(string userId, int? ttl = null)
         {
-            _linkData = GetDirectoryClient().LinkDevice(userId);
+            if (ttl==null)
+            {
+                _linkData = GetDirectoryClient().LinkDevice(userId);
+            }
+            else
+            {
+                _linkData = GetDirectoryClient().LinkDevice(userId, ttl);
+            }
             _currentUserId = userId;
         }
 

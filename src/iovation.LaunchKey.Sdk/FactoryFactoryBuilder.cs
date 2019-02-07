@@ -13,6 +13,7 @@ namespace iovation.LaunchKey.Sdk
     /// </summary>
     public class FactoryFactoryBuilder
     {
+        public const string API_BASE_URL = "https://api.launchkey.com";
         private IHttpClient _httpClient;
         private ICrypto _crypto;
         private ICache _cache;
@@ -21,7 +22,7 @@ namespace iovation.LaunchKey.Sdk
         private int _requestExpireSeconds = 5;
         private int _offsetTtl = 3600;
         private int _currentPublicKeyTtl = 300;
-        private string _apiBaseUrl = "https://api.launchkey.com";
+        private string _apiBaseUrl = API_BASE_URL;
         private string _apiIdentifier = "lka";
 
         /// <summary>

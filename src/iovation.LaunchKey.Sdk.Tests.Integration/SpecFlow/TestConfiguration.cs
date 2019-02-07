@@ -6,8 +6,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
 {
     public class TestConfiguration
     {
-        public string OrgPrivateKey { get; }
-        public string OrgId { get; set; }
+        private OrganizationFactory organizationFactory;
 
         public TestConfiguration()
         {
@@ -17,29 +16,34 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
             if (!File.Exists(keyPath) || !File.Exists(idPath))
                 throw new Exception($"Test configuration is invalid -- files with secrets should exist: {keyPath}, {idPath}");
 
-            OrgPrivateKey = File.ReadAllText(keyPath);
-            OrgId = File.ReadAllText(idPath);
+            var factoryFactoryBuilder = new FactoryFactoryBuilder();
+
+            var apiUrlPath = Path.Combine("Secrets", "ApiUrl.txt");
+            if (File.Exists(apiUrlPath))
+            {
+                var apiUrl = File.ReadAllText(apiUrlPath);
+                factoryFactoryBuilder.SetApiBaseUrl(apiUrl);
+            }
+
+            var orgPrivateKey = File.ReadAllText(keyPath);
+            var orgId = File.ReadAllText(idPath);
+            var factoryFactory = factoryFactoryBuilder.Build();
+            organizationFactory = factoryFactory.MakeOrganizationFactory(orgId, orgPrivateKey);
         }
 
         public IOrganizationClient GetOrgClient()
         {
-            var factory = new FactoryFactoryBuilder().Build();
-            var organizationFactory = factory.MakeOrganizationFactory(OrgId, OrgPrivateKey);
             return organizationFactory.MakeOrganizationClient();
         }
 
         public IDirectoryClient GetDirectoryClient(string directoryId)
         {
-            var factory = new FactoryFactoryBuilder().Build();
-            var orgFactory = factory.MakeOrganizationFactory(OrgId, OrgPrivateKey);
-            return orgFactory.MakeDirectoryClient(directoryId);
+            return organizationFactory.MakeDirectoryClient(directoryId);
         }
 
         public IServiceClient GetServiceClient(string serviceId)
         {
-            var factory = new FactoryFactoryBuilder().Build();
-            var orgFactory = factory.MakeOrganizationFactory(OrgId, OrgPrivateKey);
-            return orgFactory.MakeServiceClient(serviceId);
+            return organizationFactory.MakeServiceClient(serviceId);
         }
     }
 }
