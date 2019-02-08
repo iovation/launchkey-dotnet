@@ -58,11 +58,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('u', "user-id", HelpText = "The unique ID of the user the device is being linked for. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }
 
-        [Option('t', "ttl", HelpText = "Time to Live in seconds for the linking code that will be generated. This must be between 300 and 86400.")]
-        public int? TTL { get; set; }
-    }
+		[Option('t', "ttl", HelpText = "Time to Live in seconds for the linking code that will be generated. This must be between 300 and 86400.")]
+ 		public int? TTL { get; set; }
+	}
 
-    [Verb("directory-device-unlink", HelpText = "Unlink a device for a directory user")]
+ 	[Verb("directory-device-unlink", HelpText = "Unlink a device for a directory user")]
 	class DirectoryUnlinkDeviceOptions : DirectoryOptions
 	{
 		[Option('u', "user-id", HelpText = "The unique ID of the user the device is being linked for. This should be in the format of a GUID/UUID.", Required = true)]
