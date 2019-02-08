@@ -118,21 +118,42 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Linking Devices adds the device to the User\'s Device list")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Linking Devices with TTL returns QR Code URL and linking code")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Directory Client can link Devices")]
-        public virtual void LinkingDevicesAddsTheDeviceToTheUsersDeviceList()
+        public virtual void LinkingDevicesWithTTLReturnsQRCodeURLAndLinkingCode()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Linking Devices adds the device to the User\'s Device list", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Linking Devices with TTL returns QR Code URL and linking code", null, ((string[])(null)));
 #line 14
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
 #line 15
-    testRunner.When("I make a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I make a Device linking request with a TTL of 300 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
-    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("the Device linking response contains a valid QR Code URL", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 17
+    testRunner.And("the Device linking response contains a valid Linking Code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Linking Devices adds the device to the User\'s Device list")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Directory Client can link Devices")]
+        public virtual void LinkingDevicesAddsTheDeviceToTheUsersDeviceList()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Linking Devices adds the device to the User\'s Device list", null, ((string[])(null)));
+#line 19
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 6
+  this.FeatureBackground();
+#line 20
+    testRunner.When("I make a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 22
     testRunner.Then("there should be 1 Device in the Devices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

@@ -25,6 +25,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             _directoryClientContext.LinkDevice(Util.UniqueUserName());
         }
 
+        [When(@"I make a Device linking request with a TTL of (.*) seconds")]
+        public void WhenIMakeADeviceLinkingRequestWithTTL(int ttl)
+        {
+            _directoryClientContext.LinkDevice(Util.UniqueUserName(), ttl);
+        }
+
         [Then(@"the Device linking response contains a valid QR Code URL")]
         public void ThenTheDeviceLinkingResponseContainsAValidQRCodeURL()
         {

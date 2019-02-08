@@ -17,6 +17,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         {
             var mockTransport = new Mock<ITransport>();
             var client = new BasicDirectoryClient(TestConsts.DefaultDirectoryId, mockTransport.Object);
+            var expectedRequest = new DirectoryV3DevicesPostRequest("user id", 123);
 
             mockTransport.Setup(
                 t => t.DirectoryV3DevicesPost(
@@ -25,10 +26,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 )
             ).Returns(new DirectoryV3DevicesPostResponse { Code = "code", QrCode = "qrcode" });
 
-            var response = client.LinkDevice("user id");
+            var response = client.LinkDevice("user id", 123);
 
             Assert.AreEqual("code", response.Code);
             Assert.AreEqual("qrcode", response.QrCode);
+            mockTransport.Verify(
+                x => x.DirectoryV3DevicesPost(It.Is<DirectoryV3DevicesPostRequest>(
+                        r => r.Identifier == "user id"
+                            && r.TTL == 123
+                    ),
+                    It.IsAny<EntityIdentifier>()), Times.Once());
         }
 
         [TestMethod]
