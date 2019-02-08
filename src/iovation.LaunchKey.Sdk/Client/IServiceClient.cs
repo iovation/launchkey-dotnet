@@ -28,6 +28,12 @@ namespace iovation.LaunchKey.Sdk.Client
         AuthorizationRequest CreateAuthorizationRequest(string user, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null, string pushTitle = null, string pushBody = null, IList<DenialReason> denialReasons = null);
 
         /// <summary>
+        /// Cancels the authorization request.
+        /// </summary>
+        /// <param name="authorizationRequestId">The authorization request identifier, usually retrieved via CreateAuthorizationRequest()</param>
+        void CancelAuthorizationRequest(string authorizationRequestId);
+
+        /// <summary>
         /// Retrieve the status of an authorization request.
         /// </summary>
         /// <param name="authorizationRequestId">The authorization request identifier, usually retrieved via CreateAuthorizationRequest()</param>

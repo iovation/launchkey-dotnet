@@ -6,6 +6,8 @@ Change Log
 
 * Added dynamic linking code TTL functionality
 
+* Added authorization request cancel functionality to the Service client
+
 3.3.0
 =====
 

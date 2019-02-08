@@ -28,6 +28,13 @@ namespace iovation.LaunchKey.Sdk.Transport
         ServiceV3AuthsPostResponse ServiceV3AuthsPost(ServiceV3AuthsPostRequest request, EntityIdentifier subject);
 
         /// <summary>
+        /// Cancels an existing and pending authorization request.
+        /// </summary>
+        /// <param name="authRequestId">the unique authorization request id for the request being canceled</param>
+        /// <param name="subject">the service ID associated with the auth reques</param>
+        void ServiceV3AuthsDelete(Guid authRequestId, EntityIdentifier subject);
+
+        /// <summary>
         /// Retrieves the status of a pending authentication request. Will return NULL until a decision is made.
         /// </summary>
         /// <param name="authRequestId">the unique authorization request id for the request being checked</param>
