@@ -3,7 +3,7 @@ namespace iovation.LaunchKey.Sdk.Error
 {
     /// <summary>
     /// Thrown when an action is attempted against an authorization request
-    /// bute cannot complete as the authorization request already has a response.
+    /// but cannot complete as the authorization request already has a response.
     /// </summary>
     public class AuthorizationResponseExists : InvalidRequestException
     {

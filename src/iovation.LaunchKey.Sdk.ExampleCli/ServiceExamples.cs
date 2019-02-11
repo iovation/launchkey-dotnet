@@ -112,7 +112,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 Console.WriteLine("Sorry, your OS does not support the default windows HTTP listener. Webhook demo cannot proceed.");
                 Environment.Exit(1);
             }
-            Console.WriteLine("Webhook: Starting HTTP listener.");
+            Console.WriteLine("Webhook: Starting HTTP listener for localhost on port 9876.");
             var listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:9876/");
             listener.Start();
