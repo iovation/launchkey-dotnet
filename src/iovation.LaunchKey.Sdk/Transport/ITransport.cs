@@ -20,10 +20,10 @@ namespace iovation.LaunchKey.Sdk.Transport
         PublicV3PublicKeyGetResponse PublicV3PublicKeyGet(string publicKeyFingerprint);
 
         /// <summary>
-        /// Initiates an authentication request
+        /// Initiates an authorization request
         /// </summary>
         /// <param name="request">the request data</param>
-        /// <param name="subject">the service ID authenticating against</param>
+        /// <param name="subject">the entity identifier of the Service for which the authorization reurequestqest is made</param>
         /// <returns>response details</returns>
         ServiceV3AuthsPostResponse ServiceV3AuthsPost(ServiceV3AuthsPostRequest request, EntityIdentifier subject);
 
@@ -31,11 +31,11 @@ namespace iovation.LaunchKey.Sdk.Transport
         /// Cancels an existing and pending authorization request.
         /// </summary>
         /// <param name="authRequestId">the unique authorization request id for the request being canceled</param>
-        /// <param name="subject">the service ID associated with the auth reques</param>
+        /// <param name="subject">the service ID associated with the auth request</param>
         void ServiceV3AuthsDelete(Guid authRequestId, EntityIdentifier subject);
 
         /// <summary>
-        /// Retrieves the status of a pending authentication request. Will return NULL until a decision is made.
+        /// Retrieves the status of a pending authorization request. Will return NULL until a decision is made.
         /// </summary>
         /// <param name="authRequestId">the unique authorization request id for the request being checked</param>
         /// <param name="subject">the service ID associated with the auth request</param>
