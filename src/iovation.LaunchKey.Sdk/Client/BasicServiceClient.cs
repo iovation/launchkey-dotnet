@@ -68,6 +68,10 @@ namespace iovation.LaunchKey.Sdk.Client
             return authRequest;
         }
 
+        public void CancelAuthorizationRequest(string authorizationRequestId)
+        {
+            _transport.ServiceV3AuthsDelete(Guid.Parse(authorizationRequestId), _serviceId);
+        }
 
         public AuthorizationResponse GetAuthorizationResponse(string authorizationRequestId)
         {

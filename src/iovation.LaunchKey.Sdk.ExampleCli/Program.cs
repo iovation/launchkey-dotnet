@@ -12,6 +12,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     ServiceAuthOptions,
                     ServiceAuthWebhookOptions,
                     ServiceAuthWithPolicy,
+                    ServiceAuthCancelOptions,
                     ServiceSessionStartOptions,
                     ServiceSessionEndOptions,
                     DirectoryLinkDeviceOptions,
@@ -29,6 +30,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     (ServiceAuthOptions opts) => ServiceExamples.DoServiceAuthorization(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL, opts.Context, opts.TTL, opts.AuthTitle, opts.PushTitle, opts.PushBody, opts.FraudDenialReasons, opts.NonFraudDenialReasons),
                     (ServiceAuthWebhookOptions opts) => ServiceExamples.DoServiceAuthorizationWebhook(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL, opts.Context, opts.TTL, opts.AuthTitle, opts.PushTitle, opts.PushBody, opts.FraudDenialReasons, opts.NonFraudDenialReasons),
                     (ServiceAuthWithPolicy opts) => ServiceExamples.DoServiceAuthorizationWithPolicy(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.JailbreakDetection, opts.Factors, opts.Geofence, opts.APIURL),
+                    (ServiceAuthCancelOptions opts) => ServiceExamples.DoServiceAuthorizationCancel(opts.ServiceId, opts.PrivateKeyPath, opts.APIURL, opts.AuthRequestId),
                     (ServiceSessionStartOptions opts) => ServiceExamples.DoSessionStart(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL),
                     (ServiceSessionEndOptions opts) => ServiceExamples.DoSessionEnd(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL),
 

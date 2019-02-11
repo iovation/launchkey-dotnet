@@ -446,6 +446,11 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
             return DecryptResponse<ServiceV3AuthsPostResponse>(response);
         }
 
+        public void ServiceV3AuthsDelete(Guid authRequestId, EntityIdentifier subject)
+        {
+            var response = ExecuteRequest(HttpMethod.DELETE, $"/service/v3/auths/{authRequestId}", subject, null, null);
+        }
+
         public ServiceV3AuthsGetResponse ServiceV3AuthsGet(Guid authRequestId, EntityIdentifier subject)
         {
             var response = ExecuteRequest(HttpMethod.GET, $"/service/v3/auths/{authRequestId}", subject, null, new List<int> { 408 });

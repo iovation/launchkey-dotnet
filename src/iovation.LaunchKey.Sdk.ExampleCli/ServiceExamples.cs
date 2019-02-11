@@ -112,7 +112,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 Console.WriteLine("Sorry, your OS does not support the default windows HTTP listener. Webhook demo cannot proceed.");
                 Environment.Exit(1);
             }
-            Console.WriteLine("Webhook: Starting HTTP listener.");
+            Console.WriteLine("Webhook: Starting HTTP listener for localhost on port 9876.");
             var listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:9876/");
             listener.Start();
@@ -160,6 +160,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 Console.WriteLine("user never replied.");
                 return 1;
             }
+            catch (AuthorizationRequestCanceled)
+            {
+                Console.WriteLine($"Authorization request was canceled.");
+                return 1;
+            }
             catch (AuthorizationInProgress e)
             {
                 Console.WriteLine(e.Message);
@@ -182,6 +187,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             try
             {
                 var authorizationRequest = serviceClient.CreateAuthorizationRequest(username, context: context, title: title, ttl: ttl, pushTitle: pushTitle, pushBody: pushBody, denialReasons: GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons));
+                Console.WriteLine($"Auth Request Started: {authorizationRequest.Id}");
                 while (true)
                 {
                     Console.WriteLine("checking auth");
@@ -203,6 +209,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             catch (AuthorizationRequestTimedOutError)
             {
                 Console.WriteLine("user never replied.");
+                return 1;
+            }
+            catch (AuthorizationRequestCanceled)
+            {
+                Console.WriteLine($"Authorization request was canceled.");
                 return 1;
             }
             catch (AuthorizationInProgress e)
@@ -281,11 +292,53 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 Console.WriteLine("user never replied.");
                 return 1;
             }
+            catch (AuthorizationInProgress e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine($"    Auth Request: {e.AuthorizationRequestId}");
+                Console.WriteLine($"    Expires: {e.Expires}");
+                Console.WriteLine($"    Same Service: {e.FromSameService}");
+                return 1;
+            }
+            catch (AuthorizationRequestCanceled)
+            {
+                Console.WriteLine($"Authorization request was canceled.");
+                return 1;
+            }
             catch (BaseException e)
             {
                 Console.WriteLine($"Error while authorizing user {username} against service ID {serviceId}. Error: {e.Message}");
                 return 1;
             }
         }
+
+        public static object DoServiceAuthorizationCancel(string serviceId, string privateKey, string apiURL, string authorizationRequestId)
+        {
+            int returnValue = 0;
+            IServiceClient serviceClient;
+            serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            try
+            {
+                serviceClient.CancelAuthorizationRequest(authorizationRequestId);
+                Console.WriteLine($"Authorization request {authorizationRequestId} was canceled.");
+            }
+            catch (EntityNotFound)
+            {
+                Console.WriteLine($"Cannot cancel authorization request {authorizationRequestId} as it cannot be found.");
+                returnValue = 1;
+            }
+            catch (AuthorizationRequestCanceled)
+            {
+                Console.WriteLine($"Cannot cancel authorization request {authorizationRequestId} as it was already canceled.");
+                returnValue = 1;
+            }
+            catch (AuthorizationResponseExists)
+            {
+                Console.WriteLine($"Cannot cancel authorization request {authorizationRequestId} as it has already been completed.");
+                returnValue = 1;
+            }
+            return returnValue;
+        }
+
     }
 }

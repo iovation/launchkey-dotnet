@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommandLine;
+﻿using CommandLine;
 
 namespace iovation.LaunchKey.Sdk.ExampleCli
 {
@@ -188,6 +183,13 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 	class ServiceAuthWebhookOptions : AuthOptions
 	{
 		// This left intentionally blank
+	}
+
+	[Verb("service-auth-cancel", HelpText = "Cancel an existing authorization request for a user")]
+	class ServiceAuthCancelOptions : ServiceOptions
+	{
+		[Option('a', "auth-request", HelpText = "The ID of the authorization request you wish to cancel", Required = true)]
+		public string AuthRequestId { get; set; }
 	}
 
 	[Verb("service-session-start", HelpText = "Start a session for a user")]

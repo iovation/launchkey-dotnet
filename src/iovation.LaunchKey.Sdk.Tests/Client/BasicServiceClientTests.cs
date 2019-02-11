@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Client;
 using iovation.LaunchKey.Sdk.Domain.Webhook;
 using iovation.LaunchKey.Sdk.Error;
@@ -185,6 +186,25 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             client.CreateAuthorizationRequest("name", pushTitle: "Push Title", pushBody: "Push Body");
 
             mockTransport.Verify();
+        }
+
+        [TestMethod]
+        public void CancelAuthorizationRequest_ShouldCallTransportWithProperEntityIdentifierAndAuthRequestId()
+        {
+            var mockTransport = new Mock<ITransport>();
+            mockTransport.Setup(p => p.ServiceV3AuthsDelete(
+                    It.IsAny<Guid>(),
+                    It.IsAny<EntityIdentifier>()))
+                .Verifiable();
+
+            var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+
+            client.CancelAuthorizationRequest("aba6609a-a7e9-428d-b766-b69ecbcb65f6");
+
+            mockTransport.Verify(p => p.ServiceV3AuthsDelete(
+                    Guid.Parse("aba6609a-a7e9-428d-b766-b69ecbcb65f6"), 
+                    new EntityIdentifier(EntityType.Service, TestConsts.DefaultServiceId)
+                ));
         }
 
         [TestMethod]
