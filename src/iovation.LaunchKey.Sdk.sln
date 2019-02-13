@@ -65,5 +65,6 @@ Global
 		$3.TabsToSpaces = True
 		$3.EolMarker = Unix
 		$3.scope = text/plain
+		version = 3.5
 	EndGlobalSection
 EndGlobal
