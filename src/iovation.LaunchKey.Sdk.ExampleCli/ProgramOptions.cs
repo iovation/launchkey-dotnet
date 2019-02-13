@@ -188,7 +188,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 	[Verb("service-auth-cancel", HelpText = "Cancel an existing authorization request for a user")]
 	class ServiceAuthCancelOptions : ServiceOptions
 	{
-		[Option('a', "auth-request", HelpText = "The ID of the authorization request you wish to cancel", Required = true)]
+		[Option('r', "auth-request", HelpText = "The ID of the authorization request you wish to cancel", Required = true)]
 		public string AuthRequestId { get; set; }
 	}
 
