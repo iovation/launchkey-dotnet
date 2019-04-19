@@ -26,7 +26,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
                 devicePins,
                 "Type",
                 "Reason",
-                "Denial Reason"
+                "Denial Reason",
+                null,
+                null
             );
 
             Assert.AreSame(requestingEntity, o.RequestingEntity);
@@ -41,6 +43,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
             Assert.AreEqual("Type", o.Type);
             Assert.AreEqual("Reason", o.Reason);
             Assert.AreEqual("Denial Reason", o.DenialReason);
+            Assert.AreEqual(null, o.AuthPolicy);
+            Assert.AreEqual(null, o.AuthMethods);
         }
     }
 }

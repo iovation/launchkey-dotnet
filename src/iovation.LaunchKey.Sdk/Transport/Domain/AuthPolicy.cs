@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -155,6 +156,61 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             internal TimeFence()
             {
             }
+        }
+
+        public class JWEAuthPolicy
+        {
+            [JsonProperty("requirement")]
+            public string Requirement { get; set; }
+
+            [JsonProperty("geofences")]
+            public Location[] Geofences { get; set; }
+
+            [JsonProperty("amount")]
+            public int Amount { get; set; }
+
+            [JsonProperty("types")]
+            public string[] Types { get; set; }
+
+            public override string ToString()
+            {
+                return string.Format("Requirement: {0},\n Geofences: {1},\n Amount: {2},\n Types: {3}",Requirement, Geofences.ToString(), Amount, Types);
+            }
+
+        }
+
+        public class AuthMethod
+        {
+            [JsonProperty("method")]
+            public string Method { get; set; }
+
+            [JsonProperty("set", NullValueHandling = NullValueHandling.Include)]
+            public bool? Set { get; set; }
+
+            [JsonProperty("active")]
+            public bool Active { get; set; }
+
+            [JsonProperty("allowed")]
+            public bool Allowed { get; set; }
+
+            [JsonProperty("supported")]
+            public bool Supported { get; set; }
+
+            [JsonProperty("user_required", NullValueHandling = NullValueHandling.Include)]
+            public bool? UserRequired { get; set; }
+
+            [JsonProperty("passed", NullValueHandling = NullValueHandling.Include)]
+            public bool? Passed { get; set; }
+
+            [JsonProperty("error", NullValueHandling = NullValueHandling.Include)]
+            public bool? Error { get; set; }
+
+            public override string ToString()
+            {
+                return string.Format("Auth Method: {0} \n Set: {1} \n Active: {2} \n Allowed: {3} \n Supported: {4} \n UserRequired: {5} \n Passed: {6} \n Error: {7} \n", 
+                    Method, Set, Active, Allowed, Supported, UserRequired, Passed, Error);
+            }
+
         }
 
         private int? IntFromNullableBool(bool? val)

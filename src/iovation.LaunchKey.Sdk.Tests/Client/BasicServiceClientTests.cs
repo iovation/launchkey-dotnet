@@ -231,7 +231,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             mockTransport.Setup(p => p.ServiceV3AuthsGet(
                     TestConsts.DefaultAuthenticationId,
                     It.IsAny<EntityIdentifier>()))
-                .Returns(new ServiceV3AuthsGetResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "deviceid", new string[] { "123", "abc" }, "AUTHORIZED", "APPROVED", "Denial Reason"))
+                .Returns(new ServiceV3AuthsGetResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "deviceid", new string[] { "123", "abc" }, "AUTHORIZED", "APPROVED", "Denial Reason", null, null))
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
@@ -260,7 +260,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             mockTransport.Setup(p => p.ServiceV3AuthsGet(
                     TestConsts.DefaultAuthenticationId,
                     It.IsAny<EntityIdentifier>()))
-                .Returns(new ServiceV3AuthsGetResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "deviceid", new string[] { "123", "abc" }, "AUTHORIZED", "FRAUDULENT", "Denial Reason"))
+                .Returns(new ServiceV3AuthsGetResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "deviceid", new string[] { "123", "abc" }, "AUTHORIZED", "FRAUDULENT", "Denial Reason", null, null))
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
@@ -309,7 +309,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         {
             var testHeaders = new Dictionary<string, List<string>>();
             var testBody = "body";
-            var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] { "1234" }, "AUTHORIZED", "APPROVED", "Denial Reason");
+            var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] { "1234" }, "AUTHORIZED", "APPROVED", "Denial Reason", null, null);
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
@@ -341,7 +341,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         {
             var testHeaders = new Dictionary<string, List<string>>();
             var testBody = "body";
-            var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] { "1234" }, "DENIED", "FRAUDULENT", "Denial Reason");
+            var testResponse = new ServerSentEventAuthorizationResponse(TestConsts.DefaultServiceEntity, TestConsts.DefaultServiceId, "shash", "ohash", "push", TestConsts.DefaultAuthenticationId, true, "devid", new[] { "1234" }, "DENIED", "FRAUDULENT", "Denial Reason", null, null);
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);

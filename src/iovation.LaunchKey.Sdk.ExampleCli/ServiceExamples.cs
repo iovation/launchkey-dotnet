@@ -72,6 +72,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             Console.WriteLine($"    Svc User Hash:  {authResponse.ServiceUserHash}");
             Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
             Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
+            Console.WriteLine($"    AuthPolicy:");
+            Console.WriteLine($"       RequiredFactors:   {authResponse.AuthPolicy.RequiredFactors}");
+            Console.WriteLine($"       RequiredKnowledge: {authResponse.AuthPolicy.RequireKnowledgeFactor}");
+            Console.WriteLine($"       RequiredInherence: {authResponse.AuthPolicy.RequireInherenceFactor}");
+            Console.WriteLine($"       RequiredPosession: {authResponse.AuthPolicy.RequirePosessionFactor}");
+            Console.WriteLine($"       Locations: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
+            Console.WriteLine($"    Auth Methods:");
+            foreach(var item in authResponse.AuthMethods)
+            {
+                Console.WriteLine(item.ToString());
+            }
         }
 
         private static IList<DenialReason> GetDenialReasons(int? fraud, int? nonFraud)

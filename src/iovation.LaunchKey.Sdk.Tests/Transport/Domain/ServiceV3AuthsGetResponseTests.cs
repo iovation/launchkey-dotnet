@@ -26,6 +26,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
                 devicePins,
                 null,
                 null,
+                null,
+                null,
                 null
             );
 
@@ -38,6 +40,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
             Assert.AreEqual(true, o.Response);
             Assert.AreEqual("deviceId", o.DeviceId);
             Assert.AreSame(devicePins, o.DevicePins);
+            Assert.AreEqual(null, o.AuthPolicy);
+            Assert.AreEqual(null, o.AuthMethods);
         }
     }
 }

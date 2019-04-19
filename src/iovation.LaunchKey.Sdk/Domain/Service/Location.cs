@@ -54,5 +54,12 @@
                 return hashCode;
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("Latitude: {0} \n Longitude: {1} \n Radius: {2} \n"
+                , Latitude, Longitude, Radius);
+        }
+
     }
 }
