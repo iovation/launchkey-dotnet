@@ -137,72 +137,133 @@ namespace iovation.LaunchKey.Sdk.Client
                 {
                     reason = AuthorizationResponseReason.BUSY_LOCAL;
                 }
+                else if (response.Reason == "SENSOR")
+                {
+                    reason = AuthorizationResponseReason.SENSOR;
+                }
                 else
                 {
                     reason = AuthorizationResponseReason.OTHER;
                 }
 
-                //JWEAuthPolicy authPolicy = new JWEAuthPolicy();
+                AuthPolicy authPolicy = GetAuthPolicy(response);
+                List<AuthMethod> authMethods = GetAuthMethods(response);
 
-                //if(response.AuthPolicy != null)
-                //{
-                //    authPolicy.Requirement = response.AuthPolicy.Requirement;
-                //    authPolicy.Geofences = response.AuthPolicy.Geofences;
 
-                //    if ( response.AuthPolicy.Requirement == "amount")
-                //    {
-                //        authPolicy.Amount = response.AuthPolicy.Amount;
-                //    } else if (response.AuthPolicy.Requirement == "types")
-                //    {
-                //        authPolicy.Types = response.AuthPolicy.Types;
-                //    }
+                return new AuthorizationResponse(
+                    response.AuthorizationRequestId.ToString("D"),
+                    response.Response,
+                    response.ServiceUserHash,
+                    response.OrganizationUserHash,
+                    response.UserPushId,
+                    response.DeviceId,
+                    new List<string>(response.DevicePins),
+                    type,
+                    reason,
+                    response.DenialReason,
+                    reason == AuthorizationResponseReason.FRAUDULENT,
+                    authPolicy,
+                    authMethods
+                );
+            }
 
-                //}
+            return null;
+        }
 
-                AuthPolicy authPolicy = new AuthPolicy();
+        private AuthPolicy GetAuthPolicy(ServiceV3AuthsGetResponse authResponse)
+        {
+            AuthPolicy authPolicy = new AuthPolicy();
+            List<Location> authPolicyLocations = new List<Location>();
 
-                // PUT LOGIC HERE TO TRANSLATE
-                if (response.AuthPolicy != null)
+            if (authResponse.AuthPolicy != null)
+            {
+                if (authResponse.AuthPolicy.Geofences != null && authResponse.AuthPolicy.Geofences.Any())
                 {
-                    if ( response.AuthPolicy.Requirement == "amount")
+                    foreach (var geofence in authResponse.AuthPolicy.Geofences)
                     {
-                        authPolicy = new AuthPolicy(response.AuthPolicy.Amount);
-                        authPolicy.Locations?.Select(
-                            ploc => new Transport.Domain.AuthPolicy.Location
-                            {
-                                Latitude = ploc.Latitude,
-                                Longitude = ploc.Longitude,
-                                Radius = ploc.Radius
-                            }
-                        ).ToList();
-
-                    } 
-                    else
-                    {
-                        authPolicy = new AuthPolicy(null, response.AuthPolicy.Types.Contains("knowledge"), response.AuthPolicy.Types.Contains("inherence"), response.AuthPolicy.Types.Contains("posession"));
-                        authPolicy.Locations?.Select(
-                            ploc => new Transport.Domain.AuthPolicy.Location
-                            {
-                                Latitude = ploc.Latitude,
-                                Longitude = ploc.Longitude,
-                                Radius = ploc.Radius
-                            }
-                        ).ToList();
+                        authPolicyLocations.Add(new Location(
+                                geofence.Radius,
+                                geofence.Latitude,
+                                geofence.Longitude
+                            ));
                     }
                 }
 
-                //Iterate over transportMethod and create service AuthMethods
-                var authMethods = new List<AuthMethod>();
+                if (authResponse.AuthPolicy.Requirement == "amount")
+                {
 
-                foreach( var transportMethod in response.AuthMethods)
+
+                    authPolicy = new AuthPolicy(
+                        authResponse.AuthPolicy.Amount,
+                        null,
+                        null,
+                        null,
+                        null,
+                        authPolicyLocations
+                    );
+                }
+                else if(authResponse.AuthPolicy.Requirement == "types")
+                {
+                    bool requiredKnowledge = false;
+                    bool requiredInherence = false;
+                    bool requiredPosession = false;
+
+                    if (authResponse.AuthPolicy.Types != null)
+                    {
+                        if (authResponse.AuthPolicy.Types.Any())
+                        {
+                            requiredKnowledge = authResponse.AuthPolicy.Types.Contains("knowledge");
+                            requiredInherence = authResponse.AuthPolicy.Types.Contains("inherence");
+                            requiredPosession = authResponse.AuthPolicy.Types.Contains("possession");
+                        }
+                    }
+
+                    authPolicy = new AuthPolicy(
+                        null,
+                        requiredKnowledge,
+                        requiredInherence,
+                        requiredPosession,
+                        null,
+                        authPolicyLocations
+                    );
+                } 
+                else
+                {
+                    authPolicy = new AuthPolicy(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        authPolicyLocations
+                    );
+                }
+            } 
+            else
+            {
+                authPolicy = null;
+            }
+
+            return authPolicy;
+
+        }
+
+        private List<AuthMethod> GetAuthMethods(ServiceV3AuthsGetResponse authResponse)
+        {
+            var authMethods = new List<AuthMethod>();
+
+            if (authResponse.AuthMethods != null)
+            {
+
+                foreach (var transportMethod in authResponse.AuthMethods)
                 {
                     string methodType = transportMethod.Method.ToUpper();
                     AuthMethodType authMethodType;
 
-                    if(methodType == "PIN_CODE")
+                    if (methodType == "PIN_CODE")
                     {
                         authMethodType = AuthMethodType.PIN_CODE;
-                    } 
+                    }
                     else if (methodType == "CIRCLE_CODE")
                     {
                         authMethodType = AuthMethodType.CIRCLE_CODE;
@@ -245,27 +306,15 @@ namespace iovation.LaunchKey.Sdk.Client
                             Error = transportMethod.Error
                         }
                     );
-
+                        
                 }
-
-                return new AuthorizationResponse(
-                    response.AuthorizationRequestId.ToString("D"),
-                    response.Response,
-                    response.ServiceUserHash,
-                    response.OrganizationUserHash,
-                    response.UserPushId,
-                    response.DeviceId,
-                    new List<string>(response.DevicePins),
-                    type,
-                    reason,
-                    response.DenialReason,
-                    reason == AuthorizationResponseReason.FRAUDULENT,
-                    authPolicy,
-                    authMethods
-                );
+            }
+            else
+            {
+                authMethods = null;
             }
 
-            return null;
+            return authMethods;
         }
 
         public void SessionStart(string user, string authorizationRequestId)
@@ -354,99 +403,18 @@ namespace iovation.LaunchKey.Sdk.Client
                 {
                     reason = AuthorizationResponseReason.BUSY_LOCAL;
                 }
+                else if (authEvent.Reason == "SENSOR")
+                {
+                    reason = AuthorizationResponseReason.SENSOR;
+                }
                 else
                 {
                     reason = AuthorizationResponseReason.OTHER;
                 }
 
-                AuthPolicy authPolicy = new AuthPolicy();
 
-                // PUT LOGIC HERE TO TRANSLATE
-                if (authEvent.AuthPolicy != null)
-                {
-                    if (authEvent.AuthPolicy.Requirement == "amount")
-                    {
-                        authPolicy = new AuthPolicy(authEvent.AuthPolicy.Amount);
-                        authPolicy.Locations?.Select(
-                            ploc => new Transport.Domain.AuthPolicy.Location
-                            {
-                                Latitude = ploc.Latitude,
-                                Longitude = ploc.Longitude,
-                                Radius = ploc.Radius
-                            }
-                        ).ToList();
-
-                    }
-                    else
-                    {
-                        authPolicy = new AuthPolicy(null, authEvent.AuthPolicy.Types.Contains("knowledge"), authEvent.AuthPolicy.Types.Contains("inherence"), authEvent.AuthPolicy.Types.Contains("posession"));
-                        authPolicy.Locations?.Select(
-                            ploc => new Transport.Domain.AuthPolicy.Location
-                            {
-                                Latitude = ploc.Latitude,
-                                Longitude = ploc.Longitude,
-                                Radius = ploc.Radius
-                            }
-                        ).ToList();
-                    }
-                }
-
-                //Iterate over transportMethod and create service AuthMethods
-                var authMethods = new List<AuthMethod>();
-
-                foreach (var transportMethod in authEvent.AuthMethods)
-                {
-                    string methodType = transportMethod.Method.ToUpper();
-                    AuthMethodType authMethodType;
-
-                    if (methodType == "PIN_CODE")
-                    {
-                        authMethodType = AuthMethodType.PIN_CODE;
-                    }
-                    else if (methodType == "CIRCLE_CODE")
-                    {
-                        authMethodType = AuthMethodType.CIRCLE_CODE;
-                    }
-                    else if (methodType == "GEOFENCING")
-                    {
-                        authMethodType = AuthMethodType.GEOFENCING;
-                    }
-                    else if (methodType == "LOCATIONS")
-                    {
-                        authMethodType = AuthMethodType.LOCATIONS;
-                    }
-                    else if (methodType == "WEARABLES")
-                    {
-                        authMethodType = AuthMethodType.WEARABLES;
-                    }
-                    else if (methodType == "FINGERPRINT")
-                    {
-                        authMethodType = AuthMethodType.FINGERPRINT;
-                    }
-                    else if (methodType == "FACE")
-                    {
-                        authMethodType = AuthMethodType.FACE;
-                    }
-                    else
-                    {
-                        authMethodType = AuthMethodType.OTHER;
-                    }
-
-                    authMethods.Add(
-                        new AuthMethod
-                        {
-                            Method = authMethodType,
-                            Set = transportMethod.Set,
-                            Active = transportMethod.Active,
-                            Allowed = transportMethod.Allowed,
-                            Supported = transportMethod.Supported,
-                            UserRequired = transportMethod.UserRequired,
-                            Passed = transportMethod.Passed,
-                            Error = transportMethod.Error
-                        }
-                    );
-
-                }
+                AuthPolicy authPolicy = GetAuthPolicy(authEvent);
+                List<AuthMethod> authMethods = GetAuthMethods(authEvent);
 
                 return new AuthorizationResponseWebhookPackage(
                     new AuthorizationResponse(

@@ -77,11 +77,16 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             Console.WriteLine($"       RequiredKnowledge: {authResponse.AuthPolicy.RequireKnowledgeFactor}");
             Console.WriteLine($"       RequiredInherence: {authResponse.AuthPolicy.RequireInherenceFactor}");
             Console.WriteLine($"       RequiredPosession: {authResponse.AuthPolicy.RequirePosessionFactor}");
-            Console.WriteLine($"       Locations: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
+            Console.WriteLine($"       Location Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
+            Console.WriteLine($"       Locations:");
+            foreach (var item in authResponse.AuthPolicy.Locations)
+            {
+                Console.WriteLine(item.ToString());
+            }
             Console.WriteLine($"    Auth Methods:");
             foreach(var item in authResponse.AuthMethods)
             {
-                Console.WriteLine(item.ToString());
+                Console.WriteLine("       {item.ToString()}");
             }
         }
 

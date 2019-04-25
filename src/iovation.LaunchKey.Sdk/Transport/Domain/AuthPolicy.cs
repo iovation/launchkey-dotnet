@@ -117,6 +117,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             public Location()
             {
             }
+
         }
 
         public class TimeFence
@@ -170,7 +171,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             public int Amount { get; set; }
 
             [JsonProperty("types")]
-            public string[] Types { get; set; }
+            public List<string> Types { get; set; }
 
             public override string ToString()
             {
