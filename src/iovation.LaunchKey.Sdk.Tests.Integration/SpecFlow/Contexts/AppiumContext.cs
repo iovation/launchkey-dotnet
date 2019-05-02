@@ -100,7 +100,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         private void ApproveAuth()
         {
-            FindByID("com.launchkey.android.authenticator.demo:id/auth_info_action_positive").Click();
+            AndroidElement authorizeButton = FindByID("com.launchkey.android.authenticator.demo:id/auth_info_action_positive");
+            LongPress(authorizeButton);
         }
 
         private void TapRefresh()
