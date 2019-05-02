@@ -17,6 +17,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             _directoryClientContext = directoryClientContext;
         }
 
+        [When(@"I make a Device linking request")]
         [Given(@"I made a Device linking request")]
         public void GivenIMadeADeviceLinkingRequest()
         {
@@ -64,6 +65,40 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             catch (BaseException e)
             {
                 _commonContext.RecordException(e);
+            }
+        }
+
+        [Then(@"all of the devices should be active")]
+        public void ThenAllOfTheDevicesShouldBeActive()
+        {
+            _directoryClientContext.LoadDevicesForCurrentUser();
+            var loadedDevices = _directoryClientContext.LoadedDevices;
+
+            foreach (var device in loadedDevices)
+            {
+                var deviceStatus = device.Status;
+
+                if (device.Status.StatusCode != 1)
+                {
+                    throw new System.Exception($"All Devices should be linked. Device status was {device.Status.StatusCode}");
+                }
+            }
+        }
+
+        [Then(@"all of the devices should be inactive")]
+        public void ThenAllOfTheDevicesShouldBeInactive()
+        {
+            _directoryClientContext.LoadDevicesForCurrentUser();
+            var loadedDevices = _directoryClientContext.LoadedDevices;
+
+            foreach (var device in loadedDevices)
+            {
+                var deviceStatus = device.Status;
+
+                if (device.Status.StatusCode == 1)
+                {
+                    throw new System.Exception($"All Devices should be unlinked. Device status was {device.Status.StatusCode}");
+                }
             }
         }
     }

@@ -22,6 +22,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         private bool? _knowledge;
         private bool? _possession;
         private bool? _jailbreak;
+
         private List<Location> _locations;
 
         public DirectoryServiceAuthSteps(
@@ -103,16 +104,28 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             };
         }
 
+        [When(@"I make an Authorization request")]
+        [Given(@"I made an Authorization request")]
+        public void WhenIMakeAnAuthorizationRequest()
+        {
+            Console.WriteLine(_directoryClientContext.CurrentUserId);
+            Console.WriteLine($"LastService: {_directoryClientContext.LastCreatedService}");
+
+            _directoryServiceClientContext.Authorize(
+                _directoryClientContext.CurrentUserId,
+                null,
+                null
+            );
+        }
+
+
+
         [When(@"I attempt to make an Authorization request")]
         public void WhenIAttemptToMakeAnAuthorizationRequest()
         {
             try
             {
-                _directoryServiceClientContext.Authorize(
-                    _directoryClientContext.CurrentUserId,
-                    null,
-                    null
-                );
+                WhenIMakeAnAuthorizationRequest();
             }
             catch (BaseException e)
             {
@@ -143,6 +156,43 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             catch (BaseException e)
             {
                 _commonContext.RecordException(e);
+            }
+        }
+
+        [When(@"I get the response for the Authorization request")]
+        public void WhenIGetTheResponseForTheAuthRequest()
+        {
+            string authRequestID = _directoryServiceClientContext._lastAuthorizationRequest.Id;
+            AuthorizationResponse authResponse = _directoryServiceClientContext.GetAuthResponse(authRequestID);
+        }
+
+        [Then(@"the Authorization response should be approved")]
+        public void ThenTheAuthResponseShouldBeApproved()
+        {
+            var currentAuth = _directoryServiceClientContext._lastAuthorizationResponse;
+            if( currentAuth is null)
+            {
+                throw new Exception("Auth response was not found when it was expected");
+            }
+
+            if( currentAuth.Authorized != true)
+            {
+                throw new Exception($"Auth was not approved when it should have been: {currentAuth.ToString()}");
+            }
+        }
+
+        [Then(@"the Authorization response should be denied")]
+        public void ThenTheAuthResponseShouldBeDenied()
+        {
+            var currentAuth = _directoryServiceClientContext._lastAuthorizationResponse;
+            if (currentAuth is null)
+            {
+                throw new Exception("Auth response was not found when it was expected");
+            }
+
+            if (currentAuth.Authorized != false)
+            {
+                throw new Exception($"Auth was approved when it should not have been: {currentAuth.ToString()}");
             }
         }
 

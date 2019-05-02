@@ -11,11 +11,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
     {
         private readonly CommonContext _commonContext;
         private readonly DirectoryClientContext _directoryClientContext;
+        private readonly OrgClientContext _orgClientContext;
+        private readonly AppiumContext _appiumContext;
 
-        public DirectoryDeviceSteps(CommonContext commonContext, DirectoryClientContext directoryClientContext)
+        public DirectoryDeviceSteps(CommonContext commonContext, OrgClientContext orgClient, DirectoryClientContext directoryClientContext, AppiumContext appiumContext)
         {
             _commonContext = commonContext;
             _directoryClientContext = directoryClientContext;
+            _appiumContext = appiumContext;
+            _orgClientContext = orgClient;
         }
 
         [When(@"I make a Device linking request")]
@@ -49,6 +53,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [Given(@"I retrieve the Devices list for the current User")]
         public void WhenIRetrieveTheDevicesListForTheCurrentUser()
         {
+            Console.WriteLine($"Username: {_directoryClientContext.CurrentUserId}");
             _directoryClientContext.LoadDevicesForCurrentUser();
         }
 
@@ -95,6 +100,59 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             {
                 _commonContext.RecordException(e);
             }
+        }
+
+        [Given(@"I have a linked Device")]
+        public void GivenIHaveALinkedDevice()
+        {
+            //Given I made a Device linking request
+            _directoryClientContext.LinkDevice(Util.UniqueUserName());
+
+            //When I link my Device
+            WhenILinkMyDevice();
+        }
+
+        [When(@"I link my device")]
+        public void WhenILinkMyDevice()
+        {
+            //Get SDK Key
+            Console.WriteLine($"SDK Keys {_orgClientContext.AddedSdkKeys.Count}");
+            //string sdkKey = _directoryClientContext.AddedServicePublicKeys[0];
+            string sdkKey = _orgClientContext.AddedSdkKeys[0].ToString();
+            //Get Linking Code
+            string linkingCode = _directoryClientContext.LastLinkResponse.Code;
+            // Call Appium Context and test this
+            _appiumContext.LinkDevice(sdkKey, linkingCode, "FancyDevice");
+        }
+
+        [When(@"I link my physical device with the name ""(.*)""")]
+        public void WhenILinkMyDeviceByName(string deviceName)
+        {
+            //Get SDK Key
+            string sdkKey = _directoryClientContext.AddedServicePublicKeys[0];
+            //Get Linking Code
+            string linkingCode = _directoryClientContext.LastLinkResponse.Code;
+            // Call Appium Context and test this
+            //TODO: LinkDevice still needs to be updated to add this functionality
+            _appiumContext.LinkDevice(sdkKey, linkingCode, deviceName);
+        }
+
+        [When(@"I approve the auth request")]
+        public void WhenIApproveTheAuthRequest()
+        {
+            _appiumContext.ApproveRequest();
+        }
+
+        [When(@"I deny the auth request")]
+        public void WhenIDenyTheAuthRequest()
+        {
+            _appiumContext.DenyRequest();
+        }
+
+        [When(@"I receive the auth request and acknowledge the failure message")]
+        public void WhenIAcknowledgeFailureMessage()
+        {
+            _appiumContext.ReceiveAndAcknowledgeAuthFailure();
         }
     }
 }

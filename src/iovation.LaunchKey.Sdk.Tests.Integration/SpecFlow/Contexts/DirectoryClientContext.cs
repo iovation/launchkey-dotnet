@@ -65,7 +65,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
             {
                 _linkData = GetDirectoryClient().LinkDevice(userId, ttl);
             }
+            Console.WriteLine($"Username: {userId}");
+            Console.WriteLine($"Username Before: {_currentUserId}");
             _currentUserId = userId;
+            Console.WriteLine($"Username After: {_currentUserId}");
         }
 
         public void EndAllServiceSessions(string userId)
