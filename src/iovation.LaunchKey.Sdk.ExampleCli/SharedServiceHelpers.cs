@@ -105,9 +105,15 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             Console.WriteLine($"    Auth Methods:");
             foreach (var item in authResponse.AuthMethods)
             {
-                Console.WriteLine("       {item.ToString()}");
+                Console.WriteLine($"       Auth Method: {item.Method}");
+                Console.WriteLine($"          Set: {item.Set}");
+                Console.WriteLine($"          Active: {item.Active}");
+                Console.WriteLine($"          Allowed: {item.Allowed}");
+                Console.WriteLine($"          Supported: {item.Supported}");
+                Console.WriteLine($"          User Required: {item.UserRequired}");
+                Console.WriteLine($"          Passed: {item.Passed}");
+                Console.WriteLine($"          Error: {item.Error}");
             }
-
         }
 
         private static IList<DenialReason> GetDenialReasons(int? fraud, int? nonFraud)
