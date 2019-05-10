@@ -46,7 +46,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Service Client Authorization Request: Get Device Response Methods", "  In order to understand an auth response\n  As a Directory Service\n  I can retrie" +
                     "ve an Authorization Requests that been responded to and determine\n  the policy t" +
-                    "hat was used", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "hat was used", ProgrammingLanguage.CSharp, new string[] {
+                        "device_testing"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -91,14 +92,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         
         public virtual void FeatureBackground()
         {
-#line 7
-   #line 8
+#line 8
+   #line 9
     testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 9
-    testRunner.And("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
-    testRunner.And("I created a Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
+    testRunner.And("I created a Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
     testRunner.And("I have a linked Device", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -106,19 +107,20 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Verify that an auth request with no policy contains the expected methods")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Service Client Authorization Request: Get Device Response Methods")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("device_testing")]
         public virtual void VerifyThatAnAuthRequestWithNoPolicyContainsTheExpectedMethods()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that an auth request with no policy contains the expected methods", null, ((string[])(null)));
-#line 13
+#line 14
    this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 7
+#line 8
    this.FeatureBackground();
-#line 14
-    testRunner.When("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
-    testRunner.And("I approve the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
+    testRunner.And("I approve the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
     testRunner.And("I get the response for the Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table40 = new TechTalk.SpecFlow.Table(new string[] {
@@ -193,7 +195,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "",
                         "",
                         ""});
-#line 17
+#line 18
     testRunner.Then("the Authorization response should contain the following methods:", ((string)(null)), table40, "Then ");
 #line hidden
             this.ScenarioCleanup();

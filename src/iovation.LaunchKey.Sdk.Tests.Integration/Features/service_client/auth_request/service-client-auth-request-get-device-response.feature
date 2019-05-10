@@ -1,3 +1,4 @@
+@device_testing
 Feature: Service Client Authorization Request: Get Device Response
   In order to complete an authorization request
   As a Directory Service
@@ -19,4 +20,4 @@ Feature: Service Client Authorization Request: Get Device Response
    Scenario: Verify that a device denial response can be parsed
     When I deny the auth request
     And I get the response for the Authorization request
-    Then the Authorization response should be denied     
+    Then the Authorization response should be denied

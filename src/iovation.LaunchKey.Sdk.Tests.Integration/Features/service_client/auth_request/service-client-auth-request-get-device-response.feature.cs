@@ -45,7 +45,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Service Client Authorization Request: Get Device Response", "  In order to complete an authorization request\n  As a Directory Service\n  I can " +
-                    "retrieve an Authorization Requests that been responded to", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "retrieve an Authorization Requests that been responded to", ProgrammingLanguage.CSharp, new string[] {
+                        "device_testing"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -90,18 +91,18 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         
         public virtual void FeatureBackground()
         {
-#line 6
-   #line 7
+#line 7
+   #line 8
     testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 8
-    testRunner.And("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
-    testRunner.And("I created a Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
-    testRunner.And("I have a linked Device", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I created a Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
-    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I have a linked Device", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
+    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
     testRunner.And("I made an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -109,19 +110,20 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Verify that a device approval response can be parsed")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Service Client Authorization Request: Get Device Response")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("device_testing")]
         public virtual void VerifyThatADeviceApprovalResponseCanBeParsed()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that a device approval response can be parsed", null, ((string[])(null)));
-#line 14
+#line 15
    this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
+#line 7
    this.FeatureBackground();
-#line 15
-    testRunner.When("I approve the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
-    testRunner.And("I get the response for the Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I approve the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
+    testRunner.And("I get the response for the Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
     testRunner.Then("the Authorization response should be approved", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -130,19 +132,20 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Verify that a device denial response can be parsed")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Service Client Authorization Request: Get Device Response")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("device_testing")]
         public virtual void VerifyThatADeviceDenialResponseCanBeParsed()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that a device denial response can be parsed", null, ((string[])(null)));
-#line 19
+#line 20
    this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 6
+#line 7
    this.FeatureBackground();
-#line 20
-    testRunner.When("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
-    testRunner.And("I get the response for the Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 22
+    testRunner.And("I get the response for the Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 23
     testRunner.Then("the Authorization response should be denied", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

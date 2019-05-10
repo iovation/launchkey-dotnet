@@ -23,7 +23,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         }
 
         [When(@"I make a Device linking request")]
-        //[Given(@"I have made a Device linking request")]
+        [Given(@"I have made a Device linking request")]
         [Given(@"I made a Device linking request")]
         public void WhenIMakeADeviceLinkingRequest()
         {
@@ -123,12 +123,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [When(@"I link my physical device with the name ""(.*)""")]
         public void WhenILinkMyDeviceByName(string deviceName)
         {
-            //Get SDK Key
             string sdkKey = _directoryClientContext.AddedServicePublicKeys[0];
-            //Get Linking Code
             string linkingCode = _directoryClientContext.LastLinkResponse.Code;
-            // Call Appium Context and test this
-            //TODO: LinkDevice still needs to be updated to add this functionality
             _appiumContext.LinkDevice(sdkKey, linkingCode, deviceName);
         }
 
@@ -149,5 +145,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         {
             _appiumContext.ReceiveAndAcknowledgeAuthFailure();
         }
+
     }
 }

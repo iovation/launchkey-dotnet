@@ -9,12 +9,13 @@ using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 {
+    [Binding]
     public class AppiumContext
     {
         private AndroidDriver<AndroidElement> driver;
         private TestConfiguration _testConfiguration;
 
-        //[BeforeScenario("mobiledevice")]
+        [BeforeScenario("device_testing")]
         public void BeforeAll()
         {
             var appConfig = _testConfiguration.appiumConfigs;
@@ -31,7 +32,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
-        public void AfterAll()
+        [AfterScenario("device_testing")]
+        public void CleanupAppiumSession()
         {
             driver.Quit();
         }
@@ -39,7 +41,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         public AppiumContext(TestConfiguration testConfiguration)
         {
             _testConfiguration = testConfiguration;
-            BeforeAll();
         }
 
 

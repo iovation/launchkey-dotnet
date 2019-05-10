@@ -99,7 +99,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [Given(@"the current Authorization Policy requires a geofence with a radius of (.*), a latitude of (.*), and a longitude of (.*)")]
         public void GivenTheCurrentAuthorizationPolicyRequiresAGeofenceWithARadiusOfALatitudeOfAndALongitudeOf(double radius, double lat, double lon)
         {
-            _locations.Add(new Location(radius, lat, lon, ""));
+            _locations.Add(new Location(radius, lat, lon, null));
         }
 
         [When(@"I make an Authorization request")]
