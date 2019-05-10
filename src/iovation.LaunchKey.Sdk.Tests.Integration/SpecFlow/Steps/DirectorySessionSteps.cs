@@ -17,13 +17,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             _directoryClientContext = directoryClientContext;
         }
 
-        //[When(@"I make a Device linking request")]
-        //[Given(@"I made a Device linking request")]
-        //public void GivenIMadeADeviceLinkingRequest()
-        //{
-        //    _directoryClientContext.LinkDevice(Util.UniqueUserName());
-        //}
-
         [When(@"I delete the Sessions for the current User")]
         public void WhenIDeleteTheSessionsForTheCurrentUser()
         {
@@ -86,44 +79,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                 }
             }
         }
-
-        //[Then(@"all of the devices should be active during timeout")]
-        //public void ThenAllDevicesShouldBeActive()
-        //{
-        //    int loopCounter = 0;
-        //    bool allDevicesLinked = true;
-
-        //    while (loopCounter <= 10)
-        //    {
-        //        _directoryClientContext.LoadDevicesForCurrentUser();
-        //        var loadedDevices = _directoryClientContext.LoadedDevices;
-
-        //        allDevicesLinked = true;
-
-        //        foreach (var device in loadedDevices)
-        //        {
-        //            var deviceStatus = device.Status;
-
-        //            if (device.Status.StatusCode != 1)
-        //            {
-        //                allDevicesLinked = false;
-        //            }
-        //        }
-
-        //        if (allDevicesLinked == true)
-        //        {
-        //            break;
-        //        }
-
-        //        System.Threading.Thread.Sleep(1000);
-        //    }
-
-        //    if (allDevicesLinked == false)
-        //    {
-        //        throw new System.Exception($"All Devices should have been linked and weren't.");
-        //    }
-        //}
-
 
         [Then(@"all of the devices should be inactive")]
         public void ThenAllOfTheDevicesShouldBeInactive()
