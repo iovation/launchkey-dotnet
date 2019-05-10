@@ -347,7 +347,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual("Denial Reason", authResponse.DenialReason);
             Assert.AreEqual(false, authResponse.Fraud);
             Assert.AreEqual(2, authResponse.AuthPolicy.RequiredFactors);
-            Console.WriteLine(authResponse.AuthPolicy.Locations[0].Radius);
             Assert.AreEqual(1, authResponse.AuthPolicy.Locations.Count);
             Assert.AreEqual(200, authResponse.AuthPolicy.Locations[0].Radius);
             Assert.AreEqual(36.120825, authResponse.AuthPolicy.Locations[0].Latitude);
