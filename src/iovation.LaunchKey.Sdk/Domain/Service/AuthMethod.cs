@@ -9,45 +9,42 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
         /// <summary>
         /// Represents the type of method
         /// </summary>
-
-        //MAKE THIS AN ENUM
-        public AuthMethodType Method { get; set; }
-
+        public AuthMethodType Method { get; }
 
         /// <summary>
         /// Whether the subscriber has set up this auth method
         /// </summary>
-        public bool? Set { get; set; }
+        public bool? Set { get; }
 
         /// <summary>
         /// Whether this auth method can be used during a request
         /// </summary>
-        public bool Active { get; set; }
+        public bool Active { get; }
 
         /// <summary>
         /// Whether the subscriber has explicitly disallowed this auth method
         /// </summary>
-        public bool Allowed { get; set; }
+        public bool Allowed { get; }
 
         /// <summary>
         /// Whether the auth method is supported on the subscriber's device
         /// </summary>
-        public bool Supported { get; set; }
+        public bool Supported { get; }
 
         /// <summary>
         /// Whether the subscriber requires this auth method with every request
         /// </summary>
-        public bool? UserRequired { get; set; }
+        public bool? UserRequired { get; }
 
         /// <summary>
         /// Whether the method was successfully verified or not
         /// </summary>
-        public bool? Passed { get; set; }
+        public bool? Passed { get; }
 
         /// <summary>
         /// Whether there was an error preventing verification of this auth method
         /// </summary>
-        public bool? Error { get; set; }
+        public bool? Error { get; }
 
         /// <summary>
         /// Creates an auth method based on several options

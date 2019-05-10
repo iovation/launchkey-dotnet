@@ -295,16 +295,16 @@ namespace iovation.LaunchKey.Sdk.Client
 
                     authMethods.Add(
                         new AuthMethod
-                        {
-                            Method = authMethodType,
-                            Set = transportMethod.Set,
-                            Active = transportMethod.Active,
-                            Allowed = transportMethod.Allowed,
-                            Supported = transportMethod.Supported,
-                            UserRequired = transportMethod.UserRequired,
-                            Passed = transportMethod.Passed,
-                            Error = transportMethod.Error
-                        }
+                        (
+                            authMethodType,
+                            transportMethod.Set,
+                            transportMethod.Active,
+                            transportMethod.Allowed,
+                            transportMethod.Supported,
+                            transportMethod.UserRequired,
+                            transportMethod.Passed,
+                            transportMethod.Error
+                        )
                     );
                         
                 }
