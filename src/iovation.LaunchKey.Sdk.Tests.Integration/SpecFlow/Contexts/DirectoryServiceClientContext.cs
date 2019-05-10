@@ -8,6 +8,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
     {
         private readonly TestConfiguration _testConfiguration;
         private readonly DirectoryClientContext _directoryClientContext;
+        public AuthorizationRequest _lastAuthorizationRequest;
+        public AuthorizationResponse _lastAuthorizationResponse;
 
         public DirectoryServiceClientContext(
             TestConfiguration testConfiguration,
@@ -29,14 +31,17 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         public AuthorizationResponse GetAuthResponse(string authId)
         {
-            return GetServiceClientForCurrentService()
-                .GetAuthorizationResponse(authId);
+            AuthorizationResponse authResponse = GetServiceClientForCurrentService().GetAuthorizationResponse(authId);
+            _lastAuthorizationResponse = authResponse;
+            return authResponse;
         }
 
         public void Authorize(string userId, string context, AuthPolicy authPolicy)
         {
-            GetServiceClientForCurrentService()
+            var authRequest = GetServiceClientForCurrentService()
                 .CreateAuthorizationRequest(userId, context, authPolicy);
+           
+            _lastAuthorizationRequest = authRequest;
         }
 
         public void SessionStart(string userId, string requestId)

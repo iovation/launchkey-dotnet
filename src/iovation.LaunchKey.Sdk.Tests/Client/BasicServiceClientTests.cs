@@ -631,7 +631,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
             mockTransport.Verify();
 
-            Assert.AreEqual(0, response.AuthPolicy.RequiredFactors);
+            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors);
             Assert.AreEqual(null, response.AuthPolicy.RequireInherenceFactor);
             Assert.AreEqual(null, response.AuthPolicy.RequireKnowledgeFactor);
             Assert.AreEqual(null, response.AuthPolicy.RequirePosessionFactor);
@@ -1169,7 +1169,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Passed);
             Assert.AreEqual(null, authMethod.Error);
 
-            serviceDomain.Location location = new serviceDomain.Location(150,36.083548,-115.157517);
+            serviceDomain.Location location = new serviceDomain.Location(150,36.083548,-115.157517, "");
 
             Assert.AreEqual(location, response.AuthPolicy.Locations[0]);
         }
@@ -1243,7 +1243,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Passed);
             Assert.AreEqual(null, authMethod.Error);
 
-            serviceDomain.Location location = new serviceDomain.Location(150, 36.083548, -115.157517);
+            serviceDomain.Location location = new serviceDomain.Location(150, 36.083548, -115.157517, "");
 
             Assert.AreEqual(location, response.AuthPolicy.Locations[0]);
         }
@@ -1316,7 +1316,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Passed);
             Assert.AreEqual(null, authMethod.Error);
 
-            serviceDomain.Location location = new serviceDomain.Location(150, 36.083548, -115.157517);
+            serviceDomain.Location location = new serviceDomain.Location(150, 36.083548, -115.157517, "");
 
             Assert.AreEqual(location, response.AuthPolicy.Locations[0]);
         }

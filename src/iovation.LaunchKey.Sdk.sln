@@ -8,11 +8,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0297C3A8-E07B-45D8-9C3E-24C3A2FFFE1E}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
+		..\CHANGELOG.md = ..\CHANGELOG.md
+		..\DEPLOYING.md = ..\DEPLOYING.md
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iovation.LaunchKey.Sdk", "iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj", "{7429B6AD-791E-4953-A67A-D4CEB3E8C38B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iovation.LaunchKey.Sdk.Tests", "iovation.LaunchKey.Sdk.Tests\iovation.LaunchKey.Sdk.Tests.csproj", "{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk.Tests", "iovation.LaunchKey.Sdk.Tests\iovation.LaunchKey.Sdk.Tests.csproj", "{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iovation.LaunchKey.Sdk.Tests.Integration", "iovation.LaunchKey.Sdk.Tests.Integration\iovation.LaunchKey.Sdk.Tests.Integration.csproj", "{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}"
 EndProject
