@@ -260,15 +260,16 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     var parts = geofence.Split(':');
                     if (parts.Length != 3)
                     {
-                        Console.WriteLine("geofence should be in the format lat:lon:radius");
+                        Console.WriteLine("geofence should be in the format lat:lon:radius:name");
                         return 1;
                     }
                     var lat = double.Parse(parts[0]);
                     var lon = double.Parse(parts[1]);
                     var rad = double.Parse(parts[2]);
+                    var name = parts[3];
 
                     locations = new List<Location>();
-                    locations.Add(new Location(rad, lat, lon));
+                    locations.Add(new Location(rad, lat, lon, name));
                 }
                 catch (FormatException)
                 {

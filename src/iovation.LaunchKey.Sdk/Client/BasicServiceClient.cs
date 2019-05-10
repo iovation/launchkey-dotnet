@@ -184,7 +184,8 @@ namespace iovation.LaunchKey.Sdk.Client
                         authPolicyLocations.Add(new Location(
                                 geofence.Radius,
                                 geofence.Latitude,
-                                geofence.Longitude
+                                geofence.Longitude,
+                                geofence.Name
                             ));
                     }
                 }
