@@ -23,7 +23,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         }
 
         [When(@"I make a Device linking request")]
-        [Given(@"I have made a Device linking request")]
+        //[Given(@"I have made a Device linking request")]
+        [Given(@"I made a Device linking request")]
         public void WhenIMakeADeviceLinkingRequest()
         {
             _directoryClientContext.LinkDevice(Util.UniqueUserName());
@@ -53,7 +54,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [Given(@"I retrieve the Devices list for the current User")]
         public void WhenIRetrieveTheDevicesListForTheCurrentUser()
         {
-            Console.WriteLine($"Username: {_directoryClientContext.CurrentUserId}");
             _directoryClientContext.LoadDevicesForCurrentUser();
         }
 
@@ -115,13 +115,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [When(@"I link my device")]
         public void WhenILinkMyDevice()
         {
-            //Get SDK Key
-            Console.WriteLine($"SDK Keys {_orgClientContext.AddedSdkKeys.Count}");
-            //string sdkKey = _directoryClientContext.AddedServicePublicKeys[0];
             string sdkKey = _orgClientContext.AddedSdkKeys[0].ToString();
-            //Get Linking Code
             string linkingCode = _directoryClientContext.LastLinkResponse.Code;
-            // Call Appium Context and test this
             _appiumContext.LinkDevice(sdkKey, linkingCode, "FancyDevice");
         }
 

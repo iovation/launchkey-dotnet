@@ -69,6 +69,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\service_client\auth_request\service_client_auth_request_get_device_response_methods_1.feature.cs" />
+    <Compile Remove="Features\service_client\auth_request\org-client-service-create.feature.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Features\directory_client\devices\directory-client-device-link.feature.cs">
       <DependentUpon>directory-client-device-link.feature</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -280,7 +284,7 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Features\service_client\auth_request\service-client-auth-request-send-policy.feature.cs">
-      <DependentUpon>service-client-auth-request-send-policy.feature</DependentUpon>
+      <DependentUpon>service-client-auth-request-send-policy_1.feature</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -338,6 +342,17 @@
       <DependentUpon>service-client-auth-request-get-device-response.feature</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\service_client\auth_request\service_client_auth_request_get_device_response_methods.feature.cs">
+      <DependentUpon>service_client_auth_request_get_device_response_methods_1.feature</DependentUpon>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Features\service_client\auth_request\service-client-auth-request-send-policy %28copy%29.feature.cs">
+      <DependentUpon>service-client-auth-request-get-device-response-methods.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Features\service_client\auth_request\service_client_auth_request_get_device_response_methods_1.feature.cs">
+      <DependentUpon>service_client_auth_request_get_device_response_methods_1.feature</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -533,6 +548,12 @@
     <None Update="Features\service_client\auth_request\service-client-auth-request-get %28copy%29.feature">
       <LastGenOutput>service-client-auth-request-get.feature.cs</LastGenOutput>
     </None>
+    <None Update="Features\service_client\auth_request\service-client-auth-request-send-policy %28copy%29.feature">
+      <LastGenOutput>service-client-auth-request-send-policy.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Features\service_client\auth_request\service-client-auth-request-send-policy %28copy%29.feature">
+      <LastGenOutput>service-client-auth-request-send-policy.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
@@ -540,4 +561,7 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\service_client\auth_request\service_client_auth_request_get_device_response_methods_1.feature.cs" />
+  </ItemGroup>
 </Project>

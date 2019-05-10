@@ -68,7 +68,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         {
             OpenAuthMenu();
             TapRefresh();
-            System.Threading.Thread.Sleep(5000);
+            System.Threading.Thread.Sleep(1000);
             ApproveAuth();
         }
 
@@ -93,9 +93,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         private void DenyAuth()
         {
-            FindByID("com.launchkey.android.authenticator.demo:id/auth_info_action_negative").Click();
+            AndroidElement denyButton = FindByID("com.launchkey.android.authenticator.demo:id/auth_info_action_negative");
+            LongPress(denyButton);
+
             FindByText("I don't approve").Click();
-            FindByID("com.launchkey.android.authenticator.demo:id/auth_do_action_negative").Click();
+
+            AndroidElement submitDenyButton = FindByID("com.launchkey.android.authenticator.demo:id/auth_do_action_negative");
+            LongPress(submitDenyButton);
         }
 
         private void ApproveAuth()
