@@ -24,7 +24,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                     It.IsAny<DirectoryV3DevicesPostRequest>(),
                     It.IsAny<EntityIdentifier>()
                 )
-            ).Returns(new DirectoryV3DevicesPostResponse { Code = "code", QrCode = "qrcode" });
+            ).Returns(new DirectoryV3DevicesPostResponse { Code = "code", QrCode = "qrcode", DeviceId = "deviceID" });
 
             var response = client.LinkDevice("user id", 123);
 
