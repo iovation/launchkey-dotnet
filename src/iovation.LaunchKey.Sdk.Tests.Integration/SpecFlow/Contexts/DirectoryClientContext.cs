@@ -19,7 +19,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         public CreatedServiceInfo LastCreatedService => _ownedServices.Last();
         public Service LoadedService => _loadedService;
         public List<Service> LoadedServices => _loadedServices;
-        public DirectoryUserDeviceLinkData LastLinkResponse => _linkData;
+        public DeviceLinkData LastLinkResponse => _linkData;
         public string CurrentUserId => _currentUserId;
 
         // public key contextual data
@@ -41,7 +41,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         private Service _loadedService;
         private List<Service> _loadedServices;
         private ServicePolicy _loadedServicePolicy = new ServicePolicy();
-        private DirectoryUserDeviceLinkData _linkData;
+        private DeviceLinkData _linkData;
         private List<Device> _loadedDevices;
 
         public DirectoryClientContext(TestConfiguration testConfiguration, OrgClientContext orgClientContext)

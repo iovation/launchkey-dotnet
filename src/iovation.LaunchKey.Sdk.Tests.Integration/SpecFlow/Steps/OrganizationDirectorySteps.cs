@@ -66,7 +66,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                 directory.Id,
                 active,
                 directory.AndroidKey,
-                _keyManager.GetP12ForFingerprint(directory.IosCertificateFingerprint)
+                _keyManager.GetP12ForFingerprint(directory.IosCertificateFingerprint),
+                ""
             );
         }
 
@@ -92,7 +93,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                 _orgClientContext.LoadedDirectory.Id,
                 _orgClientContext.LoadedDirectory.Active,
                 androidKey,
-                _keyManager.GetP12ForFingerprint(_orgClientContext.LoadedDirectory.IosCertificateFingerprint)
+                _keyManager.GetP12ForFingerprint(_orgClientContext.LoadedDirectory.IosCertificateFingerprint),
+                ""
             );
         }
 
@@ -110,7 +112,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                 _orgClientContext.LoadedDirectory.Id,
                 _orgClientContext.LoadedDirectory.Active,
                 null,
-                _keyManager.GetP12ForFingerprint(_orgClientContext.LoadedDirectory.IosCertificateFingerprint)
+                _keyManager.GetP12ForFingerprint(_orgClientContext.LoadedDirectory.IosCertificateFingerprint),
+                ""
             );
         }
 
@@ -129,7 +132,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                 _orgClientContext.LoadedDirectory.Id,
                 _orgClientContext.LoadedDirectory.Active,
                 _orgClientContext.LoadedDirectory.AndroidKey,
-                _keyManager.GetBase64EncodedAlphaP12()
+                _keyManager.GetBase64EncodedAlphaP12(),
+                null
             );
         }
 
@@ -147,6 +151,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                 _orgClientContext.LoadedDirectory.Id,
                 _orgClientContext.LoadedDirectory.Active,
                 _orgClientContext.LoadedDirectory.AndroidKey,
+                null,
                 null
             );
         }
@@ -162,7 +167,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         {
             try
             {
-                _orgClientContext.UpdateDirectory(Guid.Parse(directoryId), true, null, null);
+                _orgClientContext.UpdateDirectory(Guid.Parse(directoryId), true, null, null, null);
             }
             catch (BaseException e)
             {
