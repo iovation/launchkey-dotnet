@@ -828,14 +828,24 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                     if (core.JweEncryptedDeviceResponse != null)
                     {
                         var decryptedDeviceData = _jweService.Decrypt(core.JweEncryptedDeviceResponse);
-                        var deviceResponse = DecodeResponse<ServiceV3AuthsGetResponseDeviceJWE>(decryptedDeviceData);
-                        authorizationRequestId = deviceResponse.AuthorizationRequestId;
-                        response = deviceResponse.Type == "AUTHORIZED";
-                        deviceId = deviceResponse.DeviceId;
-                        servicePins = deviceResponse.ServicePins;
-                        type = deviceResponse.Type;
-                        reason = deviceResponse.Reason;
-                        denialreason = deviceResponse.DenialReason;
+
+                        if (decryptedDeviceData.Contains("DEVICE_LINK_COMPLETION"))
+                        {
+                            DeviceLinkCompletion deviceLinkCompletion = DecodeResponse<DeviceLinkCompletion>(decryptedDeviceData);
+                            return new ServerSentEventDeviceLinked(deviceLinkCompletion);
+                        }
+                        else
+                        {
+                            var deviceResponse = DecodeResponse<ServiceV3AuthsGetResponseDeviceJWE>(decryptedDeviceData);
+                            authorizationRequestId = deviceResponse.AuthorizationRequestId;
+                            response = deviceResponse.Type == "AUTHORIZED";
+                            deviceId = deviceResponse.DeviceId;
+                            servicePins = deviceResponse.ServicePins;
+                            type = deviceResponse.Type;
+                            reason = deviceResponse.Reason;
+                            denialreason = deviceResponse.DenialReason;
+                        }
+
                     }
                     else
                     {

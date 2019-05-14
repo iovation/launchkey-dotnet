@@ -9,5 +9,9 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 
         [JsonProperty("qrcode")]
         public string QrCode { get; set; }
+
+        [JsonProperty("device_id")]
+        public string DeviceId { get; set; }
+
     }
 }

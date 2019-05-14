@@ -3,7 +3,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Directory
     /// <summary>
     /// An API response for beginning a device link.
     /// </summary>
-    public class DirectoryUserDeviceLinkData
+    public class DeviceLinkData
     {
         /// <summary>
         /// The code the user must type on the destination device to complete the linking process.
@@ -15,10 +15,16 @@ namespace iovation.LaunchKey.Sdk.Domain.Directory
         /// </summary>
         public string QrCode { get; }
 
-        public DirectoryUserDeviceLinkData(string code, string qrCode)
+        /// <summary>
+        /// A identifier for the device that originated the request
+        /// </summary>
+        public string DeviceId { get; }
+
+        public DeviceLinkData(string code, string qrCode, string deviceId)
         {
             Code = code;
             QrCode = qrCode;
+            DeviceId = deviceId;
         }
     }
 }
