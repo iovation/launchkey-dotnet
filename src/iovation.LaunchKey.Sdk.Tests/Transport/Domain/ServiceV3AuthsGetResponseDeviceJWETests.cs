@@ -294,84 +294,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
                            "    \"2963\"," +
                            "    \"2046\"" +
                            "]," +
-                           "\"auth_request\": \"8c3c0268-f692-11e7-bd2e-7692096aba47\"," +
-                           "\"auth_methods\": [" +
-                             "  {" +
-                             "    \"method\": \"wearables\"," +
-                             "    \"set\": false," +
-                             "    \"active\": false," +
-                             "    \"allowed\": true," +
-                             "    \"supported\": true," +
-                             "    \"user_required\": null," +
-                             "    \"passed\": null," +
-                             "    \"error\": null" +
-                             "  },  " +
-                             "  {" +
-                             "    \"method\": \"geofencing\"," +
-                             "    \"set\": null," +
-                             "    \"active\": true," +
-                             "    \"allowed\": true," +
-                             "    \"supported\": true," +
-                             "    \"user_required\": null," +
-                             "    \"passed\": null," +
-                             "    \"error\": null" +
-                             "  }," +
-                             "  {" +
-                             "    \"method\": \"locations\"," +
-                             "    \"set\": true," +
-                             "    \"active\": true," +
-                             "    \"allowed\": true," +
-                             "    \"supported\": true," +
-                             "    \"user_required\": true," +
-                             "    \"passed\": true," +
-                             "    \"error\": false" +
-                             "  }," +
-                             " {" +
-                             "    \"method\": \"pin_code\"," +
-                             "    \"set\": true," +
-                             "    \"active\": true," +
-                             "    \"allowed\": true," +
-                             "    \"supported\": true," +
-                             "    \"user_required\": true," +
-                             "    \"passed\": true," +
-                             "    \"error\": false" +
-                             "  }," +
-                             "  {" +
-                             "    \"method\": \"circle_code\"," +
-                             "    \"set\": false," +
-                             "    \"active\": false," +
-                             "    \"allowed\": true," +
-                             "    \"supported\": true," +
-                             "    \"user_required\": null," +
-                             "    \"passed\": null," +
-                             "    \"error\": null" +
-                             "  }," +
-                             "  {" +
-                             "    \"method\": \"face\"," +
-                             "    \"set\": false," +
-                             "    \"active\": false," +
-                             "    \"allowed\": true," +
-                             "    \"supported\": true," +
-                             "    \"user_required\": null," +
-                             "    \"passed\": null," +
-                             "    \"error\": null" +
-                             "  }," +
-                             "  {" +
-                             "    \"method\": \"fingerprint\"," +
-                             "    \"set\": false," +
-                             "    \"active\": false," +
-                             "    \"allowed\": true," +
-                             "    \"supported\": true," +
-                             "    \"user_required\": null," +
-                             "    \"passed\": null," +
-                             "    \"error\": null" +
-                             "  }" +
-                             "]" +
+                           "\"auth_request\": \"8c3c0268-f692-11e7-bd2e-7692096aba47\"" +
                         "}";
 
             var o = JsonConvert.DeserializeObject<ServiceV3AuthsGetResponseDeviceJWE>(json);
 
             Assert.AreEqual(null, o.AuthPolicy);
+            Assert.AreEqual(null, o.AuthMethods);
 
         }
 
