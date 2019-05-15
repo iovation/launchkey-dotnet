@@ -6,6 +6,7 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Remote;
 using TechTalk.SpecFlow;
 using OpenQA.Selenium.Appium.MultiTouch;
+using TechTalk.SpecFlow.UnitTestProvider;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 {
@@ -13,12 +14,21 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
     public class AppiumContext
     {
         private AndroidDriver<AndroidElement> driver;
+        private ScenarioContext _scenarioContext;
         private TestConfiguration _testConfiguration;
 
         [BeforeScenario("device_testing")]
         public void BeforeAll()
         {
             var appConfig = _testConfiguration.appiumConfigs;
+
+            //If device configurations are not set up ignore the test
+            if(appConfig == null)
+            {
+                var unitTestRuntimeProvider = (IUnitTestRuntimeProvider)
+                    _scenarioContext.GetBindingInstance((typeof(IUnitTestRuntimeProvider)));
+                unitTestRuntimeProvider.TestIgnore("ignored");
+            }
 
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.SetCapability(MobileCapabilityType.BrowserName, "");
@@ -35,12 +45,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         [AfterScenario("device_testing")]
         public void CleanupAppiumSession()
         {
-            driver.Quit();
+            if(driver != null)
+            {
+                driver.Quit();
+            }
         }
 
-        public AppiumContext(TestConfiguration testConfiguration)
+        public AppiumContext(TestConfiguration testConfiguration, ScenarioContext scenarioContext)
         {
             _testConfiguration = testConfiguration;
+            this._scenarioContext = scenarioContext;
         }
 
 
