@@ -40,14 +40,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
                 Types = new List<string> { "inherence" }
             };
 
-            var authMethods = new AuthPolicy.AuthMethod[7];
-            authMethods[0] = CreateAuthTransportMethod("wearables", false, false, true, true, null, null, null);
-            authMethods[1] = CreateAuthTransportMethod("geofencing", null, true, true, true, null, null, null);
-            authMethods[2] = CreateAuthTransportMethod("locations", true, true, true, true, true, false, false);
-            authMethods[3] = CreateAuthTransportMethod("pin_code", true, true, true, true, true, null, null);
-            authMethods[4] = CreateAuthTransportMethod("circle_code", false, false, true, true, null, null, null);
-            authMethods[5] = CreateAuthTransportMethod("face", false, false, true, true, null, null, null);
-            authMethods[6] = CreateAuthTransportMethod("fingerprint", false, false, true, true, null, null, null);
+            var authMethods = new AuthPolicy.AuthMethod[7]
+            {
+                CreateAuthTransportMethod("wearables", false, false, true, true, null, null, null),
+                CreateAuthTransportMethod("geofencing", null, true, true, true, null, null, null),
+                CreateAuthTransportMethod("locations", true, true, true, true, true, false, false),
+                CreateAuthTransportMethod("pin_code", true, true, true, true, true, null, null),
+                CreateAuthTransportMethod("circle_code", false, false, true, true, null, null, null),
+                CreateAuthTransportMethod("face", false, false, true, true, null, null, null),
+                CreateAuthTransportMethod("fingerprint", false, false, true, true, null, null, null)
+            };
 
             var o = new ServiceV3AuthsGetResponse(
                 requestingEntity,
