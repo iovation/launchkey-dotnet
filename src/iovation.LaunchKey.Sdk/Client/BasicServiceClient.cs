@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using iovation.LaunchKey.Sdk.Domain.Service;
 using iovation.LaunchKey.Sdk.Domain.Webhook;
@@ -213,9 +214,24 @@ namespace iovation.LaunchKey.Sdk.Client
                     {
                         if (authResponse.AuthPolicy.Types.Any())
                         {
-                            requiredKnowledge = authResponse.AuthPolicy.Types.Contains("knowledge");
-                            requiredInherence = authResponse.AuthPolicy.Types.Contains("inherence");
-                            requiredPosession = authResponse.AuthPolicy.Types.Contains("possession");
+                            foreach (string type in authResponse.AuthPolicy.Types)
+                            {
+                                switch (type)
+                                {
+                                    case "knowledge":
+                                        requiredKnowledge = true;
+                                        break;
+                                    case "inherence":
+                                        requiredInherence = true;
+                                        break;
+                                    case "possession":
+                                        requiredPosession = true;
+                                        break;
+                                    default:
+                                        Trace.TraceWarning($"Invalid policy type given: {type} \n It will be ignored but this could signify the need for an update.");
+                                        break;
+                                }
+                            }
                         }
                     }
 
