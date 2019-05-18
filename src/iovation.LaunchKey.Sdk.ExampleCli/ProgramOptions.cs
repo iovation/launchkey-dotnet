@@ -23,9 +23,18 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('u', "user-id", HelpText = "The unique ID of the user the device is being linked for. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }		
 	}
-	
 
-	[Verb("org-service-auth", HelpText = "(Using Organization Credentials) Authenticate a directory user against a service")]
+    [Verb("org-directory-update-webhook", HelpText = "(Using Organization Credentials) Update the Webhook URL of a directory")]
+    class OrgDirectoryUpdateWebhookURLOptions : OrgOptions
+    {
+        [Option('w', "webhook-url", HelpText = "The webhook URL to set for the directory being managed", Required = true)]
+        public string WebhookUrl { get; set; }
+
+        [Option('d', "directory-id", HelpText = "The unique ID of the directory being managed", Required = true)]
+        public string DirectoryId { get; set; }
+    }
+
+    [Verb("org-service-auth", HelpText = "(Using Organization Credentials) Authenticate a directory user against a service")]
 	class OrgServiceAuthOptions : OrgOptions
 	{
 		[Option('s', "service-id", HelpText = "The unique ID of the service being managed", Required = true)]
@@ -55,6 +64,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		[Option('t', "ttl", HelpText = "Time to Live in seconds for the linking code that will be generated. This must be between 300 and 86400.")]
  		public int? TTL { get; set; }
+
+        [Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
+        public bool? UseWebhook { get; set; }
 	}
 
  	[Verb("directory-device-unlink", HelpText = "Unlink a device for a directory user")]

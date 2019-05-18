@@ -7,6 +7,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
     {
         static void Main(string[] args)
         {
+            //You can only have 16 of these active at any given time!
             CommandLine.Parser.Default
                 .ParseArguments<
                     ServiceAuthOptions,
@@ -24,6 +25,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     DirectoryServiceSessionStartOptions,
                     DirectoryServiceSessionEndOptions,
                     OrgDirectoryListDevicesOptions,
+                    //OrgDirectoryUpdateWebhookURLOptions,
                     OrgServiceAuthOptions>(args)
                 .MapResult(
                     // service functions
@@ -35,7 +37,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     (ServiceSessionEndOptions opts) => ServiceExamples.DoSessionEnd(opts.Username, opts.ServiceId, opts.PrivateKeyPath, opts.APIURL),
 
                     // directory functions
-                    (DirectoryLinkDeviceOptions opts) => DirectoryExamples.DoDeviceLink(opts.DirectoryId, opts.PrivateKeyPath, opts.UserId, opts.APIURL, opts.TTL),
+                    (DirectoryLinkDeviceOptions opts) => DirectoryExamples.DoDeviceLink(opts.DirectoryId, opts.PrivateKeyPath, opts.UserId, opts.APIURL, opts.TTL, opts.UseWebhook),
                     (DirectoryUnlinkDeviceOptions opts) => DirectoryExamples.DoDeviceUnlink(opts.DirectoryId, opts.PrivateKeyPath, opts.UserId, opts.DeviceId, opts.APIURL),
                     (DirectoryListDevicesOptions opts) => DirectoryExamples.DoDeviceList(opts.DirectoryId, opts.PrivateKeyPath, opts.UserId, opts.APIURL),
                     (DirectorySessionListOptions opts) => DirectoryExamples.DoSessionList(opts.DirectoryId, opts.PrivateKeyPath, opts.UserId, opts.APIURL),
@@ -47,6 +49,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
                     // org functions
                     (OrgDirectoryListDevicesOptions opts) => OrgExamples.DoDirectoryDeviceList(opts.OrganizationId, opts.PrivateKeyPath, opts.DirectoryId, opts.UserId, opts.APIURL),
+                    //(OrgDirectoryUpdateWebhookURLOptions opts) => OrgExamples.DoUpdateDirectoryWebhookUrl(opts.OrganizationId, opts.PrivateKeyPath, opts.DirectoryId, opts.APIURL, opts.WebhookUrl),
                     (OrgServiceAuthOptions opts) => OrgExamples.DoServiceAuth(opts.OrganizationId, opts.PrivateKeyPath, opts.ServiceId, opts.UserId, opts.APIURL),
 
                     // errors

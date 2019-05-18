@@ -93,7 +93,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// Link a device to a user. This starts the process which must be completed via the authenticator app for this directory
         /// </summary>
-        public static int DoDeviceLink(string directoryId, string privateKey, string userId, string apiURL, int? ttl)
+        public static int DoDeviceLink(string directoryId, string privateKey, string userId, string apiURL, int? ttl, bool? useWebhook)
         {
             try
             {
@@ -101,6 +101,13 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 Console.WriteLine("Sending request to begin device link ... ");
                 var deviceLinkResponse = directoryClient.LinkDevice(userId, ttl);
                 Console.WriteLine($"Successfully sent link request. Use the follwowing code to complete the link: {deviceLinkResponse.Code}");
+
+                if ( useWebhook == true )
+                {
+                    Console.WriteLine($"You wanted to retrieve the webhook so I will open a port!");
+                    var openWebhookPort = SharedServiceHelpers.HandleDirectoryWebhook(directoryClient);
+                }
+
             }
             catch (BaseException e)
             {

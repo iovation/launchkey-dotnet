@@ -41,6 +41,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             listener.Start();
 
             Console.WriteLine("Webhook: Waiting for a request ... ");
+            Console.WriteLine("Note: If using a reverse proxy (like ngrok) make sure you set the host header to localhost:9876");
             var context = listener.GetContext();
             Console.WriteLine("Webhook: Request received");
             using (var reader = new StreamReader(context.Request.InputStream, Encoding.UTF8))
@@ -67,9 +68,61 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     var sessionEndPackage = webhookPackage as ServiceUserSessionEndWebhookPackage;
                     Console.WriteLine($"Session remotely ended for Service User Hash {sessionEndPackage.ServiceUserHash} at {sessionEndPackage.LogoutRequested}");
                 }
+                else if (webhookPackage is DirectoryUserDeviceLinkCompletionWebhookPackage)
+                {
+                    Console.WriteLine($"You have a new linked device webhook! Congratulations!");
+                }
                 else
                 {
                     Console.WriteLine("Error: received a webhook package but it was not for an authorization response or session end!");
+                    return 1;
+                }
+                return 0;
+            }
+        }
+
+        public static int HandleDirectoryWebhook(IDirectoryClient directoryClient)
+        {
+            if (!HttpListener.IsSupported)
+            {
+                Console.WriteLine("Sorry, your OS does not support the default windows HTTP listener. Webhook demo cannot proceed.");
+                Environment.Exit(1);
+            }
+            Console.WriteLine("Webhook: Starting HTTP listener for localhost on port 9876.");
+            var listener = new HttpListener();
+            listener.Prefixes.Add("http://localhost:9876/");
+            listener.Start();
+
+            Console.WriteLine("Webhook: Waiting for a request ... ");
+            Console.WriteLine("Note: If using a reverse proxy (like ngrok) make sure you set the host header to localhost:9876");
+            var context = listener.GetContext();
+            Console.WriteLine("Webhook: Request received");
+            using (var reader = new StreamReader(context.Request.InputStream, Encoding.UTF8))
+            {
+                var body = reader.ReadToEnd();
+                var headers = new Dictionary<string, List<string>>();
+                foreach (var headerName in context.Request.Headers.AllKeys)
+                {
+                    headers.Add(headerName, new List<string>());
+                    foreach (var headerValue in context.Request.Headers.GetValues(headerName))
+                    {
+                        headers[headerName].Add(headerValue);
+                    }
+                }
+                IWebhookPackage webhookPackage = directoryClient.HandleWebhook(headers, body);
+
+                if (webhookPackage is DirectoryUserDeviceLinkCompletionWebhookPackage)
+                {
+                    var message = ((DirectoryUserDeviceLinkCompletionWebhookPackage)webhookPackage).DeviceLinkData;
+                    Console.WriteLine($"You have a new linked device, congratulations!");
+                    Console.WriteLine($"     DeviceID:          {message.DeviceId}");
+                    Console.WriteLine($"     DevicePubKey:      {message.DevicePublicKey}");
+                    Console.WriteLine($"     DevicePubKeyID:    {message.DevicePublicKeyId}");
+                    Console.WriteLine($"     Type:              {message.Type}");
+                }
+                else
+                {
+                    Console.WriteLine("Error: received a webhook package but it was not for a linked device!");
                     return 1;
                 }
                 return 0;
