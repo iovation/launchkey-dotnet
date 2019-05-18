@@ -5,3 +5,4 @@ obj
 TestResults
 dist
 src/iovation.LaunchKey.Sdk.Tests.Integration/Secrets
+src/iovation.LaunchKey.Sdk.ExampleCli/Secrets/
