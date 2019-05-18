@@ -227,9 +227,9 @@ namespace iovation.LaunchKey.Sdk.Client
             IServerSentEvent serverSentEvent = _transport.HandleServerSentEvent(headers, body, method, path);
             if (serverSentEvent is ServerSentEventDeviceLinked)
             {
-                var test = ((ServerSentEventDeviceLinked)serverSentEvent).DeviceLinkCompletion;
+                var deviceLinkTransport = ((ServerSentEventDeviceLinked)serverSentEvent).DeviceLinkCompletion;
                 var deviceLinkCompletion = new Domain.Directory.DeviceLinkCompletion(
-                    test.Type, test.DeviceId, test.DevicePublicKey, test.DevicePublicKeyId
+                    deviceLinkTransport.Type, deviceLinkTransport.DeviceId, deviceLinkTransport.DevicePublicKey, deviceLinkTransport.DevicePublicKeyId
                 );
 
                 return new DirectoryUserDeviceLinkCompletionWebhookPackage(

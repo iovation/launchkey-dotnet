@@ -40,7 +40,12 @@ namespace iovation.LaunchKey.Sdk.Domain.Organization
         /// </summary>
         public string IosCertificateFingerprint { get; }
 
-        public Directory(Guid id, string name, bool active, List<Guid> serviceIds, List<Guid> sdkKeys, string androidKey, string iosCertificateFingerprint)
+        /// <summary>
+        /// The webhook URL for the directory
+        /// </summary>
+        public string WebhookUrl { get; }
+
+        public Directory(Guid id, string name, bool active, List<Guid> serviceIds, List<Guid> sdkKeys, string androidKey, string iosCertificateFingerprint, string webhookUrl)
         {
             Id = id;
             Name = name;
@@ -49,6 +54,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Organization
             SdkKeys = sdkKeys;
             AndroidKey = androidKey;
             IosCertificateFingerprint = iosCertificateFingerprint;
+            WebhookUrl = webhookUrl;
         }
     }
 }

@@ -114,7 +114,8 @@ namespace iovation.LaunchKey.Sdk.Client
                     directoryItem.ServiceIds,
                     directoryItem.SdkKeys,
                     directoryItem.AndroidKey,
-                    directoryItem.IosCertificateFingerprint
+                    directoryItem.IosCertificateFingerprint,
+                    directoryItem.WebhookUrl
                 ));
             }
 
@@ -135,7 +136,8 @@ namespace iovation.LaunchKey.Sdk.Client
                     directoryItem.ServiceIds,
                     directoryItem.SdkKeys,
                     directoryItem.AndroidKey,
-                    directoryItem.IosCertificateFingerprint
+                    directoryItem.IosCertificateFingerprint,
+                    directoryItem.WebhookUrl
                 ));
             }
 

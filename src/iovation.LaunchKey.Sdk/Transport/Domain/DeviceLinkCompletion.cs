@@ -3,18 +3,18 @@ using Newtonsoft.Json;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
-    public class DeviceLinkCompletion //: IServerSentEvent
+    public class DeviceLinkCompletion
     {
         [JsonProperty("type")]
-        public string Type { get; }
+        public string Type { get; set; }
 
         [JsonProperty("device_id")]
-        public string DeviceId { get; }
+        public string DeviceId { get; set; }
 
         [JsonProperty("device_public_key")]
-        public string DevicePublicKey { get; }
+        public string DevicePublicKey { get; set; }
 
         [JsonProperty("device_public_key_id")]
-        public string DevicePublicKeyId { get; }
+        public string DevicePublicKeyId { get; set; }
     }
 }
