@@ -17,12 +17,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             _directoryClientContext = directoryClientContext;
         }
 
-        [Given(@"I made a Device linking request")]
-        public void GivenIMadeADeviceLinkingRequest()
-        {
-            _directoryClientContext.LinkDevice(Util.UniqueUserName());
-        }
-
         [When(@"I delete the Sessions for the current User")]
         public void WhenIDeleteTheSessionsForTheCurrentUser()
         {
@@ -64,6 +58,42 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             catch (BaseException e)
             {
                 _commonContext.RecordException(e);
+            }
+        }
+
+        [Then(@"all of the devices should be active")]
+        public void ThenAllOfTheDevicesShouldBeActive()
+        {
+            //Sleep to factor in network latency
+            System.Threading.Thread.Sleep(1000);
+            _directoryClientContext.LoadDevicesForCurrentUser();
+            var loadedDevices = _directoryClientContext.LoadedDevices;
+
+            foreach (var device in loadedDevices)
+            {
+                var deviceStatus = device.Status;
+
+                if (device.Status.StatusCode != 1)
+                {
+                    throw new System.Exception($"All Devices should be linked. Device status was {device.Status.Text}");
+                }
+            }
+        }
+
+        [Then(@"all of the devices should be inactive")]
+        public void ThenAllOfTheDevicesShouldBeInactive()
+        {
+            _directoryClientContext.LoadDevicesForCurrentUser();
+            var loadedDevices = _directoryClientContext.LoadedDevices;
+
+            foreach (var device in loadedDevices)
+            {
+                var deviceStatus = device.Status;
+
+                if (device.Status.StatusCode == 1)
+                {
+                    throw new System.Exception($"All Devices should be unlinked. Device status was {device.Status.Text}");
+                }
             }
         }
     }

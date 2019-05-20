@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
@@ -16,7 +17,9 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             string[] devicePins,
             string type,
             string reason,
-            string denialReason)
+            string denialReason,
+            AuthPolicy.JWEAuthPolicy authPolicy,
+            AuthPolicy.AuthMethod[] authMethods)
         {
             RequestingEntity = requestingEntity;
             ServiceId = serviceId;
@@ -30,6 +33,8 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             Type = type;
             Reason = reason;
             DenialReason = denialReason;
+            AuthPolicy = authPolicy;
+            AuthMethods = authMethods;
         }
 
         public EntityIdentifier RequestingEntity { get; }
@@ -44,5 +49,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
         public string Type { get; }
         public string Reason { get; }
         public string DenialReason { get; }
+        public AuthPolicy.JWEAuthPolicy AuthPolicy { get; }
+        public IList<AuthPolicy.AuthMethod> AuthMethods { get; }
     }
 }

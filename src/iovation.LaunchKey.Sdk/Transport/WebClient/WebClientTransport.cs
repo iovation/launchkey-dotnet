@@ -480,6 +480,10 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                 string type;
                 string reason;
                 string denialReason;
+                AuthPolicy.JWEAuthPolicy authPolicy;
+                AuthPolicy.AuthMethod[] authMethods;
+
+
 
                 try
                 {
@@ -493,6 +497,8 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                         type = deviceResponse.Type;
                         reason = deviceResponse.Reason;
                         denialReason = deviceResponse.DenialReason;
+                        authPolicy = deviceResponse.AuthPolicy;
+                        authMethods = deviceResponse.AuthMethods;
                     }
                     else
                     {
@@ -506,6 +512,8 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                         type = null;
                         reason = null;
                         denialReason = null;
+                        authPolicy = null;
+                        authMethods = null;
                     }
 
                     return new ServiceV3AuthsGetResponse(
@@ -520,7 +528,9 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                         servicePins,
                         type,
                         reason,
-                        denialReason
+                        denialReason,
+                        authPolicy,
+                        authMethods
                     );
                 }
                 catch (Exception ex)
@@ -825,6 +835,9 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                     string type;
                     string reason;
                     string denialreason;
+                    AuthPolicy.JWEAuthPolicy authPolicy;
+                    AuthPolicy.AuthMethod[] authMethods;
+
                     if (core.JweEncryptedDeviceResponse != null)
                     {
                         var decryptedDeviceData = _jweService.Decrypt(core.JweEncryptedDeviceResponse);
@@ -836,6 +849,8 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                         type = deviceResponse.Type;
                         reason = deviceResponse.Reason;
                         denialreason = deviceResponse.DenialReason;
+                        authPolicy = deviceResponse.AuthPolicy;
+                        authMethods = deviceResponse.AuthMethods;
                     }
                     else
                     {
@@ -854,6 +869,8 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                         type = null;
                         reason = null;
                         denialreason = null;
+                        authPolicy = null;
+                        authMethods = null;
                     }
                     return new ServerSentEventAuthorizationResponse(
                         requestingEntity,
@@ -867,7 +884,9 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                         servicePins,
                         type,
                         reason,
-                        denialreason
+                        denialreason,
+                        authPolicy,
+                        authMethods
                     );
                 }
                 else

@@ -62,7 +62,17 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
         /// </summary>
         public bool? Fraud { get; }
 
-        public AuthorizationResponse(string authorizationRequestId, bool authorized, string serviceUserHash, string organizationUserHash, string userPushId, string deviceId, List<string> devicePins, AuthorizationResponseType? type, AuthorizationResponseReason? reason, string denialReason, bool? fraud)
+        /// <summary>
+        /// The criteria the user had to fulfill to authorize the request successfully
+        /// </summary>
+        public AuthPolicy AuthPolicy { get; }
+
+        /// <summary>
+        /// A list of all Auth Methods and the role they played in this Authorization request
+        /// </summary>
+        public IList<AuthMethod> AuthMethods { get; }
+
+        public AuthorizationResponse(string authorizationRequestId, bool authorized, string serviceUserHash, string organizationUserHash, string userPushId, string deviceId, List<string> devicePins, AuthorizationResponseType? type, AuthorizationResponseReason? reason, string denialReason, bool? fraud, AuthPolicy authPolicy, IList<AuthMethod> authMethods)
         {
             AuthorizationRequestId = authorizationRequestId;
             Authorized = authorized;
@@ -75,6 +85,8 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
             Reason = reason;
             DenialReason = denialReason;
             Fraud = fraud;
+            AuthPolicy = authPolicy;
+            AuthMethods = authMethods;
         }
     }
 
@@ -89,7 +101,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
         AUTHORIZED,
 
         /// <summary>
-        /// The use denied the authorization request
+        /// The user denied the authorization request
         /// </summary>
         DENIED,
 
@@ -153,6 +165,12 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
         /// User can't receive or respond to request because a Local Auth Request is pending authorization
         /// </summary>
         BUSY_LOCAL,
+
+        /// <summary>
+        /// Authenticator fails to obtain use of a sensor that was required by policy on the device. 
+        /// i.e. wearables was enabled but Bluetooth was not enabled
+        /// </summary>
+        SENSOR,
 
         /// <summary>
         /// Other exists only to allow for forward compatibility to future response reasons
