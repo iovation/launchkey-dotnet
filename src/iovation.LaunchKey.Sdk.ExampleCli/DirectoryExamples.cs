@@ -100,7 +100,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL);
                 Console.WriteLine("Sending request to begin device link ... ");
                 var deviceLinkResponse = directoryClient.LinkDevice(userId, ttl);
-                Console.WriteLine($"Successfully sent link request. Use the follwowing code to complete the link: {deviceLinkResponse.Code}");
+                Console.WriteLine($"Successfully sent link request. \n Device ID: {deviceLinkResponse.DeviceId} \n Use the following code to complete the link: {deviceLinkResponse.Code}");
 
                 if ( useWebhook == true )
                 {

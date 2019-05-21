@@ -131,7 +131,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     var message = ((DirectoryUserDeviceLinkCompletionWebhookPackage)webhookPackage).DeviceLinkData;
                     Console.WriteLine($"You have a new linked device, congratulations!");
                     Console.WriteLine($"     DeviceID:          {message.DeviceId}");
-                    Console.WriteLine($"     DevicePubKey:      {message.DevicePublicKey}");
+                    Console.WriteLine($"     DevicePubKey:      \n{message.DevicePublicKey}");
                     Console.WriteLine($"     DevicePubKeyID:    {message.DevicePublicKeyId}");
                     Console.WriteLine($"     Type:              {message.Type}");
                 }
