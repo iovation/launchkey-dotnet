@@ -38,7 +38,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
             capabilities.SetCapability(MobileCapabilityType.DeviceName, appConfig.DeviceName);
             capabilities.SetCapability(MobileCapabilityType.App, appConfig.AppFilePath);
             capabilities.SetCapability("appPackage", "com.launchkey.android.authenticator.demo");
+            capabilities.SetCapability("fullReset", true);
+            capabilities.SetCapability("noReset", false);
+            capabilities.SetCapability("disableWindowAnimation", true);
             driver = new AndroidDriver<AndroidElement>(new Uri(appConfig.AppiumURL), capabilities, TimeSpan.FromSeconds(180));
+            driver.SetSetting("ignoreUnimportantViews", true);
+            driver.SetSetting("waitForIdleTimeout", 1000);
+            driver.SetSetting("waitForSelectorTimeout", 1000);
+            driver.SetSetting("actionAcknowledgmentTimeout", 1000);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
