@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using iovation.LaunchKey.Sdk.Domain.Service;
 using iovation.LaunchKey.Sdk.Domain.Webhook;
@@ -137,10 +138,18 @@ namespace iovation.LaunchKey.Sdk.Client
                 {
                     reason = AuthorizationResponseReason.BUSY_LOCAL;
                 }
+                else if (response.Reason == "SENSOR")
+                {
+                    reason = AuthorizationResponseReason.SENSOR;
+                }
                 else
                 {
                     reason = AuthorizationResponseReason.OTHER;
                 }
+
+                AuthPolicy authPolicy = GetAuthPolicy(response);
+                List<AuthMethod> authMethods = GetAuthMethods(response);
+
 
                 return new AuthorizationResponse(
                     response.AuthorizationRequestId.ToString("D"),
@@ -153,11 +162,176 @@ namespace iovation.LaunchKey.Sdk.Client
                     type,
                     reason,
                     response.DenialReason,
-                    reason == AuthorizationResponseReason.FRAUDULENT
+                    reason == AuthorizationResponseReason.FRAUDULENT,
+                    authPolicy,
+                    authMethods
                 );
             }
 
             return null;
+        }
+
+        private AuthPolicy GetAuthPolicy(ServiceV3AuthsGetResponse authResponse)
+        {
+            AuthPolicy authPolicy = new AuthPolicy();
+            List<Location> authPolicyLocations = new List<Location>();
+
+            if (authResponse.AuthPolicy != null)
+            {
+                if (authResponse.AuthPolicy.Geofences != null && authResponse.AuthPolicy.Geofences.Any())
+                {
+                    foreach (var geofence in authResponse.AuthPolicy.Geofences)
+                    {
+                        authPolicyLocations.Add(new Location(
+                                geofence.Radius,
+                                geofence.Latitude,
+                                geofence.Longitude,
+                                geofence.Name
+                            ));
+                    }
+                }
+
+                if (authResponse.AuthPolicy.Requirement == "amount")
+                {
+
+
+                    authPolicy = new AuthPolicy(
+                        authResponse.AuthPolicy.Amount,
+                        null,
+                        null,
+                        null,
+                        null,
+                        authPolicyLocations
+                    );
+                }
+                else if(authResponse.AuthPolicy.Requirement == "types")
+                {
+                    bool requiredKnowledge = false;
+                    bool requiredInherence = false;
+                    bool requiredPosession = false;
+
+                    if (authResponse.AuthPolicy.Types != null)
+                    {
+                        if (authResponse.AuthPolicy.Types.Any())
+                        {
+                            foreach (string type in authResponse.AuthPolicy.Types)
+                            {
+                                switch (type)
+                                {
+                                    case "knowledge":
+                                        requiredKnowledge = true;
+                                        break;
+                                    case "inherence":
+                                        requiredInherence = true;
+                                        break;
+                                    case "possession":
+                                        requiredPosession = true;
+                                        break;
+                                    default:
+                                        Trace.TraceWarning($"Invalid policy type given: {type} \n It will be ignored but this could signify the need for an update.");
+                                        break;
+                                }
+                            }
+                        }
+                    }
+
+                    authPolicy = new AuthPolicy(
+                        null,
+                        requiredKnowledge,
+                        requiredInherence,
+                        requiredPosession,
+                        null,
+                        authPolicyLocations
+                    );
+                } 
+                else
+                {
+                    authPolicy = new AuthPolicy(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        authPolicyLocations
+                    );
+                }
+            } 
+            else
+            {
+                authPolicy = null;
+            }
+
+            return authPolicy;
+
+        }
+
+        private List<AuthMethod> GetAuthMethods(ServiceV3AuthsGetResponse authResponse)
+        {
+            var authMethods = new List<AuthMethod>();
+
+            if (authResponse.AuthMethods != null)
+            {
+
+                foreach (var transportMethod in authResponse.AuthMethods)
+                {
+                    string methodType = transportMethod.Method.ToUpper();
+                    AuthMethodType authMethodType;
+
+                    if (methodType == "PIN_CODE")
+                    {
+                        authMethodType = AuthMethodType.PIN_CODE;
+                    }
+                    else if (methodType == "CIRCLE_CODE")
+                    {
+                        authMethodType = AuthMethodType.CIRCLE_CODE;
+                    }
+                    else if (methodType == "GEOFENCING")
+                    {
+                        authMethodType = AuthMethodType.GEOFENCING;
+                    }
+                    else if (methodType == "LOCATIONS")
+                    {
+                        authMethodType = AuthMethodType.LOCATIONS;
+                    }
+                    else if (methodType == "WEARABLES")
+                    {
+                        authMethodType = AuthMethodType.WEARABLES;
+                    }
+                    else if (methodType == "FINGERPRINT")
+                    {
+                        authMethodType = AuthMethodType.FINGERPRINT;
+                    }
+                    else if (methodType == "FACE")
+                    {
+                        authMethodType = AuthMethodType.FACE;
+                    }
+                    else
+                    {
+                        authMethodType = AuthMethodType.OTHER;
+                    }
+
+                    authMethods.Add(
+                        new AuthMethod
+                        (
+                            authMethodType,
+                            transportMethod.Set,
+                            transportMethod.Active,
+                            transportMethod.Allowed,
+                            transportMethod.Supported,
+                            transportMethod.UserRequired,
+                            transportMethod.Passed,
+                            transportMethod.Error
+                        )
+                    );
+                        
+                }
+            }
+            else
+            {
+                authMethods = null;
+            }
+
+            return authMethods;
         }
 
         public void SessionStart(string user, string authorizationRequestId)
@@ -246,10 +420,19 @@ namespace iovation.LaunchKey.Sdk.Client
                 {
                     reason = AuthorizationResponseReason.BUSY_LOCAL;
                 }
+                else if (authEvent.Reason == "SENSOR")
+                {
+                    reason = AuthorizationResponseReason.SENSOR;
+                }
                 else
                 {
                     reason = AuthorizationResponseReason.OTHER;
                 }
+
+
+                AuthPolicy authPolicy = GetAuthPolicy(authEvent);
+                List<AuthMethod> authMethods = GetAuthMethods(authEvent);
+
                 return new AuthorizationResponseWebhookPackage(
                     new AuthorizationResponse(
                         authEvent.AuthorizationRequestId.ToString("D"),
@@ -262,7 +445,9 @@ namespace iovation.LaunchKey.Sdk.Client
                         type,
                         reason,
                         authEvent.DenialReason,
-                        reason == AuthorizationResponseReason.FRAUDULENT
+                        reason == AuthorizationResponseReason.FRAUDULENT,
+                        authPolicy,
+                        authMethods
                     )
                 );
             }

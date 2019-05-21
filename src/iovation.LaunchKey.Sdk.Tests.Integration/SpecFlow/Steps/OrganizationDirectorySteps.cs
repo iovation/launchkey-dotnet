@@ -262,6 +262,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             }
         }
 
+        [Given(@"I have added an SDK Key to the Directory")]
         [When(@"I generate and add an SDK Key to the Directory")]
         public void WhenIGenerateAndAddAnSDKKeyToTheDirectory()
         {

@@ -22,5 +22,11 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 
         [JsonProperty("service_pins")]
         public string[] ServicePins { get; set; }
+
+        [JsonProperty("auth_policy")]
+        public AuthPolicy.JWEAuthPolicy AuthPolicy { get; set; }
+
+        [JsonProperty("auth_methods")]
+        public AuthPolicy.AuthMethod[] AuthMethods { get; set; }
     }
 }

@@ -144,6 +144,29 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             Console.WriteLine($"    Svc User Hash:  {authResponse.ServiceUserHash}");
             Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
             Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
+            Console.WriteLine($"    AuthPolicy:");
+            Console.WriteLine($"       RequiredFactors:   {authResponse.AuthPolicy.RequiredFactors}");
+            Console.WriteLine($"       RequiredKnowledge: {authResponse.AuthPolicy.RequireKnowledgeFactor}");
+            Console.WriteLine($"       RequiredInherence: {authResponse.AuthPolicy.RequireInherenceFactor}");
+            Console.WriteLine($"       RequiredPosession: {authResponse.AuthPolicy.RequirePosessionFactor}");
+            Console.WriteLine($"       Location Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
+            Console.WriteLine($"       Locations:");
+            foreach (var item in authResponse.AuthPolicy.Locations)
+            {
+                Console.WriteLine(item.ToString());
+            }
+            Console.WriteLine($"    Auth Methods:");
+            foreach (var item in authResponse.AuthMethods)
+            {
+                Console.WriteLine($"       Auth Method: {item.Method}");
+                Console.WriteLine($"          Set: {item.Set}");
+                Console.WriteLine($"          Active: {item.Active}");
+                Console.WriteLine($"          Allowed: {item.Allowed}");
+                Console.WriteLine($"          Supported: {item.Supported}");
+                Console.WriteLine($"          User Required: {item.UserRequired}");
+                Console.WriteLine($"          Passed: {item.Passed}");
+                Console.WriteLine($"          Error: {item.Error}");
+            }
         }
 
         private static IList<DenialReason> GetDenialReasons(int? fraud, int? nonFraud)
