@@ -13,17 +13,22 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 {
     internal class SharedServiceHelpers
     {
-        private static String PrintNull(int? value)
-        {
-            return PrintNull(value.ToString());
-        }
-
         private static String PrintNull(double? value)
         {
             return PrintNull(value.ToString());
         }
 
         private static String PrintNull(AuthMethodType? value)
+        {
+            return PrintNull(value.ToString());
+        }
+
+        public static String PrintNull(AuthorizationResponseType? value)
+        {
+            return PrintNull(value.ToString());
+        }
+
+        public static String PrintNull(AuthorizationResponseReason? value)
         {
             return PrintNull(value.ToString());
         }
@@ -38,25 +43,6 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return String.IsNullOrEmpty(value) ? "null" : value;
         }
 
-        public static String PrintNAForNull(AuthorizationResponseType? value)
-        {
-            return PrintNAForNull(value.ToString());
-        }
-
-        public static String PrintNAForNull(AuthorizationResponseReason? value)
-        {
-            return PrintNAForNull(value.ToString());
-        }
-
-        public static String PrintNAForNull(AuthMethodType? value)
-        {
-            return PrintNAForNull(value.ToString());
-        }
-
-        public static String PrintNAForNull(string value)
-        {
-            return String.IsNullOrEmpty(value) ? "N/A" : value;
-        }
 
         private static int HandleWebhook(IServiceClient serviceClient)
         {
@@ -110,9 +96,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         {
             Console.WriteLine($"Auth response was:");
             Console.WriteLine($"    Authorized:     {authResponse.Authorized}");
-            Console.WriteLine($"    Type:           {PrintNAForNull(authResponse.Type)}");
-            Console.WriteLine($"    Reason:         {PrintNAForNull(authResponse.Reason)}");
-            Console.WriteLine($"    Denial Reason:  {PrintNAForNull(authResponse.DenialReason)}");
+            Console.WriteLine($"    Type:           {PrintNull(authResponse.Type)}");
+            Console.WriteLine($"    Reason:         {PrintNull(authResponse.Reason)}");
+            Console.WriteLine($"    Denial Reason:  {PrintNull(authResponse.DenialReason)}");
             Console.WriteLine($"    Fraud:          {authResponse.Fraud}");
             Console.WriteLine($"    Auth Request:   {authResponse.AuthorizationRequestId}");
             Console.WriteLine($"    Device Pins:    {String.Join(", ", authResponse.DevicePins)}");
@@ -123,7 +109,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
             if(authResponse.AuthPolicy == null)
             {
-                Console.WriteLine($"    AuthPolicy: N/A");
+                Console.WriteLine($"    AuthPolicy: null");
             } 
             else
             {
@@ -135,7 +121,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
                 if(authResponse.AuthPolicy.Locations.Count > 0)
                 {
-                    Console.WriteLine($"\n       Location Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
+                    Console.WriteLine($"       Location Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
                     Console.WriteLine($"       Locations:");
                     foreach (var item in authResponse.AuthPolicy.Locations)
                     {
@@ -154,7 +140,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
             if(authResponse.AuthMethods == null)
             {
-                Console.WriteLine($"    Auth Methods: N/A");
+                Console.WriteLine($"    Auth Methods: null");
             } 
             else
             {
