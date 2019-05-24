@@ -13,39 +13,49 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 {
     internal class SharedServiceHelpers
     {
-        private static String printNull(AuthorizationResponseType? value)
+        private static String PrintNull(int? value)
         {
-            return printNull(value.ToString());
+            return PrintNull(value.ToString());
         }
 
-        private static String printNull(int? value)
+        private static String PrintNull(double? value)
         {
-            return printNull(value.ToString());
+            return PrintNull(value.ToString());
         }
 
-        private static String printNull(double? value)
+        private static String PrintNull(AuthMethodType? value)
         {
-            return printNull(value.ToString());
+            return PrintNull(value.ToString());
         }
 
-        private static String printNull(AuthorizationResponseReason? value)
+        private static String PrintNull(bool? value)
         {
-            return printNull(value.ToString());
+            return PrintNull(value.ToString());
         }
 
-        private static String printNull(AuthMethodType? value)
-        {
-            return printNull(value.ToString());
-        }
-
-        private static String printNull(bool? value)
-        {
-            return printNull(value.ToString());
-        }
-
-        private static String printNull(String value)
+        private static String PrintNull(String value)
         {
             return String.IsNullOrEmpty(value) ? "null" : value;
+        }
+
+        public static String PrintNAForNull(AuthorizationResponseType? value)
+        {
+            return PrintNAForNull(value.ToString());
+        }
+
+        public static String PrintNAForNull(AuthorizationResponseReason? value)
+        {
+            return PrintNAForNull(value.ToString());
+        }
+
+        public static String PrintNAForNull(AuthMethodType? value)
+        {
+            return PrintNAForNull(value.ToString());
+        }
+
+        public static String PrintNAForNull(string value)
+        {
+            return String.IsNullOrEmpty(value) ? "N/A" : value;
         }
 
         private static int HandleWebhook(IServiceClient serviceClient)
@@ -96,14 +106,13 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             }
         }
 
-
         private static void PrintAuthorizationResponse(AuthorizationResponse authResponse)
         {
             Console.WriteLine($"Auth response was:");
             Console.WriteLine($"    Authorized:     {authResponse.Authorized}");
-            Console.WriteLine($"    Type:           {printNull(authResponse.Type)}");
-            Console.WriteLine($"    Reason:         {printNull(authResponse.Reason)}");
-            Console.WriteLine($"    Denial Reason:  {printNull(authResponse.DenialReason)}");
+            Console.WriteLine($"    Type:           {PrintNAForNull(authResponse.Type)}");
+            Console.WriteLine($"    Reason:         {PrintNAForNull(authResponse.Reason)}");
+            Console.WriteLine($"    Denial Reason:  {PrintNAForNull(authResponse.DenialReason)}");
             Console.WriteLine($"    Fraud:          {authResponse.Fraud}");
             Console.WriteLine($"    Auth Request:   {authResponse.AuthorizationRequestId}");
             Console.WriteLine($"    Device Pins:    {String.Join(", ", authResponse.DevicePins)}");
@@ -111,39 +120,56 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             Console.WriteLine($"    Svc User Hash:  {authResponse.ServiceUserHash}");
             Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
             Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
-            Console.WriteLine($"    AuthPolicy:");
-            Console.WriteLine($"       RequiredFactors:   {printNull(authResponse.AuthPolicy.RequiredFactors)}");
-            Console.WriteLine($"       RequiredKnowledge: {printNull(authResponse.AuthPolicy.RequireKnowledgeFactor)}");
-            Console.WriteLine($"       RequiredInherence: {printNull(authResponse.AuthPolicy.RequireInherenceFactor)}");
-            Console.WriteLine($"       RequiredPosession: {printNull(authResponse.AuthPolicy.RequirePosessionFactor)}");
-            Console.WriteLine($"\n       Location Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
 
-            if(authResponse.AuthPolicy.Locations.Count > 0)
+            if(authResponse.AuthPolicy == null)
             {
-                Console.WriteLine($"       Locations:");
-                foreach (var item in authResponse.AuthPolicy.Locations)
+                Console.WriteLine($"    AuthPolicy: N/A");
+            } 
+            else
+            {
+                Console.WriteLine($"    AuthPolicy:");
+                Console.WriteLine($"       RequiredFactors:   {PrintNull(authResponse.AuthPolicy.RequiredFactors)}");
+                Console.WriteLine($"       RequiredKnowledge: {PrintNull(authResponse.AuthPolicy.RequireKnowledgeFactor)}");
+                Console.WriteLine($"       RequiredInherence: {PrintNull(authResponse.AuthPolicy.RequireInherenceFactor)}");
+                Console.WriteLine($"       RequiredPosession: {PrintNull(authResponse.AuthPolicy.RequirePosessionFactor)}");
+
+                if(authResponse.AuthPolicy.Locations.Count > 0)
                 {
-                    Console.WriteLine($"          Latitude:  {printNull(item.Latitude)}");
-                    Console.WriteLine($"          Longitude: {printNull(item.Longitude)}");
-                    Console.WriteLine($"          Radius:    {printNull(item.Radius)}");
-                    Console.WriteLine($"          Name:      {printNull(item.Name)} \n");
+                    Console.WriteLine($"\n       Location Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
+                    Console.WriteLine($"       Locations:");
+                    foreach (var item in authResponse.AuthPolicy.Locations)
+                    {
+                        Console.WriteLine($"          Latitude:  {PrintNull(item.Latitude)}");
+                        Console.WriteLine($"          Longitude: {PrintNull(item.Longitude)}");
+                        Console.WriteLine($"          Radius:    {PrintNull(item.Radius)}");
+                        Console.WriteLine($"          Name:      {PrintNull(item.Name)} \n");
+                    }
+                } else
+                {
+                    Console.WriteLine($"       Locations: null");
                 }
-            } else
-            {
-                Console.WriteLine($"       Locations: null");
+
+
             }
 
-            Console.WriteLine($"    Auth Methods:");
-            foreach (var item in authResponse.AuthMethods)
+            if(authResponse.AuthMethods == null)
             {
-                Console.WriteLine($"       Auth Method: {printNull(item.Method)}");
-                Console.WriteLine($"          Set: {printNull(item.Set)}");
-                Console.WriteLine($"          Active: {printNull(item.Active)}");
-                Console.WriteLine($"          Allowed: {printNull(item.Allowed)}");
-                Console.WriteLine($"          Supported: {printNull(item.Supported)}");
-                Console.WriteLine($"          User Required: {printNull(item.UserRequired)}");
-                Console.WriteLine($"          Passed: {printNull(item.Passed)}");
-                Console.WriteLine($"          Error: {printNull(item.Error)}");
+                Console.WriteLine($"    Auth Methods: N/A");
+            } 
+            else
+            {
+                Console.WriteLine($"    Auth Methods:");
+                foreach (var item in authResponse.AuthMethods)
+                {
+                    Console.WriteLine($"       Auth Method: {PrintNull(item.Method)}");
+                    Console.WriteLine($"          Set: {PrintNull(item.Set)}");
+                    Console.WriteLine($"          Active: {PrintNull(item.Active)}");
+                    Console.WriteLine($"          Allowed: {PrintNull(item.Allowed)}");
+                    Console.WriteLine($"          Supported: {PrintNull(item.Supported)}");
+                    Console.WriteLine($"          User Required: {PrintNull(item.UserRequired)}");
+                    Console.WriteLine($"          Passed: {PrintNull(item.Passed)}");
+                    Console.WriteLine($"          Error: {PrintNull(item.Error)}");
+                }
             }
         }
 
