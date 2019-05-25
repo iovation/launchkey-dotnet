@@ -97,11 +97,11 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Linking Devices returns QR Code URL and linking code")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Linking Devices returns QR Code URL, linking code, and Device ID")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Directory Client can link Devices")]
-        public virtual void LinkingDevicesReturnsQRCodeURLAndLinkingCode()
+        public virtual void LinkingDevicesReturnsQRCodeURLLinkingCodeAndDeviceID()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Linking Devices returns QR Code URL and linking code", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Linking Devices returns QR Code URL, linking code, and Device ID", null, ((string[])(null)));
 #line 9
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
@@ -113,6 +113,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
     testRunner.Then("the Device linking response contains a valid QR Code URL", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 12
     testRunner.And("the Device linking response contains a valid Linking Code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 13
+    testRunner.And("the Device linking response contains a valid Device ID", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -123,16 +125,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
         public virtual void LinkingDevicesWithTTLReturnsQRCodeURLAndLinkingCode()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Linking Devices with TTL returns QR Code URL and linking code", null, ((string[])(null)));
-#line 14
+#line 15
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 15
-    testRunner.When("I make a Device linking request with a TTL of 300 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
-    testRunner.Then("the Device linking response contains a valid QR Code URL", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.When("I make a Device linking request with a TTL of 300 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
+    testRunner.Then("the Device linking response contains a valid QR Code URL", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 18
     testRunner.And("the Device linking response contains a valid Linking Code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -144,18 +146,18 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
         public virtual void LinkingDevicesAddsTheDeviceToTheUsersDeviceList()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Linking Devices adds the device to the User\'s Device list", null, ((string[])(null)));
-#line 19
+#line 20
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 20
-    testRunner.When("I make a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 21
-    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I make a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 22
-    testRunner.Then("there should be 1 Device in the Devices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 23
+    testRunner.Then("there should be 1 Device in the Devices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 24
     testRunner.And("all of the devices should be inactive", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -169,22 +171,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Dev
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Linking a physical device", null, new string[] {
                         "device_testing"});
-#line 26
+#line 27
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 27
-    testRunner.Given("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 28
-    testRunner.And("I made a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Given("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 29
-    testRunner.When("I link my device", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.And("I made a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 30
-    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I link my device", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 31
-    testRunner.Then("there should be 1 Device in the Devices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.And("I retrieve the Devices list for the current User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 32
+    testRunner.Then("there should be 1 Device in the Devices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 33
     testRunner.And("all of the devices should be active", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

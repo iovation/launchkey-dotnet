@@ -114,7 +114,6 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                         Console.WriteLine($"     DeviceID:          {message.DeviceId}");
                         Console.WriteLine($"     DevicePubKey:      \n{message.DevicePublicKey}");
                         Console.WriteLine($"     DevicePubKeyID:    {message.DevicePublicKeyId}");
-                        Console.WriteLine($"     Type:              {message.Type}");
                     }
                     else
                     {

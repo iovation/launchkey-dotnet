@@ -106,12 +106,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
 #line 10
     testRunner.And("I updated the Directory iOS P12 with a valid certificate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
-    testRunner.And("I generated and added 2 SDK Keys to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I updated the Directory webhook url to \"https://a.webhook.url/path\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 12
-    testRunner.And("I added 2 Services to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I generated and added 2 SDK Keys to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
-    testRunner.When("I retrieve a list of all Directories", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.And("I added 2 Services to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
+    testRunner.When("I retrieve a list of all Directories", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 15
     testRunner.Then("the current Directory is in the Directory list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

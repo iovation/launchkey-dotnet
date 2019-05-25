@@ -370,5 +370,39 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             }
         }
 
+        [Given(@"I updated? the Directory webhook url to ""(.*)""")]
+        [When(@"I update the Directory webhook url to ""(.*)""")]
+        public void GivenIUpdatedTheDirectoryWebhookUrl(string webhookUrl)
+        {
+            _orgClientContext.LoadLastCreatedDirectory();
+            var directory = _orgClientContext.LoadedDirectory;
+            _orgClientContext.UpdateDirectory(
+                directory.Id,
+                directory.Active,
+                directory.AndroidKey,
+                _keyManager.GetP12ForFingerprint(directory.IosCertificateFingerprint),
+                webhookUrl
+            );
+        }
+
+        [Then(@"the Directory webhook url is ""(.*)""")]
+        public void ThenTheDirectoryWebhookUrlIs(string webhookUrl)
+        {
+            _orgClientContext.LoadLastCreatedDirectory();
+            string directoryWebhookUrl = _orgClientContext.LoadedDirectory.WebhookUrl;
+            Assert.AreEqual(webhookUrl, directoryWebhookUrl);
+        }
+
+        [When(@"I update the Directory webhook url to null")]
+        public void WhenIUpdateTheDirectoryWebhookUrlToNull()
+        {
+            GivenIUpdatedTheDirectoryWebhookUrl("");
+        }
+
+        [Then(@"the Directory webhook url is empty")]
+        public void ThenTheDirectoryWebhookUrlIsEmpty()
+        {
+            ThenTheDirectoryWebhookUrlIs(null);
+        }
     }
 }
