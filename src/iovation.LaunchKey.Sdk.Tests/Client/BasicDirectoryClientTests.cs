@@ -19,12 +19,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var client = new BasicDirectoryClient(TestConsts.DefaultDirectoryId, mockTransport.Object);
             var expectedRequest = new DirectoryV3DevicesPostRequest("user id", 123);
 
+            string deviceID = Guid.NewGuid().ToString();
+
             mockTransport.Setup(
                 t => t.DirectoryV3DevicesPost(
                     It.IsAny<DirectoryV3DevicesPostRequest>(),
                     It.IsAny<EntityIdentifier>()
                 )
-            ).Returns(new DirectoryV3DevicesPostResponse { Code = "code", QrCode = "qrcode", DeviceId = "deviceID" });
+            ).Returns(new DirectoryV3DevicesPostResponse { Code = "code", QrCode = "qrcode", DeviceId = deviceID });
 
             var response = client.LinkDevice("user id", 123);
 

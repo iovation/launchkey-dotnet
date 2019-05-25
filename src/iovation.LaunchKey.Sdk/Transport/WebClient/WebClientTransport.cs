@@ -819,8 +819,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                 var jwtObject = _jwtService.Decode(publicKey.KeyData, _issuer.ToString(), null, GetCurrentTime(), iovHeader);
                 ValidatePrivateClaimsForServerSentRequest(method, path, body, jwtObject.Request);
 
-                // if this is application/jose, its an auth/linked device response.
-                // im not sure if this is great -- maybe a better way to detect it. 
+                // if this is not application/jose, it is a service session end response
                 if (contentHeader == "application/jose")
                 {
                     var requestingEntity = EntityIdentifier.FromString(jwtData.Audience);

@@ -22,11 +22,11 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport = transport;
         }
 
-        public DeviceLinkData LinkDevice(string userId, int? ttl = null)
+        public DirectoryUserDeviceLinkData LinkDevice(string userId, int? ttl = null)
         {
             var request = new DirectoryV3DevicesPostRequest(userId, ttl);
             var response = _transport.DirectoryV3DevicesPost(request, _directoryId);
-            return new DeviceLinkData(response.Code, response.QrCode, response.DeviceId);
+            return new DirectoryUserDeviceLinkData(response.Code, response.QrCode, response.DeviceId);
         }
 
         public List<Device> GetLinkedDevices(string userId)
@@ -229,7 +229,7 @@ namespace iovation.LaunchKey.Sdk.Client
             {
                 var deviceLinkTransport = ((ServerSentEventDeviceLinked)serverSentEvent).DeviceLinkCompletion;
                 var deviceLinkCompletion = new Domain.Directory.DeviceLinkCompletion(
-                    deviceLinkTransport.Type, deviceLinkTransport.DeviceId, deviceLinkTransport.DevicePublicKey, deviceLinkTransport.DevicePublicKeyId
+                    deviceLinkTransport.DeviceId, deviceLinkTransport.DevicePublicKey, deviceLinkTransport.DevicePublicKeyId
                 );
 
                 return new DirectoryUserDeviceLinkCompletionWebhookPackage(

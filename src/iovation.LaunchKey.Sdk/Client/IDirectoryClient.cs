@@ -12,7 +12,7 @@ namespace iovation.LaunchKey.Sdk.Client
         /// <param name="userId">The user ID to use when linking the device. This should be in the format of a GUID.</param>
         /// <param name="ttl">The number of seconds the linking code returned in the response will be valid.</param>
         /// <returns>response data, which includes a the key to type into the phone, and a scannable QR code URL.</returns>
-        DeviceLinkData LinkDevice(string userId, int? ttl = null);
+        DirectoryUserDeviceLinkData LinkDevice(string userId, int? ttl = null);
 
         /// <summary>
         /// Gets a list of devices linked to a user.

@@ -63,10 +63,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		public string UserId { get; set; }
 
 		[Option('t', "ttl", HelpText = "Time to Live in seconds for the linking code that will be generated. This must be between 300 and 86400.")]
- 		public int? TTL { get; set; }
+		public int? TTL { get; set; }
 
-        [Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
-        public bool? UseWebhook { get; set; }
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
+		public bool? UseWebhook { get; set; }
 	}
 
  	[Verb("directory-device-unlink", HelpText = "Unlink a device for a directory user")]
