@@ -40,7 +40,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
         private static String PrintNull(String value)
         {
-            return String.IsNullOrEmpty(value) ? "null" : value;
+            return String.IsNullOrEmpty(value) ? "None" : value;
         }
 
 
