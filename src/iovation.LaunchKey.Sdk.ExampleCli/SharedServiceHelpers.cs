@@ -43,19 +43,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return String.IsNullOrEmpty(value) ? "N/A" : value;
         }
 
-        public static int HandleWebhook(IServiceClient serviceClient, IDirectoryClient directoryClient = null)
+        public static int HandleWebhook(IWebhookHandler handler)
         {
-            if (serviceClient != null && directoryClient != null)
-            {
-                Console.WriteLine("You may pass in either a service or directory client but not both");
-                return 1;
-            } 
-            else if( serviceClient == null && directoryClient == null)
-            {
-                Console.WriteLine("You must pass in either a service client or directory client");
-                return 1;
-            }
-
             if (!HttpListener.IsSupported)
             {
                 Console.WriteLine("Sorry, your OS does not support the default windows HTTP listener. Webhook demo cannot proceed.");
@@ -82,10 +71,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                         headers[headerName].Add(headerValue);
                     }
                 }
-
-                if(serviceClient != null)
-                {
-                    IWebhookPackage webhookPackage = serviceClient.HandleWebhook(headers, body);
+                    IWebhookPackage webhookPackage = handler.HandleWebhook(headers, body);
 
                     if (webhookPackage is AuthorizationResponseWebhookPackage)
                     {
@@ -97,17 +83,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                         var sessionEndPackage = webhookPackage as ServiceUserSessionEndWebhookPackage;
                         Console.WriteLine($"Session remotely ended for Service User Hash {sessionEndPackage.ServiceUserHash} at {sessionEndPackage.LogoutRequested}");
                     }
-                    else
-                    {
-                        Console.WriteLine("Error: received a webhook package but it was not for an authorization response or session end!");
-                        return 1;
-                    }
-                    return 0;
-                }
-                else
-                {
-                    IWebhookPackage webhookPackage = directoryClient.HandleWebhook(headers, body);
-                    if (webhookPackage is DirectoryUserDeviceLinkCompletionWebhookPackage)
+                    else if (webhookPackage is DirectoryUserDeviceLinkCompletionWebhookPackage)
                     {
                         var message = ((DirectoryUserDeviceLinkCompletionWebhookPackage)webhookPackage).DeviceLinkData;
                         Console.WriteLine($"You have a new linked device, congratulations!");
@@ -117,12 +93,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     }
                     else
                     {
-                        Console.WriteLine("Error: received a webhook package but it was not for a linked device!");
+                        Console.WriteLine("Error: received a webhook package but it was not for a known webhook type!");
                         return 1;
                     }
-                    return 0;
-                }
 
+                return 0;
             }
         }
 

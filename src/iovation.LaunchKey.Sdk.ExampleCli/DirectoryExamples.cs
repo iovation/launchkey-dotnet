@@ -105,7 +105,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 if ( useWebhook == true )
                 {
                     Console.WriteLine($"You wanted to retrieve the webhook so I will open a port!");
-                    var openWebhookPort = SharedServiceHelpers.HandleWebhook(null, directoryClient);
+                    var openWebhookPort = SharedServiceHelpers.HandleWebhook(directoryClient);
                 }
 
             }
