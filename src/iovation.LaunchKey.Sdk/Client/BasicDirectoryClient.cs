@@ -26,7 +26,9 @@ namespace iovation.LaunchKey.Sdk.Client
         {
             var request = new DirectoryV3DevicesPostRequest(userId, ttl);
             var response = _transport.DirectoryV3DevicesPost(request, _directoryId);
-            return new DirectoryUserDeviceLinkData(response.Code, response.QrCode, response.DeviceId);
+
+            Guid? deviceID = Guid.TryParse(response.DeviceId, out Guid deviceGUID) ? (Guid?)deviceGUID : null;
+            return new DirectoryUserDeviceLinkData(response.Code, response.QrCode, deviceID);
         }
 
         public List<Device> GetLinkedDevices(string userId)

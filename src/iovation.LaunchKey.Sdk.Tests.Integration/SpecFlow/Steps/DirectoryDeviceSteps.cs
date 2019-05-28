@@ -149,7 +149,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [Then(@"the Device linking response contains a valid Device ID")]
         public void ThenTheDeviceLinkingResponseContainsValidDeviceID()
         {
-            Guid deviceID = _directoryClientContext.LastLinkResponse.DeviceId;
+            Guid? deviceID = _directoryClientContext.LastLinkResponse.DeviceId;
             Assert.AreNotEqual(deviceID, null);
         }
     }
