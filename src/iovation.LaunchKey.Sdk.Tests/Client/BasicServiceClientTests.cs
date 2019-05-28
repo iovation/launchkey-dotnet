@@ -609,7 +609,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         }
 
         [TestMethod]
-        public void AuthMethodInsight_InvalidRequirementShouldNotFailAndReturnNull()
+        public void AuthMethodInsight_InvalidRequirementShouldNotFail()
         {
             var mockTransport = new Mock<ITransport>();
 
@@ -631,7 +631,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
             mockTransport.Verify();
 
-            Assert.AreEqual(null, response.AuthPolicy);
+            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors); 
+            Assert.AreEqual(null, response.AuthPolicy.RequireInherenceFactor);
+            Assert.AreEqual(null, response.AuthPolicy.RequireKnowledgeFactor);
+            Assert.AreEqual(null, response.AuthPolicy.RequirePosessionFactor);
         }
 
         [TestMethod]
@@ -800,7 +803,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Passed);
             Assert.AreEqual(null, authMethod.Error);
 
-            Assert.AreEqual(null, response.AuthPolicy);
+            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors);
+            Assert.AreEqual(null, response.AuthPolicy.RequireInherenceFactor);
+            Assert.AreEqual(null, response.AuthPolicy.RequireKnowledgeFactor);
+            Assert.AreEqual(null, response.AuthPolicy.RequirePosessionFactor);
+            Assert.AreEqual(null, response.AuthPolicy.JailbreakDetection);
+            Assert.AreEqual(0, response.AuthPolicy.Locations.Count);
         }
 
         [TestMethod]
