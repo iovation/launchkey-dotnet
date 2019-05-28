@@ -20,13 +20,13 @@ namespace iovation.LaunchKey.Sdk.Domain.Directory
         /// <summary>
         /// A identifier for the device that originated the request
         /// </summary>
-        public Guid DeviceId { get; }
+        public Guid? DeviceId { get; }
 
-        public DirectoryUserDeviceLinkData(string code, string qrCode, string deviceId)
+        public DirectoryUserDeviceLinkData(string code, string qrCode, Guid? deviceId = null)
         {
             Code = code;
             QrCode = qrCode;
-            DeviceId = Guid.Parse(deviceId);
+            DeviceId = deviceId;
         }
     }
 }
