@@ -246,21 +246,14 @@ namespace iovation.LaunchKey.Sdk.Client
                 } 
                 else
                 {
-                    if(authPolicyLocations.Count == 0)
-                    {
-                        authPolicy = null;
-                    } 
-                    else
-                    {
-                        authPolicy = new AuthPolicy(
-                            null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            authPolicyLocations
-                        );
-                    }
+                    authPolicy = new AuthPolicy(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        authPolicyLocations
+                    );
                 }
             } 
             else
