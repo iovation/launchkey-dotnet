@@ -234,7 +234,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return 1;
         }
 
-        public static int DoAuthorizationRequest(IServiceClient serviceClient, string username, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null, string pushTitle = null, string pushBody = null, int? fraudDenialreasons = null, int? nonFraudDenialreasons = null, bool polling = true)
+        public static int DoAuthorizationRequest(IServiceClient serviceClient, string username, bool? useWebhook, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null, string pushTitle = null, string pushBody = null, int? fraudDenialreasons = null, int? nonFraudDenialreasons = null)
         {
 
             try
@@ -242,13 +242,14 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 IList<DenialReason> denialReasons = GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons);
                 AuthorizationRequest authorizationRequest = serviceClient.CreateAuthorizationRequest(username, context, policy, title, ttl, pushTitle, pushBody, denialReasons);
                 Console.WriteLine($"Auth Request Started: {authorizationRequest.Id}");
-                if (polling)
+
+                if (useWebhook == true)
                 {
-                    return PollForResponse(serviceClient, authorizationRequest);
+                    return HandleWebhook(serviceClient);
                 }
                 else
                 {
-                    return HandleWebhook(serviceClient);
+                    return PollForResponse(serviceClient, authorizationRequest);
                 }
             }
             catch (AuthorizationInProgress e)

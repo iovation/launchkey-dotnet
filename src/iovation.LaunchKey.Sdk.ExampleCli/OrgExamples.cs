@@ -5,10 +5,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 {
     class OrgExamples
     {
-        public static int DoServiceAuth(string orgId, string privateKey, string serviceId, string userId, string apiURL)
+        public static int DoServiceAuth(string orgId, string privateKey, string serviceId, string userId, string apiURL, bool? useWebhook)
         {
             var serviceClient = ClientFactories.MakeOrganizationServiceClient(orgId, privateKey, serviceId, apiURL);
-            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, userId);
+            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, userId, useWebhook);
         }
 
         public static int DoDirectoryDeviceList(string orgId, string privateKey, string directoryId, string userId, string apiURL)

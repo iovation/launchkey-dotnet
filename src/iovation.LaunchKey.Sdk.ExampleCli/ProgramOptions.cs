@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 
 namespace iovation.LaunchKey.Sdk.ExampleCli
 {
@@ -24,17 +24,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		public string UserId { get; set; }		
 	}
 
-    [Verb("org-directory-update-webhook", HelpText = "(Using Organization Credentials) Update the Webhook URL of a directory")]
-    class OrgDirectoryUpdateWebhookURLOptions : OrgOptions
-    {
-        [Option('w', "webhook-url", HelpText = "The webhook URL to set for the directory being managed", Required = true)]
-        public string WebhookUrl { get; set; }
+	[Verb("org-directory-update-webhook", HelpText = "(Using Organization Credentials) Update the Webhook URL of a directory")]
+	class OrgDirectoryUpdateWebhookURLOptions : OrgOptions
+	{
+		[Option('w', "webhook-url", HelpText = "The webhook URL to set for the directory being managed", Required = true)]
+		public string WebhookUrl { get; set; }
 
-        [Option('d', "directory-id", HelpText = "The unique ID of the directory being managed", Required = true)]
-        public string DirectoryId { get; set; }
-    }
+		[Option('d', "directory-id", HelpText = "The unique ID of the directory being managed", Required = true)]
+		public string DirectoryId { get; set; }
+	}
 
-    [Verb("org-service-auth", HelpText = "(Using Organization Credentials) Authenticate a directory user against a service")]
+	[Verb("org-service-auth", HelpText = "(Using Organization Credentials) Authenticate a directory user against a service")]
 	class OrgServiceAuthOptions : OrgOptions
 	{
 		[Option('s', "service-id", HelpText = "The unique ID of the service being managed", Required = true)]
@@ -42,6 +42,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		[Option('u', "user-id", HelpText = "The unique ID of the directory user to authenticate. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }
+
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
+		public bool? UseWebhook { get; set; }
 	}
 
 	class DirectoryOptions
@@ -101,6 +104,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		[Option('u', "user-id", HelpText = "The unique ID of the directory user to authenticate. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }
+
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
+		public bool? UseWebhook { get; set; }
 	}
 
 	[Verb("directory-service-session-start", HelpText = "Start a session for a directory user against a directory service")]
@@ -188,13 +194,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 	[Verb("service-auth", HelpText = "Authorize a user against a service using a polling method")]
 	class ServiceAuthOptions : AuthOptions
 	{
-		// This left intentionally blank
-	}
-
-	[Verb("service-auth-webhook", HelpText = "Authorize a user against a service using the Webhook method.")]
-	class ServiceAuthWebhookOptions : AuthOptions
-	{
-		// This left intentionally blank
+	
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
+		public bool? UseWebhook { get; set; }
 	}
 
 	[Verb("service-auth-cancel", HelpText = "Cancel an existing authorization request for a user")]

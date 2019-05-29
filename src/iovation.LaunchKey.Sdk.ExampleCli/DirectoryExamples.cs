@@ -31,10 +31,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// Authorize a directory user against a directory service
         /// </summary>
-        public static int DoDirectoryServiceAuth(string directoryId, string privateKey, string serviceId, string userId, string apiURL)
+        public static int DoDirectoryServiceAuth(string directoryId, string privateKey, string serviceId, string userId, string apiURL, bool? useWebhook)
         {
             var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
-            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, userId);
+            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, userId, useWebhook);
         }
 
         /// <summary>
