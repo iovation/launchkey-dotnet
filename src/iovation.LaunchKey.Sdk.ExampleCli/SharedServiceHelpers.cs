@@ -13,34 +13,34 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 {
     internal class SharedServiceHelpers
     {
-        private static String naForNull(AuthorizationResponseType? value)
+        private static String PrintNull(double? value)
         {
-            return naForNull(value.ToString());
+            return PrintNull(value.ToString());
         }
 
-        private static String naForNull(int? value)
+        private static String PrintNull(AuthMethodType? value)
         {
-            return naForNull(value.ToString());
+            return PrintNull(value.ToString());
         }
 
-        private static String naForNull(AuthorizationResponseReason? value)
+        public static String PrintNull(AuthorizationResponseType? value)
         {
-            return naForNull(value.ToString());
+            return PrintNull(value.ToString());
         }
 
-        private static String naForNull(AuthMethodType? value)
+        public static String PrintNull(AuthorizationResponseReason? value)
         {
-            return naForNull(value.ToString());
+            return PrintNull(value.ToString());
         }
 
-        private static String naForNull(bool? value)
+        private static String PrintNull(bool? value)
         {
-            return naForNull(value.ToString());
+            return PrintNull(value.ToString());
         }
 
-        private static String naForNull(String value)
+        private static String PrintNull(String value)
         {
-            return String.IsNullOrEmpty(value) ? "N/A" : value;
+            return String.IsNullOrEmpty(value) ? "None" : value;
         }
 
         public static int HandleWebhook(IWebhookHandler handler)
@@ -71,31 +71,32 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                         headers[headerName].Add(headerValue);
                     }
                 }
-                    IWebhookPackage webhookPackage = handler.HandleWebhook(headers, body);
 
-                    if (webhookPackage is AuthorizationResponseWebhookPackage)
-                    {
-                        var authPackage = webhookPackage as AuthorizationResponseWebhookPackage;
-                        PrintAuthorizationResponse(authPackage.AuthorizationResponse);
-                    }
-                    else if (webhookPackage is ServiceUserSessionEndWebhookPackage)
-                    {
-                        var sessionEndPackage = webhookPackage as ServiceUserSessionEndWebhookPackage;
-                        Console.WriteLine($"Session remotely ended for Service User Hash {sessionEndPackage.ServiceUserHash} at {sessionEndPackage.LogoutRequested}");
-                    }
-                    else if (webhookPackage is DirectoryUserDeviceLinkCompletionWebhookPackage)
-                    {
-                        var message = ((DirectoryUserDeviceLinkCompletionWebhookPackage)webhookPackage).DeviceLinkData;
-                        Console.WriteLine($"You have a new linked device, congratulations!");
-                        Console.WriteLine($"     DeviceID:          {message.DeviceId}");
-                        Console.WriteLine($"     DevicePubKey:      \n{message.DevicePublicKey}");
-                        Console.WriteLine($"     DevicePubKeyID:    {message.DevicePublicKeyId}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error: received a webhook package but it was not for a known webhook type!");
-                        return 1;
-                    }
+                IWebhookPackage webhookPackage = handler.HandleWebhook(headers, body);
+
+                if (webhookPackage is AuthorizationResponseWebhookPackage)
+                {
+                    var authPackage = webhookPackage as AuthorizationResponseWebhookPackage;
+                    PrintAuthorizationResponse(authPackage.AuthorizationResponse);
+                }
+                else if (webhookPackage is ServiceUserSessionEndWebhookPackage)
+                {
+                    var sessionEndPackage = webhookPackage as ServiceUserSessionEndWebhookPackage;
+                    Console.WriteLine($"Session remotely ended for Service User Hash {sessionEndPackage.ServiceUserHash} at {sessionEndPackage.LogoutRequested}");
+                }
+                else if (webhookPackage is DirectoryUserDeviceLinkCompletionWebhookPackage)
+                {
+                    var message = ((DirectoryUserDeviceLinkCompletionWebhookPackage)webhookPackage).DeviceLinkData;
+                    Console.WriteLine($"You have a new linked device, congratulations!");
+                    Console.WriteLine($"     DeviceID:          {message.DeviceId}");
+                    Console.WriteLine($"     DevicePubKey:      \n{message.DevicePublicKey}");
+                    Console.WriteLine($"     DevicePubKeyID:    {message.DevicePublicKeyId}");
+                }
+                else
+                {
+                    Console.WriteLine("Error: received a webhook package but it was not for a known webhook type!");
+                    return 1;
+                }
 
                 return 0;
             }
@@ -105,9 +106,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         {
             Console.WriteLine($"Auth response was:");
             Console.WriteLine($"    Authorized:     {authResponse.Authorized}");
-            Console.WriteLine($"    Type:           {naForNull(authResponse.Type)}");
-            Console.WriteLine($"    Reason:         {naForNull(authResponse.Reason)}");
-            Console.WriteLine($"    Denial Reason:  {naForNull(authResponse.DenialReason)}");
+            Console.WriteLine($"    Type:           {PrintNull(authResponse.Type)}");
+            Console.WriteLine($"    Reason:         {PrintNull(authResponse.Reason)}");
+            Console.WriteLine($"    Denial Reason:  {PrintNull(authResponse.DenialReason)}");
             Console.WriteLine($"    Fraud:          {authResponse.Fraud}");
             Console.WriteLine($"    Auth Request:   {authResponse.AuthorizationRequestId}");
             Console.WriteLine($"    Device Pins:    {String.Join(", ", authResponse.DevicePins)}");
@@ -115,28 +116,54 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             Console.WriteLine($"    Svc User Hash:  {authResponse.ServiceUserHash}");
             Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
             Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
-            Console.WriteLine($"    AuthPolicy:");
-            Console.WriteLine($"       RequiredFactors:   {naForNull(authResponse.AuthPolicy.RequiredFactors)}");
-            Console.WriteLine($"       RequiredKnowledge: {naForNull(authResponse.AuthPolicy.RequireKnowledgeFactor)}");
-            Console.WriteLine($"       RequiredInherence: {naForNull(authResponse.AuthPolicy.RequireInherenceFactor)}");
-            Console.WriteLine($"       RequiredPosession: {naForNull(authResponse.AuthPolicy.RequirePosessionFactor)}");
-            Console.WriteLine($"       Location Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
-            Console.WriteLine($"       Locations:");
-            foreach (var item in authResponse.AuthPolicy.Locations)
+
+            if(authResponse.AuthPolicy == null)
             {
-                Console.WriteLine(naForNull(item.ToString()));
+                Console.WriteLine($"    AuthPolicy: null");
+            } 
+            else
+            {
+                Console.WriteLine($"    AuthPolicy:");
+                Console.WriteLine($"       RequiredFactors:   {PrintNull(authResponse.AuthPolicy.RequiredFactors)}");
+                Console.WriteLine($"       RequiredKnowledge: {PrintNull(authResponse.AuthPolicy.RequireKnowledgeFactor)}");
+                Console.WriteLine($"       RequiredInherence: {PrintNull(authResponse.AuthPolicy.RequireInherenceFactor)}");
+                Console.WriteLine($"       RequiredPosession: {PrintNull(authResponse.AuthPolicy.RequirePosessionFactor)}");
+
+                if(authResponse.AuthPolicy.Locations.Count > 0)
+                {
+                    Console.WriteLine($"       Location Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
+                    Console.WriteLine($"       Locations:");
+                    foreach (var item in authResponse.AuthPolicy.Locations)
+                    {
+                        Console.WriteLine($"          Latitude:  {PrintNull(item.Latitude)}");
+                        Console.WriteLine($"          Longitude: {PrintNull(item.Longitude)}");
+                        Console.WriteLine($"          Radius:    {PrintNull(item.Radius)}");
+                        Console.WriteLine($"          Name:      {PrintNull(item.Name)} \n");
+                    }
+                } else
+                {
+                    Console.WriteLine($"       Locations: null");
+                }
             }
-            Console.WriteLine($"    Auth Methods:");
-            foreach (var item in authResponse.AuthMethods)
+
+            if(authResponse.AuthMethods == null)
             {
-                Console.WriteLine($"       Auth Method: {naForNull(item.Method)}");
-                Console.WriteLine($"          Set: {naForNull(item.Set)}");
-                Console.WriteLine($"          Active: {naForNull(item.Active)}");
-                Console.WriteLine($"          Allowed: {naForNull(item.Allowed)}");
-                Console.WriteLine($"          Supported: {naForNull(item.Supported)}");
-                Console.WriteLine($"          User Required: {naForNull(item.UserRequired)}");
-                Console.WriteLine($"          Passed: {naForNull(item.Passed)}");
-                Console.WriteLine($"          Error: {naForNull(item.Error)}");
+                Console.WriteLine($"    Auth Methods: null");
+            } 
+            else
+            {
+                Console.WriteLine($"    Auth Methods:");
+                foreach (var item in authResponse.AuthMethods)
+                {
+                    Console.WriteLine($"       Auth Method: {PrintNull(item.Method)}");
+                    Console.WriteLine($"          Set: {PrintNull(item.Set)}");
+                    Console.WriteLine($"          Active: {PrintNull(item.Active)}");
+                    Console.WriteLine($"          Allowed: {PrintNull(item.Allowed)}");
+                    Console.WriteLine($"          Supported: {PrintNull(item.Supported)}");
+                    Console.WriteLine($"          User Required: {PrintNull(item.UserRequired)}");
+                    Console.WriteLine($"          Passed: {PrintNull(item.Passed)}");
+                    Console.WriteLine($"          Error: {PrintNull(item.Error)}");
+                }
             }
         }
 

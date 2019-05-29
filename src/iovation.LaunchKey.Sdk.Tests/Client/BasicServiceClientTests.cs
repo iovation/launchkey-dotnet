@@ -631,7 +631,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
             mockTransport.Verify();
 
-            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors);
+            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors); 
             Assert.AreEqual(null, response.AuthPolicy.RequireInherenceFactor);
             Assert.AreEqual(null, response.AuthPolicy.RequireKnowledgeFactor);
             Assert.AreEqual(null, response.AuthPolicy.RequirePosessionFactor);
@@ -803,8 +803,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Passed);
             Assert.AreEqual(null, authMethod.Error);
 
-            List<serviceDomain.Location> emptyLocation = new List<serviceDomain.Location>();
-            CollectionAssert.AreEqual(emptyLocation, response.AuthPolicy.Locations);
+            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors);
+            Assert.AreEqual(null, response.AuthPolicy.RequireInherenceFactor);
+            Assert.AreEqual(null, response.AuthPolicy.RequireKnowledgeFactor);
+            Assert.AreEqual(null, response.AuthPolicy.RequirePosessionFactor);
+            Assert.AreEqual(null, response.AuthPolicy.JailbreakDetection);
+            Assert.AreEqual(0, response.AuthPolicy.Locations.Count);
         }
 
         [TestMethod]
