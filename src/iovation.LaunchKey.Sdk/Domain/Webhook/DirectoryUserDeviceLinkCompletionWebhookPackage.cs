@@ -10,9 +10,9 @@ namespace iovation.LaunchKey.Sdk.Domain.Webhook
         /// <summary>
         /// The device link data
         /// </summary>
-        public DeviceLinkCompletion DeviceLinkData { get; }
+        public DeviceLinkCompletionResponse DeviceLinkData { get; }
 
-        public DirectoryUserDeviceLinkCompletionWebhookPackage( DeviceLinkCompletion directoryUserDeviceLinkData)
+        public DirectoryUserDeviceLinkCompletionWebhookPackage( DeviceLinkCompletionResponse directoryUserDeviceLinkData)
         {
             DeviceLinkData = directoryUserDeviceLinkData;
         }

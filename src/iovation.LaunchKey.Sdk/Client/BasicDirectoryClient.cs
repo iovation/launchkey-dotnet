@@ -230,7 +230,7 @@ namespace iovation.LaunchKey.Sdk.Client
             if (serverSentEvent is ServerSentEventDeviceLinked)
             {
                 var deviceLinkTransport = ((ServerSentEventDeviceLinked)serverSentEvent).DeviceLinkCompletion;
-                var deviceLinkCompletion = new Domain.Directory.DeviceLinkCompletion(
+                var deviceLinkCompletion = new Domain.Directory.DeviceLinkCompletionResponse(
                     deviceLinkTransport.DeviceId, deviceLinkTransport.DevicePublicKey, deviceLinkTransport.DevicePublicKeyId
                 );
 

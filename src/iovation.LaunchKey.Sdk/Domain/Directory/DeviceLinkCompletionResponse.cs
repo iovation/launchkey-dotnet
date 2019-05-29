@@ -1,13 +1,13 @@
 ﻿using System;
 namespace iovation.LaunchKey.Sdk.Domain.Directory
 {
-    public class DeviceLinkCompletion
+    public class DeviceLinkCompletionResponse
     {
         public string DeviceId { get; }
         public string DevicePublicKey { get; }
         public string DevicePublicKeyId { get; }
 
-        public DeviceLinkCompletion(
+        public DeviceLinkCompletionResponse(
             string deviceId, string devicePublicKey, string devicePublicKeyId)
         {
             DeviceId = deviceId;
