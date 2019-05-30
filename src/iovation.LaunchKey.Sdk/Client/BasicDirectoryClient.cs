@@ -221,6 +221,12 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport.DirectoryV3ServicePolicyDelete(request, _directoryId);
         }
 
+        [Obsolete("HandleWebhook(headers,body) is obsolete. Please use HandleWebhook(headers, body, method, path)", false)]
+        public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body)
+        {
+            return HandleWebhook(headers, body, null, null);
+        }
+
         public IWebhookPackage HandleWebhook(
             Dictionary<string, List<string>> headers, string body, 
             string method, string path

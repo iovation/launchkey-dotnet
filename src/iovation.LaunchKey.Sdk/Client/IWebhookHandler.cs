@@ -5,6 +5,8 @@ namespace iovation.LaunchKey.Sdk.Client
 {
     public interface IWebhookHandler
     {
+        [System.Obsolete("HandleWebhook(headers,body) is obsolete. Please use HandleWebhook(headers, body, method, path)")]
+        IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body);
         /// <summary>
         /// Process a Webhook payload received from the LaunchKey WebHook service.
         /// </summary>

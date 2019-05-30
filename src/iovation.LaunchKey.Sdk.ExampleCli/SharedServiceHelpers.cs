@@ -72,7 +72,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     }
                 }
 
-                IWebhookPackage webhookPackage = handler.HandleWebhook(headers, body);
+                IWebhookPackage webhookPackage = handler.HandleWebhook(headers, body, "POST", "");
 
                 if (webhookPackage is AuthorizationResponseWebhookPackage)
                 {
