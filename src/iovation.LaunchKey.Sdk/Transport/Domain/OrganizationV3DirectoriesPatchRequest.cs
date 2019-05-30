@@ -17,7 +17,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
         [JsonProperty("ios_p12")]
         public string IosP12 { get; }
 
-        [JsonProperty("webhook_url")]
+        [JsonProperty("webhook_url", NullValueHandling=NullValueHandling.Include)]
         public string WebhookUrl { get; }
 
         public OrganizationV3DirectoriesPatchRequest(Guid directoryId, bool active, string androidKey, string iosP12, string webhookUrl)

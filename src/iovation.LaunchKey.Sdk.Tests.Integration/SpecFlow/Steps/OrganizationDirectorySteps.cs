@@ -396,7 +396,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [When(@"I update the Directory webhook url to null")]
         public void WhenIUpdateTheDirectoryWebhookUrlToNull()
         {
-            GivenIUpdatedTheDirectoryWebhookUrl("");
+            GivenIUpdatedTheDirectoryWebhookUrl(null);
         }
 
         [Then(@"the Directory webhook url is empty")]
