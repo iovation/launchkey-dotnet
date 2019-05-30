@@ -109,7 +109,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
             if(authResponse.AuthPolicy == null)
             {
-                Console.WriteLine($"    AuthPolicy: null");
+                Console.WriteLine($"    AuthPolicy: None");
             } 
             else
             {
@@ -130,9 +130,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                         Console.WriteLine($"          Radius:    {PrintNull(item.Radius)}");
                         Console.WriteLine($"          Name:      {PrintNull(item.Name)} \n");
                     }
-                } else
+                } 
+                else
                 {
-                    Console.WriteLine($"       Locations: null");
+                    Console.WriteLine($"       Locations: None");
                 }
 
 
@@ -140,7 +141,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
             if(authResponse.AuthMethods == null)
             {
-                Console.WriteLine($"    Auth Methods: null");
+                Console.WriteLine($"    Auth Methods: None");
             } 
             else
             {
