@@ -43,7 +43,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('u', "user-id", HelpText = "The unique ID of the directory user to authenticate. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }
 
-		[Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
 		public bool? UseWebhook { get; set; }
 	}
 
@@ -68,7 +68,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('t', "ttl", HelpText = "Time to Live in seconds for the linking code that will be generated. This must be between 300 and 86400.")]
 		public int? TTL { get; set; }
 
-		[Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
 		public bool? UseWebhook { get; set; }
 	}
 
@@ -105,7 +105,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('u', "user-id", HelpText = "The unique ID of the directory user to authenticate. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }
 
-		[Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
 		public bool? UseWebhook { get; set; }
 	}
 
@@ -195,7 +195,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 	class ServiceAuthOptions : AuthOptions
 	{
 	
-		[Option('w', "use-webhooks", HelpText = "Whether to open a port looking for a LinkedDevice Webhook", Required = false)]
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
 		public bool? UseWebhook { get; set; }
 	}
 
