@@ -325,7 +325,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.HandleWebhook(testHeaders, testBody);
+            var response = client.HandleWebhook(testHeaders, testBody, null, null);
 
             // verify the call worked
             mockTransport.Verify();
@@ -366,7 +366,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.HandleWebhook(testHeaders, testBody);
+            var response = client.HandleWebhook(testHeaders, testBody, null, null);
 
             // verify the call worked
             mockTransport.Verify();
@@ -389,7 +389,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.HandleWebhook(testHeaders, testBody);
+            var response = client.HandleWebhook(testHeaders, testBody, null, null);
 
             // verify the call worked
             mockTransport.Verify();
@@ -410,7 +410,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.HandleWebhook(testHeaders, testBody);
+            var response = client.HandleWebhook(testHeaders, testBody, null, null);
 
             // verify the call worked
             mockTransport.Verify();
@@ -435,7 +435,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
 
-            client.HandleWebhook(testHeaders, testBody);
+            client.HandleWebhook(testHeaders, testBody, null, null);
         }
 
         [TestMethod]

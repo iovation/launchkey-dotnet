@@ -817,77 +817,83 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                 // if there is a validation issue
                 // we also dont verify our private claims here, as they are not present or relevant
                 var jwtObject = _jwtService.Decode(publicKey.KeyData, _issuer.ToString(), null, GetCurrentTime(), iovHeader);
-
                 ValidatePrivateClaimsForServerSentRequest(method, path, body, jwtObject.Request);
 
-                // if this is application/jose, its an auths response. 
-                // im not sure if this is great -- maybe a better way to detect it. 
-                // what happens when we have multiple webhooks types that use encrypted payloads ... ???
+                // if this is not application/jose, it is a service session end response
                 if (contentHeader == "application/jose")
                 {
                     var requestingEntity = EntityIdentifier.FromString(jwtData.Audience);
                     var decryptedBody = _jweService.Decrypt(body);
-                    var core = DecodeResponse<ServiceV3AuthsGetResponseCore>(decryptedBody);
-                    Guid authorizationRequestId;
-                    bool response;
-                    string deviceId;
-                    string[] servicePins;
-                    string type;
-                    string reason;
-                    string denialreason;
-                    AuthPolicy.JWEAuthPolicy authPolicy;
-                    AuthPolicy.AuthMethod[] authMethods;
 
-                    if (core.JweEncryptedDeviceResponse != null)
+                    if (decryptedBody.Contains("DEVICE_LINK_COMPLETION") == true)
                     {
-                        var decryptedDeviceData = _jweService.Decrypt(core.JweEncryptedDeviceResponse);
-                        var deviceResponse = DecodeResponse<ServiceV3AuthsGetResponseDeviceJWE>(decryptedDeviceData);
-                        authorizationRequestId = deviceResponse.AuthorizationRequestId;
-                        response = deviceResponse.Type == "AUTHORIZED";
-                        deviceId = deviceResponse.DeviceId;
-                        servicePins = deviceResponse.ServicePins;
-                        type = deviceResponse.Type;
-                        reason = deviceResponse.Reason;
-                        denialreason = deviceResponse.DenialReason;
-                        authPolicy = deviceResponse.AuthPolicy;
-                        authMethods = deviceResponse.AuthMethods;
+                        DeviceLinkCompletion deviceLinkCompletion = DecodeResponse<DeviceLinkCompletion>(decryptedBody);
+                        return new ServerSentEventDeviceLinked(deviceLinkCompletion);
                     }
                     else
                     {
-                        var bodyJweHeaders = _jweService.GetHeaders(body);
-                        if (!bodyJweHeaders.ContainsKey("kid"))
-                            throw new InvalidRequestException("JWE headers does not include a key id");
-                        var privateKey = _keyMap.GetKey(requestingEntity, bodyJweHeaders["kid"]);
-                        var encryptedDeviceData = Convert.FromBase64String(core.EncryptedDeviceResponse);
-                        var decryptedDeviceData = _crypto.DecryptRSA(encryptedDeviceData, privateKey);
-                        var decryptedDeviceDataString = Encoding.UTF8.GetString(decryptedDeviceData);
-                        var deviceResponse = DecodeResponse<ServiceV3AuthsGetResponseDevice>(decryptedDeviceDataString);
-                        authorizationRequestId = deviceResponse.AuthorizationRequestId;
-                        response = deviceResponse.Response;
-                        deviceId = deviceResponse.DeviceId;
-                        servicePins = deviceResponse.ServicePins;
-                        type = null;
-                        reason = null;
-                        denialreason = null;
-                        authPolicy = null;
-                        authMethods = null;
+                        Guid authorizationRequestId;
+                        var core = DecodeResponse<ServiceV3AuthsGetResponseCore>(decryptedBody);
+                        bool response;
+                        string deviceId;
+                        string[] servicePins;
+                        string type;
+                        string reason;
+                        string denialreason;
+                        AuthPolicy.JWEAuthPolicy authPolicy;
+                        AuthPolicy.AuthMethod[] authMethods;
+
+                        if (core.JweEncryptedDeviceResponse != null)
+                        {
+                            var decryptedDeviceData = _jweService.Decrypt(core.JweEncryptedDeviceResponse);
+                            var deviceResponse = DecodeResponse<ServiceV3AuthsGetResponseDeviceJWE>(decryptedDeviceData);
+                            authorizationRequestId = deviceResponse.AuthorizationRequestId;
+                            response = deviceResponse.Type == "AUTHORIZED";
+                            deviceId = deviceResponse.DeviceId;
+                            servicePins = deviceResponse.ServicePins;
+                            type = deviceResponse.Type;
+                            reason = deviceResponse.Reason;
+                            denialreason = deviceResponse.DenialReason;
+                            authPolicy = deviceResponse.AuthPolicy;
+                            authMethods = deviceResponse.AuthMethods;
+                        }
+                        else
+                        {
+                            var bodyJweHeaders = _jweService.GetHeaders(body);
+                            if (!bodyJweHeaders.ContainsKey("kid"))
+                                throw new InvalidRequestException("JWE headers does not include a key id");
+                            var privateKey = _keyMap.GetKey(requestingEntity, bodyJweHeaders["kid"]);
+                            var encryptedDeviceData = Convert.FromBase64String(core.EncryptedDeviceResponse);
+                            var decryptedDeviceData = _crypto.DecryptRSA(encryptedDeviceData, privateKey);
+                            var decryptedDeviceDataString = Encoding.UTF8.GetString(decryptedDeviceData);
+                            var deviceResponse = DecodeResponse<ServiceV3AuthsGetResponseDevice>(decryptedDeviceDataString);
+                            authorizationRequestId = deviceResponse.AuthorizationRequestId;
+                            response = deviceResponse.Response;
+                            deviceId = deviceResponse.DeviceId;
+                            servicePins = deviceResponse.ServicePins;
+                            type = null;
+                            reason = null;
+                            denialreason = null;
+                            authPolicy = null;
+                            authMethods = null;
+                        }
+                        return new ServerSentEventAuthorizationResponse(
+                            requestingEntity,
+                            EntityIdentifier.FromString(jwtData.Subject).Id,
+                            core.ServiceUserHash,
+                            core.OrgUserHash,
+                            core.UserPushId,
+                            authorizationRequestId,
+                            response,
+                            deviceId,
+                            servicePins,
+                            type,
+                            reason,
+                            denialreason,
+                            authPolicy,
+                            authMethods
+                        );
                     }
-                    return new ServerSentEventAuthorizationResponse(
-                        requestingEntity,
-                        EntityIdentifier.FromString(jwtData.Subject).Id,
-                        core.ServiceUserHash,
-                        core.OrgUserHash,
-                        core.UserPushId,
-                        authorizationRequestId,
-                        response,
-                        deviceId,
-                        servicePins,
-                        type,
-                        reason,
-                        denialreason,
-                        authPolicy,
-                        authMethods
-                    );
                 }
                 else
                 {

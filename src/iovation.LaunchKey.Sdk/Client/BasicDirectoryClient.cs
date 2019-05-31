@@ -4,6 +4,8 @@ using System.Linq;
 using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Directory;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
+using iovation.LaunchKey.Sdk.Domain.Webhook;
+using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Transport;
 using iovation.LaunchKey.Sdk.Transport.Domain;
 
@@ -24,7 +26,9 @@ namespace iovation.LaunchKey.Sdk.Client
         {
             var request = new DirectoryV3DevicesPostRequest(userId, ttl);
             var response = _transport.DirectoryV3DevicesPost(request, _directoryId);
-            return new DirectoryUserDeviceLinkData(response.Code, response.QrCode);
+
+            Guid? deviceID = Guid.TryParse(response.DeviceId, out Guid deviceGUID) ? (Guid?)deviceGUID : null;
+            return new DirectoryUserDeviceLinkData(response.Code, response.QrCode, deviceID);
         }
 
         public List<Device> GetLinkedDevices(string userId)
@@ -197,13 +201,17 @@ namespace iovation.LaunchKey.Sdk.Client
         public ServicePolicy GetServicePolicy(Guid serviceId)
         {
             var request = new ServicePolicyItemPostRequest(serviceId);
-            var response = _transport.DirectoryV3ServicePolicyItemPost(request, _directoryId);
+            var response = _transport.DirectoryV3ServicePolicyItemPost(
+                    request, _directoryId
+            );
             return ServicePolicy.FromTransport(response);
         }
 
         public void SetServicePolicy(Guid serviceId, ServicePolicy policy)
         {
-            var request = new ServicePolicyPutRequest(serviceId, policy.ToTransport());
+            var request = new ServicePolicyPutRequest(serviceId,
+                 policy.ToTransport()
+             );
             _transport.DirectoryV3ServicePolicyPut(request, _directoryId);
         }
 
@@ -212,5 +220,33 @@ namespace iovation.LaunchKey.Sdk.Client
             var request = new ServicePolicyDeleteRequest(serviceId);
             _transport.DirectoryV3ServicePolicyDelete(request, _directoryId);
         }
+
+        [Obsolete("HandleWebhook(headers,body) is obsolete. Please use HandleWebhook(headers, body, method, path)", false)]
+        public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body)
+        {
+            return HandleWebhook(headers, body, null, null);
+        }
+
+        public IWebhookPackage HandleWebhook(
+            Dictionary<string, List<string>> headers, string body, 
+            string method, string path
+        )
+        {
+            IServerSentEvent serverSentEvent = _transport.HandleServerSentEvent(headers, body, method, path);
+            if (serverSentEvent is ServerSentEventDeviceLinked)
+            {
+                var deviceLinkTransport = ((ServerSentEventDeviceLinked)serverSentEvent).DeviceLinkCompletion;
+                var deviceLinkCompletion = new Domain.Directory.DeviceLinkCompletionResponse(
+                    deviceLinkTransport.DeviceId, deviceLinkTransport.DevicePublicKey, deviceLinkTransport.DevicePublicKeyId
+                );
+
+                return new DirectoryUserDeviceLinkCompletionWebhookPackage(
+                    deviceLinkCompletion
+                );
+            }
+
+            throw new InvalidRequestException("Unknown response type");
+        }
+
     }
 }

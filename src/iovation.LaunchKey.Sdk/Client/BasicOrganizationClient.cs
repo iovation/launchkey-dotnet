@@ -88,9 +88,9 @@ namespace iovation.LaunchKey.Sdk.Client
             return response.Id;
         }
 
-        public void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12)
+        public void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12, string webhookUrl = null)
         {
-            var request = new OrganizationV3DirectoriesPatchRequest(directoryId, active, androidKey, iosP12);
+            var request = new OrganizationV3DirectoriesPatchRequest(directoryId, active, androidKey, iosP12, webhookUrl);
             _transport.OrganizationV3DirectoriesPatch(request, _organizationId);
         }
 
@@ -114,7 +114,8 @@ namespace iovation.LaunchKey.Sdk.Client
                     directoryItem.ServiceIds,
                     directoryItem.SdkKeys,
                     directoryItem.AndroidKey,
-                    directoryItem.IosCertificateFingerprint
+                    directoryItem.IosCertificateFingerprint,
+                    directoryItem.WebhookUrl
                 ));
             }
 
@@ -135,7 +136,8 @@ namespace iovation.LaunchKey.Sdk.Client
                     directoryItem.ServiceIds,
                     directoryItem.SdkKeys,
                     directoryItem.AndroidKey,
-                    directoryItem.IosCertificateFingerprint
+                    directoryItem.IosCertificateFingerprint,
+                    directoryItem.WebhookUrl
                 ));
             }
 

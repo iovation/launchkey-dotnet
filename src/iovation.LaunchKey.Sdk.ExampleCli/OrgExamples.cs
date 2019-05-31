@@ -5,10 +5,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 {
     class OrgExamples
     {
-        public static int DoServiceAuth(string orgId, string privateKey, string serviceId, string userId, string apiURL)
+        public static int DoServiceAuth(string orgId, string privateKey, string serviceId, string userId, string apiURL, bool? useWebhook)
         {
             var serviceClient = ClientFactories.MakeOrganizationServiceClient(orgId, privateKey, serviceId, apiURL);
-            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, userId);
+            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, userId, useWebhook);
         }
 
         public static int DoDirectoryDeviceList(string orgId, string privateKey, string directoryId, string userId, string apiURL)
@@ -39,5 +39,14 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
             return 0;
         }
+
+        public static int DoUpdateDirectoryWebhookUrl(string orgId, string privateKey, string directoryId, string apiURL, string webkhookUrl)
+        {
+            var orgClient = ClientFactories.MakeOrganizationClient(orgId, privateKey, apiURL);
+            var directory = orgClient.GetDirectory(Guid.Parse(directoryId));
+            orgClient.UpdateDirectory(Guid.Parse(directoryId), directory.Active, directory.AndroidKey, directory.IosCertificateFingerprint, webkhookUrl);
+            return 0;
+        }
+
     }
 }

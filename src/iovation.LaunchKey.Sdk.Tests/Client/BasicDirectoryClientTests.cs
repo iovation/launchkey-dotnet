@@ -19,6 +19,57 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var client = new BasicDirectoryClient(TestConsts.DefaultDirectoryId, mockTransport.Object);
             var expectedRequest = new DirectoryV3DevicesPostRequest("user id", 123);
 
+            string deviceID = Guid.NewGuid().ToString();
+
+            mockTransport.Setup(
+                t => t.DirectoryV3DevicesPost(
+                    It.IsAny<DirectoryV3DevicesPostRequest>(),
+                    It.IsAny<EntityIdentifier>()
+                )
+            ).Returns(new DirectoryV3DevicesPostResponse { Code = "code", QrCode = "qrcode", DeviceId = deviceID });
+
+            var response = client.LinkDevice("user id", 123);
+
+            Assert.AreEqual("code", response.Code);
+            Assert.AreEqual("qrcode", response.QrCode);
+            Assert.AreEqual(deviceID, response.DeviceId.ToString());
+
+            mockTransport.Verify(
+                x => x.DirectoryV3DevicesPost(It.Is<DirectoryV3DevicesPostRequest>(
+                        r => r.Identifier == "user id"
+                            && r.TTL == 123
+                    ),
+                    It.IsAny<EntityIdentifier>()), Times.Once());
+        }
+
+        [TestMethod]
+        public void LinkDevice_ShouldReturnNullGuidWhenResponseContainsNoDeviceID()
+        {
+            var mockTransport = new Mock<ITransport>();
+            var client = new BasicDirectoryClient(TestConsts.DefaultDirectoryId, mockTransport.Object);
+            var expectedRequest = new DirectoryV3DevicesPostRequest("user id", 123);
+
+            string deviceID = "";
+
+            mockTransport.Setup(
+                t => t.DirectoryV3DevicesPost(
+                    It.IsAny<DirectoryV3DevicesPostRequest>(),
+                    It.IsAny<EntityIdentifier>()
+                )
+            ).Returns(new DirectoryV3DevicesPostResponse { Code = "code", QrCode = "qrcode", DeviceId = deviceID });
+
+            var response = client.LinkDevice("user id", 123);
+            Assert.AreEqual(null, response.DeviceId);
+
+        }
+
+        [TestMethod]
+        public void LinkDevice_ShouldReturnNullGuidWhenNotPassedInValue()
+        {
+            var mockTransport = new Mock<ITransport>();
+            var client = new BasicDirectoryClient(TestConsts.DefaultDirectoryId, mockTransport.Object);
+            var expectedRequest = new DirectoryV3DevicesPostRequest("user id", 123);
+
             mockTransport.Setup(
                 t => t.DirectoryV3DevicesPost(
                     It.IsAny<DirectoryV3DevicesPostRequest>(),
@@ -27,15 +78,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             ).Returns(new DirectoryV3DevicesPostResponse { Code = "code", QrCode = "qrcode" });
 
             var response = client.LinkDevice("user id", 123);
-
-            Assert.AreEqual("code", response.Code);
-            Assert.AreEqual("qrcode", response.QrCode);
-            mockTransport.Verify(
-                x => x.DirectoryV3DevicesPost(It.Is<DirectoryV3DevicesPostRequest>(
-                        r => r.Identifier == "user id"
-                            && r.TTL == 123
-                    ),
-                    It.IsAny<EntityIdentifier>()), Times.Once());
+            Assert.AreEqual(null, response.DeviceId);
         }
 
         [TestMethod]

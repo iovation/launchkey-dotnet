@@ -18,16 +18,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return SharedServiceHelpers.DoSessionEnd(serviceClient, username);
         }
 
-        public static int DoServiceAuthorizationWebhook(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons)
+        public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons, bool? useWebhook = false)
         {
             var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
-            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, username, context, null, title, ttl, pushTitle, pushBody, fraudDenialreasons, nonFraudDenialreasons, false);
-        }
-
-        public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons)
-        {
-            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
-            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, username, context, null, title, ttl, pushTitle, pushBody, fraudDenialreasons, nonFraudDenialreasons, true);
+            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, username, useWebhook, context, null, title, ttl, pushTitle, pushBody, fraudDenialreasons, nonFraudDenialreasons);
         }
 
         public static int DoServiceAuthorizationWithPolicy(string username, string serviceId, string privateKey, bool jailbreakDetection, int? factors, string geofence, string apiURL)
@@ -66,7 +60,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 );
 
             var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
-            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, username, policy: policy);
+            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, username, false, policy: policy);
         }
 
         public static object DoServiceAuthorizationCancel(string serviceId, string privateKey, string apiURL, string authorizationRequestId)

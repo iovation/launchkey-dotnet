@@ -355,6 +355,12 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport.ServiceV3SessionsDelete(request, _serviceId);
         }
 
+        [Obsolete("HandleWebhook(headers, body) is obsolete. Please use HandleWebhook(headers, body, method, path)", false)]
+        public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body)
+        {
+            return HandleWebhook(headers, body, null, null);
+        }
+
         public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null)
         {
             var serverSentEvent = _transport.HandleServerSentEvent(headers, body, method, path);

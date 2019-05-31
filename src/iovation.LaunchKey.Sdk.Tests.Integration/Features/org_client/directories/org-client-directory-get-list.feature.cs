@@ -114,12 +114,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
 #line 12
     testRunner.And("I updated the Directory iOS P12 with a valid certificate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
-    testRunner.And("I generated and added 2 SDK Keys to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I updated the Directory webhook url to \"https://a.webhook.url/path\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
-    testRunner.And("I added 2 Services to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I generated and added 2 SDK Keys to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
-    testRunner.When("I retrieve a list of Directories with the created Directory\'s ID", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.And("I added 2 Services to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
+    testRunner.When("I retrieve a list of Directories with the created Directory\'s ID", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
     testRunner.Then("the current Directory list is a list with only the current Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -131,15 +133,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
         public virtual void GetAnInvalidDirectoryRaisesAnException()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get an invalid Directory raises an exception", null, ((string[])(null)));
-#line 18
+#line 19
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 19
+#line 20
     testRunner.When("I attempt retrieve a list of Directories with the Directory ID \"eba60cb8-c649-11e" +
                     "7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 20
+#line 21
     testRunner.Then("a Forbidden error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

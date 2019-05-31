@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Domain.Directory;
+using iovation.LaunchKey.Sdk.Domain.Webhook;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
-    public interface IDirectoryClient : IServiceManagingClient
+    public interface IDirectoryClient : IServiceManagingClient, IWebhookHandler
     {
         /// <summary>
         /// Links a device to a user.

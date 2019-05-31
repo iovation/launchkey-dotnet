@@ -14,7 +14,7 @@ namespace iovation.LaunchKey.Sdk.Tests
         public static readonly EntityIdentifier DefaultDirectoryEntity = new EntityIdentifier(EntityType.Directory, TestConsts.DefaultDirectoryId);
         public static readonly Guid DefaultDeviceId = new Guid("00000000-0000-0000-0000-000000000005");
         public static readonly DateTime DefaultTime = new DateTime(2015, 1, 1);
-
+        public static readonly string DefaultWebhookUrl = "https://a.webhook.url/path";
 
         public static readonly string DefaultPrivateKey = @"-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEA7fEWbTsSs1+QYFP2pGJFyFb/fPO90jGV5rRE5FRbdinH7KDA

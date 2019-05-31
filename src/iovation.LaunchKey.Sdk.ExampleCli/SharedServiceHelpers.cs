@@ -43,8 +43,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return String.IsNullOrEmpty(value) ? "None" : value;
         }
 
-
-        private static int HandleWebhook(IServiceClient serviceClient)
+        public static int HandleWebhook(IWebhookHandler handler)
         {
             if (!HttpListener.IsSupported)
             {
@@ -57,6 +56,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             listener.Start();
 
             Console.WriteLine("Webhook: Waiting for a request ... ");
+            Console.WriteLine("Note: If using a reverse proxy (like ngrok) make sure you set the host header to localhost:9876");
             var context = listener.GetContext();
             Console.WriteLine("Webhook: Request received");
             using (var reader = new StreamReader(context.Request.InputStream, Encoding.UTF8))
@@ -71,7 +71,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                         headers[headerName].Add(headerValue);
                     }
                 }
-                IWebhookPackage webhookPackage = serviceClient.HandleWebhook(headers, body);
+
+                IWebhookPackage webhookPackage = handler.HandleWebhook(headers, body, "POST", "");
 
                 if (webhookPackage is AuthorizationResponseWebhookPackage)
                 {
@@ -83,11 +84,20 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     var sessionEndPackage = webhookPackage as ServiceUserSessionEndWebhookPackage;
                     Console.WriteLine($"Session remotely ended for Service User Hash {sessionEndPackage.ServiceUserHash} at {sessionEndPackage.LogoutRequested}");
                 }
+                else if (webhookPackage is DirectoryUserDeviceLinkCompletionWebhookPackage)
+                {
+                    var message = ((DirectoryUserDeviceLinkCompletionWebhookPackage)webhookPackage).DeviceLinkData;
+                    Console.WriteLine($"You have a new linked device, congratulations!");
+                    Console.WriteLine($"     DeviceID:          {message.DeviceId}");
+                    Console.WriteLine($"     DevicePubKey:      \n{message.DevicePublicKey}");
+                    Console.WriteLine($"     DevicePubKeyID:    {message.DevicePublicKeyId}");
+                }
                 else
                 {
-                    Console.WriteLine("Error: received a webhook package but it was not for an authorization response or session end!");
+                    Console.WriteLine("Error: received a webhook package but it was not for a known webhook type!");
                     return 1;
                 }
+
                 return 0;
             }
         }
@@ -135,8 +145,6 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 {
                     Console.WriteLine($"       Locations: None");
                 }
-
-
             }
 
             if(authResponse.AuthMethods == null)
@@ -227,7 +235,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return 1;
         }
 
-        public static int DoAuthorizationRequest(IServiceClient serviceClient, string username, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null, string pushTitle = null, string pushBody = null, int? fraudDenialreasons = null, int? nonFraudDenialreasons = null, bool polling = true)
+        public static int DoAuthorizationRequest(IServiceClient serviceClient, string username, bool? useWebhook, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null, string pushTitle = null, string pushBody = null, int? fraudDenialreasons = null, int? nonFraudDenialreasons = null)
         {
 
             try
@@ -235,13 +243,14 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 IList<DenialReason> denialReasons = GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons);
                 AuthorizationRequest authorizationRequest = serviceClient.CreateAuthorizationRequest(username, context, policy, title, ttl, pushTitle, pushBody, denialReasons);
                 Console.WriteLine($"Auth Request Started: {authorizationRequest.Id}");
-                if (polling)
+
+                if (useWebhook == true)
                 {
-                    return PollForResponse(serviceClient, authorizationRequest);
+                    return HandleWebhook(serviceClient);
                 }
                 else
                 {
-                    return HandleWebhook(serviceClient);
+                    return PollForResponse(serviceClient, authorizationRequest);
                 }
             }
             catch (AuthorizationInProgress e)
