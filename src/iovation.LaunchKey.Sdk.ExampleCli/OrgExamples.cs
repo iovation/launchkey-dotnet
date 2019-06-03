@@ -44,7 +44,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         {
             var orgClient = ClientFactories.MakeOrganizationClient(orgId, privateKey, apiURL);
             var directory = orgClient.GetDirectory(Guid.Parse(directoryId));
-            orgClient.UpdateDirectory(Guid.Parse(directoryId), directory.Active, directory.AndroidKey, directory.IosCertificateFingerprint, webkhookUrl);
+            orgClient.UpdateDirectory(Guid.Parse(directoryId), directory.Active, directory.AndroidKey, null, webkhookUrl);
             return 0;
         }
 
