@@ -131,8 +131,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
                 if(authResponse.AuthPolicy.Locations.Count > 0)
                 {
-                    Console.WriteLine($"       Location Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
-                    Console.WriteLine($"       Locations:");
+                    Console.WriteLine($"       Geofence Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
+                    Console.WriteLine($"       Geofences:");
                     foreach (var item in authResponse.AuthPolicy.Locations)
                     {
                         Console.WriteLine($"          Latitude:  {PrintNull(item.Latitude)}");
@@ -143,7 +143,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 } 
                 else
                 {
-                    Console.WriteLine($"       Locations: None");
+                    Console.WriteLine($"       Geofences: None");
                 }
             }
 
