@@ -28,6 +28,9 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 
             [JsonProperty("ios_certificate_fingerprint")]
             public string IosCertificateFingerprint { get; set; }
+
+            [JsonProperty("webhook_url")]
+            public string WebhookUrl { get; set; }
         }
 
         public List<Directory> Directories { get; }

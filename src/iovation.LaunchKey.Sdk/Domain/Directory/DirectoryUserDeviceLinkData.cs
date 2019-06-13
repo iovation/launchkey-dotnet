@@ -1,3 +1,5 @@
+using System;
+
 namespace iovation.LaunchKey.Sdk.Domain.Directory
 {
     /// <summary>
@@ -15,10 +17,16 @@ namespace iovation.LaunchKey.Sdk.Domain.Directory
         /// </summary>
         public string QrCode { get; }
 
-        public DirectoryUserDeviceLinkData(string code, string qrCode)
+        /// <summary>
+        /// A identifier for the device that originated the request
+        /// </summary>
+        public Guid? DeviceId { get; }
+
+        public DirectoryUserDeviceLinkData(string code, string qrCode, Guid? deviceId = null)
         {
             Code = code;
             QrCode = qrCode;
+            DeviceId = deviceId;
         }
     }
 }

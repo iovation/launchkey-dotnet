@@ -49,7 +49,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
                 .Returns(HttpResponse.Object);
             Crypto = new Mock<ICrypto>();
             Crypto.Setup(c => c.DecryptRSA(It.IsAny<byte[]>(), It.IsAny<RSA>())).Returns(System.Text.Encoding.ASCII.GetBytes("Decrypted"));
-            Crypto.Setup(c => c.Sha256(It.IsAny<byte[]>())).Returns(System.Text.Encoding.ASCII.GetBytes("Hash"));
+            Crypto.Setup(c => c.Sha256(It.IsAny<byte[]>())).Returns(new byte[] { 255 });
             PublicKeyCache = new Mock<ICache>();
             PublicKeyCache.Setup(c => c.Get(It.IsAny<String>())).Returns("Public Key");
             Issuer = new EntityIdentifier(EntityType.Directory, default(Guid));
@@ -61,7 +61,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
             JwtClaimsResponse.Object.StatusCode = 204;
             JwtClaimsResponse.Object.LocationHeader = null;
             JwtClaimsResponse.Object.CacheControlHeader = null;
-            JwtClaimsResponse.Object.ContentHash = "Hash";
+            JwtClaimsResponse.Object.ContentHash = "ff";
             JwtClaimsResponse.Object.ContentHashAlgorithm = "S256";
 
             JwtClaims.Object.Response = JwtClaimsResponse.Object;
@@ -133,6 +133,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.WebClient
         {
             HttpResponse.Object.StatusCode = HttpStatusCode.RequestTimeout;
             JwtClaimsResponse.Object.StatusCode = 408;
+            Transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AuthorizationRequestCanceled))]
+        public void ServiceV3AuthsGet_ShouldThrowAuthorizationRequestCanceledFor400AndSvc007()
+        {
+            HttpResponse.Object.StatusCode = HttpStatusCode.BadRequest;
+            HttpResponse.Object.ResponseBody = "Encrypted JWE";
+            JwtClaimsResponse.Object.StatusCode = 400;
+            JsonEncoder
+                .Setup(p => p.DecodeObject<Sdk.Domain.Error>(It.IsAny<string>()))
+                .Returns(new Sdk.Domain.Error
+                {
+                    ErrorCode = "SVC-007"
+                });
             Transport.ServiceV3AuthsGet(TestConsts.DefaultAuthenticationId, TestConsts.DefaultServiceEntity);
         }
 

@@ -4,7 +4,7 @@ using iovation.LaunchKey.Sdk.Domain.Webhook;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
-    public interface IServiceClient
+    public interface IServiceClient : IWebhookHandler
     {
         /// <summary>
         /// Perform an authorization for a user of a service.
@@ -26,6 +26,12 @@ namespace iovation.LaunchKey.Sdk.Client
         /// <param name="ttl">Time to live in seconds for the authorization request. If not provided or null, the system default will be used</param>
         /// <returns>Information regarding the authorization request.</returns>
         AuthorizationRequest CreateAuthorizationRequest(string user, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null, string pushTitle = null, string pushBody = null, IList<DenialReason> denialReasons = null);
+
+        /// <summary>
+        /// Cancels the authorization request.
+        /// </summary>
+        /// <param name="authorizationRequestId">The authorization request identifier, usually retrieved via CreateAuthorizationRequest()</param>
+        void CancelAuthorizationRequest(string authorizationRequestId);
 
         /// <summary>
         /// Retrieve the status of an authorization request.
@@ -52,15 +58,5 @@ namespace iovation.LaunchKey.Sdk.Client
         /// </summary>
         /// <param name="user">The username or directory user ID to end the session for</param>
         void SessionEnd(string user);
-
-        /// <summary>
-        /// Process a Webhook payload received from the LaunchKey WebHook service.
-        /// </summary>
-        /// <param name="headers"></param>
-        /// <param name="body"></param>
-        /// <param name="method">The HTTP method of the received request. Optional. Include for stricter security checks.</param>
-        /// <param name="path">The HTTP path of the received request. Optional. Include for stricter security checks.</param>
-        /// <returns></returns>
-        IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null);
     }
 }

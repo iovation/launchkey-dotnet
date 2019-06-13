@@ -68,6 +68,8 @@ namespace iovation.LaunchKey.Sdk.Error
                         authorizationRequestId,
                         fromSameService,
                         expires);
+                case "SVC-006": return new AuthorizationResponseExists(errorMessage, null, errorCode);
+                case "SVC-007": return new AuthorizationRequestCanceled(errorMessage, null, errorCode);
                 case "DIR-001": return new InvalidDirectoryIdentifier(errorMessage, null, errorCode);
                 case "KEY-001": return new InvalidPublicKey(errorMessage, null, errorCode);
                 case "KEY-002": return new PublicKeyAlreadyInUse(errorMessage, null, errorCode);

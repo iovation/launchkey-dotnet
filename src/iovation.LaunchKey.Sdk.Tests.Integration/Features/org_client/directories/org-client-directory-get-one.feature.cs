@@ -114,25 +114,29 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
 #line 12
     testRunner.And("I updated the Directory iOS P12 with a valid certificate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
-    testRunner.And("I generated and added 2 SDK Keys to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I updated the Directory webhook url to \"https://a.webhook.url/path\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 14
-    testRunner.And("I added 2 Services to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I generated and added 2 SDK Keys to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
-    testRunner.When("I retrieve the created Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.And("I added 2 Services to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
-    testRunner.Then("the ID matches the value returned when the Directory was created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.When("I retrieve the created Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
-    testRunner.And("the Directory name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("the ID matches the value returned when the Directory was created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 18
-    testRunner.And("the Directory is active", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the Directory name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
-    testRunner.And("the Directory Android Key is \"Hello Android\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the Directory is active", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
-    testRunner.And("Directory the iOS Certificate Fingerprint matches the provided certificate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("the Directory Android Key is \"Hello Android\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 21
-    testRunner.And("the Directory has the added SDK Key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("Directory the iOS Certificate Fingerprint matches the provided certificate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
+    testRunner.And("the Directory has the added SDK Key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 23
     testRunner.And("the Directory has the added Service IDs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 24
+    testRunner.And("the Directory webhook url is \"https://a.webhook.url/path\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -143,15 +147,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
         public virtual void GetAnInvalidDirectoryRaisesAnException()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get an invalid Directory raises an exception", null, ((string[])(null)));
-#line 24
+#line 26
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 25
+#line 27
     testRunner.When("I attempt retrieve the Directory identified by \"eba60cb8-c649-11e7-abc4-cec278b6b" +
                     "50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 26
+#line 28
     testRunner.Then("a Forbidden error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

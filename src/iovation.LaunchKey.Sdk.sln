@@ -3,16 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iovation.LaunchKey.Sdk.ExampleCli", "iovation.LaunchKey.Sdk.ExampleCli\iovation.LaunchKey.Sdk.ExampleCli.csproj", "{98609471-5035-4A52-893C-8A156FC8751B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk.ExampleCli", "iovation.LaunchKey.Sdk.ExampleCli\iovation.LaunchKey.Sdk.ExampleCli.csproj", "{98609471-5035-4A52-893C-8A156FC8751B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0297C3A8-E07B-45D8-9C3E-24C3A2FFFE1E}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
+		..\CHANGELOG.md = ..\CHANGELOG.md
+		..\DEPLOYING.md = ..\DEPLOYING.md
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iovation.LaunchKey.Sdk", "iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj", "{7429B6AD-791E-4953-A67A-D4CEB3E8C38B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iovation.LaunchKey.Sdk.Tests", "iovation.LaunchKey.Sdk.Tests\iovation.LaunchKey.Sdk.Tests.csproj", "{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iovation.LaunchKey.Sdk.Tests", "iovation.LaunchKey.Sdk.Tests\iovation.LaunchKey.Sdk.Tests.csproj", "{4032F5B2-0099-4922-BF9B-D7300BB6F8FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iovation.LaunchKey.Sdk.Tests.Integration", "iovation.LaunchKey.Sdk.Tests.Integration\iovation.LaunchKey.Sdk.Tests.Integration.csproj", "{408C8CFF-AFB8-41E1-B2F0-D1FB750EE2D7}"
 EndProject
@@ -52,5 +55,19 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CDB11F0A-CB76-4FDE-BA10-AC3F38662515}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 80
+		$3.TabsToSpaces = True
+		$3.EolMarker = Unix
+		$3.scope = text/plain
+		version = 3.5
 	EndGlobalSection
 EndGlobal

@@ -164,8 +164,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
 #line 9
   this.FeatureBackground();
 #line 26
-    testRunner.Given("the current Authorization Policy requires a geofence with a radius of 1.0, a lati" +
-                    "tude of 23.4, and a longitude of -56.7", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("the current Authorization Policy requires a geofence with a radius of 150.0, a la" +
+                    "titude of 23.4, and a longitude of -56.7", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 27
     testRunner.And("the current Authorization Policy requires a geofence with a radius of 100.0, a la" +
                     "titude of -23.4, and a longitude of 56.7", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

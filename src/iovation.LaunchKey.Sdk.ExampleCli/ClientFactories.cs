@@ -36,6 +36,13 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return MakeFactoryFactory(apiURL).MakeServiceFactory(serviceId, privateKey);
         }
 
+        public static Client.IOrganizationClient MakeOrganizationClient(string orgId, string privateKeyLocation, string apiURL)
+        {
+            var organizationClient = MakeOrganizationFactory(orgId,privateKeyLocation,apiURL).MakeOrganizationClient();
+            return organizationClient;
+
+        }
+
         public static Client.IDirectoryClient MakeDirectoryClient(string directoryId, string privateKeyLocation, string apiURL)
         {
             var directoryClient = MakeDirectoryFactory(directoryId, privateKeyLocation, apiURL).MakeDirectoryClient();

@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using iovation.LaunchKey.Sdk.Error;
 
 namespace iovation.LaunchKey.Sdk.ExampleCli
@@ -16,19 +15,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// </summary>
         public static int DoDirectoryServiceSessionStart(string directoryId, string privateKey, string serviceId, string userId, string apiURL)
         {
-            try
-            {
-                var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
-
-                Console.WriteLine("Sending request to start session ... ");
-                serviceClient.SessionStart(userId);
-                Console.WriteLine("Request completed.");
-            }
-            catch (BaseException e)
-            {
-                Console.WriteLine($"Error starting a session for the directory user {userId} in directory {directoryId}. Error: {e.Message}");
-            }
-            return 0;
+            var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
+            return SharedServiceHelpers.DoSessionStart(serviceClient, userId);
         }
 
         /// <summary>
@@ -36,67 +24,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// </summary>
         public static int DoDirectoryServiceSessionEnd(string directoryId, string privateKey, string serviceId, string userId, string apiURL)
         {
-            try
-            {
-                var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
-
-                Console.WriteLine("Sending request to end session ... ");
-                serviceClient.SessionEnd(userId);
-                Console.WriteLine("Request completed.");
-            }
-            catch (BaseException e)
-            {
-                Console.WriteLine($"Error ending session for the directory user {userId} in directory {directoryId}. Error: {e.Message}");
-            }
-            return 0;
+            var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
+            return SharedServiceHelpers.DoSessionEnd(serviceClient, userId);
         }
 
         /// <summary>
         /// Authorize a directory user against a directory service
         /// </summary>
-        public static int DoDirectoryServiceAuth(string directoryId, string privateKey, string serviceId, string userId, string apiURL)
+        public static int DoDirectoryServiceAuth(string directoryId, string privateKey, string serviceId, string userId, string apiURL, bool? useWebhook)
         {
-            try
-            {
-                var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
-                Console.WriteLine("Sending service auth request ... ");
-                var authorizationRequest = serviceClient.CreateAuthorizationRequest(userId, context: "This is a 60 second auth", title: ".NET Service SDK Test Directory Service Auth", ttl: 60);
-                while (true)
-                {
-                    Console.WriteLine("checking auth");
-
-                    // poll for a response
-                    var authResponse = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
-
-                    // if we got one, process it
-                    if (authResponse != null)
-                    {
-                        Console.WriteLine($"Auth response was {authResponse.Authorized}");
-                        return 0;
-                    }
-
-                    // if not, we are still waiting on the user. wait a bit ... 
-                    Thread.Sleep(1000);
-                }
-            }
-            catch (AuthorizationRequestTimedOutError)
-            {
-                Console.WriteLine("user never replied.");
-                return 1;
-            }
-            catch (AuthorizationInProgress e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine($"    Auth Request: {e.AuthorizationRequestId}");
-                Console.WriteLine($"    Expires: {e.Expires}");
-                Console.WriteLine($"    Same Service: {e.FromSameService}");
-                return 1;
-            }
-            catch (BaseException e)
-            {
-                Console.WriteLine($"Error while authorizing directory user {userId} within directory {directoryId} against service ID {serviceId}. Error: {e.Message}");
-                return 1;
-            }
+            var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
+            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, userId, useWebhook);
         }
 
         /// <summary>
@@ -155,14 +93,21 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// Link a device to a user. This starts the process which must be completed via the authenticator app for this directory
         /// </summary>
-        public static int DoDeviceLink(string directoryId, string privateKey, string userId, string apiURL)
+        public static int DoDeviceLink(string directoryId, string privateKey, string userId, string apiURL, int? ttl, bool? useWebhook)
         {
             try
             {
                 var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL);
                 Console.WriteLine("Sending request to begin device link ... ");
-                var deviceLinkResponse = directoryClient.LinkDevice(userId);
-                Console.WriteLine($"Successfully sent link request. Use the follwowing code to complete the link: {deviceLinkResponse.Code}");
+                var deviceLinkResponse = directoryClient.LinkDevice(userId, ttl);
+                Console.WriteLine($"Successfully sent link request. \n Device ID: {deviceLinkResponse.DeviceId} \n Use the following code to complete the link: {deviceLinkResponse.Code}");
+
+                if ( useWebhook == true )
+                {
+                    Console.WriteLine($"You wanted to retrieve the webhook so I will open a port!");
+                    var openWebhookPort = SharedServiceHelpers.HandleWebhook(directoryClient);
+                }
+
             }
             catch (BaseException e)
             {

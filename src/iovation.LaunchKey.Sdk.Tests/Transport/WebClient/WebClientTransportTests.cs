@@ -451,6 +451,57 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
         }
 
         [TestMethod]
+        public void ServiceV3AuthsDelete_ShouldCallApi()
+        {
+            DoApiCallTest(
+                t => t.ServiceV3AuthsDelete(Guid.Parse("aba6609a-a7e9-428d-b766-b69ecbcb65f6"), DefaultSubject),
+                HttpMethod.DELETE,
+                "/service/v3/auths/aba6609a-a7e9-428d-b766-b69ecbcb65f6"
+            );
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EntityNotFound))]
+        public void ServiceV3AuthsDelete_ShouldThrowEntityNotFoundOn404()
+        {
+            var httpClient = MakeMockHttpClient("Not found", 404);
+            var transport = MakeMockedTransport(httpClient.Object, MakeMockedJsonService().Object);
+            transport.ServiceV3AuthsDelete(Guid.Parse("aba6609a-a7e9-428d-b766-b69ecbcb65f6"), DefaultSubject);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AuthorizationRequestCanceled))]
+        public void ServiceV3AuthsDelete_ShouldThrowAuthorizationRequestCanceleddOn400AndSvc007()
+        {
+            var httpClient_ = MakeMockHttpClient("Invalid Request", 400);
+            var jsonService = MakeMockedJsonService();
+            jsonService
+                .Setup(p => p.DecodeObject<Sdk.Domain.Error>(It.IsAny<string>()))
+                .Returns(new Sdk.Domain.Error
+                {
+                    ErrorCode = "SVC-007"
+                });
+            var transport_ = MakeMockedTransport(httpClient_.Object, jsonService.Object, 400);
+            transport_.ServiceV3AuthsDelete(Guid.Parse("aba6609a-a7e9-428d-b766-b69ecbcb65f6"), DefaultSubject);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AuthorizationResponseExists))]
+        public void ServiceV3AuthsDelete_ShouldThrowAuthorizationRequestCanceleddOn400AndSvc006()
+        {
+            var httpClient_ = MakeMockHttpClient("Invalid Request", 400);
+            var jsonService = MakeMockedJsonService();
+            jsonService
+                .Setup(p => p.DecodeObject<Sdk.Domain.Error>(It.IsAny<string>()))
+                .Returns(new Sdk.Domain.Error
+                {
+                    ErrorCode = "SVC-006"
+                });
+            var transport_ = MakeMockedTransport(httpClient_.Object, jsonService.Object, 400);
+            transport_.ServiceV3AuthsDelete(Guid.Parse("aba6609a-a7e9-428d-b766-b69ecbcb65f6"), DefaultSubject);
+        }
+
+        [TestMethod]
         public void ServiceV3SessionsPost_ShouldCallApi()
         {
             DoApiCallTest(
@@ -583,7 +634,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
         public void OrganizationV3DirectoriesListPatch_ShouldCallApi()
         {
             DoApiCallTest(
-                t => t.OrganizationV3DirectoriesPatch(new OrganizationV3DirectoriesPatchRequest(TestConsts.DefaultDirectoryId, true, "android", "ioskey"), TestConsts.DefaultOrganizationEntity),
+                t => t.OrganizationV3DirectoriesPatch(new OrganizationV3DirectoriesPatchRequest(TestConsts.DefaultDirectoryId, true, "android", "ioskey", TestConsts.DefaultWebhookUrl), TestConsts.DefaultOrganizationEntity),
                 HttpMethod.PATCH,
                 "/organization/v3/directories"
             );

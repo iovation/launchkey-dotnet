@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Domain.Directory;
+using iovation.LaunchKey.Sdk.Domain.Webhook;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
-    public interface IDirectoryClient : IServiceManagingClient
+    public interface IDirectoryClient : IServiceManagingClient, IWebhookHandler
     {
         /// <summary>
         /// Links a device to a user.
         /// </summary>
         /// <param name="userId">The user ID to use when linking the device. This should be in the format of a GUID.</param>
+        /// <param name="ttl">The number of seconds the linking code returned in the response will be valid.</param>
         /// <returns>response data, which includes a the key to type into the phone, and a scannable QR code URL.</returns>
-        DirectoryUserDeviceLinkData LinkDevice(string userId);
+        DirectoryUserDeviceLinkData LinkDevice(string userId, int? ttl = null);
 
         /// <summary>
         /// Gets a list of devices linked to a user.

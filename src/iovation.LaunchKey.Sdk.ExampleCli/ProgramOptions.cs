@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CommandLine;
 
 namespace iovation.LaunchKey.Sdk.ExampleCli
@@ -28,7 +23,16 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('u', "user-id", HelpText = "The unique ID of the user the device is being linked for. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }		
 	}
-	
+
+	[Verb("org-directory-update-webhook", HelpText = "(Using Organization Credentials) Update the Webhook URL of a directory")]
+	class OrgDirectoryUpdateWebhookURLOptions : OrgOptions
+	{
+		[Option('w', "webhook-url", HelpText = "The webhook URL to set for the directory being managed", Required = true)]
+		public string WebhookUrl { get; set; }
+
+		[Option('d', "directory-id", HelpText = "The unique ID of the directory being managed", Required = true)]
+		public string DirectoryId { get; set; }
+	}
 
 	[Verb("org-service-auth", HelpText = "(Using Organization Credentials) Authenticate a directory user against a service")]
 	class OrgServiceAuthOptions : OrgOptions
@@ -38,6 +42,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		[Option('u', "user-id", HelpText = "The unique ID of the directory user to authenticate. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }
+
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
+		public bool? UseWebhook { get; set; }
 	}
 
 	class DirectoryOptions
@@ -57,9 +64,15 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 	{
 		[Option('u', "user-id", HelpText = "The unique ID of the user the device is being linked for. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }
+
+		[Option('t', "ttl", HelpText = "Time to Live in seconds for the linking code that will be generated. This must be between 300 and 86400.")]
+		public int? TTL { get; set; }
+
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
+		public bool? UseWebhook { get; set; }
 	}
 
-	[Verb("directory-device-unlink", HelpText = "Unlink a device for a directory user")]
+ 	[Verb("directory-device-unlink", HelpText = "Unlink a device for a directory user")]
 	class DirectoryUnlinkDeviceOptions : DirectoryOptions
 	{
 		[Option('u', "user-id", HelpText = "The unique ID of the user the device is being linked for. This should be in the format of a GUID/UUID.", Required = true)]
@@ -91,6 +104,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
 		[Option('u', "user-id", HelpText = "The unique ID of the directory user to authenticate. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }
+
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
+		public bool? UseWebhook { get; set; }
 	}
 
 	[Verb("directory-service-session-start", HelpText = "Start a session for a directory user against a directory service")]
@@ -178,13 +194,16 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 	[Verb("service-auth", HelpText = "Authorize a user against a service using a polling method")]
 	class ServiceAuthOptions : AuthOptions
 	{
-		// This left intentionally blank
+	
+		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
+		public bool? UseWebhook { get; set; }
 	}
 
-	[Verb("service-auth-webhook", HelpText = "Authorize a user against a service using the Webhook method.")]
-	class ServiceAuthWebhookOptions : AuthOptions
+	[Verb("service-auth-cancel", HelpText = "Cancel an existing authorization request for a user")]
+	class ServiceAuthCancelOptions : ServiceOptions
 	{
-		// This left intentionally blank
+		[Option('a', "auth-request", HelpText = "The ID of the authorization request you wish to cancel", Required = true)]
+		public string AuthRequestId { get; set; }
 	}
 
 	[Verb("service-session-start", HelpText = "Start a session for a user")]

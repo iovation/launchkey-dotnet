@@ -249,7 +249,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
             var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mock.Object);
 
-            client.UpdateDirectory(TestConsts.DefaultDirectoryId, true, "a", "i");
+            client.UpdateDirectory(TestConsts.DefaultDirectoryId, true, "a", "i", TestConsts.DefaultWebhookUrl);
             mock.Verify();
         }
 
@@ -366,6 +366,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                         Id = did,
                         IosCertificateFingerprint = "i",
                         Name = "n",
+                        WebhookUrl = TestConsts.DefaultWebhookUrl,
                         SdkKeys = new List<Guid>
                         {
                             sdkid
@@ -385,6 +386,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.IsTrue(response[0].Active);
             Assert.IsTrue(response[0].AndroidKey == "a");
             Assert.IsTrue(response[0].IosCertificateFingerprint == "i");
+            Assert.IsTrue(response[0].WebhookUrl == TestConsts.DefaultWebhookUrl);
             Assert.IsTrue(response[0].Name == "n");
             Assert.IsTrue(response[0].SdkKeys.Count == 1);
             Assert.IsTrue(response[0].SdkKeys[0] == sdkid);
