@@ -1,5 +1,8 @@
 Change Log
 ----------
+3.6.0
+=====
+
 3.5.1
 =====
 * Added DenialContextInquiryEnabled to Directory management
