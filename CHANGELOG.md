@@ -1,5 +1,9 @@
 Change Log
 ----------
+3.6.0
+=====
+
+
 3.5.0
 =====
 * Added Auth Method Insight

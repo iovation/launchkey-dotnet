@@ -12,7 +12,7 @@
     <PackageLicenseUrl />
     <PackageProjectUrl>https://docs.launchkey.com/api/index.html</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <ReleaseVersion>3.5</ReleaseVersion>
+    <ReleaseVersion>3.6</ReleaseVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="jose-jwt" Version="2.4.0" />
