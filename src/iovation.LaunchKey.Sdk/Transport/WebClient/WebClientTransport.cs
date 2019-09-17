@@ -218,6 +218,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                 ThrowForStatus(response, publicKey.KeyData, requestId, httpStatusCodeWhiteList);
 
                 // validate the response itself
+                // TODO: Don't pass in publickey KeyData, use what is in the response!
                 ValidateEncryptedResponse(response, publicKey.KeyData, requestId);
 
                 // if we're here, we've passed all validation and error handling
@@ -759,11 +760,19 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
             ExecuteRequest(HttpMethod.PUT, "/organization/v3/service/policy", subject, request, null);
         }
 
-        public AuthPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
+        public IPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
         {
             var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/service/policy/item", subject, request, null);
-            return DecryptResponse<AuthPolicy>(response);
+            TransportPolicy policy = DecryptResponse<TransportPolicy>(response);
+
+            if (policy.Type == null || policy.Type == "LEGACY)")
+            {
+                return DecryptResponse<AuthPolicy>(response);
+            }
+
+            return policy;
         }
+
 
         public void OrganizationV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject)
         {
@@ -775,7 +784,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
             ExecuteRequest(HttpMethod.PUT, "/directory/v3/service/policy", subject, request, null);
         }
 
-        public AuthPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
+        public IPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
         {
             var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/service/policy/item", subject, request, null);
             return DecryptResponse<AuthPolicy>(response);

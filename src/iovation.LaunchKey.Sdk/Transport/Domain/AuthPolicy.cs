@@ -1,13 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
-    public class AuthPolicy
+    public class AuthPolicy : IPolicy
     {
+        [DefaultValue("LEGACY")]
+        public string Type { get; set; }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public enum MinimumRequirementType
         {
