@@ -8,10 +8,11 @@ using iovation.LaunchKey.Sdk.Domain.Webhook;
 using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Transport;
 using iovation.LaunchKey.Sdk.Transport.Domain;
+using DomainPolicy = iovation.LaunchKey.Sdk.Domain.Service.Policy;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
-    public class BasicDirectoryClient : IDirectoryClient
+    public class BasicDirectoryClient : ServiceManagingBaseClient, IDirectoryClient
     {
         private readonly EntityIdentifier _directoryId;
         private readonly ITransport _transport;
@@ -198,20 +199,81 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport.DirectoryV3ServiceKeysDelete(request, _directoryId);
         }
 
+
+        [Obsolete("GetServicePolicy is deprecated, please use GetAdvancedServicePolicy instead")]
         public ServicePolicy GetServicePolicy(Guid serviceId)
         {
-            var request = new ServicePolicyItemPostRequest(serviceId);
-            var response = _transport.DirectoryV3ServicePolicyItemPost(
-                    request, _directoryId
-            );
-            return ServicePolicy.FromTransport(response);
+            DomainPolicy.IPolicy legacyPolicy = GetAdvancedServicePolicy(serviceId);
+
+            if (legacyPolicy.GetType() != typeof(LegacyPolicy))
+            {
+                //TODO: ADD LOGGING
+                return null;
+            }
+            else
+            {
+                DomainPolicy.LegacyPolicy convertedLegacyPolicy = (DomainPolicy.LegacyPolicy)legacyPolicy;
+                List<AuthPolicy.Location> convertedLocations = GetTransportLocationsFromDomainGeoCircleFences(convertedLegacyPolicy.Fences);
+
+                AuthPolicy convertedPolicy = new AuthPolicy(
+                    convertedLegacyPolicy.Amount,
+                    convertedLegacyPolicy.KnowledgeRequired,
+                    convertedLegacyPolicy.InherenceRequired,
+                    convertedLegacyPolicy.PossessionRequired,
+                    convertedLegacyPolicy.DenyRootedJailbroken,
+                    convertedLocations,
+                    convertedLegacyPolicy.TimeRestrictions
+                    );
+                return ServicePolicy.FromTransport(convertedPolicy);
+            }
         }
 
+        [Obsolete("SetServicePolicy is deprecated, please use SetAdvancedServicePolicy instead")]
         public void SetServicePolicy(Guid serviceId, ServicePolicy policy)
         {
-            var request = new ServicePolicyPutRequest(serviceId,
-                 policy.ToTransport()
-             );
+            //Convert to LegacyPolicy to send to SetAdvancedServicePolicy
+            DomainPolicy.IPolicy convertedPolicy = GetDomainPolicyFromTransportPolicy(policy.ToTransport());
+            SetAdvancedServicePolicy(serviceId, convertedPolicy);
+        }
+
+        public DomainPolicy.IPolicy GetAdvancedServicePolicy(Guid serviceId)
+        {
+            var request = new ServicePolicyItemPostRequest(serviceId);
+            IPolicy response = _transport.DirectoryV3ServicePolicyItemPost(request, _directoryId);
+            return GetDomainPolicyFromTransportPolicy(response);
+        }
+
+        public void SetAdvancedServicePolicy(Guid serviceId, DomainPolicy.IPolicy policy)
+        {
+            IPolicy requestPolicy = null;
+            if (policy.GetType() == typeof(DomainPolicy.LegacyPolicy))
+            {
+                DomainPolicy.LegacyPolicy legacyPolicy =
+                    (DomainPolicy.LegacyPolicy)policy;
+                List<AuthPolicy.Location> locations = GetTransportLocationsFromDomainGeoCircleFences(legacyPolicy.Fences);
+                requestPolicy = new AuthPolicy(
+                    legacyPolicy.Amount, legacyPolicy.KnowledgeRequired,
+                    legacyPolicy.InherenceRequired, legacyPolicy.PossessionRequired,
+                    legacyPolicy.DenyRootedJailbroken, locations,
+                    legacyPolicy.TimeRestrictions);
+            }
+            else if (policy.GetType() == typeof(DomainPolicy.ConditionalGeoFencePolicy))
+            {
+                requestPolicy = GetTransportPolicyFromDomainPolicy(policy);
+            }
+            else if (policy.GetType() == typeof(DomainPolicy.MethodAmountPolicy))
+            {
+                requestPolicy = GetTransportPolicyFromDomainPolicy(policy);
+            }
+            else if (policy.GetType() == typeof(DomainPolicy.FactorsPolicy))
+            {
+                requestPolicy = GetTransportPolicyFromDomainPolicy(policy);
+            }
+            else
+            {
+                throw new InvalidParameters("Policy was not a known policy type");
+            }
+            var request = new ServicePolicyPutRequest(serviceId, requestPolicy);
             _transport.DirectoryV3ServicePolicyPut(request, _directoryId);
         }
 

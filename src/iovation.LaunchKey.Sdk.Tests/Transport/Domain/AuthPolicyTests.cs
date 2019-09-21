@@ -168,6 +168,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
         {
             var expected =
                 "{" +
+                "\"type\":\"LEGACY\"," +
                 "\"minimum_requirements\":[{" +
                 "\"requirement\":\"authenticated\"," +
                 "\"any\":2," +
@@ -230,6 +231,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
         {
             var expected =
                 "{" +
+                "\"type\":\"LEGACY\"," +
                 "\"minimum_requirements\":[]," +
                 "\"factors\":[" +
                 "{" +
@@ -251,6 +253,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
         {
             var expected =
                 "{" +
+                "\"type\":\"LEGACY\"," +
                 "\"minimum_requirements\":[]," +
                 "\"factors\":[]" +
                 "}";
@@ -373,5 +376,154 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
             var actual = new JsonNetJsonEncoder().DecodeObject<AuthPolicy>(json);
             actual.ShouldCompare(expected);
         }
+
+        [TestMethod]
+        public void Serialization_ConditionalGeofence_Works()
+        {
+            var json = "{" +
+                "\"type\": \"COND_GEO\"," +
+                "\"deny_emulator_simulator\": false," +
+                "\"deny_rooted_jailbroken\": false," +
+                "\"fences\": [" +
+                    "{" +
+                    "\"country\": \"CA\"," +
+                    "\"type\": \"TERRITORY\"," +
+                    "\"name\": \"Ontario\"," +
+                    "\"administrative_area\": \"CA-ON\"" +
+                    "}" +
+                "]," +
+                "\"inside\": {" +
+                    "\"fences\": []," +
+                    "\"type\": \"FACTORS\"," +
+                    "\"factors\": [" +
+                        "\"POSSESSION\"" +
+                    "]" +
+                "}," +
+                "\"outside\": {" +
+                    "\"fences\": []," +
+                    "\"amount\": 1," +
+                    "\"type\": \"METHOD_AMOUNT\"" +
+                "}}";
+
+            FactorsPolicy factorsPolicy = new FactorsPolicy(
+                factors: new List<string>() { "POSSESSION" },
+                denyEmulatorSimulator: null,
+                denyRootedJailbroken: null,
+                fences: new List<TransportFence>()
+                );
+            MethodAmountPolicy methodAmountPolicy = new MethodAmountPolicy(
+                fences: new List<TransportFence>(),
+                denyEmulatorSimulator: null,
+                denyRootedJailbroken: null,
+                amount: 1
+            );
+
+            var expected = new ConditionalGeoFencePolicy(
+                denyRootedJailbroken: false,
+                denyEmulatorSimulator: false,
+                fences: new List<TransportFence>() { new TransportFence(name:"Ontario", country:"CA", administrativeArea:"CA-ON", type:"TERRITORY")},
+                inside: factorsPolicy,
+                outside: methodAmountPolicy );
+            var actual = new JsonNetJsonEncoder().DecodeObject<ConditionalGeoFencePolicy>(json);
+            actual.ShouldCompare(expected);
+            FactorsPolicy inside = (FactorsPolicy)actual.Inside;
+            MethodAmountPolicy outside = (MethodAmountPolicy)actual.Outside;
+            Assert.IsNull(inside.DenyEmulatorSimulator);
+            Assert.IsNull(inside.DenyRootedJailbroken);
+            Assert.IsNull(outside.DenyEmulatorSimulator);
+            Assert.IsNull(outside.DenyRootedJailbroken);
+        }
+
+
+        [TestMethod]
+        public void Serialization_MethodAmountPolicy()
+        {
+
+            var json = "{" +
+                    "\"type\": \"METHOD_AMOUNT\"," +
+                    "\"deny_emulator_simulator\": false," +
+                    "\"deny_rooted_jailbroken\": false," +
+                    "\"amount\": 1, " +
+                    "\"fences\": [ " +
+                        "{" +
+                            "\"name\": \"LV-89102\"," +
+                            "\"type\": \"TERRITORY\"," +
+                            "\"country\": \"US\", " +
+                            "\"postal_code\": \"89012\" " +
+                        "}," +
+                        "{" +
+                            "\"name\": \"California\", " +
+                            "\"type\": \"TERRITORY\", " +
+                            "\"country\": \"US\", " +
+                            "\"administrative_area\": \"US-CA\"," +
+                            "\"postal_code\": \"92535\" " +
+                        "}," +
+                        "{" +
+                            "\"name\": \"Ontario\", " +
+                            "\"type\": \"TERRITORY\"," +
+                            "\"country\": \"CA\", " +
+                            "\"administrative_area\": \"CA-ON\"" +
+                        "}" +
+                    "]" +
+                "}";
+
+            var expected = new MethodAmountPolicy(
+                amount: 1,
+                denyEmulatorSimulator: false,
+                denyRootedJailbroken: false,
+                fences: new List<TransportFence>()
+                {
+                    new TransportFence(country:"US", name:"LV-89102", administrativeArea: null, postalCode: "89012", type:"TERRITORY"),
+                    new TransportFence(country:"US", name:"California", administrativeArea: "US-CA", postalCode: "92535", type:"TERRITORY"),
+                    new TransportFence(country:"CA", name:"Ontario", administrativeArea: "CA-ON", postalCode: null, type:"TERRITORY")
+
+                }
+                );
+
+            var actual = new JsonNetJsonEncoder().DecodeObject<MethodAmountPolicy>(json);
+            actual.ShouldCompare(expected);
+        }
+
+        [TestMethod]
+        public void Serialization_FactorsPolicy()
+        {
+            var json = "{" +
+                "\"type\": \"FACTORS\"," +
+                "\"deny_emulator_simulator\": false," +
+                "\"deny_rooted_jailbroken\": false," +
+                "\"factors\": [\"POSSESSION\"], " +
+                "\"fences\": [ " +
+                    "{" +
+                        "\"name\": \"LV-89102\"," +
+                        "\"type\": \"TERRITORY\"," +
+                        "\"country\": \"US\", " +
+                        "\"postal_code\": \"89012\" " +
+                    "}," +
+                    "{" +
+                        "\"name\": \"Point A\", " +
+                        "\"type\": \"GEO_CIRCLE\", " +
+                        "\"latitude\": 123.45, " +
+                        "\"longitude\": -25.45," +
+                        "\"radius\": 105 " +
+                    "}," +
+                "]" +
+            "}";
+
+            var expected = new FactorsPolicy(
+                factors: new List<string>() { "POSSESSION" },
+                denyEmulatorSimulator: false,
+                denyRootedJailbroken: false,
+                fences: new List<TransportFence>()
+                {
+                    new TransportFence(country:"US", name:"LV-89102", administrativeArea: null, postalCode: "89012", type:"TERRITORY"),
+                    new TransportFence(latitude:123.45, name:"Point A", longitude: -25.45, radius: 105, type:"GEO_CIRCLE"),
+                }
+                );
+
+            var actual = new JsonNetJsonEncoder().DecodeObject<FactorsPolicy>(json);
+            actual.ShouldCompare(expected);
+        }
+
     }
+
 }

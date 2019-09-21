@@ -4,6 +4,8 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
     public class GeoCircleFence : IFence
     {
+        [JsonProperty("type")]
+        public string Type { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

@@ -33,6 +33,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             InherenceRequired = isInherence;
             KnowledgeRequired = isKnowledge;
             PossessionRequired = isPossession;
+            Type = "LEGACY";
         }
     }
 }

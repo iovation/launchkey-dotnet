@@ -7,15 +7,15 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
     {
 
         public Double Amount { get; }
-        public Boolean DenyRootedJailbroken { get; }
-        public Boolean DenyEmulatorSimulator { get; }
+        public bool? DenyRootedJailbroken { get; }
+        public bool? DenyEmulatorSimulator { get; }
         public List<IFence> Fences { get; }
 
         public MethodAmountPolicy(
             List<IFence> fences,
             Double amount = 0,
-            Boolean denyRootedJailbroken = false,
-            Boolean denyEmulatorSimulator = false
+            bool? denyRootedJailbroken = false,
+            bool? denyEmulatorSimulator = false
             )
         {
             Amount = amount;

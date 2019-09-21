@@ -17,8 +17,8 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
         [JsonProperty("postal_code")]
         public string PostalCode { get; set; }
 
-        public TerritoryFence(string name, string country,
-            string administrativeArea, string postalCode)
+        public TerritoryFence(string country, string name = null,
+            string administrativeArea = null, string postalCode = null)
         {
             Name = name;
             Country = country;

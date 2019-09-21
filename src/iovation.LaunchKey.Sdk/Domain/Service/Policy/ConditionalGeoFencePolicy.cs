@@ -6,8 +6,8 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
 {
     public class ConditionalGeoFencePolicy : IPolicy
     {
-        public bool DenyRootedJailbroken { get; }
-        public bool DenyEmulatorSimulator { get; }
+        public bool? DenyRootedJailbroken { get; }
+        public bool? DenyEmulatorSimulator { get; }
         public List<IFence> Fences { get; }
         public IPolicy Inside { get; }
         public IPolicy Outside { get; }
@@ -21,7 +21,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
             )
         {
 
-            if(!(outside is MethodAmountPolicy) || !(outside is FactorsPolicy))
+            if(!(outside is MethodAmountPolicy) && !(outside is FactorsPolicy))
             {
                 throw new InvalidPolicyAttributes(
                     "Inside and Outside policies must be one of the following: " +
@@ -29,7 +29,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
                 );
             }
 
-            if (!(inside is MethodAmountPolicy) || !(inside is FactorsPolicy))
+            if (!(inside is MethodAmountPolicy) && !(inside is FactorsPolicy))
             {
                 throw new InvalidPolicyAttributes(
                     "Inside and Outside policies must be one of the following: " +
@@ -37,7 +37,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
                 );
             }
 
-            if (outside.DenyEmulatorSimulator != false || inside.DenyEmulatorSimulator != false)
+            if (outside.DenyEmulatorSimulator == true || inside.DenyEmulatorSimulator == true)
             {
                 throw new InvalidPolicyAttributes(
                     "Setting DenyRootedJailbroken is not allowed on Inside " +
@@ -45,7 +45,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
                 );
             }
 
-            if (outside.DenyRootedJailbroken != false || inside.DenyRootedJailbroken != false)
+            if (outside.DenyRootedJailbroken == true || inside.DenyRootedJailbroken == true)
             {
                 throw new InvalidPolicyAttributes(
                     "Setting DenyRootedJailbroken is not allowed on Inside " +
@@ -53,11 +53,24 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
                 );
             }
 
-            if (outside.Fences.Count != 0 || inside.Fences.Count != 0)
+            if(outside.Fences != null)
             {
-                throw new InvalidPolicyAttributes(
-                    "Fences are not allowed on Inside or Outside Policy objects"
-                );
+                if(outside.Fences.Count != 0)
+                {
+                    throw new InvalidPolicyAttributes(
+                        "Fences are not allowed on Inside or Outside Policy objects"
+                    );
+                }
+            }
+
+            if(inside.Fences != null)
+            {
+                if(inside.Fences.Count != 0)
+                {
+                    throw new InvalidPolicyAttributes(
+                        "Fences are not allowed on Inside or Outside Policy objects"
+                    );
+                }
             }
 
             Inside = inside;

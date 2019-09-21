@@ -419,6 +419,20 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
                     UserHash = "uhash"
                 });
 
+            jsonService
+                .Setup(p => p.DecodeObject<IPolicy>(It.IsAny<string>()))
+                .Returns(new LegacyPolicy(
+                    null,
+                    null,
+                    false,
+                    0,
+                    false,
+                    false,
+                    false
+            ));
+
+            //Set the value for this to decodeobject
+
             return jsonService;
         }
 
@@ -854,11 +868,20 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
             DoApiCallTest(
                 t => t.OrganizationV3ServicePolicyItemPost(
                     new ServicePolicyItemPostRequest(svcId),
-                    TestConsts.DefaultOrganizationEntity
-                ),
+                    TestConsts.DefaultOrganizationEntity),
                 HttpMethod.POST,
                 "/organization/v3/service/policy/item"
             );
+
+
+            //var httpClient = MakeMockHttpClient(bodyResponse, 200);
+            //var jsonService = new Mock<IJsonEncoder>();
+
+            //var transport = MakeMockedTransport(httpClient.Object, jsonService.Object);
+            //transport.OrganizationV3ServicePolicyItemPost(
+            //        new ServicePolicyItemPostRequest(svcId),
+            //        TestConsts.DefaultOrganizationEntity
+            //    );
         }
 
         [TestMethod]

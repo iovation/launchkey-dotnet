@@ -9,8 +9,8 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
         public Boolean RequireKnowledgeFactor { get; }
         public Boolean RequirePossessionFactor { get; }
         public Boolean RequireInherenceFactor { get; }
-        public Boolean DenyRootedJailbroken { get; }
-        public Boolean DenyEmulatorSimulator { get; }
+        public Boolean? DenyRootedJailbroken { get; }
+        public Boolean? DenyEmulatorSimulator { get; }
         public List<IFence> Fences { get; }
 
         public FactorsPolicy(

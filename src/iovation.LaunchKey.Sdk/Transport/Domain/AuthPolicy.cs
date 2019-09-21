@@ -181,7 +181,6 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             {
                 return string.Format("Requirement: {0},\n Geofences: {1},\n Amount: {2},\n Types: {3}",Requirement, Geofences.ToString(), Amount, Types);
             }
-
         }
 
         public class AuthMethod
@@ -289,6 +288,8 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
                     }
                 });
             }
+
+            Type = "LEGACY";
         }
     }
 }

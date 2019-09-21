@@ -763,14 +763,27 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
         public IPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
         {
             var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/service/policy/item", subject, request, null);
-            TransportPolicy policy = DecryptResponse<TransportPolicy>(response);
+            // This should now parse to the correct subtype!
+            return DecryptResponse<IPolicy>(response);
 
-            if (policy.Type == null || policy.Type == "LEGACY)")
-            {
-                return DecryptResponse<AuthPolicy>(response);
-            }
+            //if (policy.Type == null || policy.Type == "LEGACY")
+            //{
+            //    policy = DecryptResponse<AuthPolicy>(response);
+            //}
+            //else if (policy.Type == "COND_GEO")
+            //{
+            //    policy = DecryptResponse<ConditionalGeoFencePolicy>(response);
+            //}
+            //else if (policy.Type == "FACTORS")
+            //{
+            //    policy = DecryptResponse<FactorsPolicy>(response);
+            //}
+            //else if (policy.Type == "METHOD_AMOUNT")
+            //{
+            //    policy = DecryptResponse<MethodAmountPolicy>(response);
+            //}
 
-            return policy;
+            // return policy;
         }
 
 

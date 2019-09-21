@@ -12,17 +12,17 @@
     <PackageLicenseUrl />
     <PackageProjectUrl>https://docs.launchkey.com/api/index.html</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <ReleaseVersion>3.6</ReleaseVersion>
+    <ReleaseVersion>3.5</ReleaseVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="jose-jwt" Version="2.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.3.37" />
+    <PackageReference Include="JsonSubTypes" Version="1.6.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\Service\Policy\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Transport\Domain\ServicePolicyPutRequest %28copy%29.cs" />
   </ItemGroup>
 </Project>

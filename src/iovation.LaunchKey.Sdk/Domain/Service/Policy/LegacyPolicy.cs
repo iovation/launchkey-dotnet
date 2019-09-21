@@ -6,8 +6,8 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
     public class LegacyPolicy : IPolicy
     {
 
-        public bool DenyRootedJailbroken { get; }
-        public bool DenyEmulatorSimulator { get; } = false;
+        public bool? DenyRootedJailbroken { get; }
+        public bool? DenyEmulatorSimulator { get; } = false;
         public List<IFence> Fences { get; }
         public int? Amount { get; }
         public bool InherenceRequired { get; }
