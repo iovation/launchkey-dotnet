@@ -26,7 +26,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
             )
         {
             DenyRootedJailbroken = denyRootedJailbroken;
-            Fences = fences;
+            Fences = fences ?? new List<IFence>();
             Amount = amount;
             InherenceRequired = inherenceRequired;
             KnowledgeRequired = knowledgeRequired;

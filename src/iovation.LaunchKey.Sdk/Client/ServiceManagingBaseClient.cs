@@ -40,6 +40,9 @@ namespace iovation.LaunchKey.Sdk.Client
                         convertedTimeFences = factor.Attributes.TimeFences;
                     }
                 }
+
+
+
                 return new DomainPolicy.LegacyPolicy(
                     fences: convertedGeoFences,
                     denyRootedJailbroken: (bool)parsedLegacyPolicy.JailbreakDetection,

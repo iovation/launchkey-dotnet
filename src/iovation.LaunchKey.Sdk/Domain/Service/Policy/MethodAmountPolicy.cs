@@ -21,7 +21,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
             Amount = amount;
             DenyRootedJailbroken = denyRootedJailbroken;
             DenyEmulatorSimulator = denyEmulatorSimulator;
-            Fences = fences;
+            Fences = fences ?? new List<IFence>();
         }
     }
 }

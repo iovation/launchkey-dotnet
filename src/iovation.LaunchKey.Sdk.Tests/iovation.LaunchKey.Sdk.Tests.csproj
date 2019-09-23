@@ -28,4 +28,7 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Service\Policy\" />
+  </ItemGroup>
 </Project>

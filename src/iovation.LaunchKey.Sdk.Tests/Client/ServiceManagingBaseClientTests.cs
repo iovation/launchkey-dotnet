@@ -27,7 +27,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(expected.Amount, actual.Amount);
             Assert.AreEqual(expected.DenyEmulatorSimulator, actual.DenyEmulatorSimulator);
             Assert.AreEqual(expected.DenyRootedJailbroken, actual.DenyRootedJailbroken);
-            Assert.AreEqual(expected.Fences, actual.Fences);
+            Assert.IsInstanceOfType(actual.Fences, typeof(List<DomainPolicy.IFence>));
+            Assert.AreEqual(0, actual.Fences.Count);
             Assert.AreEqual(expected.InherenceRequired, actual.InherenceRequired);
             Assert.AreEqual(expected.KnowledgeRequired, actual.KnowledgeRequired);
             Assert.AreEqual(expected.PossessionRequired, actual.PossessionRequired);
