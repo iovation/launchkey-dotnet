@@ -205,26 +205,14 @@ namespace iovation.LaunchKey.Sdk.Client
         {
             DomainPolicy.IPolicy legacyPolicy = GetAdvancedServicePolicy(serviceId);
 
-            if (legacyPolicy.GetType() != typeof(LegacyPolicy))
+            if (legacyPolicy.GetType() != typeof(DomainPolicy.LegacyPolicy))
             {
                 //TODO: ADD LOGGING
                 return null;
             }
             else
             {
-                DomainPolicy.LegacyPolicy convertedLegacyPolicy = (DomainPolicy.LegacyPolicy)legacyPolicy;
-                List<AuthPolicy.Location> convertedLocations = GetTransportLocationsFromDomainGeoCircleFences(convertedLegacyPolicy.Fences);
-
-                AuthPolicy convertedPolicy = new AuthPolicy(
-                    convertedLegacyPolicy.Amount,
-                    convertedLegacyPolicy.KnowledgeRequired,
-                    convertedLegacyPolicy.InherenceRequired,
-                    convertedLegacyPolicy.PossessionRequired,
-                    convertedLegacyPolicy.DenyRootedJailbroken,
-                    convertedLocations,
-                    convertedLegacyPolicy.TimeRestrictions
-                    );
-                return ServicePolicy.FromTransport(convertedPolicy);
+                return GetServicePolicyFromLegacyPolicy((DomainPolicy.LegacyPolicy)legacyPolicy);
             }
         }
 

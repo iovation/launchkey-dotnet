@@ -168,7 +168,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
         {
             var expected =
                 "{" +
-                "\"type\":\"LEGACY\"," +
                 "\"minimum_requirements\":[{" +
                 "\"requirement\":\"authenticated\"," +
                 "\"any\":2," +
@@ -231,7 +230,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
         {
             var expected =
                 "{" +
-                "\"type\":\"LEGACY\"," +
                 "\"minimum_requirements\":[]," +
                 "\"factors\":[" +
                 "{" +
@@ -253,7 +251,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
         {
             var expected =
                 "{" +
-                "\"type\":\"LEGACY\"," +
                 "\"minimum_requirements\":[]," +
                 "\"factors\":[]" +
                 "}";

@@ -137,7 +137,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "False",
                         "False",
                         "True",
-                        "False",
+                        "True",
                         "",
                         "",
                         ""});

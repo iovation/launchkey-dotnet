@@ -32,7 +32,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(expected.InherenceRequired, actual.InherenceRequired);
             Assert.AreEqual(expected.KnowledgeRequired, actual.KnowledgeRequired);
             Assert.AreEqual(expected.PossessionRequired, actual.PossessionRequired);
-            Assert.AreEqual(expected.TimeRestrictions, actual.TimeRestrictions);
+            Assert.IsInstanceOfType(actual.TimeRestrictions, typeof(List<AuthPolicy.TimeFence>));
+            Assert.AreEqual(0, actual.TimeRestrictions.Count);
         }
 
         [TestMethod]

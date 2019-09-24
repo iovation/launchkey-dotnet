@@ -17,21 +17,21 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
 
         public LegacyPolicy(
             List<IFence> fences,
-            bool denyRootedJailbroken = false,
+            bool? denyRootedJailbroken = false,
             int? amount = 0,
-            bool inherenceRequired = false,
-            bool knowledgeRequired = false,
-            bool possessionRequired = false,
+            bool? inherenceRequired = false,
+            bool? knowledgeRequired = false,
+            bool? possessionRequired = false,
             List<TimeFence> timeRestrictions = null
             )
         {
-            DenyRootedJailbroken = denyRootedJailbroken;
+            DenyRootedJailbroken = denyRootedJailbroken ?? false;
             Fences = fences ?? new List<IFence>();
-            Amount = amount;
-            InherenceRequired = inherenceRequired;
-            KnowledgeRequired = knowledgeRequired;
-            PossessionRequired = possessionRequired;
-            TimeRestrictions = timeRestrictions;
+            Amount = amount ?? 0;
+            InherenceRequired = inherenceRequired ?? false;
+            KnowledgeRequired = knowledgeRequired ?? false;
+            PossessionRequired = possessionRequired ?? false;
+            TimeRestrictions = timeRestrictions ?? new List<TimeFence>();
         }
     }
 }

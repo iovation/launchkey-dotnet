@@ -9,7 +9,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
     public class AuthPolicy : IPolicy
     {
-        [DefaultValue("LEGACY")]
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
@@ -289,7 +289,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
                 });
             }
 
-            Type = "LEGACY";
+            //Type = "LEGACY";
         }
     }
 }

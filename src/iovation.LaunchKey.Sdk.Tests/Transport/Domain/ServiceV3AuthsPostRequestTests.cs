@@ -77,7 +77,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
             );
             var o = new ServiceV3AuthsPostRequest("my-unique-user-identifier", policy, null, null, null, null, null, null);
             var json = encoder.EncodeObject(o);
-            var expected = "{\"username\":\"my-unique-user-identifier\",\"policy\":{\"type\":\"LEGACY\",\"minimum_requirements\":[{\"requirement\":\"authenticated\",\"any\":2}],\"factors\":[{\"factor\":\"geofence\",\"requirement\":\"forced requirement\",\"priority\":1,\"attributes\":{\"locations\":[{\"radius\":60.0,\"latitude\":27.175,\"longitude\":78.0422}]}}]}}";
+            var expected = "{\"username\":\"my-unique-user-identifier\",\"policy\":{\"minimum_requirements\":[{\"requirement\":\"authenticated\",\"any\":2}],\"factors\":[{\"factor\":\"geofence\",\"requirement\":\"forced requirement\",\"priority\":1,\"attributes\":{\"locations\":[{\"radius\":60.0,\"latitude\":27.175,\"longitude\":78.0422}]}}]}}";
 
             Assert.AreEqual(expected, json);
         }

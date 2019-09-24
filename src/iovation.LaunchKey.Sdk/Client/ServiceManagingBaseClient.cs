@@ -13,14 +13,13 @@ namespace iovation.LaunchKey.Sdk.Client
         public static DomainPolicy.IPolicy GetDomainPolicyFromTransportPolicy(IPolicy policy)
         {
             DomainPolicy.IPolicy returnPolicy = null;
-            if(policy.Type == "LEGACY")
+            if(policy.Type == null || policy.Type == "LEGACY")
             {
                 AuthPolicy convertedLegacyPolicy = (AuthPolicy)policy;
                 //Grab a parsed object to save having to reimplement policy logic
                 ServicePolicy parsedLegacyPolicy = ServicePolicy.FromTransport(convertedLegacyPolicy);
-                List<DomainPolicy.IFence> convertedGeoFences = null;
-                List<AuthPolicy.TimeFence> convertedTimeFences = null;
-                // TODO: 
+                List<DomainPolicy.IFence> convertedGeoFences = new List<DomainPolicy.IFence>();
+                List<AuthPolicy.TimeFence> convertedTimeFences = new List<AuthPolicy.TimeFence>();
                 foreach (var factor in convertedLegacyPolicy.Factors)
                 {
                     if (factor.Factor == AuthPolicy.FactorType.Geofence)
@@ -45,11 +44,11 @@ namespace iovation.LaunchKey.Sdk.Client
 
                 return new DomainPolicy.LegacyPolicy(
                     fences: convertedGeoFences,
-                    denyRootedJailbroken: (bool)parsedLegacyPolicy.JailbreakDetection,
+                    denyRootedJailbroken: parsedLegacyPolicy.JailbreakDetection,
                     amount: parsedLegacyPolicy.RequiredFactors,
-                    inherenceRequired: (bool)parsedLegacyPolicy.RequireInherenceFactor,
-                    knowledgeRequired: (bool)parsedLegacyPolicy.RequireKnowledgeFactor,
-                    possessionRequired: (bool)parsedLegacyPolicy.RequirePossessionFactor,
+                    inherenceRequired: parsedLegacyPolicy.RequireInherenceFactor,
+                    knowledgeRequired: parsedLegacyPolicy.RequireKnowledgeFactor,
+                    possessionRequired: parsedLegacyPolicy.RequirePossessionFactor,
                     timeRestrictions: convertedTimeFences
                 );
             }
@@ -273,5 +272,41 @@ namespace iovation.LaunchKey.Sdk.Client
             return locations;
         }
 
+        public static ServicePolicy GetServicePolicyFromLegacyPolicy(DomainPolicy.LegacyPolicy legacyPolicy)
+        {
+            List<AuthPolicy.Location> convertedLocations = GetTransportLocationsFromDomainGeoCircleFences(legacyPolicy.Fences);
+
+            bool? knowledgeRequired = legacyPolicy.KnowledgeRequired;
+            bool? possessionRequired = legacyPolicy.PossessionRequired;
+            bool? inherenceRequired = legacyPolicy.InherenceRequired;
+
+            if (legacyPolicy.InherenceRequired == false && legacyPolicy.KnowledgeRequired == false && legacyPolicy.PossessionRequired == false)
+            {
+                knowledgeRequired = null;
+                possessionRequired = null;
+                inherenceRequired = null;
+            }
+
+            int? amount = legacyPolicy.Amount;
+            if (amount == 0)
+            {
+                amount = null;
+            }
+
+            bool? denyRootedJailbroken = legacyPolicy.DenyRootedJailbroken;
+            if (legacyPolicy.DenyRootedJailbroken == false)
+                denyRootedJailbroken = null;
+
+            AuthPolicy convertedPolicy = new AuthPolicy(
+                amount,
+                knowledgeRequired,
+                inherenceRequired,
+                possessionRequired,
+                denyRootedJailbroken,
+                convertedLocations,
+                legacyPolicy.TimeRestrictions
+                );
+            return ServicePolicy.FromTransport(convertedPolicy);
+        }
     }
 }
