@@ -169,7 +169,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             public string Requirement { get; set; }
 
             [JsonProperty("geofences")]
-            public Location[] Geofences { get; set; }
+            public List<TransportFence> Geofences { get; set; }
 
             [JsonProperty("amount")]
             public int Amount { get; set; }

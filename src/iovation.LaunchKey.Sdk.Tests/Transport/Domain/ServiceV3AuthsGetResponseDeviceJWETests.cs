@@ -54,7 +54,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
             Assert.AreEqual("2963", o.ServicePins[3]);
             Assert.AreEqual("2046", o.ServicePins[4]);
             Assert.AreEqual(null, o.AuthPolicy.Requirement);
-            Assert.AreEqual(0, o.AuthPolicy.Geofences.Length);
+            Assert.AreEqual(0, o.AuthPolicy.Geofences.Count);
             Assert.AreEqual(1, o.AuthMethods.Length);
         }
 
@@ -106,7 +106,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 
             Assert.AreEqual("types", o.AuthPolicy.Requirement);
             Assert.AreEqual("knowledge", o.AuthPolicy.Types[0]);
-            Assert.AreEqual(2, o.AuthPolicy.Geofences.Length);
+            Assert.AreEqual(2, o.AuthPolicy.Geofences.Count);
             Assert.AreEqual(36.121020, o.AuthPolicy.Geofences[0].Latitude);
             Assert.AreEqual(-115.156460, o.AuthPolicy.Geofences[0].Longitude);
             Assert.AreEqual(550, o.AuthPolicy.Geofences[0].Radius);

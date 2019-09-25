@@ -175,7 +175,7 @@ namespace iovation.LaunchKey.Sdk.Client
             {
                 foreach (TransportFence fence in fences)
                 {
-                    if (fence.Type == "GEO_CIRCLE")
+                    if (fence.Type == null || fence.Type == "GEO_CIRCLE")
                     {
                         convertedFences.Add(
                             new DomainPolicy.GeoCircleFence(
