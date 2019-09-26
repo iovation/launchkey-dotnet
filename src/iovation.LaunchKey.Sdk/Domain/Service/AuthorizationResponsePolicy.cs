@@ -45,25 +45,9 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
         /// <param name="inherenceRequired"></param>
         /// <param name="knowledgeRequired"></param>
         /// <param name="possessionRequired"></param>
-        public AuthorizationResponsePolicy(string requirement = null, int? amount = null, List<IFence> fences = null, bool? inherenceRequired = null, bool? knowledgeRequired = null, bool? possessionRequired = null)
+        public AuthorizationResponsePolicy(Requirement? requirement, int? amount = null, List<IFence> fences = null, bool? inherenceRequired = null, bool? knowledgeRequired = null, bool? possessionRequired = null)
         {
-            if(requirement == null)
-            {
-                Requirement = null;
-            } else
-            {
-                //Requirement = (Requirement)Enum.Parse(typeof(Requirement), requirement, true);
-                Requirement parsedRequirement;
-                if(Enum.TryParse<Requirement>(requirement, true, out parsedRequirement))
-                {
-                    Requirement = parsedRequirement;
-                }
-                else
-                {
-                    Requirement = Service.Requirement.OTHER;
-                }
-                
-            }
+            Requirement = requirement;
             Amount = amount;
             Fences = fences ?? new List<IFence>();
             InherenceRequired = inherenceRequired;

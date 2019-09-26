@@ -183,8 +183,28 @@ namespace iovation.LaunchKey.Sdk.Client
                     possessionRequired = response.AuthPolicy.Types.Contains("POSSESSION", StringComparer.OrdinalIgnoreCase);
                 }
 
+                Requirement? requirement = null;
+
+                if (response.AuthPolicy.Requirement == null)
+                {
+                    requirement = null;
+                }
+                else
+                {
+                    Requirement parsedRequirement;
+                    if (Enum.TryParse(response.AuthPolicy.Requirement, true, out parsedRequirement))
+                    {
+                        requirement = parsedRequirement;
+                    }
+                    else
+                    {
+                        requirement = Requirement.OTHER;
+                    }
+
+                }
+
                 authResponse = new AuthorizationResponsePolicy(
-                    requirement: response.AuthPolicy.Requirement,
+                    requirement: requirement,
                     amount: response.AuthPolicy.Amount,
                     fences: fences,
                     knowledgeRequired: knowledgeRequired,
