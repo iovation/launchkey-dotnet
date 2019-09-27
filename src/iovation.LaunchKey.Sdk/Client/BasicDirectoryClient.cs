@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Directory;
@@ -207,7 +208,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
             if (legacyPolicy.GetType() != typeof(DomainPolicy.LegacyPolicy))
             {
-                //TODO: ADD LOGGING
+                Trace.TraceWarning($"Invalid policy type returned to legacy function. To utilize new policies please use GetAdvancedServicePolicy");
                 return null;
             }
             else

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Organization;
@@ -221,7 +222,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
             if (legacyPolicy.GetType() != typeof(DomainPolicy.LegacyPolicy))
             {
-                //TODO: ADD LOGGING
+                Trace.TraceWarning($"Invalid policy type returned to legacy function. To utilize new policies please use GetAdvancedServicePolicy");
                 return null;
             }
             else
@@ -233,7 +234,6 @@ namespace iovation.LaunchKey.Sdk.Client
         [Obsolete("SetServicePolicy is deprecated, please use SetAdvancedServicePolicy instead")]
         public void SetServicePolicy(Guid serviceId, ServicePolicy policy)
         {
-            //Convert to LegacyPolicy to send to SetAdvancedServicePolicy
             DomainPolicy.IPolicy convertedPolicy = GetDomainPolicyFromTransportPolicy(policy.ToTransport());
             SetAdvancedServicePolicy(serviceId, convertedPolicy);
         }

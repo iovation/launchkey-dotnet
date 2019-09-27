@@ -10,7 +10,7 @@ namespace iovation.LaunchKey.Sdk.Client
 {
     public class ServiceManagingBaseClient
     {
-        public static DomainPolicy.IPolicy GetDomainPolicyFromTransportPolicy(IPolicy policy)
+        internal static DomainPolicy.IPolicy GetDomainPolicyFromTransportPolicy(IPolicy policy)
         {
             DomainPolicy.IPolicy returnPolicy = null;
             if(policy.Type == null || policy.Type == "LEGACY")
@@ -99,7 +99,7 @@ namespace iovation.LaunchKey.Sdk.Client
             return returnPolicy;
         }
 
-        public static IPolicy GetTransportPolicyFromDomainPolicy(DomainPolicy.IPolicy policy, bool nestedPolicy = false)
+        internal static IPolicy GetTransportPolicyFromDomainPolicy(DomainPolicy.IPolicy policy, bool nestedPolicy = false)
         {
             IPolicy returnPolicy = null;
 
@@ -168,7 +168,7 @@ namespace iovation.LaunchKey.Sdk.Client
             return returnPolicy;
         }
 
-        public static List<DomainPolicy.IFence> GetDomainFencesFromTransportFences(List<TransportFence> fences)
+        internal static List<DomainPolicy.IFence> GetDomainFencesFromTransportFences(List<TransportFence> fences)
         {
             List<DomainPolicy.IFence> convertedFences = new List<DomainPolicy.IFence>();
             if(fences != null)
@@ -208,7 +208,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
         }
 
-        public static List<TransportFence> GetTransportFencesFromDomainFences(List<DomainPolicy.IFence> fences)
+        internal static List<TransportFence> GetTransportFencesFromDomainFences(List<DomainPolicy.IFence> fences)
         {
             List<TransportFence> convertedFences = new List<TransportFence>();
 
@@ -251,7 +251,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
         }
 
-        public static List<AuthPolicy.Location> GetTransportLocationsFromDomainGeoCircleFences(List<DomainPolicy.IFence> fences)
+        internal static List<AuthPolicy.Location> GetTransportLocationsFromDomainGeoCircleFences(List<DomainPolicy.IFence> fences)
         {
             List<AuthPolicy.Location> locations = new List<AuthPolicy.Location>();
             if(fences != null)
@@ -272,7 +272,7 @@ namespace iovation.LaunchKey.Sdk.Client
             return locations;
         }
 
-        public static ServicePolicy GetServicePolicyFromLegacyPolicy(DomainPolicy.LegacyPolicy legacyPolicy)
+        internal static ServicePolicy GetServicePolicyFromLegacyPolicy(DomainPolicy.LegacyPolicy legacyPolicy)
         {
             List<AuthPolicy.Location> convertedLocations = GetTransportLocationsFromDomainGeoCircleFences(legacyPolicy.Fences);
 

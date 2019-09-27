@@ -300,7 +300,7 @@ namespace iovation.LaunchKey.Sdk.Client
                 }
                 else if(authResponsePolicy.Requirement == Requirement.COND_GEO)
                 {
-                    //TODO: ADD LOGGING
+                    Trace.TraceWarning($"Conditional Geofence cannot be converted to the legacy policy. To utilize new policies please use HandleAdvancedWebhook");
                     return null;
                 }
                 else
