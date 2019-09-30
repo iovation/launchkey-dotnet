@@ -362,11 +362,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 Console.WriteLine($"    Same Service: {e.FromSameService}");
                 return 1;
             }
-            //catch (BaseException e)
-            //{
-            //    Console.WriteLine($"Error while authorizing user {username}. Error: {e.Message}");
-            //    return 1;
-            //}
+            catch (BaseException e)
+            {
+                Console.WriteLine($"Error while authorizing user {username}. Error: {e.Message}");
+                return 1;
+            }
         }
 
         public static int DoAuthorizationCancel(IServiceClient serviceClient, string authorizationRequestId)
