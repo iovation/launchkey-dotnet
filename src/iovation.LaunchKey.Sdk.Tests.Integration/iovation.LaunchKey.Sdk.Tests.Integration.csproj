@@ -354,6 +354,9 @@
     <Compile Update="Features\service_client\auth_request\service_client_auth_request_get_device_response_methods_1.feature.cs">
       <DependentUpon>service_client_auth_request_get_device_response_methods_1.feature</DependentUpon>
     </Compile>
+    <Compile Update="Features\policy\policy_construction.feature.cs">
+      <DependentUpon>policy_construction.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -545,14 +548,8 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>beta-public-key.feature.cs</LastGenOutput>
     </None>
-    <None Update="Features\service_client\auth_request\service-client-auth-request-get %28copy%29.feature">
-      <LastGenOutput>service-client-auth-request-get.feature.cs</LastGenOutput>
-    </None>
-    <None Update="Features\service_client\auth_request\service-client-auth-request-send-policy %28copy%29.feature">
-      <LastGenOutput>service-client-auth-request-send-policy.feature.cs</LastGenOutput>
-    </None>
-    <None Update="Features\service_client\auth_request\service-client-auth-request-send-policy %28copy%29.feature">
-      <LastGenOutput>service-client-auth-request-send-policy.feature.cs</LastGenOutput>
+    <None Update="Features\policy\policy_construction.feature">
+      <LastGenOutput>policy_construction.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -560,8 +557,7 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0">
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
-    <SpecFlowObsoleteCodeBehindFiles Remove="Features\service_client\auth_request\service_client_auth_request_get_device_response_methods_1.feature.cs" />
+    <Folder Include="Features\policy\" />
   </ItemGroup>
 </Project>

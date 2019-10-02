@@ -16,8 +16,8 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
             IPolicy inside,
             IPolicy outside,
             List<IFence> fences,
-            bool denyRootedJailbroken = false, 
-            bool denyEmulatorSimulator = false
+            bool? denyRootedJailbroken = false, 
+            bool? denyEmulatorSimulator = false
             )
         {
 
@@ -76,8 +76,8 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
             Inside = inside;
             Outside = outside;
             Fences = fences ?? new List<IFence>();
-            DenyRootedJailbroken = denyRootedJailbroken;
-            DenyEmulatorSimulator = denyEmulatorSimulator;
+            DenyRootedJailbroken = denyRootedJailbroken ?? false;
+            DenyEmulatorSimulator = denyEmulatorSimulator ?? false;
         }
     }
 }

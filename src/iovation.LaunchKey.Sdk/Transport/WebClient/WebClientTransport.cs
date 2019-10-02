@@ -780,7 +780,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
         public IPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
         {
             var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/service/policy/item", subject, request, null);
-            return DecryptResponse<AuthPolicy>(response);
+            return DecryptResponse<IPolicy>(response);
         }
 
         public void DirectoryV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject)

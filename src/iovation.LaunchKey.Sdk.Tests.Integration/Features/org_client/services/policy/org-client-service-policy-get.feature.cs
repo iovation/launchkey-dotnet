@@ -211,7 +211,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 7
   this.FeatureBackground();
 #line hidden
-            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table36 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Days",
                         "Start Hour",
@@ -219,7 +219,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "End Hour",
                         "End Minute",
                         "Time Zone"});
-            table24.AddRow(new string[] {
+            table36.AddRow(new string[] {
                         "Week Days",
                         "Monday,Tuesday,Wednesday,Thursday,Friday",
                         "0",
@@ -227,7 +227,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "23",
                         "59",
                         "America/Los_Angeles"});
-            table24.AddRow(new string[] {
+            table36.AddRow(new string[] {
                         "Week Ends",
                         "Saturday,Sunday",
                         "0",
@@ -236,13 +236,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "59",
                         "America/New_York"});
 #line 40
-    testRunner.Given("the Organization Service Policy is set to have the following Time Fences:", ((string)(null)), table24, "Given ");
+    testRunner.Given("the Organization Service Policy is set to have the following Time Fences:", ((string)(null)), table36, "Given ");
 #line 44
     testRunner.And("I set the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 45
     testRunner.When("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table37 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Days",
                         "Start Hour",
@@ -250,7 +250,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "End Hour",
                         "End Minute",
                         "Time Zone"});
-            table25.AddRow(new string[] {
+            table37.AddRow(new string[] {
                         "Week Days",
                         "Monday,Tuesday,Wednesday,Thursday,Friday",
                         "0",
@@ -258,7 +258,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "23",
                         "59",
                         "America/Los_Angeles"});
-            table25.AddRow(new string[] {
+            table37.AddRow(new string[] {
                         "Week Ends",
                         "Saturday,Sunday",
                         "0",
@@ -267,7 +267,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "59",
                         "America/New_York"});
 #line 46
-    testRunner.Then("the Organization Service Policy has the following Time Fences:", ((string)(null)), table25, "Then ");
+    testRunner.Then("the Organization Service Policy has the following Time Fences:", ((string)(null)), table37, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -284,45 +284,45 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 7
   this.FeatureBackground();
 #line hidden
-            TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Latitude",
                         "Longitude",
                         "Radius"});
-            table26.AddRow(new string[] {
+            table38.AddRow(new string[] {
                         "Location Alpha",
                         "12.3",
                         "23.4",
                         "500"});
-            table26.AddRow(new string[] {
+            table38.AddRow(new string[] {
                         "Location Beta",
                         "32.1",
                         "43.2",
                         "1000"});
 #line 52
-    testRunner.Given("the Organization Service Policy is set to have the following Geofence locations:", ((string)(null)), table26, "Given ");
+    testRunner.Given("the Organization Service Policy is set to have the following Geofence locations:", ((string)(null)), table38, "Given ");
 #line 56
     testRunner.And("I set the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 57
     testRunner.When("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table39 = new TechTalk.SpecFlow.Table(new string[] {
                         "Name",
                         "Latitude",
                         "Longitude",
                         "Radius"});
-            table27.AddRow(new string[] {
+            table39.AddRow(new string[] {
                         "Location Alpha",
                         "12.3",
                         "23.4",
                         "500"});
-            table27.AddRow(new string[] {
+            table39.AddRow(new string[] {
                         "Location Beta",
                         "32.1",
                         "43.2",
                         "1000"});
 #line 58
-    testRunner.Then("the Organization Service Policy has the following Geofence locations:", ((string)(null)), table27, "Then ");
+    testRunner.Then("the Organization Service Policy has the following Geofence locations:", ((string)(null)), table39, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -343,6 +343,419 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                     "b8-c649-11e7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 65
     testRunner.Then("a ServiceNotFound error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Setting Fences on a Method Amount Policy works as expected")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization Client can retrieve Organization Service Policy")]
+        public virtual void SettingFencesOnAMethodAmountPolicyWorksAsExpected()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Fences on a Method Amount Policy works as expected", null, ((string[])(null)));
+#line 67
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 7
+  this.FeatureBackground();
+#line 68
+    testRunner.When("I create a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table40 = new TechTalk.SpecFlow.Table(new string[] {
+                        "latitude",
+                        "longitude",
+                        "radius",
+                        "name"});
+            table40.AddRow(new string[] {
+                        "45.1250",
+                        "150.51",
+                        "15200",
+                        "Large Fence"});
+            table40.AddRow(new string[] {
+                        "-50.0111",
+                        "-140",
+                        "100",
+                        "Small Fence"});
+#line 69
+    testRunner.And("I add the following GeoCircleFence items", ((string)(null)), table40, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table41 = new TechTalk.SpecFlow.Table(new string[] {
+                        "country",
+                        "admin_area",
+                        "postal_code",
+                        "name"});
+            table41.AddRow(new string[] {
+                        "US",
+                        "US-NV",
+                        "89120",
+                        "US-NV"});
+            table41.AddRow(new string[] {
+                        "US",
+                        "US-CA",
+                        "90001",
+                        "US-CA"});
+#line 73
+    testRunner.And("I add the following TerritoryFence items", ((string)(null)), table41, "And ");
+#line 77
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 78
+    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 79
+    testRunner.Then("the Organization Service Policy has \"4\" fences", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 80
+    testRunner.And("the Organization Service Policy contains the GeoCircleFence \"Large Fence\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 81
+    testRunner.And("the \"Large Fence\" fence has a latitude of \"45.1250\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 82
+    testRunner.And("the \"Large Fence\" fence has a longitude of \"150.51\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 83
+    testRunner.And("the \"Large Fence\" fence has a radius of \"15200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 84
+    testRunner.And("the Organization Service Policy contains the GeoCircleFence \"Small Fence\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 85
+    testRunner.And("the \"Small Fence\" fence has a latitude of \"-50.0111\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 86
+    testRunner.And("the \"Small Fence\" fence has a longitude of \"-140\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 87
+    testRunner.And("the \"Small Fence\" fence has a radius of \"100\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 88
+    testRunner.And("the Organization Service Policy contains the TerritoryFence \"US-NV\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 89
+    testRunner.And("the \"US-NV\" fence has a country of \"US\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 90
+    testRunner.And("the \"US-NV\" fence has an administrative_area of \"US-NV\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 91
+    testRunner.And("the \"US-NV\" fence has a postal_code of \"89120\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 92
+    testRunner.And("the Organization Service Policy contains the TerritoryFence \"US-CA\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 93
+    testRunner.And("the \"US-CA\" fence has a country of \"US\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 94
+    testRunner.And("the \"US-CA\" fence has an administrative_area of \"US-CA\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 95
+    testRunner.And("the \"US-CA\" fence has a postal_code of \"90001\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Setting Fences on a Factors Policy works as expected")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization Client can retrieve Organization Service Policy")]
+        public virtual void SettingFencesOnAFactorsPolicyWorksAsExpected()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Fences on a Factors Policy works as expected", null, ((string[])(null)));
+#line 97
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 7
+  this.FeatureBackground();
+#line 98
+    testRunner.When("I create a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table42 = new TechTalk.SpecFlow.Table(new string[] {
+                        "latitude",
+                        "longitude",
+                        "radius",
+                        "name"});
+            table42.AddRow(new string[] {
+                        "45.1250",
+                        "150.51",
+                        "15200",
+                        "Large Fence"});
+            table42.AddRow(new string[] {
+                        "-50.0111",
+                        "-140",
+                        "100",
+                        "Small Fence"});
+#line 99
+    testRunner.And("I add the following GeoCircleFence items", ((string)(null)), table42, "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table43 = new TechTalk.SpecFlow.Table(new string[] {
+                        "country",
+                        "admin_area",
+                        "postal_code",
+                        "name"});
+            table43.AddRow(new string[] {
+                        "US",
+                        "US-NV",
+                        "89120",
+                        "US-NV"});
+            table43.AddRow(new string[] {
+                        "US",
+                        "US-CA",
+                        "90001",
+                        "US-CA"});
+#line 103
+    testRunner.And("I add the following TerritoryFence items", ((string)(null)), table43, "And ");
+#line 107
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 108
+    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 109
+    testRunner.Then("the Organization Service Policy has \"4\" fences", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 110
+    testRunner.And("the Organization Service Policy contains the GeoCircleFence \"Large Fence\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 111
+    testRunner.And("the \"Large Fence\" fence has a latitude of \"45.1250\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 112
+    testRunner.And("the \"Large Fence\" fence has a longitude of \"150.51\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 113
+    testRunner.And("the \"Large Fence\" fence has a radius of \"15200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 114
+    testRunner.And("the Organization Service Policy contains the GeoCircleFence \"Small Fence\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 115
+    testRunner.And("the \"Small Fence\" fence has a latitude of \"-50.0111\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 116
+    testRunner.And("the \"Small Fence\" fence has a longitude of \"-140\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 117
+    testRunner.And("the \"Small Fence\" fence has a radius of \"100\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 118
+    testRunner.And("the Organization Service Policy contains the TerritoryFence \"US-NV\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 119
+    testRunner.And("the \"US-NV\" fence has a country of \"US\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 120
+    testRunner.And("the \"US-NV\" fence has an administrative_area of \"US-NV\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 121
+    testRunner.And("the \"US-NV\" fence has a postal_code of \"89120\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 122
+    testRunner.And("the Organization Service Policy contains the TerritoryFence \"US-CA\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 123
+    testRunner.And("the \"US-CA\" fence has a country of \"US\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 124
+    testRunner.And("the \"US-CA\" fence has an administrative_area of \"US-CA\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 125
+    testRunner.And("the \"US-CA\" fence has a postal_code of \"90001\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Setting Inside Policy to Factors Policy works as expected")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization Client can retrieve Organization Service Policy")]
+        public virtual void SettingInsidePolicyToFactorsPolicyWorksAsExpected()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Inside Policy to Factors Policy works as expected", null, ((string[])(null)));
+#line 127
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 7
+  this.FeatureBackground();
+#line 128
+    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 129
+    testRunner.When("I set the inside Policy to a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 130
+    testRunner.And("I set the inside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 131
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 132
+    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 133
+    testRunner.Then("the inside Policy should be a FactorsPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 134
+    testRunner.And("the inside Policy factors should be set to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 135
+    testRunner.And("deny_rooted_jailbroken should be set to \"False\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 136
+    testRunner.And("deny_emulator_simulator should be set to \"False\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 137
+    testRunner.And("the Organization Service Policy has \"1\" fence", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Setting Inside Policy to Methods Amount Policy works as expected")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization Client can retrieve Organization Service Policy")]
+        public virtual void SettingInsidePolicyToMethodsAmountPolicyWorksAsExpected()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Inside Policy to Methods Amount Policy works as expected", null, ((string[])(null)));
+#line 139
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 7
+  this.FeatureBackground();
+#line 140
+    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 141
+    testRunner.When("I set the inside Policy to a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 142
+    testRunner.And("I set the inside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 143
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 144
+    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 145
+    testRunner.Then("the inside Policy should be a MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 146
+    testRunner.And("the inside Policy amount should be set to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 147
+    testRunner.And("deny_rooted_jailbroken should be set to \"False\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 148
+    testRunner.And("deny_emulator_simulator should be set to \"False\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 149
+    testRunner.And("the Organization Service Policy has \"1\" fence", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Setting Outside Policy to Factors Policy works as expected")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization Client can retrieve Organization Service Policy")]
+        public virtual void SettingOutsidePolicyToFactorsPolicyWorksAsExpected()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Outside Policy to Factors Policy works as expected", null, ((string[])(null)));
+#line 151
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 7
+  this.FeatureBackground();
+#line 152
+    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 153
+    testRunner.When("I set the outside Policy to a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 154
+    testRunner.And("I set the outside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 155
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 156
+    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 157
+    testRunner.Then("the outside Policy should be a FactorsPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 158
+    testRunner.And("the outside Policy factors should be set to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 159
+    testRunner.And("deny_rooted_jailbroken should be set to \"False\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 160
+    testRunner.And("deny_emulator_simulator should be set to \"False\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 161
+    testRunner.And("the Organization Service Policy has \"1\" fence", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Setting Outside Policy to Methods Amount Policy works as expected")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization Client can retrieve Organization Service Policy")]
+        public virtual void SettingOutsidePolicyToMethodsAmountPolicyWorksAsExpected()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Outside Policy to Methods Amount Policy works as expected", null, ((string[])(null)));
+#line 163
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 7
+  this.FeatureBackground();
+#line 164
+    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 165
+    testRunner.When("I set the outside Policy to a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 166
+    testRunner.And("I set the outside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 167
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 168
+    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 169
+    testRunner.Then("the outside Policy should be a MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 170
+    testRunner.And("the outside Policy amount should be set to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 171
+    testRunner.And("deny_rooted_jailbroken should be set to \"False\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 172
+    testRunner.And("deny_emulator_simulator should be set to \"False\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 173
+    testRunner.And("the Organization Service Policy has \"1\" fence", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Setting Fences on a Conditional Geofence Policy works as expected")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization Client can retrieve Organization Service Policy")]
+        public virtual void SettingFencesOnAConditionalGeofencePolicyWorksAsExpected()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Fences on a Conditional Geofence Policy works as expected", null, ((string[])(null)));
+#line 175
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 7
+  this.FeatureBackground();
+#line 176
+    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table44 = new TechTalk.SpecFlow.Table(new string[] {
+                        "latitude",
+                        "longitude",
+                        "radius",
+                        "name"});
+            table44.AddRow(new string[] {
+                        "45.1250",
+                        "150.51",
+                        "15200",
+                        "Large Fence"});
+            table44.AddRow(new string[] {
+                        "-50.0111",
+                        "-140",
+                        "100",
+                        "Small Fence"});
+#line 177
+    testRunner.When("I add the following GeoCircleFence items", ((string)(null)), table44, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table45 = new TechTalk.SpecFlow.Table(new string[] {
+                        "country",
+                        "admin_area",
+                        "postal_code",
+                        "name"});
+            table45.AddRow(new string[] {
+                        "US",
+                        "US-NV",
+                        "89120",
+                        "US-NV"});
+            table45.AddRow(new string[] {
+                        "US",
+                        "US-CA",
+                        "90001",
+                        "US-CA"});
+#line 181
+    testRunner.And("I add the following TerritoryFence items", ((string)(null)), table45, "And ");
+#line 185
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 186
+    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 187
+    testRunner.Then("the Organization Service Policy has \"5\" fences", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 188
+    testRunner.And("the Organization Service Policy contains the GeoCircleFence \"Large Fence\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 189
+    testRunner.And("the \"Large Fence\" fence has a latitude of \"45.1250\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 190
+    testRunner.And("the \"Large Fence\" fence has a longitude of \"150.51\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 191
+    testRunner.And("the \"Large Fence\" fence has a radius of \"15200\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 192
+    testRunner.And("the Organization Service Policy contains the GeoCircleFence \"Small Fence\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 193
+    testRunner.And("the \"Small Fence\" fence has a latitude of \"-50.0111\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 194
+    testRunner.And("the \"Small Fence\" fence has a longitude of \"-140\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 195
+    testRunner.And("the \"Small Fence\" fence has a radius of \"100\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 196
+    testRunner.And("the Organization Service Policy contains the TerritoryFence \"US-NV\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 197
+    testRunner.And("the \"US-NV\" fence has a country of \"US\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 198
+    testRunner.And("the \"US-NV\" fence has an administrative_area of \"US-NV\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 199
+    testRunner.And("the \"US-NV\" fence has a postal_code of \"89120\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 200
+    testRunner.And("the Organization Service Policy contains the TerritoryFence \"US-CA\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 201
+    testRunner.And("the \"US-CA\" fence has a country of \"US\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 202
+    testRunner.And("the \"US-CA\" fence has an administrative_area of \"US-CA\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 203
+    testRunner.And("the \"US-CA\" fence has a postal_code of \"90001\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

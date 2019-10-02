@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using iovation.LaunchKey.Sdk.Domain.Service.Policy;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Tables;
 using TechTalk.SpecFlow;
@@ -40,6 +41,40 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
             }
 
             return timeFences;
+        }
+
+        public static List<IFence> GeoCircleFenceFromTable(Table table)
+        {
+            var fences = new List<IFence>();
+
+            foreach(var fence in table.CreateSet<GeofenceTableRow>())
+            {
+                fences.Add(new GeoCircleFence(
+                        latitude: fence.Latitude,
+                        longitude: fence.Longitude,
+                        radius: fence.Radius,
+                        name: fence.Name
+                ));
+            }
+
+            return fences;
+        }
+
+        public static List<IFence> TerritoryFenceFromTable(Table table)
+        {
+            var fences = new List<IFence>();
+
+            foreach (var fence in table.CreateSet<TerritoryFenceTableRow>())
+            {
+                fences.Add(new TerritoryFence(
+                    country: fence.Country,
+                    administrativeArea: fence.AdministrativeArea,
+                    postalCode: fence.PostalCode,
+                    name: fence.Name
+                ));
+            }
+
+            return fences;
         }
     }
 }

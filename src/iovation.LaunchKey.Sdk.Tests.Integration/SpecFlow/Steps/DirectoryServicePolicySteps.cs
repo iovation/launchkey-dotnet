@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using iovation.LaunchKey.Sdk.Domain.Service.Policy;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
@@ -226,6 +228,237 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         public void ThenTheOrganizationServicePolicyHasNoRequirementForJailBreakProtection()
         {
             Assert.IsTrue(_directoryClientContext.LoadedServicePolicy.JailbreakDetection == null);
+        }
+
+        [When(@"I create a new MethodAmountPolicy")]
+        public void WhenICreateANewMethodAmountPolicy()
+        {
+            _directoryClientContext.CreateMethodAmountPolicy();
+        }
+
+        [When(@"I add the following GeoCircleFence items")]
+        public void WhenIAddTheFollowingGeoCircleFenceItems(Table table)
+        {
+            List<IFence> geocirclefences = TableUtils.GeoCircleFenceFromTable(table);
+            _directoryClientContext.AddIFenceToAdvancedPolicy(geocirclefences);
+        }
+
+        [When(@"I add the following TerritoryFence items")]
+        public void WhenIAddTheFollowingTerritoryFenceItems(Table table)
+        {
+            List<IFence> territoryfences = TableUtils.TerritoryFenceFromTable(table);
+            _directoryClientContext.AddIFenceToAdvancedPolicy(territoryfences);
+        }
+
+        [When(@"I set the Policy for the Current Directory Service to the new policy")]
+        public void WhenISetThePolicyForTheCurrentDirectoryServiceToTheNewPolicy()
+        {
+            _directoryClientContext.SetAdvancedServicePolicy(
+                _directoryClientContext.LastCreatedService.Id,
+                _directoryClientContext.LoadedAdvancedServicePolicy
+            );
+        }
+
+        [Then(@"the Directory Service Policy has ""(.*)"" fences")]
+        public void ThenTheDirectoryServicePolicyHasFences(int p0)
+        {
+            Assert.AreEqual(p0, _directoryClientContext.LoadedAdvancedServicePolicy.Fences.Count);
+        }
+
+        [When(@"I retrieve the Advanced Policy for the Current Directory Service")]
+        public void WhenIRetrieveTheAdvancedPolicyForTheCurrentDirectoryService()
+        {
+            _directoryClientContext.LoadAdvancedServicePolicy(_directoryClientContext.LastCreatedService.Id);
+        }
+
+
+        [When(@"I set the amount to ""(.*)""")]
+        public void WhenISetTheAmountTo(int p0)
+        {
+            _directoryClientContext.SetAmountOnMethodAmountPolicy(p0);
+        }
+
+        [Then(@"the amount should be set to ""(.*)""")]
+        public void ThenTheAmountShouldBeSetTo(int p0)
+        {
+
+            Assert.AreEqual(p0, (_directoryClientContext.LoadedAdvancedServicePolicy as MethodAmountPolicy)?.Amount);
+        }
+
+        [When(@"I create a new Factors Policy")]
+        public void WhenICreateANewFactorsPolicy()
+        {
+            _directoryClientContext.CreateFactorsPolicy();
+        }
+
+        [When(@"I set the factors to ""(.*)""")]
+        public void WhenISetTheFactorsTo(string factors)
+        {
+            bool requireKnowledge = factors.ToLower().Contains("knowledge");
+            bool requirePossession = factors.ToLower().Contains("possession");
+            bool requireInherence = factors.ToLower().Contains("inherence");
+            _directoryClientContext.SetFactors(requireKnowledge, requirePossession, requireInherence);
+        }
+
+        [Then(@"factors should be set to ""(.*)""")]
+        public void ThenFactorsShouldBeSetTo(string factors)
+        {
+            if(factors.ToLower().Contains("knowledge"))
+            {
+                Assert.AreEqual(true, (_directoryClientContext.LoadedAdvancedServicePolicy as FactorsPolicy)?.RequireKnowledgeFactor);
+            }
+            else if (factors.ToLower().Contains("possession"))
+            {
+                Assert.AreEqual(true, (_directoryClientContext.LoadedAdvancedServicePolicy as FactorsPolicy)?.RequirePossessionFactor);
+            }
+            else if (factors.ToLower().Contains("inherence"))
+            {
+                Assert.AreEqual(true, (_directoryClientContext.LoadedAdvancedServicePolicy as FactorsPolicy)?.RequireInherenceFactor);
+            }
+        }
+
+        [When(@"I set deny_rooted_jailbroken to ""(.*)""")]
+        public void WhenISetDeny_Rooted_JailbrokenTo(bool value)
+        {
+            _directoryClientContext.SetDenyRootedJailbroken(value);
+        }
+
+        [Then(@"deny_rooted_jailbroken should be set to ""(.*)""")]
+        public void ThenDeny_Rooted_JailbrokenShouldBeSetTo(bool value)
+        {
+            Assert.AreEqual(value, _directoryClientContext.LoadedAdvancedServicePolicy.DenyRootedJailbroken);
+        }
+
+        [When(@"I set deny_emulator_simulator to ""(.*)""")]
+        public void WhenISetDeny_Emulator_SimulatorTo(bool value)
+        {
+            _directoryClientContext.SetDenyEmulatorSimulator(value);
+        }
+
+        [Then(@"deny_emulator_simulator should be set to ""(.*)""")]
+        public void ThenDeny_Emulator_SimulatorShouldBeSetTo(bool value)
+        {
+            Assert.AreEqual(value, _directoryClientContext.LoadedAdvancedServicePolicy.DenyEmulatorSimulator);
+        }
+
+        [Given(@"the Directory Service is set to any Conditional Geofence Policy")]
+        public void GivenTheDirectoryServiceIsSetToAnyConditionalGeofencePolicy()
+        {
+            _directoryClientContext.CreateConditionaGeofence();
+        }
+
+        [When(@"I set the inside Policy to a new Factors Policy")]
+        public void WhenISetTheInsidePolicyToANewFactorsPolicy()
+        {
+            FactorsPolicy insidePolicy = new FactorsPolicy(null,true);
+            _directoryClientContext.SetInsideConditionalGeofencePolicy(insidePolicy);
+        }
+
+        [When(@"I set the inside Policy factors to ""(.*)""")]
+        public void WhenISetTheInsidePolicyFactorsTo(string factors)
+        {
+            FactorsPolicy currentPolicy = ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Inside as FactorsPolicy);
+            bool requireKnowledge = factors.ToLower().Contains("knowledge");
+            bool requirePossession = factors.ToLower().Contains("possession");
+            bool requireInherence = factors.ToLower().Contains("inherence");
+            FactorsPolicy newPolicy = new FactorsPolicy(
+                fences: currentPolicy.Fences,
+                requireKnowledgeFactor: requireKnowledge,
+                requirePossessionFactor: requirePossession,
+                requireInherenceFactor: requireInherence,
+                denyRootedJailbroken: currentPolicy.DenyRootedJailbroken,
+                denyEmulatorSimulator: currentPolicy.DenyEmulatorSimulator
+            );
+            _directoryClientContext.SetInsideConditionalGeofencePolicy(newPolicy);
+        }
+
+        [Then(@"the inside Policy should be a FactorsPolicy")]
+        public void ThenTheInsidePolicyShouldBeAFactorsPolicy()
+        {
+            Assert.IsInstanceOfType((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Inside, typeof(FactorsPolicy));
+        }
+
+        [When(@"I set the inside Policy to a new MethodAmountPolicy")]
+        public void WhenISetTheInsidePolicyToANewMethodAmountPolicy()
+        {
+            MethodAmountPolicy insidePolicy = new MethodAmountPolicy(null, 0);
+            _directoryClientContext.SetInsideConditionalGeofencePolicy(insidePolicy);
+        }
+
+        [When(@"I set the inside Policy amount to ""(.*)""")]
+        public void WhenISetTheInsidePolicyAmountTo(int amount)
+        {
+            MethodAmountPolicy currentPolicy = ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Inside as MethodAmountPolicy);
+            MethodAmountPolicy newPolicy = new MethodAmountPolicy(
+                fences: currentPolicy.Fences,
+                amount: amount,
+                denyRootedJailbroken: currentPolicy.DenyRootedJailbroken,
+                denyEmulatorSimulator: currentPolicy.DenyEmulatorSimulator
+            );
+            _directoryClientContext.SetInsideConditionalGeofencePolicy(newPolicy);
+        }
+
+        [Then(@"the inside Policy should be a MethodAmountPolicy")]
+        public void ThenTheInsidePolicyShouldBeAMethodAmountPolicy()
+        {
+            Assert.IsInstanceOfType((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Inside, typeof(MethodAmountPolicy));
+        }
+
+        [When(@"I set the outside Policy to a new Factors Policy")]
+        public void WhenISetTheOutsidePolicyToANewFactorsPolicy()
+        {
+            FactorsPolicy insidePolicy = new FactorsPolicy(null, true);
+            _directoryClientContext.SetOutsideConditionalGeofencePolicy(insidePolicy);
+        }
+
+        [When(@"I set the outside Policy factors to ""(.*)""")]
+        public void WhenISetTheOutsidePolicyFactorsTo(string factors)
+        {
+            FactorsPolicy currentPolicy = ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside as FactorsPolicy);
+            bool requireKnowledge = factors.ToLower().Contains("knowledge");
+            bool requirePossession = factors.ToLower().Contains("possession");
+            bool requireInherence = factors.ToLower().Contains("inherence");
+            FactorsPolicy newPolicy = new FactorsPolicy(
+                fences: currentPolicy.Fences,
+                requireKnowledgeFactor: requireKnowledge,
+                requirePossessionFactor: requirePossession,
+                requireInherenceFactor: requireInherence,
+                denyRootedJailbroken: currentPolicy.DenyRootedJailbroken,
+                denyEmulatorSimulator: currentPolicy.DenyEmulatorSimulator
+            );
+            _directoryClientContext.SetOutsideConditionalGeofencePolicy(newPolicy);
+        }
+
+        [Then(@"the outside Policy should be a FactorsPolicy")]
+        public void ThenTheOutsidePolicyShouldBeAFactorsPolicy()
+        {
+            Assert.IsInstanceOfType((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside, typeof(FactorsPolicy));
+        }
+
+        [When(@"I set the outside Policy to a new MethodAmountPolicy")]
+        public void WhenISetTheOutsidePolicyToANewMethodAmountPolicy()
+        {
+            MethodAmountPolicy outsidePolicy = new MethodAmountPolicy(null, 0);
+            _directoryClientContext.SetOutsideConditionalGeofencePolicy(outsidePolicy);
+        }
+
+        [When(@"I set the outside Policy amount to ""(.*)""")]
+        public void WhenISetTheOutsidePolicyAmountTo(int amount)
+        {
+            MethodAmountPolicy currentPolicy = ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside as MethodAmountPolicy);
+            MethodAmountPolicy newPolicy = new MethodAmountPolicy(
+                fences: currentPolicy.Fences,
+                amount: amount,
+                denyRootedJailbroken: currentPolicy.DenyRootedJailbroken,
+                denyEmulatorSimulator: currentPolicy.DenyEmulatorSimulator
+            );
+            _directoryClientContext.SetOutsideConditionalGeofencePolicy(newPolicy);
+        }
+
+        [Then(@"the outside Policy should be a MethodAmountPolicy")]
+        public void ThenTheOutsidePolicyShouldBeAMethodAmountPolicy()
+        {
+            Assert.IsInstanceOfType((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside, typeof(MethodAmountPolicy));
         }
     }
 }

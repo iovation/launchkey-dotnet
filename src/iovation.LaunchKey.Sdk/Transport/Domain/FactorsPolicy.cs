@@ -32,7 +32,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             DenyRootedJailbroken = denyRootedJailbroken;
             DenyEmulatorSimulator = denyEmulatorSimulator;
             Fences = fences ?? new List<TransportFence>();
-            Factors = factors;
+            Factors = factors ?? new List<string>();
             Type = "FACTORS";
         }
 

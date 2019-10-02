@@ -123,7 +123,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
 #line 17
     testRunner.And("I get the response for the Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table40 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table64 = new TechTalk.SpecFlow.Table(new string[] {
                         "Method",
                         "Set",
                         "Active",
@@ -132,7 +132,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "User Required",
                         "Passed",
                         "Error"});
-            table40.AddRow(new string[] {
+            table64.AddRow(new string[] {
                         "wearables",
                         "False",
                         "False",
@@ -141,7 +141,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "",
                         "",
                         ""});
-            table40.AddRow(new string[] {
+            table64.AddRow(new string[] {
                         "geofencing",
                         "",
                         "True",
@@ -150,7 +150,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "",
                         "",
                         ""});
-            table40.AddRow(new string[] {
+            table64.AddRow(new string[] {
                         "locations",
                         "False",
                         "False",
@@ -159,7 +159,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "",
                         "",
                         ""});
-            table40.AddRow(new string[] {
+            table64.AddRow(new string[] {
                         "pin_code",
                         "False",
                         "False",
@@ -168,7 +168,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "",
                         "",
                         ""});
-            table40.AddRow(new string[] {
+            table64.AddRow(new string[] {
                         "circle_code",
                         "False",
                         "False",
@@ -177,7 +177,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "",
                         "",
                         ""});
-            table40.AddRow(new string[] {
+            table64.AddRow(new string[] {
                         "face",
                         "False",
                         "False",
@@ -186,7 +186,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "",
                         "",
                         ""});
-            table40.AddRow(new string[] {
+            table64.AddRow(new string[] {
                         "fingerprint",
                         "False",
                         "False",
@@ -196,7 +196,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "",
                         ""});
 #line 18
-    testRunner.Then("the Authorization response should contain the following methods:", ((string)(null)), table40, "Then ");
+    testRunner.Then("the Authorization response should contain the following methods:", ((string)(null)), table64, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

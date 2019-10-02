@@ -62,8 +62,8 @@ namespace iovation.LaunchKey.Sdk.Client
                     inside: inside,
                     outside: outside,
                     fences: fences,
-                    denyRootedJailbroken: (bool)convertedPolicy.DenyRootedJailbroken,
-                    denyEmulatorSimulator: (bool)convertedPolicy.DenyEmulatorSimulator
+                    denyRootedJailbroken: convertedPolicy.DenyRootedJailbroken,
+                    denyEmulatorSimulator: convertedPolicy.DenyEmulatorSimulator
                 );
             }
             else if (policy.Type == "FACTORS")
@@ -72,8 +72,8 @@ namespace iovation.LaunchKey.Sdk.Client
                 List<DomainPolicy.IFence> fences = GetDomainFencesFromTransportFences(convertedPolicy.Fences);
                 returnPolicy = new DomainPolicy.FactorsPolicy(
                     fences: fences,
-                    denyRootedJailbroken: (bool)convertedPolicy.DenyRootedJailbroken,
-                    denyEmulatorSimulator: (bool)convertedPolicy.DenyEmulatorSimulator,
+                    denyRootedJailbroken: convertedPolicy.DenyRootedJailbroken,
+                    denyEmulatorSimulator: convertedPolicy.DenyEmulatorSimulator,
                     requireKnowledgeFactor: convertedPolicy.Factors.Contains("KNOWLEDGE"),
                     requirePossessionFactor: convertedPolicy.Factors.Contains("POSSESSION"),
                     requireInherenceFactor: convertedPolicy.Factors.Contains("INHERENCE")
@@ -86,8 +86,8 @@ namespace iovation.LaunchKey.Sdk.Client
                 returnPolicy = new DomainPolicy.MethodAmountPolicy(
                     fences: fences,
                     amount: convertedPolicy.Amount,
-                    denyRootedJailbroken: (bool)convertedPolicy.DenyRootedJailbroken,
-                    denyEmulatorSimulator: (bool)convertedPolicy.DenyEmulatorSimulator
+                    denyRootedJailbroken: convertedPolicy.DenyRootedJailbroken,
+                    denyEmulatorSimulator: convertedPolicy.DenyEmulatorSimulator
                 );
             }
             else
@@ -224,7 +224,8 @@ namespace iovation.LaunchKey.Sdk.Client
                                 name: convertedFence.Name,
                                 latitude: convertedFence.Latitude,
                                 longitude: convertedFence.Longitude,
-                                radius: convertedFence.Radius
+                                radius: convertedFence.Radius,
+                                type: "GEO_CIRCLE"
                             )
                         );
                     }
@@ -236,7 +237,8 @@ namespace iovation.LaunchKey.Sdk.Client
                                 name: convertedFence.Name,
                                 country: convertedFence.Country,
                                 administrativeArea: convertedFence.AdministrativeArea,
-                                postalCode: convertedFence.PostalCode
+                                postalCode: convertedFence.PostalCode,
+                                type: "TERRITORY"
                             )
                         );
                     }
