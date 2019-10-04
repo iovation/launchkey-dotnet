@@ -634,7 +634,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
         public void OrganizationV3DirectoriesListPatch_ShouldCallApi()
         {
             DoApiCallTest(
-                t => t.OrganizationV3DirectoriesPatch(new OrganizationV3DirectoriesPatchRequest(TestConsts.DefaultDirectoryId, true, "android", "ioskey", TestConsts.DefaultWebhookUrl), TestConsts.DefaultOrganizationEntity),
+                t => t.OrganizationV3DirectoriesPatch(new OrganizationV3DirectoriesPatchRequest(TestConsts.DefaultDirectoryId, true, "android", "ioskey", true, TestConsts.DefaultWebhookUrl), TestConsts.DefaultOrganizationEntity),
                 HttpMethod.PATCH,
                 "/organization/v3/directories"
             );

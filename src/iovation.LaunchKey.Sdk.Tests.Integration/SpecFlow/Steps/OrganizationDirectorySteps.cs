@@ -162,7 +162,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         {
             try
             {
-                _orgClientContext.UpdateDirectory(Guid.Parse(directoryId), true, null, null, null);
+                _orgClientContext.UpdateDirectory(Guid.Parse(directoryId), true, null, null, true, null);
             }
             catch (BaseException e)
             {
@@ -381,6 +381,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                 directory.Active,
                 directory.AndroidKey,
                 _keyManager.GetP12ForFingerprint(directory.IosCertificateFingerprint),
+                directory.DenialContextInquiryEnabled,
                 webhookUrl
             );
         }
@@ -403,6 +404,34 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         public void ThenTheDirectoryWebhookUrlIsEmpty()
         {
             ThenTheDirectoryWebhookUrlIs(null);
+        }
+
+        [When(@"I update the DenialContextInquiryEnabled to ""(.*)""")]
+        public void WhenIUpdateTheDenialContextInquiryEnabledTo(bool value)
+        {
+            _orgClientContext.LoadLastCreatedDirectory();
+            var directory = _orgClientContext.LoadedDirectory;
+            _orgClientContext.UpdateDirectory(
+                directory.Id,
+                directory.Active,
+                directory.AndroidKey,
+                _keyManager.GetP12ForFingerprint(directory.IosCertificateFingerprint),
+                value,
+                directory.WebhookUrl
+            );
+        }
+
+        [Then(@"DenialContextInquiryEnabled should be set to ""(.*)""")]
+        public void ThenDenialContextInquiryEnabledShouldBeSetToValue(bool value)
+        {
+            _orgClientContext.LoadLastCreatedDirectory();
+            Assert.AreEqual(value, _orgClientContext.LoadedDirectory.DenialContextInquiryEnabled);
+        }
+
+        [Then(@"DenialContextInquiryEnabled is set to ""(.*)""")]
+        public void ThenDenialContextInquiryEnabledIsSetTo(bool value)
+        {
+            ThenDenialContextInquiryEnabledShouldBeSetToValue(value);
         }
     }
 }

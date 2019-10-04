@@ -41,11 +41,16 @@ namespace iovation.LaunchKey.Sdk.Domain.Organization
         public string IosCertificateFingerprint { get; }
 
         /// <summary>
+        /// Whether to enable the user to select a reason why they denied a transaction
+        /// </summary>
+        public bool? DenialContextInquiryEnabled { get; }
+
+        /// <summary>
         /// The webhook URL for the directory
         /// </summary>
         public string WebhookUrl { get; }
 
-        public Directory(Guid id, string name, bool active, List<Guid> serviceIds, List<Guid> sdkKeys, string androidKey, string iosCertificateFingerprint, string webhookUrl = null)
+        public Directory(Guid id, string name, bool active, List<Guid> serviceIds, List<Guid> sdkKeys, string androidKey, string iosCertificateFingerprint, bool? denialContextInquiryEnabled = null, string webhookUrl = null)
         {
             Id = id;
             Name = name;
@@ -54,6 +59,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Organization
             SdkKeys = sdkKeys;
             AndroidKey = androidKey;
             IosCertificateFingerprint = iosCertificateFingerprint;
+            DenialContextInquiryEnabled = denialContextInquiryEnabled;
             WebhookUrl = webhookUrl;
         }
     }

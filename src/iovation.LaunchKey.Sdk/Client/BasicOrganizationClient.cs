@@ -88,9 +88,9 @@ namespace iovation.LaunchKey.Sdk.Client
             return response.Id;
         }
 
-        public void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12, string webhookUrl = null)
+        public void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12, bool? denialContextInquiryEnabled = null, string webhookUrl = null)
         {
-            var request = new OrganizationV3DirectoriesPatchRequest(directoryId, active, androidKey, iosP12, webhookUrl);
+            var request = new OrganizationV3DirectoriesPatchRequest(directoryId, active, androidKey, iosP12, denialContextInquiryEnabled, webhookUrl);
             _transport.OrganizationV3DirectoriesPatch(request, _organizationId);
         }
 
@@ -105,7 +105,7 @@ namespace iovation.LaunchKey.Sdk.Client
             var response = _transport.OrganizationV3DirectoriesListPost(request, _organizationId);
             var directories = new List<Directory>();
 
-            foreach (var directoryItem in response.Directories)
+            foreach (OrganizationV3DirectoriesListPostResponse.Directory directoryItem in response.Directories)
             {
                 directories.Add(new Directory(
                     directoryItem.Id,
@@ -115,6 +115,7 @@ namespace iovation.LaunchKey.Sdk.Client
                     directoryItem.SdkKeys,
                     directoryItem.AndroidKey,
                     directoryItem.IosCertificateFingerprint,
+                    directoryItem.DenialContextInquiryEnabled,
                     directoryItem.WebhookUrl
                 ));
             }
@@ -127,7 +128,7 @@ namespace iovation.LaunchKey.Sdk.Client
             var response = _transport.OrganizationV3DirectoriesGet(_organizationId);
             var directories = new List<Directory>();
 
-            foreach (var directoryItem in response.Directories)
+            foreach (OrganizationV3DirectoriesGetResponse.Directory directoryItem in response.Directories)
             {
                 directories.Add(new Directory(
                     directoryItem.Id,
@@ -137,6 +138,7 @@ namespace iovation.LaunchKey.Sdk.Client
                     directoryItem.SdkKeys,
                     directoryItem.AndroidKey,
                     directoryItem.IosCertificateFingerprint,
+                    directoryItem.DenialContextInquiryEnabled,
                     directoryItem.WebhookUrl
                 ));
             }
