@@ -20,10 +20,10 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
         [JsonProperty("webhook_url", NullValueHandling=NullValueHandling.Include)]
         public string WebhookUrl { get; }
 
-        [JsonProperty("denial_context_inquiry_enabled", NullValueHandling=NullValueHandling.Include)]
-        public bool DenialContextInquiryEnabled { get; }
+        [JsonProperty("denial_context_inquiry_enabled", NullValueHandling=NullValueHandling.Ignore)]
+        public bool? DenialContextInquiryEnabled { get; }
 
-        public OrganizationV3DirectoriesPatchRequest(Guid directoryId, bool active, string androidKey, string iosP12, bool denialContextInquiryEnabled, string webhookUrl)
+        public OrganizationV3DirectoriesPatchRequest(Guid directoryId, bool active, string androidKey, string iosP12, bool? denialContextInquiryEnabled, string webhookUrl)
         {
             DirectoryId = directoryId;
             Active = active;

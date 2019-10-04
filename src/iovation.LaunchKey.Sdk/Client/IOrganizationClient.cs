@@ -22,7 +22,7 @@ namespace iovation.LaunchKey.Sdk.Client
         /// <param name="androidKey">GCM push key</param>
         /// <param name="iosP12">APNS push certificate in .P12 format that has been Base64 Encoded</param>
         /// <param name="webhookUrl"> The URL that directory webhooks will be sent to</param>
-        void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12, bool denialContextInquiryEnabled = true, string webhookUrl = null);
+        void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12, bool? denialContextInquiryEnabled = null, string webhookUrl = null);
 
         /// <summary>
         /// Get a directory from this organization

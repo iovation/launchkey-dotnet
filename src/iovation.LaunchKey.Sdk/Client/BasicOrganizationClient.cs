@@ -88,7 +88,7 @@ namespace iovation.LaunchKey.Sdk.Client
             return response.Id;
         }
 
-        public void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12, bool denialContextInquiryEnabled = true, string webhookUrl = null)
+        public void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12, bool? denialContextInquiryEnabled = null, string webhookUrl = null)
         {
             var request = new OrganizationV3DirectoriesPatchRequest(directoryId, active, androidKey, iosP12, denialContextInquiryEnabled, webhookUrl);
             _transport.OrganizationV3DirectoriesPatch(request, _organizationId);

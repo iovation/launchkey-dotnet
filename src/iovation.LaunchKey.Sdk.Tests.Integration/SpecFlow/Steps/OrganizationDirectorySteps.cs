@@ -416,13 +416,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                 directory.Active,
                 directory.AndroidKey,
                 _keyManager.GetP12ForFingerprint(directory.IosCertificateFingerprint),
-                false,
+                value,
                 directory.WebhookUrl
             );
         }
 
         [Then(@"DenialContextInquiryEnabled should be set to ""(.*)""")]
-        public void ThenDenialContextInquiryEnabledShouldBeSetToFalse(bool value)
+        public void ThenDenialContextInquiryEnabledShouldBeSetToValue(bool value)
         {
             _orgClientContext.LoadLastCreatedDirectory();
             Assert.AreEqual(value, _orgClientContext.LoadedDirectory.DenialContextInquiryEnabled);
@@ -431,7 +431,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [Then(@"DenialContextInquiryEnabled is set to ""(.*)""")]
         public void ThenDenialContextInquiryEnabledIsSetTo(bool value)
         {
-            ThenDenialContextInquiryEnabledShouldBeSetToFalse(value);
+            ThenDenialContextInquiryEnabledShouldBeSetToValue(value);
         }
     }
 }

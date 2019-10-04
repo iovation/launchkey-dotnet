@@ -29,7 +29,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             [JsonProperty("ios_certificate_fingerprint")]
             public string IosCertificateFingerprint { get; set; }
 
-            [JsonProperty("denial_context_inquiry_enabled", NullValueHandling = NullValueHandling.Include)]
+            [JsonProperty("denial_context_inquiry_enabled", NullValueHandling = NullValueHandling.Ignore)]
             public bool DenialContextInquiryEnabled { get; set; }
 
             [JsonProperty("webhook_url")]

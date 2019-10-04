@@ -43,15 +43,14 @@ namespace iovation.LaunchKey.Sdk.Domain.Organization
         /// <summary>
         /// Whether to enable the user to select a reason why they denied a transaction
         /// </summary>
-        public bool DenialContextInquiryEnabled { get; }
+        public bool? DenialContextInquiryEnabled { get; }
 
-        public string Test { get; }
         /// <summary>
         /// The webhook URL for the directory
         /// </summary>
         public string WebhookUrl { get; }
 
-        public Directory(Guid id, string name, bool active, List<Guid> serviceIds, List<Guid> sdkKeys, string androidKey, string iosCertificateFingerprint, bool denialContextInquiryEnabled = true, string webhookUrl = null)
+        public Directory(Guid id, string name, bool active, List<Guid> serviceIds, List<Guid> sdkKeys, string androidKey, string iosCertificateFingerprint, bool? denialContextInquiryEnabled = null, string webhookUrl = null)
         {
             Id = id;
             Name = name;
