@@ -246,20 +246,41 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Attempting to update an invalid Directory throws a Forbidden exception")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can set Denial Context Inquiry Enabled to False")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization clients can update Directories")]
-        public virtual void AttemptingToUpdateAnInvalidDirectoryThrowsAForbiddenException()
+        public virtual void ICanSetDenialContextInquiryEnabledToFalse()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to update an invalid Directory throws a Forbidden exception", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can set Denial Context Inquiry Enabled to False", null, ((string[])(null)));
 #line 45
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
 #line 46
+    testRunner.When("I update the DenialContextInquiryEnabled to \"false\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 47
+    testRunner.And("I retrieve the updated Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 48
+    testRunner.Then("DenialContextInquiryEnabled should be set to \"false\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Attempting to update an invalid Directory throws a Forbidden exception")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization clients can update Directories")]
+        public virtual void AttemptingToUpdateAnInvalidDirectoryThrowsAForbiddenException()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to update an invalid Directory throws a Forbidden exception", null, ((string[])(null)));
+#line 50
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 6
+  this.FeatureBackground();
+#line 51
     testRunner.When("I attempt to update the active status of the Directory with the ID \"eba60cb8-c649" +
                     "-11e7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 47
+#line 52
     testRunner.Then("a Forbidden error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

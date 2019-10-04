@@ -42,6 +42,11 @@ Feature: Organization clients can update Directories
     And I retrieve the updated Directory
     Then the Directory webhook url is empty
     
+  Scenario: I can set Denial Context Inquiry Enabled to False
+    When I update the DenialContextInquiryEnabled to "false"
+    And I retrieve the updated Directory
+    Then DenialContextInquiryEnabled should be set to "false"
+
   Scenario: Attempting to update an invalid Directory throws a Forbidden exception
     When I attempt to update the active status of the Directory with the ID "eba60cb8-c649-11e7-abc4-cec278b6b50a"
     Then a Forbidden error occurs

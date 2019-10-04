@@ -9,7 +9,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
         [TestMethod]
         public void Constructor_ShouldSetProperties()
         {
-            var request = new OrganizationV3DirectoriesPatchRequest(TestConsts.DefaultDirectoryId, true, "a", "i", TestConsts.DefaultWebhookUrl);
+            var request = new OrganizationV3DirectoriesPatchRequest(TestConsts.DefaultDirectoryId, true, "a", "i", true, TestConsts.DefaultWebhookUrl);
 
             Assert.AreEqual(true, request.Active);
             Assert.AreEqual("a", request.AndroidKey);

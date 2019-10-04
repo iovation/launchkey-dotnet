@@ -103,6 +103,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
     testRunner.And("I retrieve the created Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
     testRunner.Then("the Directory name is the same as was sent", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 10
+    testRunner.And("DenialContextInquiryEnabled is set to \"true\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -113,14 +115,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
         public virtual void ClientSendingDuplicateDirectoryNameRaisesDirectoryNameInUse()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Client sending duplicate Directory name raises DirectoryNameInUse", null, ((string[])(null)));
-#line 11
+#line 12
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 12
-    testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 13
-    testRunner.And("I attempt to create a Directory with the same name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
+    testRunner.And("I attempt to create a Directory with the same name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
     testRunner.Then("a DirectoryNameInUse error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

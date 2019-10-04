@@ -107,9 +107,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
             _ownedDirectories.Add(new CreatedDirectoryInfo(id, name));
         }
 
-        public void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12, string webhookUrl = null)
+        public void UpdateDirectory(Guid directoryId, bool active, string androidKey, string iosP12, bool denialContextEnabled = true, string webhookUrl = null)
         {
-            _orgClient.UpdateDirectory(directoryId, active, androidKey, iosP12, webhookUrl);
+            _orgClient.UpdateDirectory(directoryId, active, androidKey, iosP12, denialContextEnabled, webhookUrl);
         }
 
         public void LoadAllDirectories()
@@ -168,7 +168,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
             {
                 try
                 {
-                    _orgClient.UpdateDirectory(ownedDirectory.Id, false, null, null, null);
+                    _orgClient.UpdateDirectory(ownedDirectory.Id, false, null, null, true, null);
                 }
                 catch (Exception e)
                 {

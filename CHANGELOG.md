@@ -1,5 +1,10 @@
 Change Log
 ----------
+3.5.1
+=====
+* Added DenialContextInquiryEnabled to Directory management
+    * Allows setting whether user can provide a reason for denying the Authentication Request
+
 3.5.0
 =====
 * Added Auth Method Insight

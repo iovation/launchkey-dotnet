@@ -249,7 +249,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
             var client = new BasicOrganizationClient(TestConsts.DefaultOrgId, mock.Object);
 
-            client.UpdateDirectory(TestConsts.DefaultDirectoryId, true, "a", "i", TestConsts.DefaultWebhookUrl);
+            client.UpdateDirectory(TestConsts.DefaultDirectoryId, true, "a", "i", true, TestConsts.DefaultWebhookUrl);
             mock.Verify();
         }
 
