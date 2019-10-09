@@ -230,6 +230,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             Assert.IsTrue(_directoryClientContext.LoadedServicePolicy.JailbreakDetection == null);
         }
 
+        //=======================NEW STUFF STARTS HERE==========================//
+        //======================================================================//
+
         [When(@"I create a new MethodAmountPolicy")]
         public void WhenICreateANewMethodAmountPolicy()
         {
@@ -292,6 +295,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         }
 
         [When(@"I set the factors to ""(.*)""")]
+        [Scope(Feature = "Directory Client can retrieve Directory Service Policy")]
+        [Scope(Feature = "Directory Client can set Directory Service Policy")]
         public void WhenISetTheFactorsTo(string factors)
         {
             bool requireKnowledge = factors.ToLower().Contains("knowledge");
@@ -459,6 +464,125 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         public void ThenTheOutsidePolicyShouldBeAMethodAmountPolicy()
         {
             Assert.IsInstanceOfType((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside, typeof(MethodAmountPolicy));
+        }
+
+        private IFence GetFenceFromPolicy(string fenceName)
+        {
+            foreach (var fence in _directoryClientContext.LoadedAdvancedServicePolicy.Fences)
+            {
+                if (fence.Name == fenceName)
+                {
+                    return fence;
+                }
+            }
+
+            return null;
+        }
+
+        [Then(@"the Directory Service Policy contains the GeoCircleFence ""(.*)""")]
+        public void ThenTheDirectoryServicePolicyContainsTheGeoCircleFence(string geofenceName)
+        {
+            IFence fence = GetFenceFromPolicy(geofenceName);
+            Assert.IsNotNull(fence);
+            Assert.IsInstanceOfType(fence, typeof(GeoCircleFence));
+        }
+
+        [Then(@"the ""(.*)"" fence has a latitude of ""(.*)""")]
+        public void ThenTheFenceHasALatitudeOf(string geofenceName, double latitude)
+        {
+            IFence fence = GetFenceFromPolicy(geofenceName);
+            Assert.IsNotNull(fence);
+            Assert.AreEqual(latitude, (fence as GeoCircleFence).Latitude);
+        }
+
+        [Then(@"the ""(.*)"" fence has a longitude of ""(.*)""")]
+        public void ThenTheFenceHasALongitudeOf(string geofenceName, double longitude)
+        {
+            IFence fence = GetFenceFromPolicy(geofenceName);
+            Assert.IsNotNull(fence);
+            Assert.AreEqual(longitude, (fence as GeoCircleFence).Longitude);
+        }
+
+        [Then(@"the ""(.*)"" fence has a radius of ""(.*)""")]
+        public void ThenTheFenceHasARadiusOf(string geofenceName, int radius)
+        {
+            IFence fence = GetFenceFromPolicy(geofenceName);
+            Assert.IsNotNull(fence);
+            Assert.AreEqual(radius, (fence as GeoCircleFence).Radius);
+        }
+
+        [Then(@"the Directory Service Policy contains the TerritoryFence ""(.*)""")]
+        public void ThenTheDirectoryServicePolicyContainsTheTerritoryFence(string geofenceName)
+        {
+            IFence fence = GetFenceFromPolicy(geofenceName);
+            Assert.IsNotNull(fence);
+            Assert.IsInstanceOfType(fence, typeof(TerritoryFence));
+        }
+
+        [Then(@"the ""(.*)"" fence has a country of ""(.*)""")]
+        public void ThenTheFenceHasACountryOf(string geofenceName, string country)
+        {
+            IFence fence = GetFenceFromPolicy(geofenceName);
+            Assert.IsNotNull(fence);
+            Assert.AreEqual(country, (fence as TerritoryFence).Country);
+        }
+
+        [Then(@"the ""(.*)"" fence has an administrative_area of ""(.*)""")]
+        public void ThenTheFenceHasAnAdministrative_AreaOf(string geofenceName, string adminArea)
+        {
+            IFence fence = GetFenceFromPolicy(geofenceName);
+            Assert.IsNotNull(fence);
+            Assert.AreEqual(adminArea, (fence as TerritoryFence).AdministrativeArea);
+        }
+
+        [Then(@"the ""(.*)"" fence has a postal_code of ""(.*)""")]
+        public void ThenTheFenceHasAPostal_CodeOf(string geofenceName, string postalCode)
+        {
+            IFence fence = GetFenceFromPolicy(geofenceName);
+            Assert.IsNotNull(fence);
+            Assert.AreEqual(postalCode, (fence as TerritoryFence).PostalCode);
+        }
+
+        [Then(@"the inside Policy factors should be set to ""(.*)""")]
+        public void ThenTheInsidePolicyFactorsShouldBeSetTo(string factors)
+        {
+            bool requiredKnowledge = factors.ToLower().Contains("knowledge");
+            bool requiredPossession = factors.ToLower().Contains("possession");
+            bool requiredInherence = factors.ToLower().Contains("inherence");
+
+            Assert.AreEqual(requiredKnowledge, ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Inside as FactorsPolicy).RequireKnowledgeFactor);
+            Assert.AreEqual(requiredPossession, ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Inside as FactorsPolicy).RequirePossessionFactor);
+            Assert.AreEqual(requiredInherence, ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Inside as FactorsPolicy).RequireInherenceFactor);
+        }
+
+        [Then(@"the inside Policy amount should be set to ""(.*)""")]
+        public void ThenTheInsidePolicyAmountShouldBeSetTo(int amount)
+        {
+            Assert.AreEqual(amount, ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Inside as MethodAmountPolicy).Amount);
+        }
+
+        [Then(@"the Directory Service Policy has ""(.*)"" fence")]
+        public void ThenTheDirectoryServicePolicyHasFence(int numOfFences)
+        {
+            Assert.AreEqual(numOfFences, _directoryClientContext.LoadedAdvancedServicePolicy.Fences.Count);
+        }
+
+        [Then(@"the outside Policy factors should be set to ""(.*)""")]
+        public void ThenTheOutsidePolicyFactorsShouldBeSetTo(string factors)
+        {
+            bool requiredKnowledge = factors.ToLower().Contains("knowledge");
+            bool requiredPossession = factors.ToLower().Contains("possession");
+            bool requiredInherence = factors.ToLower().Contains("inherence");
+
+            Assert.AreEqual(requiredKnowledge, ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside as FactorsPolicy).RequireKnowledgeFactor);
+            Assert.AreEqual(requiredPossession, ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside as FactorsPolicy).RequirePossessionFactor);
+            Assert.AreEqual(requiredInherence, ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside as FactorsPolicy).RequireInherenceFactor);
+        }
+
+        [Then(@"the outside Policy amount should be set to ""(.*)""")]
+        public void ThenTheOutsidePolicyAmountShouldBeSetTo(int amount)
+        {
+            Assert.AreEqual(amount, ((_directoryClientContext.LoadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside as MethodAmountPolicy).Amount);
         }
     }
 }

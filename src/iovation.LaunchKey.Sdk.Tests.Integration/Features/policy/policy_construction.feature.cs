@@ -99,7 +99,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Policy
 #line 7
     testRunner.And("I set the factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 8
-    testRunner.And(string.Format("I set {0} on the Policy to {1}", field, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("I set {0} on the Factors Policy to {1}", field, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
     testRunner.And("I attempt to create a new Conditional Geofence Policy with the inside policy set " +
                     "to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -149,7 +149,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Policy
 #line 18
     testRunner.And("I set the factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
-    testRunner.And(string.Format("I set {0} on the Policy to {1}", field, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("I set {0} on the Factors Policy to {1}", field, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
     testRunner.And("I attempt to create a new Conditional Geofence Policy with the outside policy set" +
                     " to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -199,7 +199,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Policy
 #line 29
     testRunner.And("I set the amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 30
-    testRunner.And(string.Format("I set {0} on the Policy to {1}", field, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("I set {0} on the Method Amount Policy to {1}", field, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 31
     testRunner.And("I attempt to create a new Conditional Geofence Policy with the inside policy set " +
                     "to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -249,7 +249,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Policy
 #line 40
     testRunner.And("I set the amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 41
-    testRunner.And(string.Format("I set {0} on the Policy to {1}", field, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("I set {0} on the Method Amount Policy to {1}", field, value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 42
     testRunner.And("I attempt to create a new Conditional Geofence Policy with the outside policy set" +
                     " to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

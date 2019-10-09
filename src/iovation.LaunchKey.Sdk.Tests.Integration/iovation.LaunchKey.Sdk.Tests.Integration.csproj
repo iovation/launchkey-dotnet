@@ -16,6 +16,7 @@
     <None Remove="Secrets\OrgPrivateKey.txt" />
     <None Remove="Secrets\AppiumConfig.txt" />
     <None Remove="Secrets\ApiUrl.txt" />
+    <None Remove="Secrets\AppiumConfig_test %28copy%29.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,10 +38,13 @@
     <Content Include="Secrets\OrgPrivateKey.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Secrets\AppiumConfig.txt">
+    <Content Include="Secrets\AppiumConfig_test.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Secrets\ApiUrl.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Secrets\AppiumConfig.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

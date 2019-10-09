@@ -96,6 +96,7 @@ Feature: Directory Client can retrieve Directory Service Policy
 
   Scenario: Setting Fences on a Factors Policy works as expected
     When I create a new Factors Policy
+    And I set the factors to "KNOWLEDGE"
     And I add the following GeoCircleFence items
       | latitude | longitude | radius | name        |
       | 45.1250  | 150.51    | 15200  | Large Fence |

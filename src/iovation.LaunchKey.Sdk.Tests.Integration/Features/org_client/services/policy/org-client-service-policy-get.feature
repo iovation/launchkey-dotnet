@@ -67,15 +67,15 @@ Feature: Organization Client can retrieve Organization Service Policy
   Scenario: Setting Fences on a Method Amount Policy works as expected
     When I create a new MethodAmountPolicy
     And I add the following GeoCircleFence items
-    | latitude | longitude | radius | name        |
-    | 45.1250  | 150.51    | 15200  | Large Fence |
-    | -50.0111 | -140      | 100    | Small Fence |
+      | latitude | longitude | radius | name        |
+      | 45.1250  | 150.51    | 15200  | Large Fence |
+      | -50.0111 | -140      | 100    | Small Fence |
     And I add the following TerritoryFence items
-    | country | admin_area | postal_code | name  |
-    | US      | US-NV      | 89120       | US-NV |
-    | US      | US-CA      | 90001       | US-CA |
+      | country | admin_area | postal_code | name  |
+      | US      | US-NV      | 89120       | US-NV |
+      | US      | US-CA      | 90001       | US-CA |
     And I set the Policy for the Current Organization Service to the new policy
-    And I retrieve the Policy for the Current Organization Service
+    And I retrieve the Advanced Policy for the Current Organization Service
     Then the Organization Service Policy has "4" fences
     And the Organization Service Policy contains the GeoCircleFence "Large Fence"
     And the "Large Fence" fence has a latitude of "45.1250"
@@ -96,16 +96,17 @@ Feature: Organization Client can retrieve Organization Service Policy
 
   Scenario: Setting Fences on a Factors Policy works as expected
     When I create a new Factors Policy
+    And I set the factors to "KNOWLEDGE"
     And I add the following GeoCircleFence items
-    | latitude | longitude | radius | name        |
-    | 45.1250  | 150.51    | 15200  | Large Fence |
-    | -50.0111 | -140      | 100    | Small Fence |
+      | latitude | longitude | radius | name        |
+      | 45.1250  | 150.51    | 15200  | Large Fence |
+      | -50.0111 | -140      | 100    | Small Fence |
     And I add the following TerritoryFence items
-    | country | admin_area | postal_code | name  |
-    | US      | US-NV      | 89120       | US-NV |
-    | US      | US-CA      | 90001       | US-CA |
+      | country | admin_area | postal_code | name  |
+      | US      | US-NV      | 89120       | US-NV |
+      | US      | US-CA      | 90001       | US-CA |
     And I set the Policy for the Current Organization Service to the new policy
-    And I retrieve the Policy for the Current Organization Service
+    And I retrieve the Advanced Policy for the Current Organization Service
     Then the Organization Service Policy has "4" fences
     And the Organization Service Policy contains the GeoCircleFence "Large Fence"
     And the "Large Fence" fence has a latitude of "45.1250"
@@ -129,7 +130,7 @@ Feature: Organization Client can retrieve Organization Service Policy
     When I set the inside Policy to a new Factors Policy
     And I set the inside Policy factors to "Knowledge"
     And I set the Policy for the Current Organization Service to the new policy
-    And I retrieve the Policy for the Current Organization Service
+    And I retrieve the Advanced Policy for the Current Organization Service
     Then the inside Policy should be a FactorsPolicy
     And the inside Policy factors should be set to "Knowledge"
     And deny_rooted_jailbroken should be set to "False"
@@ -141,7 +142,7 @@ Feature: Organization Client can retrieve Organization Service Policy
     When I set the inside Policy to a new MethodAmountPolicy
     And I set the inside Policy amount to "2"
     And I set the Policy for the Current Organization Service to the new policy
-    And I retrieve the Policy for the Current Organization Service
+    And I retrieve the Advanced Policy for the Current Organization Service
     Then the inside Policy should be a MethodAmountPolicy
     And the inside Policy amount should be set to "2"
     And deny_rooted_jailbroken should be set to "False"
@@ -153,7 +154,7 @@ Feature: Organization Client can retrieve Organization Service Policy
     When I set the outside Policy to a new Factors Policy
     And I set the outside Policy factors to "Knowledge"
     And I set the Policy for the Current Organization Service to the new policy
-    And I retrieve the Policy for the Current Organization Service
+    And I retrieve the Advanced Policy for the Current Organization Service
     Then the outside Policy should be a FactorsPolicy
     And the outside Policy factors should be set to "Knowledge"
     And deny_rooted_jailbroken should be set to "False"
@@ -165,7 +166,7 @@ Feature: Organization Client can retrieve Organization Service Policy
     When I set the outside Policy to a new MethodAmountPolicy
     And I set the outside Policy amount to "2"
     And I set the Policy for the Current Organization Service to the new policy
-    And I retrieve the Policy for the Current Organization Service
+    And I retrieve the Advanced Policy for the Current Organization Service
     Then the outside Policy should be a MethodAmountPolicy
     And the outside Policy amount should be set to "2"
     And deny_rooted_jailbroken should be set to "False"
@@ -175,15 +176,15 @@ Feature: Organization Client can retrieve Organization Service Policy
   Scenario: Setting Fences on a Conditional Geofence Policy works as expected
     Given the Organization Service is set to any Conditional Geofence Policy
     When I add the following GeoCircleFence items
-    | latitude | longitude | radius | name        |
-    | 45.1250  | 150.51    | 15200  | Large Fence |
-    | -50.0111 | -140      | 100    | Small Fence |
+      | latitude | longitude | radius | name        |
+      | 45.1250  | 150.51    | 15200  | Large Fence |
+      | -50.0111 | -140      | 100    | Small Fence |
     And I add the following TerritoryFence items
-    | country | admin_area | postal_code | name  |
-    | US      | US-NV      | 89120       | US-NV |
-    | US      | US-CA      | 90001       | US-CA |
+      | country | admin_area | postal_code | name  |
+      | US      | US-NV      | 89120       | US-NV |
+      | US      | US-CA      | 90001       | US-CA |
     And I set the Policy for the Current Organization Service to the new policy
-    And I retrieve the Policy for the Current Organization Service
+    And I retrieve the Advanced Policy for the Current Organization Service
     Then the Organization Service Policy has "5" fences
     And the Organization Service Policy contains the GeoCircleFence "Large Fence"
     And the "Large Fence" fence has a latitude of "45.1250"

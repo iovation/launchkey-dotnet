@@ -647,7 +647,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 147
     testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 148
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 149
     testRunner.Then(string.Format("the amount should be set to \"{0}\"", amount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -778,7 +778,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 169
     testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 170
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 171
     testRunner.Then("the Organization Service Policy has \"4\" fences", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -796,13 +796,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 174
     testRunner.When("I create a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 175
-    testRunner.And(string.Format("I set the factors to {0}", factors), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("I set the factors to \"{0}\"", factors), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 176
     testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 177
-    testRunner.When("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 178
-    testRunner.Then(string.Format("factors should be set to {0}", factors), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then(string.Format("factors should be set to \"{0}\"", factors), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -905,6 +905,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
   this.FeatureBackground();
 #line 190
     testRunner.When("I create a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 191
+    testRunner.And("I set the factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table60 = new TechTalk.SpecFlow.Table(new string[] {
                         "latitude",
@@ -921,7 +923,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "-140",
                         "100",
                         "Small Fence"});
-#line 191
+#line 192
     testRunner.And("I add the following GeoCircleFence items", ((string)(null)), table60, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table61 = new TechTalk.SpecFlow.Table(new string[] {
@@ -939,13 +941,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "US-CA",
                         "90001",
                         "US-CA"});
-#line 195
+#line 196
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table61, "And ");
-#line 199
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 200
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 201
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 202
     testRunner.Then("the Organization Service Policy has \"4\" fences", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -957,22 +959,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
         public virtual void SettingDeny_Rooted_JailbrokenWorksAsExpectedOnAFactorsPolicy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting deny_rooted_jailbroken works as expected on a Factors Policy", null, ((string[])(null)));
-#line 203
+#line 204
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 204
-    testRunner.When("I create a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 205
-    testRunner.And("I set the factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I create a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 206
-    testRunner.And("I set deny_rooted_jailbroken to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 207
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set deny_rooted_jailbroken to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 208
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 209
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 210
     testRunner.Then("deny_rooted_jailbroken should be set to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -984,22 +986,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
         public virtual void SettingDeny_Rooted_JailbrokenWorksAsExpectedOnAMethodAmountPolicy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting deny_rooted_jailbroken works as expected on a Method Amount Policy", null, ((string[])(null)));
-#line 211
+#line 212
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 212
-    testRunner.When("I create a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 213
-    testRunner.And("I set the amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I create a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 214
-    testRunner.And("I set deny_rooted_jailbroken to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 215
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set deny_rooted_jailbroken to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 216
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 217
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 218
     testRunner.Then("deny_rooted_jailbroken should be set to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1011,22 +1013,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
         public virtual void SettingDeny_Emulator_SimulatorWorksAsExpectedOnAFactorsPolicy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting deny_emulator_simulator works as expected on a Factors Policy", null, ((string[])(null)));
-#line 219
+#line 220
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 220
-    testRunner.When("I create a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 221
-    testRunner.And("I set the factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I create a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 222
-    testRunner.And("I set deny_emulator_simulator to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 223
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set deny_emulator_simulator to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 224
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 225
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 226
     testRunner.Then("deny_emulator_simulator should be set to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1038,22 +1040,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
         public virtual void SettingDeny_Emulator_SimulatorWorksAsExpectedOnAMethodAmountPolicy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting deny_emulator_simulator works as expected on a Method Amount Policy", null, ((string[])(null)));
-#line 227
+#line 228
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 228
-    testRunner.When("I create a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 229
-    testRunner.And("I set the amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I create a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 230
-    testRunner.And("I set deny_emulator_simulator to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 231
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set deny_emulator_simulator to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 232
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 233
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 234
     testRunner.Then("deny_emulator_simulator should be set to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1065,22 +1067,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
         public virtual void SettingInsidePolicyToFactorsPolicyWorksAsExpected()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Inside Policy to Factors Policy works as expected", null, ((string[])(null)));
-#line 235
+#line 236
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 236
-    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 237
-    testRunner.When("I set the inside Policy to a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 238
-    testRunner.And("I set the inside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I set the inside Policy to a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 239
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the inside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 240
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 241
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 242
     testRunner.Then("the inside Policy should be a FactorsPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1092,22 +1094,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
         public virtual void SettingInsidePolicyToMethodsAmountPolicyWorksAsExpected()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Inside Policy to Methods Amount Policy works as expected", null, ((string[])(null)));
-#line 243
+#line 244
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 244
-    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 245
-    testRunner.When("I set the inside Policy to a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 246
-    testRunner.And("I set the inside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I set the inside Policy to a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 247
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the inside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 248
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 249
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 250
     testRunner.Then("the inside Policy should be a MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1119,22 +1121,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
         public virtual void SettingOutsidePolicyToFactorsPolicyWorksAsExpected()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Outside Policy to Factors Policy works as expected", null, ((string[])(null)));
-#line 251
+#line 252
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 252
-    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 253
-    testRunner.When("I set the outside Policy to a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 254
-    testRunner.And("I set the outside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I set the outside Policy to a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 255
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the outside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 256
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 257
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 258
     testRunner.Then("the outside Policy should be a FactorsPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1146,22 +1148,22 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
         public virtual void SettingOutsidePolicyToMethodsAmountPolicyWorksAsExpected()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Outside Policy to Methods Amount Policy works as expected", null, ((string[])(null)));
-#line 259
+#line 260
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 260
-    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 261
-    testRunner.When("I set the outside Policy to a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 262
-    testRunner.And("I set the outside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.When("I set the outside Policy to a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 263
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the outside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 264
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 265
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 266
     testRunner.Then("the outside Policy should be a MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1173,12 +1175,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
         public virtual void SettingFencesOnAConditionalGeofencePolicyWorksAsExpected()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Setting Fences on a Conditional Geofence Policy works as expected", null, ((string[])(null)));
-#line 267
+#line 268
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 268
+#line 269
     testRunner.Given("the Organization Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table62 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1196,7 +1198,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "-140",
                         "100",
                         "Small Fence"});
-#line 269
+#line 270
     testRunner.When("I add the following GeoCircleFence items", ((string)(null)), table62, "When ");
 #line hidden
             TechTalk.SpecFlow.Table table63 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1214,13 +1216,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
                         "US-CA",
                         "90001",
                         "US-CA"});
-#line 273
+#line 274
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table63, "And ");
-#line 277
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 278
-    testRunner.And("I retrieve the Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 279
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 280
     testRunner.Then("the Organization Service Policy has \"5\" fences", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

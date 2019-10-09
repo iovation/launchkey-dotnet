@@ -5,7 +5,7 @@
   Scenario Outline: Setting device integrity checks on FactorsPolicy inside nested conditions are invalid
     When I create a new Factors Policy
     And I set the factors to "Knowledge"
-    And I set <field> on the Policy to <value>
+    And I set <field> on the Factors Policy to <value>
     And I attempt to create a new Conditional Geofence Policy with the inside policy set to the new policy
     Then an InvalidPolicyAttributes error occurs
   Examples:
@@ -16,7 +16,7 @@
   Scenario Outline: Setting device integrity checks on FactorsPolicy outside nested conditions are invalid
     When I create a new Factors Policy
     And I set the factors to "Knowledge"
-    And I set <field> on the Policy to <value>
+    And I set <field> on the Factors Policy to <value>
     And I attempt to create a new Conditional Geofence Policy with the outside policy set to the new policy
     Then an InvalidPolicyAttributes error occurs
   Examples:
@@ -27,7 +27,7 @@
   Scenario Outline: Setting device integrity checks on MethodAmountPolicy inside nested conditions are invalid
     When I create a new MethodAmountPolicy
     And I set the amount to "2"
-    And I set <field> on the Policy to <value>
+    And I set <field> on the Method Amount Policy to <value>
     And I attempt to create a new Conditional Geofence Policy with the inside policy set to the new policy
     Then an InvalidPolicyAttributes error occurs
   Examples:
@@ -38,7 +38,7 @@
   Scenario Outline: Setting device integrity checks on MethodAmountPolicy outside nested conditions are invalid
     When I create a new MethodAmountPolicy
     And I set the amount to "2"
-    And I set <field> on the Policy to <value>
+    And I set <field> on the Method Amount Policy to <value>
     And I attempt to create a new Conditional Geofence Policy with the outside policy set to the new policy
     Then an InvalidPolicyAttributes error occurs
   Examples:

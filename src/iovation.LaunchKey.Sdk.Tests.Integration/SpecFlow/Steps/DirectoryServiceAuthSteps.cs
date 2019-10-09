@@ -301,6 +301,5 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         {
             Assert.AreEqual(numOfFactors, _directoryServiceClientContext._lastAuthorizationResponse.AuthPolicy.RequiredFactors);
         }
-
     }
 }

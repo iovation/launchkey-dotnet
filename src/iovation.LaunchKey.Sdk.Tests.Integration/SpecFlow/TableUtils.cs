@@ -68,7 +68,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
             {
                 fences.Add(new TerritoryFence(
                     country: fence.Country,
-                    administrativeArea: fence.AdministrativeArea,
+                    administrativeArea: fence.AdminArea,
                     postalCode: fence.PostalCode,
                     name: fence.Name
                 ));
