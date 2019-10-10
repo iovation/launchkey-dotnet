@@ -253,7 +253,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             _directoryClientContext.AddIFenceToAdvancedPolicy(territoryfences);
         }
 
-        [When(@"I set the Policy for the Current Directory Service to the new policy")]
+        [When(@"I set the Advanced Policy for the Current Directory Service to the new policy")]
         public void WhenISetThePolicyForTheCurrentDirectoryServiceToTheNewPolicy()
         {
             _directoryClientContext.SetAdvancedServicePolicy(

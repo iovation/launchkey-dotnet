@@ -25,7 +25,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Policy
         
         private Microsoft.VisualStudio.TestTools.UnitTesting.TestContext _testContext;
         
-#line 1 "policy_construction.feature"
+#line 1 "policy-construction.feature"
 #line hidden
         
         public virtual Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext

@@ -41,6 +41,13 @@ namespace iovation.LaunchKey.Sdk.Client
         AuthorizationResponse GetAuthorizationResponse(string authorizationRequestId);
 
         /// <summary>
+        /// Retrieve the status of an Advanced authorization request.
+        /// </summary>
+        /// <param name="authorizationRequestId">The authorization request identifier, usually retrieved via CreateAuthorizationRequest()</param>
+        /// <returns>NULL if the authorization is pending. A response package once the user has responded.</returns>
+        AdvancedAuthorizationResponse GetAdvancedAuthorizationResponse(string authorizationRequestId);
+
+        /// <summary>
         /// Begin a session for a user of this service.
         /// </summary>
         /// <param name="user">The username or directory user ID</param>

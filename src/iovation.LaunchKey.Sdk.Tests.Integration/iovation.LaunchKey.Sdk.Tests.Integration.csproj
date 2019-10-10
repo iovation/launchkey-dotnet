@@ -361,6 +361,9 @@
     <Compile Update="Features\policy\policy_construction.feature.cs">
       <DependentUpon>policy_construction.feature</DependentUpon>
     </Compile>
+    <Compile Update="Features\service_client\auth_request\service-client-auth-request-get-device-response-new-policy.feature.cs">
+      <DependentUpon>service-client-auth-request-get-device-response-new-policy.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -555,6 +558,10 @@
     <None Update="Features\policy\policy_construction.feature">
       <LastGenOutput>policy_construction.feature.cs</LastGenOutput>
     </None>
+    <None Update="Features\service_client\auth_request\service_client_auth_request_get_device_response_new_policy.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>service-client-auth-request-get-device-response-new-policy.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
@@ -563,5 +570,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\policy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SpecFlowObsoleteCodeBehindFiles Update="Features\service_client\auth_request\service_client_auth_request_get_device_response_new_policy.feature.cs">
+      <DependentUpon>service-client-auth-request-get-device-response-new-policy.feature</DependentUpon>
+    </SpecFlowObsoleteCodeBehindFiles>
   </ItemGroup>
 </Project>

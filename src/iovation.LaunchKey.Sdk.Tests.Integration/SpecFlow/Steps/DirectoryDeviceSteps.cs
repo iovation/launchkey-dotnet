@@ -152,5 +152,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             Guid? deviceID = _directoryClientContext.LastLinkResponse.DeviceId;
             Assert.AreNotEqual(deviceID, null);
         }
+
+        [When(@"I set the factors to ""(.*)""")]
+        public void WhenISetTheFactorsTo(string factors)
+        {
+            bool requireKnowledge = factors.ToLower().Contains("knowledge");
+            bool requireInherence = factors.ToLower().Contains("inherence");
+            bool requirePossession = factors.ToLower().Contains("possession");
+            _directoryClientContext.SetFactors(requireKnowledge, requirePossession, requireInherence);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Domain.Service;
+using iovation.LaunchKey.Sdk.Domain.Service.Policy;
 using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -161,6 +162,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             AuthorizationResponse authResponse = _directoryServiceClientContext.GetAuthResponse(authRequestID);
         }
 
+        [When(@"I get the response for the Advanced Authorization request")]
+        public void WhenIGetTheResponseForTheAdvancedAuthRequest()
+        {
+            string authRequestID = _directoryServiceClientContext._lastAuthorizationRequest.Id;
+            AdvancedAuthorizationResponse authResponse = _directoryServiceClientContext.GetAdvancedAuthorizationResponse(authRequestID);
+        }
+
         [Then(@"the Authorization response should be approved")]
         public void ThenTheAuthResponseShouldBeApproved()
         {
@@ -301,5 +309,58 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         {
             Assert.AreEqual(numOfFactors, _directoryServiceClientContext._lastAuthorizationResponse.AuthPolicy.RequiredFactors);
         }
+
+        [Then(@"the Advanced Authorization response should require Inherence")]
+        public void ThenTheAdvancedAuthorizationResponseShouldRequireInherence()
+        {
+            Assert.AreEqual(true, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.InherenceRequired);
+        }
+
+        [Then(@"the Advanced Authorization response should have the requirement ""(.*)""")]
+        public void ThenTheAdvancedAuthorizationResponseShouldHaveTheRequirement(string type)
+        {
+            Assert.AreEqual(type, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.Requirement.ToString());
+        }
+
+        [Then(@"the Advanced Authorization response should have amount set to (.*)")]
+        public void ThenTheAdvancedAuthorizationResponseShouldHaveAmountSetTo(int amount)
+        {
+            Assert.AreEqual(amount, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.Amount);
+        }
+
+        [Then(@"the Advanced Authorization response should contain a GeoCircleFence with a radius of (.*), a latitude of (.*), a longitude of (.*), and a name of ""(.*)""")]
+        public void ThenTheAdvancedAuthorizationResponseShouldContainAGeoCircleFence(int radius, double latitude, double longitude, string name)
+        {
+            bool fenceFound = false;
+            foreach(var fence in _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.Fences)
+            {
+                if (fence.Name == name)
+                {
+                    Assert.AreEqual(radius, (fence as GeoCircleFence).Radius);
+                    Assert.AreEqual(latitude, (fence as GeoCircleFence).Latitude);
+                    Assert.AreEqual(longitude, (fence as GeoCircleFence).Longitude);
+                    fenceFound = true;
+                }
+            }
+            Assert.IsTrue(fenceFound);
+        }
+
+        [Then(@"the Advanced Authorization response should contain a TerritoryFence with a country of ""(.*)"", a administrative area of ""(.*)"", a postal code of ""(.*)"", and a name of ""(.*)""")]
+        public void ThenTheAdvancedAuthorizationResponseShouldContainATerritoryFence(string country, string adminArea, string postalCode, string name)
+        {
+            bool fenceFound = false;
+            foreach (var fence in _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.Fences)
+            {
+                if (fence.Name == name)
+                {
+                    Assert.AreEqual(country, (fence as TerritoryFence).Country);
+                    Assert.AreEqual(adminArea, (fence as TerritoryFence).AdministrativeArea);
+                    Assert.AreEqual(postalCode, (fence as TerritoryFence).PostalCode);
+                    fenceFound = true;
+                }
+            }
+            Assert.IsTrue(fenceFound);
+        }
+
     }
 }

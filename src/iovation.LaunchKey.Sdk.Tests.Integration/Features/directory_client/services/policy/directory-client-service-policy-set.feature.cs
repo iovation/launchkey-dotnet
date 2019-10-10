@@ -646,7 +646,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 148
     testRunner.And(string.Format("I set the amount to \"{0}\"", amount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 149
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 150
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 151
@@ -777,7 +777,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 167
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table28, "And ");
 #line 171
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 172
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 173
@@ -799,7 +799,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 177
     testRunner.And(string.Format("I set the factors to \"{0}\"", factors), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 178
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 179
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 180
@@ -945,7 +945,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 198
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table30, "And ");
 #line 202
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 203
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 204
@@ -972,7 +972,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 209
     testRunner.And("I set deny_rooted_jailbroken to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 210
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 211
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 212
@@ -999,7 +999,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 217
     testRunner.And("I set deny_rooted_jailbroken to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 218
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 219
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 220
@@ -1026,7 +1026,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 225
     testRunner.And("I set deny_emulator_simulator to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 226
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 227
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 228
@@ -1053,7 +1053,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 233
     testRunner.And("I set deny_emulator_simulator to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 234
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 235
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 236
@@ -1080,7 +1080,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 241
     testRunner.And("I set the inside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 242
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 243
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 244
@@ -1107,7 +1107,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 249
     testRunner.And("I set the inside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 250
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 251
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 252
@@ -1134,7 +1134,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 257
     testRunner.And("I set the outside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 258
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 259
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 260
@@ -1161,7 +1161,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 265
     testRunner.And("I set the outside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 266
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 267
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 268
@@ -1220,7 +1220,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Directory_Client.Ser
 #line 276
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table32, "And ");
 #line 280
-    testRunner.And("I set the Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 281
     testRunner.And("I retrieve the Advanced Policy for the Current Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 282
