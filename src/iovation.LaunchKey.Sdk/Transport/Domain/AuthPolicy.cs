@@ -289,7 +289,6 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
                 });
             }
 
-            //Type = "LEGACY";
         }
     }
 }

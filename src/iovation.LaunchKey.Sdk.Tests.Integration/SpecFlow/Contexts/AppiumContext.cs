@@ -90,7 +90,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         {
             OpenAuthMenu();
             TapRefresh();
-            System.Threading.Thread.Sleep(1500);
+            System.Threading.Thread.Sleep(1000);
             ApproveAuth();
         }
 
