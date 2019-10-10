@@ -230,11 +230,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             Assert.IsTrue(_orgClientContext.LoadedServicePolicy.JailbreakDetection == null);
         }
 
-        //==============================NEW STUFF HERE =========================
-        //==============================NEW STUFF HERE =========================
-        //==============================NEW STUFF HERE =========================
-        //==============================NEW STUFF HERE =========================
-
         [When(@"I create a new MethodAmountPolicy")]
         [Scope(Feature = "Organization Client can retrieve Organization Service Policy")]
         [Scope(Feature = "Organization Client can set Organization Service Policy")]
@@ -261,7 +256,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             _orgClientContext.AddIFenceToAdvancedPolicy(territoryfences);
         }
 
-        [When(@"I set the Policy for the Current Organization Service to the new policy")]
+        [When(@"I set the Advanced Policy for the Current Organization Service to the new policy")]
         [Scope(Feature = "Organization Client can retrieve Organization Service Policy")]
         [Scope(Feature = "Organization Client can set Organization Service Policy")]
         public void WhenISetThePolicyForTheCurrentOrganizationServiceToTheNewPolicy()

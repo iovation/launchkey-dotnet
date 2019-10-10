@@ -230,9 +230,6 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             Assert.IsTrue(_directoryClientContext.LoadedServicePolicy.JailbreakDetection == null);
         }
 
-        //=======================NEW STUFF STARTS HERE==========================//
-        //======================================================================//
-
         [When(@"I create a new MethodAmountPolicy")]
         public void WhenICreateANewMethodAmountPolicy()
         {

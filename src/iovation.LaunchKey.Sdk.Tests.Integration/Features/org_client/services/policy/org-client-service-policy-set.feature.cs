@@ -645,7 +645,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 146
     testRunner.And(string.Format("I set the amount to \"{0}\"", amount), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 147
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 148
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 149
@@ -776,7 +776,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 165
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table59, "And ");
 #line 169
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 170
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 171
@@ -798,7 +798,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 175
     testRunner.And(string.Format("I set the factors to \"{0}\"", factors), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 176
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 177
     testRunner.When("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 178
@@ -944,7 +944,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 196
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table61, "And ");
 #line 200
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 201
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 202
@@ -971,7 +971,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 207
     testRunner.And("I set deny_rooted_jailbroken to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 208
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 209
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 210
@@ -998,7 +998,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 215
     testRunner.And("I set deny_rooted_jailbroken to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 216
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 217
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 218
@@ -1025,7 +1025,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 223
     testRunner.And("I set deny_emulator_simulator to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 224
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 225
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 226
@@ -1052,7 +1052,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 231
     testRunner.And("I set deny_emulator_simulator to \"True\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 232
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 233
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 234
@@ -1079,7 +1079,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 239
     testRunner.And("I set the inside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 240
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 241
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 242
@@ -1106,7 +1106,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 247
     testRunner.And("I set the inside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 248
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 249
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 250
@@ -1133,7 +1133,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 255
     testRunner.And("I set the outside Policy factors to \"Knowledge\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 256
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 257
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 258
@@ -1160,7 +1160,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 263
     testRunner.And("I set the outside Policy amount to \"2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 264
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 265
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 266
@@ -1219,7 +1219,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 274
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table63, "And ");
 #line 278
-    testRunner.And("I set the Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 279
     testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 280
