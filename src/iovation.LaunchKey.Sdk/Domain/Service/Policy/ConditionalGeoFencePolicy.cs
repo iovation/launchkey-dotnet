@@ -4,14 +4,47 @@ using iovation.LaunchKey.Sdk.Error;
 
 namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
 {
+    /// <summary>
+    /// Object that represents a Conditional Geofence Authorization Policy
+    /// </summary>
     public class ConditionalGeoFencePolicy : IPolicy
     {
+        /// <summary>
+        /// Whether to allow or deny rooted or jailbroken devices
+        /// </summary>
         public bool? DenyRootedJailbroken { get; }
+
+        /// <summary>
+        /// Whether to allow or deny emulator or simulator devices
+        /// </summary>
         public bool? DenyEmulatorSimulator { get; }
+
+        /// <summary>
+        /// List containing any Fence objects for the Authorization Policy
+        /// </summary>
         public List<IFence> Fences { get; }
+
+        /// <summary>
+        /// The Policy object that corresponds to devices within the specified Fences
+        /// </summary>
         public IPolicy Inside { get; }
+
+        /// <summary>
+        /// The Policy object that corresponds to devices that are not within the specified Fences
+        /// </summary>
         public IPolicy Outside { get; }
 
+        /// <summary>
+        /// Initializes object that represents a Conditional Geofence Authorization Policy
+        /// Inside, Outside, and Fences must be supplied.
+        /// Both Inside and Outside policies cannot have DenyEmulatorSimulator or DenyRootedJailbroken set to true and cannot set fences
+        /// Fences must have at least one value
+        /// </summary>
+        /// <param name="inside"></param>
+        /// <param name="outside"></param>
+        /// <param name="fences"></param>
+        /// <param name="denyRootedJailbroken"></param>
+        /// <param name="denyEmulatorSimulator"></param>
         public ConditionalGeoFencePolicy(
             IPolicy inside,
             IPolicy outside,

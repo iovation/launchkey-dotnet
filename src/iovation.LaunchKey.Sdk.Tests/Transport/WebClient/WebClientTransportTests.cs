@@ -872,16 +872,6 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
                 HttpMethod.POST,
                 "/organization/v3/service/policy/item"
             );
-
-
-            //var httpClient = MakeMockHttpClient(bodyResponse, 200);
-            //var jsonService = new Mock<IJsonEncoder>();
-
-            //var transport = MakeMockedTransport(httpClient.Object, jsonService.Object);
-            //transport.OrganizationV3ServicePolicyItemPost(
-            //        new ServicePolicyItemPostRequest(svcId),
-            //        TestConsts.DefaultOrganizationEntity
-            //    );
         }
 
         [TestMethod]
