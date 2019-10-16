@@ -82,7 +82,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
             if(advancedAuthResponse != null)
             {
-                AuthPolicy authPolicy = GetAuthPolicyFromAuthResponsePolicy(advancedAuthResponse.AuthorizationResponsePolicy);
+                AuthPolicy authPolicy = GetAuthPolicyFromAuthResponsePolicy(advancedAuthResponse.Policy);
 
                 return new AuthorizationResponse(
                     authorizationRequestId: advancedAuthResponse.AuthorizationRequestId,
@@ -430,7 +430,7 @@ namespace iovation.LaunchKey.Sdk.Client
             else if(webhookPackage is AdvancedAuthorizationResponseWebhookPackage)
             {
                 AdvancedAuthorizationResponse advancedAuthorizationResponse = ((AdvancedAuthorizationResponseWebhookPackage)webhookPackage).AdvancedAuthorizationResponse;
-                AuthPolicy authPolicy = GetAuthPolicyFromAuthResponsePolicy(advancedAuthorizationResponse.AuthorizationResponsePolicy);
+                AuthPolicy authPolicy = GetAuthPolicyFromAuthResponsePolicy(advancedAuthorizationResponse.Policy);
 
                 return new AuthorizationResponseWebhookPackage(
                     new AuthorizationResponse(

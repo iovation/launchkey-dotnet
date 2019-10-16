@@ -173,12 +173,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         public void ThenTheAuthResponseShouldBeApproved()
         {
             var currentAuth = _directoryServiceClientContext._lastAuthorizationResponse;
-            if( currentAuth is null)
+            if (currentAuth is null)
             {
                 throw new Exception("Auth response was not found when it was expected");
             }
 
-            if( currentAuth.Authorized != true)
+            if (currentAuth.Authorized != true)
             {
                 throw new Exception($"Auth was not approved when it should have been: {currentAuth.ToString()}");
             }
@@ -205,11 +205,11 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             var authTestMethods = table.CreateSet<AuthMethod>();
             var authResponseMethods = _directoryServiceClientContext._lastAuthorizationResponse.AuthMethods;
 
-            foreach( AuthMethod authTestMethod in authTestMethods)
+            foreach (AuthMethod authTestMethod in authTestMethods)
             {
-                foreach( var authResponseMethod in authResponseMethods)
+                foreach (var authResponseMethod in authResponseMethods)
                 {
-                    if(authTestMethod.Method == authResponseMethod.Method)
+                    if (authTestMethod.Method == authResponseMethod.Method)
                     {
                         Assert.AreEqual(authTestMethod.Active, authResponseMethod.Active);
                         Assert.AreEqual(authTestMethod.Allowed, authResponseMethod.Allowed);
@@ -218,7 +218,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                         Assert.AreEqual(authTestMethod.Passed, authResponseMethod.Passed);
                         Assert.AreEqual(authTestMethod.Set, authResponseMethod.Set);
                         Assert.AreEqual(authTestMethod.UserRequired, authResponseMethod.UserRequired);
-                        break; 
+                        break;
                     }
                 }
             }
@@ -313,26 +313,26 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [Then(@"the Advanced Authorization response should require Inherence")]
         public void ThenTheAdvancedAuthorizationResponseShouldRequireInherence()
         {
-            Assert.AreEqual(true, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.InherenceRequired);
+            Assert.AreEqual(true, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.InherenceRequired);
         }
 
         [Then(@"the Advanced Authorization response should have the requirement ""(.*)""")]
         public void ThenTheAdvancedAuthorizationResponseShouldHaveTheRequirement(string type)
         {
-            Assert.AreEqual(type, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.Requirement.ToString());
+            Assert.AreEqual(type, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.Requirement.ToString());
         }
 
         [Then(@"the Advanced Authorization response should have amount set to (.*)")]
         public void ThenTheAdvancedAuthorizationResponseShouldHaveAmountSetTo(int amount)
         {
-            Assert.AreEqual(amount, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.Amount);
+            Assert.AreEqual(amount, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.Amount);
         }
 
         [Then(@"the Advanced Authorization response should contain a GeoCircleFence with a radius of (.*), a latitude of (.*), a longitude of (.*), and a name of ""(.*)""")]
         public void ThenTheAdvancedAuthorizationResponseShouldContainAGeoCircleFence(int radius, double latitude, double longitude, string name)
         {
             bool fenceFound = false;
-            foreach(var fence in _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.Fences)
+            foreach (var fence in _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.Fences)
             {
                 if (fence.Name == name)
                 {
@@ -349,7 +349,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         public void ThenTheAdvancedAuthorizationResponseShouldContainATerritoryFence(string country, string adminArea, string postalCode, string name)
         {
             bool fenceFound = false;
-            foreach (var fence in _directoryServiceClientContext._lastAdvancedAuthorizationResponse.AuthorizationResponsePolicy.Fences)
+            foreach (var fence in _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.Fences)
             {
                 if (fence.Name == name)
                 {

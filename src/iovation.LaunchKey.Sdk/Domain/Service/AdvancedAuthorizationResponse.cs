@@ -65,14 +65,14 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
         /// <summary>
         /// The criteria the user had to fulfill to authorize the request successfully
         /// </summary>
-        public AuthorizationResponsePolicy AuthorizationResponsePolicy { get; }
+        public AuthorizationResponsePolicy Policy { get; }
 
         /// <summary>
         /// A list of all Auth Methods and the role they played in this Authorization request
         /// </summary>
         public IList<AuthMethod> AuthMethods { get; }
 
-        public AdvancedAuthorizationResponse(string authorizationRequestId, bool authorized, string serviceUserHash, string organizationUserHash, string userPushId, string deviceId, List<string> devicePins, AuthorizationResponseType? type, AuthorizationResponseReason? reason, string denialReason, bool? fraud, AuthorizationResponsePolicy authResponsePolicy, IList<AuthMethod> authMethods)
+        public AdvancedAuthorizationResponse(string authorizationRequestId, bool authorized, string serviceUserHash, string organizationUserHash, string userPushId, string deviceId, List<string> devicePins, AuthorizationResponseType? type, AuthorizationResponseReason? reason, string denialReason, bool? fraud, AuthorizationResponsePolicy policy, IList<AuthMethod> authMethods)
         {
             AuthorizationRequestId = authorizationRequestId;
             Authorized = authorized;
@@ -85,7 +85,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service
             Reason = reason;
             DenialReason = denialReason;
             Fraud = fraud;
-            AuthorizationResponsePolicy = authResponsePolicy;
+            Policy = policy;
             AuthMethods = authMethods;
         }
     }

@@ -79,7 +79,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 }
 
                 IWebhookPackage webhookPackage;
-                if(advancedWebhook == true)
+                if (advancedWebhook == true)
                 {
                     Console.WriteLine("Listening for an AdvancedWebhook!");
                     webhookPackage = handler.HandleAdvancedWebhook(headers, body, "POST", "");
@@ -107,7 +107,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     Console.WriteLine($"     DevicePubKey:      \n{message.DevicePublicKey}");
                     Console.WriteLine($"     DevicePubKeyID:    {message.DevicePublicKeyId}");
                 }
-                else if(webhookPackage is AdvancedAuthorizationResponseWebhookPackage)
+                else if (webhookPackage is AdvancedAuthorizationResponseWebhookPackage)
                 {
                     var authPackage = webhookPackage as AdvancedAuthorizationResponseWebhookPackage;
                     PrintAdvancedAuthorizationResponse(authPackage.AdvancedAuthorizationResponse);
@@ -137,10 +137,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
             Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
 
-            if(authResponse.AuthPolicy == null)
+            if (authResponse.AuthPolicy == null)
             {
                 Console.WriteLine($"    AuthPolicy: None");
-            } 
+            }
             else
             {
                 Console.WriteLine($"    AuthPolicy:");
@@ -149,7 +149,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 Console.WriteLine($"       RequiredInherence: {PrintNull(authResponse.AuthPolicy.RequireInherenceFactor)}");
                 Console.WriteLine($"       RequiredPosession: {PrintNull(authResponse.AuthPolicy.RequirePosessionFactor)}");
 
-                if(authResponse.AuthPolicy.Locations.Count > 0)
+                if (authResponse.AuthPolicy.Locations.Count > 0)
                 {
                     Console.WriteLine($"       Geofence Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
                     Console.WriteLine($"       Geofences:");
@@ -160,17 +160,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                         Console.WriteLine($"          Radius:    {PrintNull(item.Radius)}");
                         Console.WriteLine($"          Name:      {PrintNull(item.Name)} \n");
                     }
-                } 
+                }
                 else
                 {
                     Console.WriteLine($"       Geofences: None");
                 }
             }
 
-            if(authResponse.AuthMethods == null)
+            if (authResponse.AuthMethods == null)
             {
                 Console.WriteLine($"    Auth Methods: None");
-            } 
+            }
             else
             {
                 Console.WriteLine($"    Auth Methods:");
@@ -204,26 +204,26 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
             Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
 
-            if (authResponse.AuthorizationResponsePolicy == null)
+            if (authResponse.Policy == null)
             {
                 Console.WriteLine($"    AuthResponse: None");
             }
             else
             {
                 Console.WriteLine($"    AuthPolicy:");
-                Console.WriteLine($"       Requirement:       {PrintNull(authResponse.AuthorizationResponsePolicy.Requirement.ToString())}");
-                Console.WriteLine($"       Amount:            {PrintNull(authResponse.AuthorizationResponsePolicy.Amount)}");
-                Console.WriteLine($"       RequiredKnowledge: {PrintNull(authResponse.AuthorizationResponsePolicy.KnowledgeRequired)}");
-                Console.WriteLine($"       RequiredInherence: {PrintNull(authResponse.AuthorizationResponsePolicy.InherenceRequired)}");
-                Console.WriteLine($"       RequiredPosession: {PrintNull(authResponse.AuthorizationResponsePolicy.PossessionRequired)}");
+                Console.WriteLine($"       Requirement:       {PrintNull(authResponse.Policy.Requirement.ToString())}");
+                Console.WriteLine($"       Amount:            {PrintNull(authResponse.Policy.Amount)}");
+                Console.WriteLine($"       RequiredKnowledge: {PrintNull(authResponse.Policy.KnowledgeRequired)}");
+                Console.WriteLine($"       RequiredInherence: {PrintNull(authResponse.Policy.InherenceRequired)}");
+                Console.WriteLine($"       RequiredPosession: {PrintNull(authResponse.Policy.PossessionRequired)}");
 
-                if (authResponse.AuthorizationResponsePolicy.Fences.Count > 0)
+                if (authResponse.Policy.Fences.Count > 0)
                 {
-                    Console.WriteLine($"       Fence Count: {String.Join(", ", authResponse.AuthorizationResponsePolicy.Fences.Count)}");
+                    Console.WriteLine($"       Fence Count: {String.Join(", ", authResponse.Policy.Fences.Count)}");
                     Console.WriteLine($"       Fences:");
-                    foreach (IFence item in authResponse.AuthorizationResponsePolicy.Fences)
+                    foreach (IFence item in authResponse.Policy.Fences)
                     {
-                        if(item is TerritoryFence)
+                        if (item is TerritoryFence)
                         {
                             Console.WriteLine($"          Type:       TerritoryFence");
                             Console.WriteLine($"          AdminArea:  {PrintNull(((TerritoryFence)item).AdministrativeArea)}");
@@ -231,7 +231,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                             Console.WriteLine($"          Name:       {PrintNull(((TerritoryFence)item).Name)}");
                             Console.WriteLine($"          PostalCode: {PrintNull(((TerritoryFence)item).PostalCode)}");
                         }
-                        else if(item is GeoCircleFence)
+                        else if (item is GeoCircleFence)
                         {
                             Console.WriteLine($"          Type:      GeoCircleFence");
                             Console.WriteLine($"          Latitude:  {PrintNull(((GeoCircleFence)item).Latitude)}");
