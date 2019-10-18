@@ -4,7 +4,7 @@ using iovation.LaunchKey.Sdk.Domain.Webhook;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
-    public interface IServiceClient : IWebhookHandler
+    public interface IServiceClient : IAdvancedWebhookHandler
     {
         /// <summary>
         /// Perform an authorization for a user of a service.

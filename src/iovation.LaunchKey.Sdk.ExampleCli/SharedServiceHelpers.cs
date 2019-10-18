@@ -82,7 +82,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 if (advancedWebhook == true)
                 {
                     Console.WriteLine("Listening for an AdvancedWebhook!");
-                    webhookPackage = handler.HandleAdvancedWebhook(headers, body, "POST", "");
+                    webhookPackage = (handler as IAdvancedWebhookHandler).HandleAdvancedWebhook(headers, body, "POST", "");
                 }
                 else
                 {

@@ -298,13 +298,5 @@ namespace iovation.LaunchKey.Sdk.Client
 
             throw new InvalidRequestException("Unknown response type");
         }
-
-        public IWebhookPackage HandleAdvancedWebhook(
-            Dictionary<string, List<string>> headers, string body,
-            string method, string path)
-        {
-            return HandleWebhook(headers, body, method, path);
-        }
-
     }
 }
