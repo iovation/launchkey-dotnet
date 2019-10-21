@@ -421,14 +421,11 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 
             jsonService
                 .Setup(p => p.DecodeObject<IPolicy>(It.IsAny<string>()))
-                .Returns(new LegacyPolicy(
-                    null,
-                    null,
-                    false,
+                .Returns(new MethodAmountPolicy(
                     0,
                     false,
                     false,
-                    false
+                    null
             ));
 
             //Set the value for this to decodeobject

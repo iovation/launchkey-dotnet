@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Transport.Domain;
@@ -269,12 +268,16 @@ namespace iovation.LaunchKey.Sdk.Client
                             (fence as DomainPolicy.GeoCircleFence).Longitude
                         ));
                     }
+                    else
+                    {
+                        Trace.TraceWarning($"A Fence besides GeoCircleFence was present while using legacy functionality. This fence has been skipped from being processed.");
+                    }
                 }
             }
             return locations;
         }
 
-        internal static ServicePolicy GetServicePolicyFromLegacyPolicy(DomainPolicy.LegacyPolicy legacyPolicy)
+        internal static ServicePolicy GetDomainServicePolicyFromDomainLegacyPolicy(DomainPolicy.LegacyPolicy legacyPolicy)
         {
             List<AuthPolicy.Location> convertedLocations = GetTransportLocationsFromDomainGeoCircleFences(legacyPolicy.Fences);
 
@@ -291,9 +294,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
             int? amount = legacyPolicy.Amount;
             if (amount == 0)
-            {
                 amount = null;
-            }
 
             bool? denyRootedJailbroken = legacyPolicy.DenyRootedJailbroken;
             if (legacyPolicy.DenyRootedJailbroken == false)

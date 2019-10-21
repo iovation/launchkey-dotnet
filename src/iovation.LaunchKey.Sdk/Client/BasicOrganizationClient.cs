@@ -227,7 +227,7 @@ namespace iovation.LaunchKey.Sdk.Client
             }
             else
             {
-                return GetServicePolicyFromLegacyPolicy((DomainPolicy.LegacyPolicy)legacyPolicy);
+                return GetDomainServicePolicyFromDomainLegacyPolicy((DomainPolicy.LegacyPolicy)legacyPolicy);
             }
         }
 

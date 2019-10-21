@@ -213,14 +213,13 @@ namespace iovation.LaunchKey.Sdk.Client
             }
             else
             {
-                return GetServicePolicyFromLegacyPolicy((DomainPolicy.LegacyPolicy)legacyPolicy);
+                return GetDomainServicePolicyFromDomainLegacyPolicy((DomainPolicy.LegacyPolicy)legacyPolicy);
             }
         }
 
         [Obsolete("SetServicePolicy is deprecated, please use SetAdvancedServicePolicy instead")]
         public void SetServicePolicy(Guid serviceId, ServicePolicy policy)
         {
-            //Convert to LegacyPolicy to send to SetAdvancedServicePolicy
             DomainPolicy.IPolicy convertedPolicy = GetDomainPolicyFromTransportPolicy(policy.ToTransport());
             SetAdvancedServicePolicy(serviceId, convertedPolicy);
         }

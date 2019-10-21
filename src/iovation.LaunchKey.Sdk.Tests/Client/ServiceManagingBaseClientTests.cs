@@ -82,7 +82,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         public void TestGetDomainPolicyFromTransport_Factors()
         {
             FactorsPolicy transportPolicy = new FactorsPolicy(
-                new List<string>() { "KNOWLEDGE"},
+                new List<string>() { "KNOWLEDGE" },
                 true,
                 true,
                 null

@@ -16,7 +16,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
         /// <summary>
         /// Whether to allow or deny emulator or simulator devices
         /// </summary>
-        public bool? DenyEmulatorSimulator { get; } = false;
+        public bool? DenyEmulatorSimulator { get; } = null;
 
         /// <summary>
         /// List containing any Fence objects for the Authorization Policy

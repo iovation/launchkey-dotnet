@@ -185,11 +185,7 @@ namespace iovation.LaunchKey.Sdk.Client
 
                 Requirement? requirement = null;
 
-                if (response.AuthPolicy.Requirement == null)
-                {
-                    requirement = null;
-                }
-                else
+                if (response.AuthPolicy.Requirement != null)
                 {
                     Requirement parsedRequirement;
                     if (Enum.TryParse(response.AuthPolicy.Requirement, true, out parsedRequirement))
@@ -200,7 +196,6 @@ namespace iovation.LaunchKey.Sdk.Client
                     {
                         requirement = Requirement.OTHER;
                     }
-
                 }
 
                 authResponse = new AuthorizationResponsePolicy(
@@ -210,7 +205,7 @@ namespace iovation.LaunchKey.Sdk.Client
                     knowledgeRequired: knowledgeRequired,
                     inherenceRequired: inherenceRequired,
                     possessionRequired: possessionRequired
-                    );
+                );
             }
 
 
@@ -268,6 +263,10 @@ namespace iovation.LaunchKey.Sdk.Client
                                     (fence as DomainPolicy.GeoCircleFence)?.Name
                                 )
                             );
+                        }
+                        else
+                        {
+                            Trace.TraceWarning($"A Fence besides GeoCircleFence was present while using legacy functionality. This fence has been skipped from being processed.");
                         }
                     }
                 }
