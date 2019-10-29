@@ -12,7 +12,7 @@ using DomainPolicy = iovation.LaunchKey.Sdk.Domain.Service.Policy;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
-    public class BasicOrganizationClient : ServiceManagingBaseClient, IOrganizationClient
+    public class BasicOrganizationClient : IOrganizationClient
     {
         private EntityIdentifier _organizationId;
         private ITransport _transport;
@@ -225,57 +225,26 @@ namespace iovation.LaunchKey.Sdk.Client
                 Trace.TraceWarning($"Invalid policy type returned to legacy function. To utilize new policies please use GetAdvancedServicePolicy");
                 return null;
             }
-            else
-            {
-                return GetDomainServicePolicyFromDomainLegacyPolicy((DomainPolicy.LegacyPolicy)legacyPolicy);
-            }
+
+            return ServicePolicy.FromTransport((AuthPolicy)legacyPolicy.ToTransport());
         }
 
         [Obsolete("SetServicePolicy is deprecated, please use SetAdvancedServicePolicy instead")]
         public void SetServicePolicy(Guid serviceId, ServicePolicy policy)
         {
-            DomainPolicy.IPolicy convertedPolicy = GetDomainPolicyFromTransportPolicy(policy.ToTransport());
-            SetAdvancedServicePolicy(serviceId, convertedPolicy);
+            SetAdvancedServicePolicy(serviceId, policy.ToLegacyPolicy());
         }
 
         public DomainPolicy.IPolicy GetAdvancedServicePolicy(Guid serviceId)
         {
             var request = new ServicePolicyItemPostRequest(serviceId);
             IPolicy response = _transport.OrganizationV3ServicePolicyItemPost(request, _organizationId);
-            return GetDomainPolicyFromTransportPolicy(response);
+            return response.FromTransport();
         }
 
         public void SetAdvancedServicePolicy(Guid serviceId, DomainPolicy.IPolicy policy)
         {
-            IPolicy requestPolicy = null;
-            if(policy.GetType() == typeof(DomainPolicy.LegacyPolicy))
-            {
-                DomainPolicy.LegacyPolicy legacyPolicy =
-                    (DomainPolicy.LegacyPolicy)policy;
-                List<AuthPolicy.Location> locations = GetTransportLocationsFromDomainGeoCircleFences(legacyPolicy.Fences);
-                requestPolicy = new AuthPolicy(
-                    legacyPolicy.Amount, legacyPolicy.KnowledgeRequired,
-                    legacyPolicy.InherenceRequired, legacyPolicy.PossessionRequired,
-                    legacyPolicy.DenyRootedJailbroken,locations,
-                    legacyPolicy.TimeRestrictions);
-            }
-            else if(policy.GetType() == typeof(DomainPolicy.ConditionalGeoFencePolicy))
-            {
-                requestPolicy = GetTransportPolicyFromDomainPolicy(policy);
-            }
-            else if (policy.GetType() == typeof(DomainPolicy.MethodAmountPolicy))
-            {
-                requestPolicy = GetTransportPolicyFromDomainPolicy(policy);
-            }
-            else if (policy.GetType() == typeof(DomainPolicy.FactorsPolicy))
-            {
-                requestPolicy = GetTransportPolicyFromDomainPolicy(policy);
-            }
-            else
-            {
-                throw new InvalidParameters("Policy was not a known policy type");
-            }
-            var request = new ServicePolicyPutRequest(serviceId, requestPolicy);
+            var request = new ServicePolicyPutRequest(serviceId, policy.ToTransport());
             _transport.OrganizationV3ServicePolicyPut(request, _organizationId);
         }
 

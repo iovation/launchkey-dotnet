@@ -11,5 +11,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
         Boolean? DenyRootedJailbroken { get; }
         Boolean? DenyEmulatorSimulator { get; }
         List<IFence> Fences { get; }
+
+        Transport.Domain.IPolicy ToTransport();
     }
 }

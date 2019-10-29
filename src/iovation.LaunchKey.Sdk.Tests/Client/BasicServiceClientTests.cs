@@ -311,8 +311,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var testHeaders = new Dictionary<string, List<string>>();
             var testBody = "body";
 
-            var geofences = new List<TransportFence>();
-            geofences.Add(new TransportFence(name:"Test Geo", radius:200, latitude:36.120825, longitude:-115.157216));
+            var geofences = new List<IFence>();
+            geofences.Add(new GeoCircleFence(name:"Test Geo", radius:200, latitude:36.120825, longitude:-115.157216));
 
             var authPolicy = new AuthPolicy.JWEAuthPolicy
             {
@@ -462,9 +462,9 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         {
             var mockTransport = new Mock<ITransport>();
 
-            var geofences = new List<TransportFence>();
-            geofences.Add(new TransportFence(name: "Work", radius:150, latitude:36.083548, longitude:-115.157517));
-            geofences.Add(new TransportFence(name: "Home", radius:100, latitude:40.55, longitude:-90.12));
+            var geofences = new List<IFence>();
+            geofences.Add(new GeoCircleFence(name: "Work", radius:150, latitude:36.083548, longitude:-115.157517));
+            geofences.Add(new GeoCircleFence(name: "Home", radius:100, latitude:40.55, longitude:-90.12));
 
             var authPolicy = new AuthPolicy.JWEAuthPolicy
             {
@@ -497,7 +497,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         {
             var mockTransport = new Mock<ITransport>();
 
-            var geofences = new List<TransportFence>();
+            var geofences = new List<IFence>();
 
             var authPolicy = new AuthPolicy.JWEAuthPolicy
             {
@@ -1109,8 +1109,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         {
             var mockTransport = new Mock<ITransport>();
 
-            var geofences = new List<TransportFence>();
-            geofences.Add(new TransportFence(name: "Work", radius: 150, latitude: 36.083548, longitude:-115.157517));
+            var geofences = new List<IFence>();
+            geofences.Add(new GeoCircleFence(name: "Work", radius: 150, latitude: 36.083548, longitude:-115.157517));
 
             var authPolicy = new AuthPolicy.JWEAuthPolicy
             {
@@ -1183,8 +1183,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         {
             var mockTransport = new Mock<ITransport>();
 
-            var geofences = new List<TransportFence>();
-            geofences.Add(new TransportFence(name: "Work", radius: 150, latitude: 36.083548, longitude: -115.157517));
+            var geofences = new List<IFence>();
+            geofences.Add(new GeoCircleFence(name: "Work", radius: 150, latitude: 36.083548, longitude: -115.157517));
 
             var authPolicy = new AuthPolicy.JWEAuthPolicy
             {
@@ -1257,8 +1257,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         {
             var mockTransport = new Mock<ITransport>();
 
-            var geofences = new List<TransportFence>();
-            geofences.Add(new TransportFence(name: "Work", radius: 150, latitude: 36.083548, longitude: -115.157517));
+            var geofences = new List<IFence>();
+            geofences.Add(new GeoCircleFence(name: "Work", radius: 150, latitude: 36.083548, longitude: -115.157517));
 
             var authPolicy = new AuthPolicy.JWEAuthPolicy
             {

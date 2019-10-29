@@ -13,6 +13,11 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
     {
         [DefaultValue("LEGACY")]
         [JsonProperty("type", DefaultValueHandling = DefaultValueHandling.Populate)]
-         string Type { get; set; }
+        string Type { get; set; }
+
+        bool? DenyEmulatorSimulator { get; set; }
+        bool? DenyRootedJailbroken { get; set; }
+
+        Sdk.Domain.Service.Policy.IPolicy FromTransport();
     }
 }

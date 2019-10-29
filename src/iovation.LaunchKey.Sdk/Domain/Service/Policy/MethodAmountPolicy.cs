@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TransportDomain = iovation.LaunchKey.Sdk.Transport.Domain;
 
 namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
 {
@@ -39,6 +40,27 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
             DenyRootedJailbroken = denyRootedJailbroken;
             DenyEmulatorSimulator = denyEmulatorSimulator;
             Fences = fences ?? new List<IFence>();
+        }
+
+        /// <summary>
+        /// Returns the Transport object that can be used in the transport for
+        /// sending to the LaunchKey API
+        /// </summary>
+        /// <returns>Returns this objects representation to Sdk.Transport.Domain.IPolicy</returns>
+        public TransportDomain.IPolicy ToTransport()
+        {
+            List<TransportDomain.IFence> fences = new List<TransportDomain.IFence>();
+            foreach (IFence fence in Fences)
+            {
+                fences.Add(fence.ToTransport());
+            }
+
+            return new TransportDomain.MethodAmountPolicy(
+                amount: Amount,
+                denyRootedJailbroken: DenyRootedJailbroken,
+                denyEmulatorSimulator: DenyEmulatorSimulator,
+                fences: fences
+            );
         }
     }
 }
