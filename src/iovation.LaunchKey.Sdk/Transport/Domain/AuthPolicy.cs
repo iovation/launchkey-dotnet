@@ -301,7 +301,6 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
         public DomainPolicy.IPolicy FromTransport()
         {
             List<DomainPolicy.IFence> fences = new List<DomainPolicy.IFence>();
-            List<Sdk.Domain.ServiceManager.TimeFence> convertedTimeFences = new List<Sdk.Domain.ServiceManager.TimeFence>();
             ServicePolicy parsedLegacyPolicy = ServicePolicy.FromTransport(this);
 
             foreach (var factor in Factors)
