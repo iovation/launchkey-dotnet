@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -81,7 +81,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 IWebhookPackage webhookPackage;
                 if (advancedWebhook == true)
                 {
-                    webhookPackage = (handler as IAdvancedWebhookHandler).HandleAdvancedWebhook(headers, body, "POST", "");
+                    Console.WriteLine("Listening for an AdvancedWebhook!");
+                    webhookPackage = handler.HandleAdvancedWebhook(headers, body, "POST", "");
                 }
                 else
                 {
