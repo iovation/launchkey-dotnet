@@ -226,6 +226,7 @@ namespace iovation.LaunchKey.Sdk.Client
                 return null;
             }
 
+            // This calls ToTransport because the parsing logic that is contained in the ServicePolicy class shouldn't be duplicated
             return ServicePolicy.FromTransport((AuthPolicy)legacyPolicy.ToTransport());
         }
 

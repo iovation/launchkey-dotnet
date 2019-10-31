@@ -127,6 +127,11 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
                 fences.Add(fence.ToTransport());
             }
 
+            /*
+                * These values are explcitly set to null because of the shared JSON serialization with nested Policies and root Policies
+                * API does not accept these keys in nested policies so we have to set it to null so it does not serialize
+                * These values are verified in the constructor to not be True
+            */
             TransportDomain.IPolicy insidePolicy = Inside.ToTransport();
             insidePolicy.DenyEmulatorSimulator = null;
             insidePolicy.DenyRootedJailbroken = null;

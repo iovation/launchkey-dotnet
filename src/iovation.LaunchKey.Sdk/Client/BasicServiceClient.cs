@@ -170,7 +170,6 @@ namespace iovation.LaunchKey.Sdk.Client
 
             if (response.AuthPolicy != null)
             {
-                //List<DomainPolicy.IFence> fences = ServiceManagingBaseClient.GetDomainFencesFromTransportFences(response.AuthPolicy.Geofences);
                 List<DomainPolicy.IFence> fences = new List<DomainPolicy.IFence>();
 
                 if(response.AuthPolicy.Geofences != null)
