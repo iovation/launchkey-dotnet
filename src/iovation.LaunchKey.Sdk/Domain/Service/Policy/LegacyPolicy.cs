@@ -1,5 +1,8 @@
 using System.Collections.Generic;
-using static iovation.LaunchKey.Sdk.Transport.Domain.AuthPolicy;
+using System.Diagnostics;
+using System.Linq;
+using iovation.LaunchKey.Sdk.Domain.ServiceManager;
+using TransportDomain = iovation.LaunchKey.Sdk.Transport.Domain;
 
 namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
 {
@@ -46,7 +49,7 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
         /// <summary>
         /// List of server-side time restrictions
         /// </summary>
-        public List<TimeFence> TimeRestrictions {get;}
+        public List<TimeFence> TimeRestrictions { get; }
 
         public LegacyPolicy(
             List<IFence> fences,
@@ -65,6 +68,78 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
             KnowledgeRequired = knowledgeRequired ?? false;
             PossessionRequired = possessionRequired ?? false;
             TimeRestrictions = timeRestrictions ?? new List<TimeFence>();
+        }
+
+        /// <summary>
+        /// Returns the Transport object that can be used in the transport for
+        /// sending to the LaunchKey API
+        /// </summary>
+        /// <returns>Returns this objects representation to Sdk.Transport.Domain.AuthPolicy</returns>
+        public TransportDomain.IPolicy ToTransport()
+        {
+            List<TransportDomain.AuthPolicy.Location> fences = new List<TransportDomain.AuthPolicy.Location>();
+            List<TransportDomain.AuthPolicy.TimeFence> timeFences = new List<TransportDomain.AuthPolicy.TimeFence>();
+            foreach (IFence fence in Fences)
+            {
+                if (fence.GetType() == typeof(GeoCircleFence))
+                {
+                    fences.Add(new TransportDomain.AuthPolicy.Location(
+                        (fence as GeoCircleFence).Name,
+                        (fence as GeoCircleFence).Radius,
+                        (fence as GeoCircleFence).Latitude,
+                        (fence as GeoCircleFence).Longitude
+                    ));
+                }
+                else
+                {
+                    Trace.TraceWarning($"A Fence besides GeoCircleFence was present while using legacy functionality. This fence has been skipped from being processed.");
+                }
+            }
+
+            foreach(TimeFence timeFence in TimeRestrictions)
+            {
+                timeFences.Add(
+                    new TransportDomain.AuthPolicy.TimeFence(
+                        name: timeFence.Name,
+                        days: timeFence.Days.Select(day => day.ToString()).ToList(),
+                        startHour: timeFence.StartHour,
+                        endHour: timeFence.EndHour,
+                        startMinute: timeFence.StartMinute,
+                        endMinute: timeFence.EndMinute,
+                        timeZone: timeFence.TimeZone
+                    )
+                );
+            }
+
+            int? amount = Amount;
+
+            if (amount == 0)
+                amount = null;
+
+            bool? deviceIntegrity = DenyRootedJailbroken;
+            if (deviceIntegrity == false)
+                deviceIntegrity = null;
+
+            bool? knowledgeRequired = KnowledgeRequired;
+            bool? possessionRequired = PossessionRequired;
+            bool? inherenceRequired = InherenceRequired;
+
+            if (InherenceRequired == false && KnowledgeRequired == false && PossessionRequired == false)
+            {
+                knowledgeRequired = null;
+                possessionRequired = null;
+                inherenceRequired = null;
+            }
+
+            return new TransportDomain.AuthPolicy(
+                any: amount,
+                requireKnowledgeFactor: knowledgeRequired,
+                requireInherenceFactor: inherenceRequired,
+                requirePossessionFactor: possessionRequired,
+                deviceIntegrity: deviceIntegrity,
+                locations: fences,
+                timeFences: timeFences
+            );
         }
     }
 }

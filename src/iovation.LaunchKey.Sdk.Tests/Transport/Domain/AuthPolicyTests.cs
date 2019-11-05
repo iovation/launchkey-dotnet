@@ -406,10 +406,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
                 factors: new List<string>() { "POSSESSION" },
                 denyEmulatorSimulator: null,
                 denyRootedJailbroken: null,
-                fences: new List<TransportFence>()
+                fences: new List<IFence>()
                 );
             MethodAmountPolicy methodAmountPolicy = new MethodAmountPolicy(
-                fences: new List<TransportFence>(),
+                fences: new List<IFence>(),
                 denyEmulatorSimulator: null,
                 denyRootedJailbroken: null,
                 amount: 1
@@ -418,7 +418,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
             var expected = new ConditionalGeoFencePolicy(
                 denyRootedJailbroken: false,
                 denyEmulatorSimulator: false,
-                fences: new List<TransportFence>() { new TransportFence(name:"Ontario", country:"CA", administrativeArea:"CA-ON", type:"TERRITORY")},
+                fences: new List<IFence>() { new TerritoryFence(name:"Ontario", country:"CA", administrativeArea:"CA-ON")},
                 inside: factorsPolicy,
                 outside: methodAmountPolicy );
             var actual = new JsonNetJsonEncoder().DecodeObject<ConditionalGeoFencePolicy>(json);
@@ -468,11 +468,11 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
                 amount: 1,
                 denyEmulatorSimulator: false,
                 denyRootedJailbroken: false,
-                fences: new List<TransportFence>()
+                fences: new List<IFence>()
                 {
-                    new TransportFence(country:"US", name:"LV-89102", administrativeArea: null, postalCode: "89012", type:"TERRITORY"),
-                    new TransportFence(country:"US", name:"California", administrativeArea: "US-CA", postalCode: "92535", type:"TERRITORY"),
-                    new TransportFence(country:"CA", name:"Ontario", administrativeArea: "CA-ON", postalCode: null, type:"TERRITORY")
+                    new TerritoryFence(country:"US", name:"LV-89102", administrativeArea: null, postalCode: "89012"),
+                    new TerritoryFence(country:"US", name:"California", administrativeArea: "US-CA", postalCode: "92535"),
+                    new TerritoryFence(country:"CA", name:"Ontario", administrativeArea: "CA-ON", postalCode: null)
 
                 }
                 );
@@ -510,10 +510,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
                 factors: new List<string>() { "POSSESSION" },
                 denyEmulatorSimulator: false,
                 denyRootedJailbroken: false,
-                fences: new List<TransportFence>()
+                fences: new List<IFence>()
                 {
-                    new TransportFence(country:"US", name:"LV-89102", administrativeArea: null, postalCode: "89012", type:"TERRITORY"),
-                    new TransportFence(latitude:123.45, name:"Point A", longitude: -25.45, radius: 105, type:"GEO_CIRCLE"),
+                    new TerritoryFence(country:"US", name:"LV-89102", administrativeArea: null, postalCode: "89012"),
+                    new GeoCircleFence(latitude:123.45, name:"Point A", longitude: -25.45, radius: 105),
                 }
                 );
 

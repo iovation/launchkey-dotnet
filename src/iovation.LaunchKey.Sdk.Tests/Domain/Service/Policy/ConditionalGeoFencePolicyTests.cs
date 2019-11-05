@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using iovation.LaunchKey.Sdk.Client;
+﻿using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Domain.Service.Policy;
 using iovation.LaunchKey.Sdk.Error;
-using iovation.LaunchKey.Sdk.Transport;
-//using iovation.LaunchKey.Sdk.Transport.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using TransportDomain = iovation.LaunchKey.Sdk.Transport.Domain;
 
 namespace iovation.LaunchKey.Sdk.Tests.Domain.Service.Policy
 {
@@ -222,6 +218,35 @@ namespace iovation.LaunchKey.Sdk.Tests.Domain.Service.Policy
                     denyRootedJailbroken: false
                 )
             );
+        }
+
+        [TestMethod]
+        public void Test_To_Transport_Works()
+        {
+            var expected = new TransportDomain.ConditionalGeoFencePolicy(
+                DEFAULT_METHOD_AMOUNT_POLICY.ToTransport(),
+                DEFAULT_FACTORS_POLICY.ToTransport(),
+                false,
+                false,
+                new List<TransportDomain.IFence>()
+            );
+
+            var policy = new ConditionalGeoFencePolicy(
+                DEFAULT_METHOD_AMOUNT_POLICY,
+                DEFAULT_FACTORS_POLICY,
+                null,
+                false,
+                false
+            );
+
+            TransportDomain.ConditionalGeoFencePolicy actual = (TransportDomain.ConditionalGeoFencePolicy)policy.ToTransport();
+
+            Assert.IsInstanceOfType(actual, typeof(TransportDomain.ConditionalGeoFencePolicy));
+            Assert.AreEqual(expected.DenyEmulatorSimulator, actual.DenyEmulatorSimulator);
+            Assert.AreEqual(expected.DenyRootedJailbroken, actual.DenyRootedJailbroken);
+            Assert.IsInstanceOfType(actual.Inside, typeof(TransportDomain.MethodAmountPolicy));
+            Assert.IsInstanceOfType(actual.Outside, typeof(TransportDomain.FactorsPolicy));
+            CollectionAssert.AreEquivalent(expected.Fences, actual.Fences);
         }
 
         public void CompareDefaultFences(List<IFence> actualFences)

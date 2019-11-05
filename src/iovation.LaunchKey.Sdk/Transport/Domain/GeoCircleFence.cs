@@ -1,10 +1,10 @@
 using Newtonsoft.Json;
+using DomainPolicy = iovation.LaunchKey.Sdk.Domain.Service.Policy;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
     public class GeoCircleFence : IFence
     {
-        [JsonProperty("type")]
         public string Type { get; set; }
 
         [JsonProperty("name")]
@@ -26,7 +26,17 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             Latitude = latitude;
             Longitude = longitude; 
             Radius = radius;
+            Type = "GEO_CIRCLE";
         }
 
+        public DomainPolicy.IFence FromTransport()
+        {
+            return new DomainPolicy.GeoCircleFence(
+                latitude: Latitude,
+                longitude: Longitude,
+                radius: Radius,
+                name: Name
+            );
+        }
     }
 }

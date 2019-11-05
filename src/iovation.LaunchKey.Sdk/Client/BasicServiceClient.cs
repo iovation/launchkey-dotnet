@@ -170,7 +170,15 @@ namespace iovation.LaunchKey.Sdk.Client
 
             if (response.AuthPolicy != null)
             {
-                List<DomainPolicy.IFence> fences = ServiceManagingBaseClient.GetDomainFencesFromTransportFences(response.AuthPolicy.Geofences);
+                List<DomainPolicy.IFence> fences = new List<DomainPolicy.IFence>();
+
+                if(response.AuthPolicy.Geofences != null)
+                {
+                    foreach (IFence fence in response.AuthPolicy.Geofences)
+                    {
+                        fences.Add(fence.FromTransport());
+                    }
+                }
 
                 bool? knowledgeRequired = null;
                 bool? possessionRequired = null;
@@ -267,6 +275,7 @@ namespace iovation.LaunchKey.Sdk.Client
                         else
                         {
                             Trace.TraceWarning($"A Fence besides GeoCircleFence was present while using legacy functionality. This fence has been skipped from being processed.");
+
                         }
                     }
                 }

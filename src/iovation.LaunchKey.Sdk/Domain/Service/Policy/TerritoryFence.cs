@@ -50,5 +50,15 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
             PostalCode = postalCode;
             Name = name;
         }
+
+        public Transport.Domain.IFence ToTransport()
+        {
+            return new Transport.Domain.TerritoryFence(
+                name: Name,
+                country: Country,
+                administrativeArea: AdministrativeArea,
+                postalCode: PostalCode
+            );
+        }
     }
 }
