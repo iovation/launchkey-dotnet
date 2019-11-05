@@ -2,6 +2,27 @@ Change Log
 ----------
 3.6.0
 =====
+* Added new Policy objects
+    * MethodAmountPolicy
+    * FactorsPolicy
+    * LegacyPolicy
+    * ConditionalGeofencePolicy
+* Added new Fence objects:
+    * TerritoryFence
+    * GeoCircleFence
+* Added new client methods:
+    * SetAdvancedServicePolicy
+    * GetAdvancedServicePolicy
+    * GetAdvancedAuthorizationResponse
+* Added new Webhook method:
+    * GetAdvancedWebhook
+* Bugfix concerning LaunchKey API key rotation
+* Deprecated:
+    * ServicePolicy
+    * SetServicePolicy
+    * GetServicePolicy
+    * GetWebhook
+    * Location
 
 3.5.1
 =====
