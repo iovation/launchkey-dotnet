@@ -214,11 +214,18 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                     }
                 );
 
+                var JWTHeaders = Jose.JWT.Headers(response.Headers[IOV_JWT_HEADER]);
+                string kid = (string)JWTHeaders["kid"];
+
+                if(kid != publicKey.Thumbprint)
+                {
+                    publicKey = FetchPublicKeyWithId(kid);
+                }
+
                 // check for errors, decode and decrypt them if needed and crash out
                 ThrowForStatus(response, publicKey.KeyData, requestId, httpStatusCodeWhiteList);
 
                 // validate the response itself
-                // TODO: Don't pass in publickey KeyData, use what is in the response!
                 ValidateEncryptedResponse(response, publicKey.KeyData, requestId);
 
                 // if we're here, we've passed all validation and error handling
