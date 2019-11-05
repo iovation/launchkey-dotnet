@@ -54,7 +54,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
             Assert.AreEqual("2963", o.ServicePins[3]);
             Assert.AreEqual("2046", o.ServicePins[4]);
             Assert.AreEqual(null, o.AuthPolicy.Requirement);
-            Assert.AreEqual(0, o.AuthPolicy.Geofences.Length);
+            Assert.AreEqual(0, o.AuthPolicy.Geofences.Count);
             Assert.AreEqual(1, o.AuthMethods.Length);
         }
 
@@ -78,10 +78,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 
             Assert.AreEqual("amount", o.AuthPolicy.Requirement);
             Assert.AreEqual(2, o.AuthPolicy.Amount);
-            Assert.AreEqual(36.120825, o.AuthPolicy.Geofences[0].Latitude);
-            Assert.AreEqual(-115.157216, o.AuthPolicy.Geofences[0].Longitude);
-            Assert.AreEqual(200, o.AuthPolicy.Geofences[0].Radius);
-            Assert.AreEqual(null, o.AuthPolicy.Geofences[0].Name);
+            Assert.AreEqual(36.120825, (o.AuthPolicy.Geofences[0] as GeoCircleFence)?.Latitude);
+            Assert.AreEqual(-115.157216, (o.AuthPolicy.Geofences[0] as GeoCircleFence)?.Longitude);
+            Assert.AreEqual(200, (o.AuthPolicy.Geofences[0] as GeoCircleFence)?.Radius);
+            Assert.AreEqual(null, (o.AuthPolicy.Geofences[0] as GeoCircleFence)?.Name);
 
         }
 
@@ -106,15 +106,19 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 
             Assert.AreEqual("types", o.AuthPolicy.Requirement);
             Assert.AreEqual("knowledge", o.AuthPolicy.Types[0]);
-            Assert.AreEqual(2, o.AuthPolicy.Geofences.Length);
-            Assert.AreEqual(36.121020, o.AuthPolicy.Geofences[0].Latitude);
-            Assert.AreEqual(-115.156460, o.AuthPolicy.Geofences[0].Longitude);
-            Assert.AreEqual(550, o.AuthPolicy.Geofences[0].Radius);
-            Assert.AreEqual("HQ North", o.AuthPolicy.Geofences[0].Name);
-            Assert.AreEqual(34.121020, o.AuthPolicy.Geofences[1].Latitude);
-            Assert.AreEqual(-113.156460, o.AuthPolicy.Geofences[1].Longitude);
-            Assert.AreEqual(150, o.AuthPolicy.Geofences[1].Radius);
-            Assert.AreEqual("HQ West", o.AuthPolicy.Geofences[1].Name);
+            Assert.AreEqual(2, o.AuthPolicy.Geofences.Count);
+
+            GeoCircleFence fenceOne = (GeoCircleFence)o.AuthPolicy.Geofences[0];
+            GeoCircleFence fenceTwo = (GeoCircleFence)o.AuthPolicy.Geofences[1];
+
+            Assert.AreEqual(36.121020, fenceOne.Latitude);
+            Assert.AreEqual(-115.156460, fenceOne.Longitude);
+            Assert.AreEqual(550, fenceOne.Radius);
+            Assert.AreEqual("HQ North", fenceOne.Name);
+            Assert.AreEqual(34.121020, fenceTwo.Latitude);
+            Assert.AreEqual(-113.156460, fenceTwo.Longitude);
+            Assert.AreEqual(150, fenceTwo.Radius);
+            Assert.AreEqual("HQ West", fenceTwo.Name);
         }
 
         [TestMethod]

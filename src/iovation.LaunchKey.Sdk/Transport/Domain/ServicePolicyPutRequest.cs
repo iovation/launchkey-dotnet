@@ -9,12 +9,12 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
         public Guid ServiceId { get; }
 
         [JsonProperty("policy")]
-        public AuthPolicy AuthPolicy { get; }
+        public IPolicy Policy { get; }
 
-        public ServicePolicyPutRequest(Guid serviceId, AuthPolicy authPolicy)
+        public ServicePolicyPutRequest(Guid serviceId, IPolicy policy)
         {
             ServiceId = serviceId;
-            AuthPolicy = authPolicy;
+            Policy = policy;
         }
     }
 }

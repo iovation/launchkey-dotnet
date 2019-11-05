@@ -98,23 +98,23 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line hidden
-            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
                         "key",
                         "value"});
-            table21.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "description",
                         "Super Awesome Service"});
-            table21.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "icon",
                         "https://www.iovation.com/icon"});
-            table21.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "callback_url",
                         "https://www.iovation.com/callback"});
-            table21.AddRow(new string[] {
+            table33.AddRow(new string[] {
                         "active",
                         "True"});
 #line 7
-    testRunner.Given("I created a Organization Service with the following:", ((string)(null)), table21, "Given ");
+    testRunner.Given("I created a Organization Service with the following:", ((string)(null)), table33, "Given ");
 #line 13
     testRunner.When("I retrieve the created Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 14

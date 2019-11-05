@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Directory;
@@ -8,6 +9,7 @@ using iovation.LaunchKey.Sdk.Domain.Webhook;
 using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Transport;
 using iovation.LaunchKey.Sdk.Transport.Domain;
+using DomainPolicy = iovation.LaunchKey.Sdk.Domain.Service.Policy;
 
 namespace iovation.LaunchKey.Sdk.Client
 {
@@ -198,20 +200,38 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport.DirectoryV3ServiceKeysDelete(request, _directoryId);
         }
 
+
+        [Obsolete("GetServicePolicy is deprecated, please use GetAdvancedServicePolicy instead")]
         public ServicePolicy GetServicePolicy(Guid serviceId)
         {
-            var request = new ServicePolicyItemPostRequest(serviceId);
-            var response = _transport.DirectoryV3ServicePolicyItemPost(
-                    request, _directoryId
-            );
-            return ServicePolicy.FromTransport(response);
+            DomainPolicy.IPolicy legacyPolicy = GetAdvancedServicePolicy(serviceId);
+
+            if (legacyPolicy.GetType() != typeof(DomainPolicy.LegacyPolicy))
+            {
+                Trace.TraceWarning($"Invalid policy type returned to legacy function. To utilize new policies please use GetAdvancedServicePolicy");
+                return null;
+            }
+
+            // This calls ToTransport because the parsing logic that is contained in the ServicePolicy class shouldn't be duplicated
+            return ServicePolicy.FromTransport((AuthPolicy)legacyPolicy.ToTransport());
         }
 
+        [Obsolete("SetServicePolicy is deprecated, please use SetAdvancedServicePolicy instead")]
         public void SetServicePolicy(Guid serviceId, ServicePolicy policy)
         {
-            var request = new ServicePolicyPutRequest(serviceId,
-                 policy.ToTransport()
-             );
+            SetAdvancedServicePolicy(serviceId, policy.ToLegacyPolicy());
+        }
+
+        public DomainPolicy.IPolicy GetAdvancedServicePolicy(Guid serviceId)
+        {
+            var request = new ServicePolicyItemPostRequest(serviceId);
+            IPolicy response = _transport.DirectoryV3ServicePolicyItemPost(request, _directoryId);
+            return response.FromTransport();
+        }
+
+        public void SetAdvancedServicePolicy(Guid serviceId, DomainPolicy.IPolicy policy)
+        {
+            var request = new ServicePolicyPutRequest(serviceId, policy.ToTransport());
             _transport.DirectoryV3ServicePolicyPut(request, _directoryId);
         }
 
@@ -246,6 +266,13 @@ namespace iovation.LaunchKey.Sdk.Client
             }
 
             throw new InvalidRequestException("Unknown response type");
+        }
+
+        public IWebhookPackage HandleAdvancedWebhook(
+            Dictionary<string, List<string>> headers, string body,
+            string method, string path)
+        {
+            return HandleWebhook(headers, body, method, path);
         }
 
     }

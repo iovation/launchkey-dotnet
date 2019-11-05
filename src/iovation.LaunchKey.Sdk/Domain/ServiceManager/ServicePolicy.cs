@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DomainPolicy = iovation.LaunchKey.Sdk.Domain.Service.Policy;
 
 namespace iovation.LaunchKey.Sdk.Domain.ServiceManager
 {
@@ -187,6 +188,33 @@ namespace iovation.LaunchKey.Sdk.Domain.ServiceManager
                     timeFences: timeFences
                 );
             }
+        }
+
+        public DomainPolicy.IPolicy ToLegacyPolicy()
+        {
+            List<DomainPolicy.IFence> fences = new List<DomainPolicy.IFence>();
+
+            foreach(var location in Locations)
+            {
+                fences.Add(
+                    new DomainPolicy.GeoCircleFence(
+                            name: location.Name,
+                            latitude: location.Latitude,
+                            longitude: location.Longitude,
+                            radius: location.Radius
+                    )
+                );
+            }
+
+            return new DomainPolicy.LegacyPolicy(
+                fences: fences,
+                denyRootedJailbroken: JailbreakDetection,
+                amount: RequiredFactors,
+                inherenceRequired: RequireInherenceFactor,
+                knowledgeRequired: RequireKnowledgeFactor,
+                possessionRequired: RequirePossessionFactor,
+                timeRestrictions: TimeFences
+            );
         }
     }
 }

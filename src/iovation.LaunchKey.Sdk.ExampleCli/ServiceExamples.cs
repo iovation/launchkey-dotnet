@@ -18,10 +18,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return SharedServiceHelpers.DoSessionEnd(serviceClient, username);
         }
 
-        public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons, bool? useWebhook = false)
+        public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons, bool? useWebhook = false, bool? advancedWebhook = false)
         {
             var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
-            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, username, useWebhook, context, null, title, ttl, pushTitle, pushBody, fraudDenialreasons, nonFraudDenialreasons);
+            return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, username, useWebhook, advancedWebhook, context, null, title, ttl, pushTitle, pushBody, fraudDenialreasons, nonFraudDenialreasons);
         }
 
         public static int DoServiceAuthorizationWithPolicy(string username, string serviceId, string privateKey, bool jailbreakDetection, int? factors, string geofence, string apiURL)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Domain;
+using iovation.LaunchKey.Sdk.Domain.Service.Policy;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 
 namespace iovation.LaunchKey.Sdk.Client
@@ -91,11 +92,25 @@ namespace iovation.LaunchKey.Sdk.Client
         ServicePolicy GetServicePolicy(Guid serviceId);
 
         /// <summary>
+        /// Get the Advanced authorization policy for the Service
+        /// </summary>
+        /// <param name="serviceId">The service to retrieve the authorization policy for</param>
+        /// <returns></returns>
+        IPolicy GetAdvancedServicePolicy(Guid serviceId);
+
+        /// <summary>
         /// Update the default authorization policy for a Service
         /// </summary>
         /// <param name="serviceId">The service to update the authorization policy for</param>
         /// <param name="policy">The new authorization policy</param>
         void SetServicePolicy(Guid serviceId, ServicePolicy policy);
+
+        /// <summary>
+        /// Update the Advanced authorization policy for a Service
+        /// </summary>
+        /// <param name="serviceId">The service to update the authorization policy for</param>
+        /// <param name="policy">The new authorization policy</param>
+        void SetAdvancedServicePolicy(Guid serviceId, IPolicy policy);
 
         /// <summary>
         /// Remove the default authorization policy for a Service

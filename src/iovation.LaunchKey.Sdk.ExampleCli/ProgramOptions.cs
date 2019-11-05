@@ -197,6 +197,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 	
 		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
 		public bool? UseWebhook { get; set; }
+
+        [Option('o', "use-advanced-webhooks", HelpText = "Whether to use the new HandleAdvancedWebhook instead of deprecated HandleWebhook", Required = false)]
+        public bool? AdvancedWebhook { get; set; }
 	}
 
 	[Verb("service-auth-cancel", HelpText = "Cancel an existing authorization request for a user")]

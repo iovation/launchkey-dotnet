@@ -92,23 +92,23 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
         {
 #line 6
   #line hidden
-            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
                         "key",
                         "value"});
-            table22.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "description",
                         "Super Awesome Service"});
-            table22.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "icon",
                         "https://www.iovation.com/icon"});
-            table22.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "callback_url",
                         "https://www.iovation.com/callback"});
-            table22.AddRow(new string[] {
+            table34.AddRow(new string[] {
                         "active",
                         "True"});
 #line 7
-    testRunner.Given("I created a Organization Service with the following:", ((string)(null)), table22, "Given ");
+    testRunner.Given("I created a Organization Service with the following:", ((string)(null)), table34, "Given ");
 #line hidden
         }
         
@@ -124,23 +124,23 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services
 #line 6
   this.FeatureBackground();
 #line hidden
-            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table35 = new TechTalk.SpecFlow.Table(new string[] {
                         "key",
                         "value"});
-            table23.AddRow(new string[] {
+            table35.AddRow(new string[] {
                         "description",
                         "So Much Awesome"});
-            table23.AddRow(new string[] {
+            table35.AddRow(new string[] {
                         "icon",
                         "https://www.iovation.com/iconic"});
-            table23.AddRow(new string[] {
+            table35.AddRow(new string[] {
                         "callback_url",
                         "https://www.iovation.com/callbackish"});
-            table23.AddRow(new string[] {
+            table35.AddRow(new string[] {
                         "active",
                         "False"});
 #line 15
-    testRunner.When("I update the Organization Service with the following:", ((string)(null)), table23, "When ");
+    testRunner.When("I update the Organization Service with the following:", ((string)(null)), table35, "When ");
 #line 21
     testRunner.And("I retrieve the created Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
