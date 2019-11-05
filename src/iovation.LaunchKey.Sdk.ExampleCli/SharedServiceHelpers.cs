@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using iovation.LaunchKey.Sdk.Client;
 using iovation.LaunchKey.Sdk.Domain.Service;
+using iovation.LaunchKey.Sdk.Domain.Service.Policy;
 using iovation.LaunchKey.Sdk.Domain.Webhook;
 using iovation.LaunchKey.Sdk.Error;
 
@@ -43,7 +44,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return String.IsNullOrEmpty(value) ? "None" : value;
         }
 
-        public static int HandleWebhook(IWebhookHandler handler)
+        public static int HandleWebhook(IWebhookHandler handler, bool? advancedWebhook = false)
         {
             if (!HttpListener.IsSupported)
             {
@@ -51,11 +52,16 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 Environment.Exit(1);
             }
             Console.WriteLine("Webhook: Starting HTTP listener for localhost on port 9876.");
+
             var listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:9876/");
             listener.Start();
 
             Console.WriteLine("Webhook: Waiting for a request ... ");
+            if (advancedWebhook == true)
+            {
+                Console.WriteLine("Listening for an AdvancedWebhook!");
+            }
             Console.WriteLine("Note: If using a reverse proxy (like ngrok) make sure you set the host header to localhost:9876");
             var context = listener.GetContext();
             Console.WriteLine("Webhook: Request received");
@@ -72,7 +78,16 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     }
                 }
 
-                IWebhookPackage webhookPackage = handler.HandleWebhook(headers, body, "POST", "");
+                IWebhookPackage webhookPackage;
+                if (advancedWebhook == true)
+                {
+                    Console.WriteLine("Listening for an AdvancedWebhook!");
+                    webhookPackage = handler.HandleAdvancedWebhook(headers, body, "POST", "");
+                }
+                else
+                {
+                    webhookPackage = handler.HandleWebhook(headers, body, "POST", "");
+                }
 
                 if (webhookPackage is AuthorizationResponseWebhookPackage)
                 {
@@ -91,6 +106,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     Console.WriteLine($"     DeviceID:          {message.DeviceId}");
                     Console.WriteLine($"     DevicePubKey:      \n{message.DevicePublicKey}");
                     Console.WriteLine($"     DevicePubKeyID:    {message.DevicePublicKeyId}");
+                }
+                else if (webhookPackage is AdvancedAuthorizationResponseWebhookPackage)
+                {
+                    var authPackage = webhookPackage as AdvancedAuthorizationResponseWebhookPackage;
+                    PrintAdvancedAuthorizationResponse(authPackage.AdvancedAuthorizationResponse);
                 }
                 else
                 {
@@ -117,10 +137,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
             Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
 
-            if(authResponse.AuthPolicy == null)
+            if (authResponse.AuthPolicy == null)
             {
                 Console.WriteLine($"    AuthPolicy: None");
-            } 
+            }
             else
             {
                 Console.WriteLine($"    AuthPolicy:");
@@ -129,7 +149,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 Console.WriteLine($"       RequiredInherence: {PrintNull(authResponse.AuthPolicy.RequireInherenceFactor)}");
                 Console.WriteLine($"       RequiredPosession: {PrintNull(authResponse.AuthPolicy.RequirePosessionFactor)}");
 
-                if(authResponse.AuthPolicy.Locations.Count > 0)
+                if (authResponse.AuthPolicy.Locations.Count > 0)
                 {
                     Console.WriteLine($"       Geofence Count: {String.Join(", ", authResponse.AuthPolicy.Locations.Count)}");
                     Console.WriteLine($"       Geofences:");
@@ -140,17 +160,17 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                         Console.WriteLine($"          Radius:    {PrintNull(item.Radius)}");
                         Console.WriteLine($"          Name:      {PrintNull(item.Name)} \n");
                     }
-                } 
+                }
                 else
                 {
                     Console.WriteLine($"       Geofences: None");
                 }
             }
 
-            if(authResponse.AuthMethods == null)
+            if (authResponse.AuthMethods == null)
             {
                 Console.WriteLine($"    Auth Methods: None");
-            } 
+            }
             else
             {
                 Console.WriteLine($"    Auth Methods:");
@@ -167,6 +187,87 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 }
             }
         }
+
+
+        private static void PrintAdvancedAuthorizationResponse(AdvancedAuthorizationResponse authResponse)
+        {
+            Console.WriteLine($"Auth response was:");
+            Console.WriteLine($"    Authorized:     {authResponse.Authorized}");
+            Console.WriteLine($"    Type:           {PrintNull(authResponse.Type)}");
+            Console.WriteLine($"    Reason:         {PrintNull(authResponse.Reason)}");
+            Console.WriteLine($"    Denial Reason:  {PrintNull(authResponse.DenialReason)}");
+            Console.WriteLine($"    Fraud:          {authResponse.Fraud}");
+            Console.WriteLine($"    Auth Request:   {authResponse.AuthorizationRequestId}");
+            Console.WriteLine($"    Device Pins:    {String.Join(", ", authResponse.DevicePins)}");
+            Console.WriteLine($"    Org User Hash:  {authResponse.OrganizationUserHash}");
+            Console.WriteLine($"    Svc User Hash:  {authResponse.ServiceUserHash}");
+            Console.WriteLine($"    User Push ID:   {authResponse.UserPushId}");
+            Console.WriteLine($"    Device ID:      {authResponse.DeviceId}");
+
+            if (authResponse.Policy == null)
+            {
+                Console.WriteLine($"    AuthResponse: None");
+            }
+            else
+            {
+                Console.WriteLine($"    AuthPolicy:");
+                Console.WriteLine($"       Requirement:       {PrintNull(authResponse.Policy.Requirement.ToString())}");
+                Console.WriteLine($"       Amount:            {PrintNull(authResponse.Policy.Amount)}");
+                Console.WriteLine($"       RequiredKnowledge: {PrintNull(authResponse.Policy.KnowledgeRequired)}");
+                Console.WriteLine($"       RequiredInherence: {PrintNull(authResponse.Policy.InherenceRequired)}");
+                Console.WriteLine($"       RequiredPosession: {PrintNull(authResponse.Policy.PossessionRequired)}");
+
+                if (authResponse.Policy.Fences.Count > 0)
+                {
+                    Console.WriteLine($"       Fence Count: {String.Join(", ", authResponse.Policy.Fences.Count)}");
+                    Console.WriteLine($"       Fences:");
+                    foreach (IFence item in authResponse.Policy.Fences)
+                    {
+                        if (item is TerritoryFence)
+                        {
+                            Console.WriteLine($"          Type:       TerritoryFence");
+                            Console.WriteLine($"          AdminArea:  {PrintNull(((TerritoryFence)item).AdministrativeArea)}");
+                            Console.WriteLine($"          Country:    {PrintNull(((TerritoryFence)item).Country)}");
+                            Console.WriteLine($"          Name:       {PrintNull(((TerritoryFence)item).Name)}");
+                            Console.WriteLine($"          PostalCode: {PrintNull(((TerritoryFence)item).PostalCode)}");
+                        }
+                        else if (item is GeoCircleFence)
+                        {
+                            Console.WriteLine($"          Type:      GeoCircleFence");
+                            Console.WriteLine($"          Latitude:  {PrintNull(((GeoCircleFence)item).Latitude)}");
+                            Console.WriteLine($"          Longitude: {PrintNull(((GeoCircleFence)item).Longitude)}");
+                            Console.WriteLine($"          Radius:    {PrintNull(((GeoCircleFence)item).Radius)}");
+                            Console.WriteLine($"          Name:      {PrintNull(((GeoCircleFence)item).Name)} \n");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"       Geofences: None");
+                }
+            }
+
+            if (authResponse.AuthMethods == null)
+            {
+                Console.WriteLine($"    Auth Methods: None");
+            }
+            else
+            {
+                Console.WriteLine($"    Auth Methods:");
+                foreach (var item in authResponse.AuthMethods)
+                {
+                    Console.WriteLine($"       Auth Method: {PrintNull(item.Method)}");
+                    Console.WriteLine($"          Set: {PrintNull(item.Set)}");
+                    Console.WriteLine($"          Active: {PrintNull(item.Active)}");
+                    Console.WriteLine($"          Allowed: {PrintNull(item.Allowed)}");
+                    Console.WriteLine($"          Supported: {PrintNull(item.Supported)}");
+                    Console.WriteLine($"          User Required: {PrintNull(item.UserRequired)}");
+                    Console.WriteLine($"          Passed: {PrintNull(item.Passed)}");
+                    Console.WriteLine($"          Error: {PrintNull(item.Error)}");
+                }
+            }
+        }
+
 
         private static IList<DenialReason> GetDenialReasons(int? fraud, int? nonFraud)
         {
@@ -235,7 +336,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return 1;
         }
 
-        public static int DoAuthorizationRequest(IServiceClient serviceClient, string username, bool? useWebhook, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null, string pushTitle = null, string pushBody = null, int? fraudDenialreasons = null, int? nonFraudDenialreasons = null)
+        public static int DoAuthorizationRequest(IServiceClient serviceClient, string username, bool? useWebhook, bool? advancedWebhook = null, string context = null, AuthPolicy policy = null, string title = null, int? ttl = null, string pushTitle = null, string pushBody = null, int? fraudDenialreasons = null, int? nonFraudDenialreasons = null)
         {
 
             try
@@ -246,7 +347,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 
                 if (useWebhook == true)
                 {
-                    return HandleWebhook(serviceClient);
+                    return HandleWebhook(serviceClient, advancedWebhook);
                 }
                 else
                 {

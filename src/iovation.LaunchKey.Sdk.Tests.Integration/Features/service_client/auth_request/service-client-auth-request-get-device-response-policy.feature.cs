@@ -189,7 +189,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
 #line 34
     testRunner.When("I make a Policy based Authorization request for the User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 35
-    testRunner.And("I receive the auth request and acknowledge the failure message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 36
     testRunner.And("I get the response for the Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
@@ -217,7 +217,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
 #line 42
     testRunner.When("I make a Policy based Authorization request for the User", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 43
-    testRunner.And("I receive the auth request and acknowledge the failure message", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 44
     testRunner.And("I get the response for the Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 45

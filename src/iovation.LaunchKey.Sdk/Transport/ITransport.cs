@@ -323,7 +323,7 @@ namespace iovation.LaunchKey.Sdk.Transport
         /// <param name="request">The request object</param>
         /// <param name="subject">The organization the service belongs to</param>
         /// <returns>The response from the API</returns>
-        AuthPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject);
+        IPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject);
 
         /// <summary>
         /// Delete the default Policy of an Organization Service
@@ -345,7 +345,7 @@ namespace iovation.LaunchKey.Sdk.Transport
         /// <param name="request">The request object</param>
         /// <param name="subject">The directory the service belongs to</param>
         /// <returns>the response from the LaunchKey API</returns>
-        AuthPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject);
+        IPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject);
 
         /// <summary>
         /// Delete the default Policy of a Directory Service

@@ -214,6 +214,14 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
                     }
                 );
 
+                var JWTHeaders = Jose.JWT.Headers(response.Headers[IOV_JWT_HEADER]);
+                string kid = (string)JWTHeaders["kid"];
+
+                if(kid != publicKey.Thumbprint)
+                {
+                    publicKey = FetchPublicKeyWithId(kid);
+                }
+
                 // check for errors, decode and decrypt them if needed and crash out
                 ThrowForStatus(response, publicKey.KeyData, requestId, httpStatusCodeWhiteList);
 
@@ -759,11 +767,12 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
             ExecuteRequest(HttpMethod.PUT, "/organization/v3/service/policy", subject, request, null);
         }
 
-        public AuthPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
+        public IPolicy OrganizationV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
         {
             var response = ExecuteRequest(HttpMethod.POST, "/organization/v3/service/policy/item", subject, request, null);
-            return DecryptResponse<AuthPolicy>(response);
+            return DecryptResponse<IPolicy>(response);
         }
+
 
         public void OrganizationV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject)
         {
@@ -775,10 +784,10 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
             ExecuteRequest(HttpMethod.PUT, "/directory/v3/service/policy", subject, request, null);
         }
 
-        public AuthPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
+        public IPolicy DirectoryV3ServicePolicyItemPost(ServicePolicyItemPostRequest request, EntityIdentifier subject)
         {
             var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/service/policy/item", subject, request, null);
-            return DecryptResponse<AuthPolicy>(response);
+            return DecryptResponse<IPolicy>(response);
         }
 
         public void DirectoryV3ServicePolicyDelete(ServicePolicyDeleteRequest request, EntityIdentifier subject)

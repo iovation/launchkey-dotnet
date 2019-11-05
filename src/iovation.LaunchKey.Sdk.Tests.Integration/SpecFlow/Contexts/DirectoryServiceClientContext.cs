@@ -10,6 +10,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         private readonly DirectoryClientContext _directoryClientContext;
         public AuthorizationRequest _lastAuthorizationRequest;
         public AuthorizationResponse _lastAuthorizationResponse;
+        public AdvancedAuthorizationResponse _lastAdvancedAuthorizationResponse;
 
         public DirectoryServiceClientContext(
             TestConfiguration testConfiguration,
@@ -33,6 +34,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         {
             AuthorizationResponse authResponse = GetServiceClientForCurrentService().GetAuthorizationResponse(authId);
             _lastAuthorizationResponse = authResponse;
+            return authResponse;
+        }
+
+        public AdvancedAuthorizationResponse GetAdvancedAuthorizationResponse(string authId)
+        {
+            AdvancedAuthorizationResponse authResponse = GetServiceClientForCurrentService().GetAdvancedAuthorizationResponse(authId);
+            _lastAdvancedAuthorizationResponse = authResponse;
             return authResponse;
         }
 

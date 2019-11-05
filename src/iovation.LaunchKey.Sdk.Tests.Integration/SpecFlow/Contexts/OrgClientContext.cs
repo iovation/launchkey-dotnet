@@ -5,6 +5,7 @@ using System.Linq;
 using iovation.LaunchKey.Sdk.Client;
 using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Organization;
+using iovation.LaunchKey.Sdk.Domain.Service.Policy;
 using iovation.LaunchKey.Sdk.Domain.ServiceManager;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
@@ -38,7 +39,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         // policy-related contextual data
         public ServicePolicy LoadedServicePolicy => _loadedServicePolicy;
-
+        public IPolicy LoadedAdvancedServicePolicy => _loadedAdvancedServicePolicy;
 
         private readonly IOrganizationClient _orgClient;
         private Directory _loadedDirectory;
@@ -50,7 +51,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         private List<string> _addedServicePublicKeys = new List<string>();
         private List<string> _addedDirectoryPublicKeys = new List<string>();
         private ServicePolicy _loadedServicePolicy = new ServicePolicy();
-
+        private IPolicy _loadedAdvancedServicePolicy;
 
         public OrgClientContext(TestConfiguration config)
         {
@@ -258,5 +259,199 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         {
             _orgClient.RemoveServicePolicy(serviceId);
         }
+
+        public void LoadAdvancedServicePolicy(Guid serviceId)
+        {
+            
+            _loadedAdvancedServicePolicy = _orgClient.GetAdvancedServicePolicy(serviceId);
+        }
+
+        public void SetAdvancedServicePolicy(Guid serviceId, IPolicy authPolicy)
+        {
+            _orgClient.SetAdvancedServicePolicy(serviceId, authPolicy);
+
+            // clear the service policy so we don't accidentally inspect data we just sent.
+            _loadedAdvancedServicePolicy = null;
+        }
+
+        public void CreateMethodAmountPolicy()
+        {
+            _loadedAdvancedServicePolicy = new MethodAmountPolicy(fences: null);
+        }
+
+        public void AddIFenceToAdvancedPolicy(List<IFence> fences)
+        {
+            IPolicy currentPolicy = _loadedAdvancedServicePolicy;
+
+            var combinedFences = fences.Concat(currentPolicy.Fences);
+
+            if (currentPolicy is MethodAmountPolicy)
+            {
+                _loadedAdvancedServicePolicy = new MethodAmountPolicy(
+                    fences: combinedFences.ToList(),
+                    amount: ((MethodAmountPolicy)currentPolicy).Amount,
+                    denyRootedJailbroken: ((MethodAmountPolicy)currentPolicy).DenyRootedJailbroken,
+                    denyEmulatorSimulator: ((MethodAmountPolicy)currentPolicy).DenyEmulatorSimulator
+                );
+            }
+            else if (currentPolicy is FactorsPolicy)
+            {
+                _loadedAdvancedServicePolicy = new FactorsPolicy(
+                    fences: combinedFences.ToList(),
+                    requireKnowledgeFactor: ((FactorsPolicy)currentPolicy).RequireKnowledgeFactor,
+                    requirePossessionFactor: ((FactorsPolicy)currentPolicy).RequirePossessionFactor,
+                    requireInherenceFactor: ((FactorsPolicy)currentPolicy).RequireInherenceFactor,
+                    denyRootedJailbroken: ((FactorsPolicy)currentPolicy).DenyRootedJailbroken,
+                    denyEmulatorSimulator: ((FactorsPolicy)currentPolicy).DenyEmulatorSimulator
+                );
+            }
+            else if (_loadedAdvancedServicePolicy is ConditionalGeoFencePolicy)
+            {
+                _loadedAdvancedServicePolicy = new ConditionalGeoFencePolicy(
+                    inside: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).Inside,
+                    outside: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).Outside,
+                    fences: combinedFences.ToList(),
+                    denyRootedJailbroken: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).DenyRootedJailbroken,
+                    denyEmulatorSimulator: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).DenyEmulatorSimulator
+                );
+            }
+        }
+
+        public void SetAmountOnMethodAmountPolicy(int amount)
+        {
+            IPolicy currentPolicy = _loadedAdvancedServicePolicy;
+            _loadedAdvancedServicePolicy = new MethodAmountPolicy(
+                fences: currentPolicy.Fences,
+                amount: amount,
+                denyRootedJailbroken: currentPolicy.DenyRootedJailbroken,
+                denyEmulatorSimulator: currentPolicy.DenyEmulatorSimulator
+            );
+        }
+
+        public void CreateFactorsPolicy()
+        {
+            _loadedAdvancedServicePolicy = new FactorsPolicy(null);
+        }
+
+        public void SetFactors(bool requireKnowledge, bool requirePossession, bool requireInherence)
+        {
+            _loadedAdvancedServicePolicy = new FactorsPolicy(
+                fences: _loadedAdvancedServicePolicy.Fences,
+                requireKnowledgeFactor: requireKnowledge,
+                requireInherenceFactor: requireInherence,
+                requirePossessionFactor: requirePossession,
+                denyEmulatorSimulator: _loadedAdvancedServicePolicy.DenyEmulatorSimulator,
+                denyRootedJailbroken: _loadedAdvancedServicePolicy.DenyRootedJailbroken
+            );
+        }
+
+        public void SetDenyRootedJailbroken(bool value)
+        {
+            if (_loadedAdvancedServicePolicy is MethodAmountPolicy)
+            {
+                _loadedAdvancedServicePolicy = new MethodAmountPolicy(
+                    fences: ((MethodAmountPolicy)_loadedAdvancedServicePolicy).Fences,
+                    amount: ((MethodAmountPolicy)_loadedAdvancedServicePolicy).Amount,
+                    denyRootedJailbroken: value,
+                    denyEmulatorSimulator: ((MethodAmountPolicy)_loadedAdvancedServicePolicy).DenyEmulatorSimulator
+                );
+            }
+            else if (_loadedAdvancedServicePolicy is FactorsPolicy)
+            {
+                _loadedAdvancedServicePolicy = new FactorsPolicy(
+                    fences: ((FactorsPolicy)_loadedAdvancedServicePolicy).Fences,
+                    requireKnowledgeFactor: ((FactorsPolicy)_loadedAdvancedServicePolicy).RequireKnowledgeFactor,
+                    requirePossessionFactor: ((FactorsPolicy)_loadedAdvancedServicePolicy).RequirePossessionFactor,
+                    requireInherenceFactor: ((FactorsPolicy)_loadedAdvancedServicePolicy).RequireInherenceFactor,
+                    denyRootedJailbroken: value,
+                    denyEmulatorSimulator: ((FactorsPolicy)_loadedAdvancedServicePolicy).DenyEmulatorSimulator
+                );
+            }
+            else if (_loadedAdvancedServicePolicy is ConditionalGeoFencePolicy)
+            {
+                _loadedAdvancedServicePolicy = new ConditionalGeoFencePolicy(
+                    inside: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).Inside,
+                    outside: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).Outside,
+                    fences: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).Fences,
+                    denyRootedJailbroken: value,
+                    denyEmulatorSimulator: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).DenyEmulatorSimulator
+                );
+            }
+        }
+
+        public void SetDenyEmulatorSimulator(bool value)
+        {
+            if (_loadedAdvancedServicePolicy is MethodAmountPolicy)
+            {
+                _loadedAdvancedServicePolicy = new MethodAmountPolicy(
+                    fences: ((MethodAmountPolicy)_loadedAdvancedServicePolicy).Fences,
+                    amount: ((MethodAmountPolicy)_loadedAdvancedServicePolicy).Amount,
+                    denyRootedJailbroken: ((MethodAmountPolicy)_loadedAdvancedServicePolicy).DenyRootedJailbroken,
+                    denyEmulatorSimulator: value
+                );
+            }
+            else if (_loadedAdvancedServicePolicy is FactorsPolicy)
+            {
+                _loadedAdvancedServicePolicy = new FactorsPolicy(
+                    fences: ((FactorsPolicy)_loadedAdvancedServicePolicy).Fences,
+                    requireKnowledgeFactor: ((FactorsPolicy)_loadedAdvancedServicePolicy).RequireKnowledgeFactor,
+                    requirePossessionFactor: ((FactorsPolicy)_loadedAdvancedServicePolicy).RequirePossessionFactor,
+                    requireInherenceFactor: ((FactorsPolicy)_loadedAdvancedServicePolicy).RequireInherenceFactor,
+                    denyRootedJailbroken: ((FactorsPolicy)_loadedAdvancedServicePolicy).DenyEmulatorSimulator,
+                    denyEmulatorSimulator: value
+                );
+            }
+            else if (_loadedAdvancedServicePolicy is ConditionalGeoFencePolicy)
+            {
+                _loadedAdvancedServicePolicy = new ConditionalGeoFencePolicy(
+                    inside: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).Inside,
+                    outside: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).Outside,
+                    fences: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).Fences,
+                    denyRootedJailbroken: ((ConditionalGeoFencePolicy)_loadedAdvancedServicePolicy).DenyRootedJailbroken,
+                    denyEmulatorSimulator: value
+                );
+            }
+        }
+
+        public void CreateConditionaGeofence()
+        {
+            MethodAmountPolicy defaultPolicy = new MethodAmountPolicy(null, 0, false, false);
+
+            List<IFence> fences = new List<IFence>() {
+                new TerritoryFence("US")
+            };
+
+            _loadedAdvancedServicePolicy = new ConditionalGeoFencePolicy(
+                inside: defaultPolicy,
+                outside: defaultPolicy,
+                fences: fences,
+                denyRootedJailbroken: false,
+                denyEmulatorSimulator: false
+            );
+        }
+
+        public void SetInsideConditionalGeofencePolicy(IPolicy insidePolicy)
+        {
+            _loadedAdvancedServicePolicy = new ConditionalGeoFencePolicy(
+                inside: insidePolicy,
+                outside: (_loadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Outside,
+                fences: (_loadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Fences,
+                denyRootedJailbroken: (_loadedAdvancedServicePolicy as ConditionalGeoFencePolicy).DenyRootedJailbroken,
+                denyEmulatorSimulator: (_loadedAdvancedServicePolicy as ConditionalGeoFencePolicy).DenyEmulatorSimulator
+            );
+        }
+
+        public void SetOutsideConditionalGeofencePolicy(IPolicy outsidePolicy)
+        {
+            _loadedAdvancedServicePolicy = new ConditionalGeoFencePolicy(
+                inside: (_loadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Inside,
+                outside: outsidePolicy,
+                fences: (_loadedAdvancedServicePolicy as ConditionalGeoFencePolicy).Fences,
+                denyRootedJailbroken: (_loadedAdvancedServicePolicy as ConditionalGeoFencePolicy).DenyRootedJailbroken,
+                denyEmulatorSimulator: (_loadedAdvancedServicePolicy as ConditionalGeoFencePolicy).DenyEmulatorSimulator
+            );
+        }
+
+
     }
 }

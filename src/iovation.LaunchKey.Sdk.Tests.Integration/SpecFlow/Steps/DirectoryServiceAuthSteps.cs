@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Domain.Service;
+using iovation.LaunchKey.Sdk.Domain.Service.Policy;
 using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -161,16 +162,23 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             AuthorizationResponse authResponse = _directoryServiceClientContext.GetAuthResponse(authRequestID);
         }
 
+        [When(@"I get the response for the Advanced Authorization request")]
+        public void WhenIGetTheResponseForTheAdvancedAuthRequest()
+        {
+            string authRequestID = _directoryServiceClientContext._lastAuthorizationRequest.Id;
+            AdvancedAuthorizationResponse authResponse = _directoryServiceClientContext.GetAdvancedAuthorizationResponse(authRequestID);
+        }
+
         [Then(@"the Authorization response should be approved")]
         public void ThenTheAuthResponseShouldBeApproved()
         {
             var currentAuth = _directoryServiceClientContext._lastAuthorizationResponse;
-            if( currentAuth is null)
+            if (currentAuth is null)
             {
                 throw new Exception("Auth response was not found when it was expected");
             }
 
-            if( currentAuth.Authorized != true)
+            if (currentAuth.Authorized != true)
             {
                 throw new Exception($"Auth was not approved when it should have been: {currentAuth.ToString()}");
             }
@@ -197,11 +205,11 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             var authTestMethods = table.CreateSet<AuthMethod>();
             var authResponseMethods = _directoryServiceClientContext._lastAuthorizationResponse.AuthMethods;
 
-            foreach( AuthMethod authTestMethod in authTestMethods)
+            foreach (AuthMethod authTestMethod in authTestMethods)
             {
-                foreach( var authResponseMethod in authResponseMethods)
+                foreach (var authResponseMethod in authResponseMethods)
                 {
-                    if(authTestMethod.Method == authResponseMethod.Method)
+                    if (authTestMethod.Method == authResponseMethod.Method)
                     {
                         Assert.AreEqual(authTestMethod.Active, authResponseMethod.Active);
                         Assert.AreEqual(authTestMethod.Allowed, authResponseMethod.Allowed);
@@ -210,7 +218,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                         Assert.AreEqual(authTestMethod.Passed, authResponseMethod.Passed);
                         Assert.AreEqual(authTestMethod.Set, authResponseMethod.Set);
                         Assert.AreEqual(authTestMethod.UserRequired, authResponseMethod.UserRequired);
-                        break; 
+                        break;
                     }
                 }
             }
@@ -300,6 +308,58 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         public void ThenTheAuthorizationResponseShouldRequireFactors(int numOfFactors)
         {
             Assert.AreEqual(numOfFactors, _directoryServiceClientContext._lastAuthorizationResponse.AuthPolicy.RequiredFactors);
+        }
+
+        [Then(@"the Advanced Authorization response should require Inherence")]
+        public void ThenTheAdvancedAuthorizationResponseShouldRequireInherence()
+        {
+            Assert.AreEqual(true, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.InherenceRequired);
+        }
+
+        [Then(@"the Advanced Authorization response should have the requirement ""(.*)""")]
+        public void ThenTheAdvancedAuthorizationResponseShouldHaveTheRequirement(string type)
+        {
+            Assert.AreEqual(type, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.Requirement.ToString());
+        }
+
+        [Then(@"the Advanced Authorization response should have amount set to (.*)")]
+        public void ThenTheAdvancedAuthorizationResponseShouldHaveAmountSetTo(int amount)
+        {
+            Assert.AreEqual(amount, _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.Amount);
+        }
+
+        [Then(@"the Advanced Authorization response should contain a GeoCircleFence with a radius of (.*), a latitude of (.*), a longitude of (.*), and a name of ""(.*)""")]
+        public void ThenTheAdvancedAuthorizationResponseShouldContainAGeoCircleFence(int radius, double latitude, double longitude, string name)
+        {
+            bool fenceFound = false;
+            foreach (var fence in _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.Fences)
+            {
+                if (fence.Name == name)
+                {
+                    Assert.AreEqual(radius, (fence as GeoCircleFence).Radius);
+                    Assert.AreEqual(latitude, (fence as GeoCircleFence).Latitude);
+                    Assert.AreEqual(longitude, (fence as GeoCircleFence).Longitude);
+                    fenceFound = true;
+                }
+            }
+            Assert.IsTrue(fenceFound);
+        }
+
+        [Then(@"the Advanced Authorization response should contain a TerritoryFence with a country of ""(.*)"", a administrative area of ""(.*)"", a postal code of ""(.*)"", and a name of ""(.*)""")]
+        public void ThenTheAdvancedAuthorizationResponseShouldContainATerritoryFence(string country, string adminArea, string postalCode, string name)
+        {
+            bool fenceFound = false;
+            foreach (var fence in _directoryServiceClientContext._lastAdvancedAuthorizationResponse.Policy.Fences)
+            {
+                if (fence.Name == name)
+                {
+                    Assert.AreEqual(country, (fence as TerritoryFence).Country);
+                    Assert.AreEqual(adminArea, (fence as TerritoryFence).AdministrativeArea);
+                    Assert.AreEqual(postalCode, (fence as TerritoryFence).PostalCode);
+                    fenceFound = true;
+                }
+            }
+            Assert.IsTrue(fenceFound);
         }
 
     }

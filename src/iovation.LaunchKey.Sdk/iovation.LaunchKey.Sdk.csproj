@@ -7,16 +7,25 @@
     <Authors>iovation, Inc</Authors>
     <Product>LaunchKey .NET SDK</Product>
     <PackageTags>LaunchKey Security Multi-Factor Two-Factor Authentication 2FA MFA</PackageTags>
-    <Copyright>Copyright 2018 iovation, Inc.</Copyright>
+    <Copyright>Copyright 2019 iovation, Inc.</Copyright>
     <Description>SDK for accessing LaunchKey V3 endpoints.</Description>
     <PackageLicenseUrl />
     <PackageProjectUrl>https://docs.launchkey.com/api/index.html</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ReleaseVersion>3.6</ReleaseVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="jose-jwt" Version="2.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.3.37" />
+    <PackageReference Include="JsonSubTypes" Version="1.6.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Domain\Service\Policy\" />
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
 </Project>

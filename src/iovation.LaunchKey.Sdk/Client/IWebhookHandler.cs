@@ -15,6 +15,17 @@ namespace iovation.LaunchKey.Sdk.Client
         /// <param name="method">The HTTP method of the received request. Optional. Include for stricter security checks.</param>
         /// <param name="path">The HTTP path of the received request. Optional. Include for stricter security checks.</param>
         /// <returns></returns>
+        [System.Obsolete("HandleWebhook is deprecated. Please use HandleAdvancedWebhook(headers, body, method, path) instead")]
         IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null);
+
+        /// <summary>
+        /// Process an advanced webhook payload received from the LaunchKey service.
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <param name="body"></param>
+        /// <param name="method"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        IWebhookPackage HandleAdvancedWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null);
     }
 }

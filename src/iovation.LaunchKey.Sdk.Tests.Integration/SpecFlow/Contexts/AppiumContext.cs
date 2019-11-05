@@ -37,7 +37,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
             capabilities.SetCapability(MobileCapabilityType.AutomationName, "UIAutomator2");
             capabilities.SetCapability(MobileCapabilityType.DeviceName, appConfig.DeviceName);
             capabilities.SetCapability(MobileCapabilityType.App, appConfig.AppFilePath);
-            capabilities.SetCapability("appPackage", "com.launchkey.android.authenticator.demo");
+            capabilities.SetCapability("appPackage", "com.launchkey.android.authenticator.demo.javaApp");
             capabilities.SetCapability("fullReset", true);
             capabilities.SetCapability("noReset", false);
             capabilities.SetCapability("disableWindowAnimation", true);
@@ -115,18 +115,18 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         private void DenyAuth()
         {
-            AndroidElement denyButton = FindByID("com.launchkey.android.authenticator.demo:id/auth_info_action_negative");
+            AndroidElement denyButton = FindByID("auth_info_action_negative");
             LongPress(denyButton);
 
             FindByText("I don't approve").Click();
 
-            AndroidElement submitDenyButton = FindByID("com.launchkey.android.authenticator.demo:id/auth_do_action_negative");
+            AndroidElement submitDenyButton = FindByID("auth_do_action_negative");
             LongPress(submitDenyButton);
         }
 
         private void ApproveAuth()
         {
-            AndroidElement authorizeButton = FindByID("com.launchkey.android.authenticator.demo:id/auth_info_action_positive");
+            AndroidElement authorizeButton = FindByID("auth_info_action_positive");
             LongPress(authorizeButton);
         }
 
@@ -142,7 +142,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         private void SubmitLinkingForm()
         {
-            AndroidElement linkButton = FindByID("com.launchkey.android.authenticator.demo:id/demo_link_button");
+            AndroidElement linkButton = FindByID("demo_link_button");
             linkButton.Click();
         }
 
@@ -155,7 +155,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         private void FillAuthenticatorSdkKey(string sdkKey)
         {
-            FindByID("com.launchkey.android.authenticator.demo:id/demo_link_edit_key").SendKeys(sdkKey);
+            FindByID("demo_link_edit_key").SendKeys(sdkKey);
         }
 
         private void FillLinkingMenu(string linkingCode)
