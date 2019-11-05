@@ -1,10 +1,12 @@
 using Newtonsoft.Json;
+using DomainPolicy = iovation.LaunchKey.Sdk.Domain.Service.Policy;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
     public class TerritoryFence : IFence
     {
-        
+        public string Type { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -23,7 +25,18 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             Name = name;
             Country = country;
             AdministrativeArea = administrativeArea;
-            PostalCode = postalCode; 
+            PostalCode = postalCode;
+            Type = "TERRITORY";
+        }
+
+        public DomainPolicy.IFence FromTransport()
+        {
+            return new DomainPolicy.TerritoryFence(
+                country: Country,
+                administrativeArea: AdministrativeArea,
+                postalCode: PostalCode,
+                name: Name
+            );
         }
 
     }

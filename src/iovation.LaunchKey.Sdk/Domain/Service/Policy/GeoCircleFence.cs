@@ -37,5 +37,15 @@ namespace iovation.LaunchKey.Sdk.Domain.Service.Policy
             Radius = radius;
             Name = name;
         }
+
+        public Transport.Domain.IFence ToTransport()
+        {
+            return new Transport.Domain.GeoCircleFence(
+                name: Name,
+                latitude: Latitude,
+                longitude: Longitude,
+                radius: Radius
+            );
+        }
     }
 }

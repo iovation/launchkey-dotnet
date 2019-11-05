@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using DomainPolicy = iovation.LaunchKey.Sdk.Domain.Service.Policy;
+using ServicePolicy = iovation.LaunchKey.Sdk.Domain.ServiceManager.ServicePolicy;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
@@ -11,6 +13,12 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
     {
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
+
+        [JsonProperty("deny_emulator_simulator", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? DenyEmulatorSimulator { get; set; } = null;
+
+        [JsonProperty("deny_rooted_jailbroken", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? DenyRootedJailbroken { get; set; } = null;
 
         [JsonConverter(typeof(StringEnumConverter))]
         public enum MinimumRequirementType
@@ -169,7 +177,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             public string Requirement { get; set; }
 
             [JsonProperty("geofences")]
-            public List<TransportFence> Geofences { get; set; }
+            public List<IFence> Geofences { get; set; }
 
             [JsonProperty("amount")]
             public int Amount { get; set; }
@@ -288,7 +296,39 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
                     }
                 });
             }
-
         }
+
+        public DomainPolicy.IPolicy FromTransport()
+        {
+            List<DomainPolicy.IFence> fences = new List<DomainPolicy.IFence>();
+            ServicePolicy parsedLegacyPolicy = ServicePolicy.FromTransport(this);
+
+            foreach (var factor in Factors)
+            {
+                if (factor.Factor == FactorType.Geofence)
+                {
+                    foreach (var location in factor.Attributes.Locations)
+                        fences.Add(
+                            new DomainPolicy.GeoCircleFence(
+                                name: location.Name,
+                                latitude: location.Latitude,
+                                longitude: location.Longitude,
+                                radius: location.Radius
+                            )
+                        );
+                }
+            }
+
+            return new DomainPolicy.LegacyPolicy(
+                fences: fences,
+                denyRootedJailbroken: parsedLegacyPolicy.JailbreakDetection,
+                amount: parsedLegacyPolicy.RequiredFactors,
+                inherenceRequired: parsedLegacyPolicy.RequireInherenceFactor,
+                knowledgeRequired: parsedLegacyPolicy.RequireKnowledgeFactor,
+                possessionRequired: parsedLegacyPolicy.RequirePossessionFactor,
+                timeRestrictions: parsedLegacyPolicy.TimeFences
+            );
+        }
+
     }
 }

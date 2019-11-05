@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
+using DomainPolicy = iovation.LaunchKey.Sdk.Domain.Service.Policy;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
@@ -17,7 +18,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
         public bool? DenyEmulatorSimulator { get; set; }
 
         [JsonProperty("fences")]
-        public List<TransportFence> Fences { get; set; }
+        public List<IFence> Fences { get; set; }
 
         [JsonProperty("inside")]
         public IPolicy Inside { get; set; }
@@ -30,16 +31,32 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             IPolicy outside,
             bool? denyRootedJailbroken = false,
             bool? denyEmulatorSimulator = false,
-            List<TransportFence> fences = null
+            List<IFence> fences = null
             )
         {
             DenyRootedJailbroken = denyRootedJailbroken;
             DenyEmulatorSimulator = denyEmulatorSimulator;
-            Fences = fences ?? new List<TransportFence>();
+            Fences = fences ?? new List<IFence>();
             Inside = inside;
             Outside = outside;
             Type = "COND_GEO";
         }
 
+        public DomainPolicy.IPolicy FromTransport()
+        {
+            List<DomainPolicy.IFence> fences = new List<DomainPolicy.IFence>();
+            foreach (IFence fence in Fences)
+            {
+                fences.Add(fence.FromTransport());
+            }
+
+            return new DomainPolicy.ConditionalGeoFencePolicy(
+                    inside: Inside.FromTransport(),
+                    outside: Outside.FromTransport(),
+                    fences: fences,
+                    denyRootedJailbroken: DenyRootedJailbroken,
+                    denyEmulatorSimulator: DenyEmulatorSimulator
+            );
+        }
     }
 }

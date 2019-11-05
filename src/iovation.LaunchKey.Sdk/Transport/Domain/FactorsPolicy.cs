@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
+using DomainPolicy = iovation.LaunchKey.Sdk.Domain.Service.Policy;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
@@ -17,7 +18,7 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
         public bool? DenyEmulatorSimulator {get; set; }
 
         [JsonProperty("fences")]
-        public List<TransportFence> Fences { get; set; }
+        public List<IFence> Fences { get; set; }
 
         [JsonProperty("factors")]
         public List<string> Factors { get; set; }
@@ -26,16 +27,32 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
             List<string> factors,
             bool? denyRootedJailbroken = false,
             bool? denyEmulatorSimulator = false, 
-            List<TransportFence> fences = null
+            List<IFence> fences = null
             )
         {
             DenyRootedJailbroken = denyRootedJailbroken;
             DenyEmulatorSimulator = denyEmulatorSimulator;
-            Fences = fences ?? new List<TransportFence>();
+            Fences = fences ?? new List<IFence>();
             Factors = factors ?? new List<string>();
             Type = "FACTORS";
         }
 
+        public DomainPolicy.IPolicy FromTransport()
+        {
+            List<DomainPolicy.IFence> fences = new List<DomainPolicy.IFence>();
+            foreach (IFence fence in Fences)
+            {
+                fences.Add(fence.FromTransport());
+            }
 
+            return new DomainPolicy.FactorsPolicy(
+                fences: fences,
+                requireKnowledgeFactor: Factors.Contains("KNOWLEDGE"),
+                requireInherenceFactor: Factors.Contains("INHERENCE"),
+                requirePossessionFactor: Factors.Contains("POSSESSION"),
+                denyEmulatorSimulator: DenyEmulatorSimulator,
+                denyRootedJailbroken: DenyRootedJailbroken                
+            );
+        }
     }
 }
