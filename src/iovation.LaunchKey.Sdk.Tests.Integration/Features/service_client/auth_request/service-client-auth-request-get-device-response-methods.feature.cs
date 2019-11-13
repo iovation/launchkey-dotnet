@@ -45,8 +45,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Service Client Authorization Request: Get Device Response Methods", "  In order to understand an auth response\n  As a Directory Service\n  I can retrie" +
-                    "ve an Authorization Requests that been responded to and determine\n  the policy t" +
-                    "hat was used", ProgrammingLanguage.CSharp, new string[] {
+                    "ve an Authorization Requests that been responded to and determine\n  the methods " +
+                    "that were used", ProgrammingLanguage.CSharp, new string[] {
                         "device_testing"});
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -93,7 +93,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         public virtual void FeatureBackground()
         {
 #line 8
-   #line 9
+  #line 9
     testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 10
     testRunner.And("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -112,10 +112,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that an auth request with no policy contains the expected methods", null, ((string[])(null)));
 #line 14
-   this.ScenarioInitialize(scenarioInfo);
+  this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 8
-   this.FeatureBackground();
+  this.FeatureBackground();
 #line 15
     testRunner.When("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16

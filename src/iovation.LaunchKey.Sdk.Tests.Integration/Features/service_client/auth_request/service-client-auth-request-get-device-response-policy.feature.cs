@@ -93,7 +93,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         public virtual void FeatureBackground()
         {
 #line 8
-   #line 9
+  #line 9
     testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 10
     testRunner.And("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -112,10 +112,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that geofences without names received from a device can be parsed", null, ((string[])(null)));
 #line 14
-   this.ScenarioInitialize(scenarioInfo);
+  this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 8
-   this.FeatureBackground();
+  this.FeatureBackground();
 #line 15
     testRunner.Given("the current Authorization Policy requires a geofence with a radius of 150.0, a la" +
                     "titude of 23.4, and a longitude of -56.7", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
@@ -146,10 +146,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that geofences containing names received from a device can be parsed", null, ((string[])(null)));
 #line 23
-   this.ScenarioInitialize(scenarioInfo);
+  this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 8
-   this.FeatureBackground();
+  this.FeatureBackground();
 #line 24
     testRunner.Given("the current Authorization Policy requires a geofence with a radius of 150.0, a la" +
                     "titude of 23.4, a longitude of -56.7, and a name of \"geo 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
@@ -180,10 +180,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that required factor counts received from a device can be parsed", null, ((string[])(null)));
 #line 32
-   this.ScenarioInitialize(scenarioInfo);
+  this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 8
-   this.FeatureBackground();
+  this.FeatureBackground();
 #line 33
     testRunner.Given("the current Authorization Policy requires 3 factors", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 34
@@ -206,10 +206,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that required factor types received from a device can be parsed", null, ((string[])(null)));
 #line 39
-   this.ScenarioInitialize(scenarioInfo);
+  this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 8
-   this.FeatureBackground();
+  this.FeatureBackground();
 #line 40
     testRunner.Given("the current Authorization Policy requires inherence", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 41
