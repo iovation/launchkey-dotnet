@@ -92,7 +92,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         public virtual void FeatureBackground()
         {
 #line 7
-   #line 8
+  #line 8
     testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
     testRunner.And("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -115,10 +115,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that a device approval response can be parsed", null, ((string[])(null)));
 #line 15
-   this.ScenarioInitialize(scenarioInfo);
+  this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
-   this.FeatureBackground();
+  this.FeatureBackground();
 #line 16
     testRunner.When("I approve the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 17
@@ -137,10 +137,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that a device denial response can be parsed", null, ((string[])(null)));
 #line 20
-   this.ScenarioInitialize(scenarioInfo);
+  this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
-   this.FeatureBackground();
+  this.FeatureBackground();
 #line 21
     testRunner.When("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 22

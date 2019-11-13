@@ -136,9 +136,11 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
 #line 6
   this.FeatureBackground();
 #line 16
+    testRunner.Given("I generated and added 2 SDK Keys to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 17
     testRunner.When("I attempt to remove the last generated SDK Key from the Directory with the ID \"eb" +
                     "a60cb8-c649-11e7-abc4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 17
+#line 18
     testRunner.Then("a Forbidden error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -152,15 +154,17 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to remove an SDK Key that does not exist throw an InvalidSDKKey except" +
                     "ion", null, ((string[])(null)));
-#line 19
+#line 20
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 20
+#line 21
+    testRunner.Given("I generated and added 2 SDK Keys to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 22
     testRunner.When("I attempt to remove the last generated SDK Key \"eba60cb8-c649-11e7-abc4-cec278b6b" +
                     "50a\" from the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 21
+#line 23
     testRunner.Then("a InvalidSDKKey error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -174,16 +178,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to remove the last SDK Key from a Directory throw an LastRemainingSDKK" +
                     "ey exception", null, ((string[])(null)));
-#line 23
+#line 25
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 24
-    testRunner.Given("I generated and added 1 SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 25
-    testRunner.When("I attempt to remove the last generated SDK Key from the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 26
+    testRunner.Given("I generated and added 1 SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 27
+    testRunner.When("I attempt to remove the last generated SDK Key from the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 28
     testRunner.Then("a LastRemainingSDKKey error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

@@ -175,12 +175,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         public virtual void VerifyThatAConditionalGeofencePolicyCanBeParsed()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that a Conditional Geofence Policy can be parsed", null, ((string[])(null)));
-#line 34
+#line 33
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
   this.FeatureBackground();
-#line 35
+#line 34
     testRunner.Given("the Directory Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table65 = new TechTalk.SpecFlow.Table(new string[] {
@@ -193,20 +193,20 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "-141",
                         "234400",
                         "Large Fence"});
-#line 36
+#line 35
     testRunner.When("I add the following GeoCircleFence items", ((string)(null)), table65, "When ");
-#line 39
+#line 38
     testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 40
+#line 39
     testRunner.And("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 41
+#line 40
     testRunner.And("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 42
+#line 41
     testRunner.And("I get the response for the Advanced Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 43
+#line 42
     testRunner.Then("the Advanced Authorization response should contain a GeoCircleFence with a radius" +
                     " of 234400, a latitude of 41, a longitude of -141, and a name of \"Large Fence\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 44
+#line 43
     testRunner.And("the Advanced Authorization response should have the requirement \"COND_GEO\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -219,14 +219,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         public virtual void VerifyThatGeoCircleFenceFencesCanBeParsedFromFencesOnAFactorsPolicy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that GeoCircleFence fences can be parsed from Fences on a Factors Policy", null, ((string[])(null)));
-#line 46
+#line 45
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
   this.FeatureBackground();
-#line 47
+#line 46
     testRunner.When("I create a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 48
+#line 47
     testRunner.And("I set the factors to \"KNOWLEDGE\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table66 = new TechTalk.SpecFlow.Table(new string[] {
@@ -244,24 +244,24 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "-140",
                         "100",
                         "Small Fence"});
-#line 49
+#line 48
     testRunner.And("I add the following GeoCircleFence items", ((string)(null)), table66, "And ");
-#line 53
+#line 52
     testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 54
+#line 53
     testRunner.And("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 55
+#line 54
     testRunner.And("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 56
+#line 55
     testRunner.And("I get the response for the Advanced Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 57
+#line 56
     testRunner.Then("the Advanced Authorization response should contain a GeoCircleFence with a radius" +
                     " of 15200, a latitude of 45.1250, a longitude of 150.51, and a name of \"Large Fe" +
                     "nce\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 58
+#line 57
     testRunner.And("the Advanced Authorization response should contain a GeoCircleFence with a radius" +
                     " of 100, a latitude of -50.01, a longitude of -140, and a name of \"Small Fence\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 59
+#line 58
     testRunner.And("the Advanced Authorization response should have the requirement \"TYPES\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -276,12 +276,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that GeoCircleFence fences can be parsed from Fences on a Methods Amount P" +
                     "olicy", null, ((string[])(null)));
-#line 61
+#line 60
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
   this.FeatureBackground();
-#line 62
+#line 61
     testRunner.When("I create a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table67 = new TechTalk.SpecFlow.Table(new string[] {
@@ -299,24 +299,24 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "-140",
                         "100",
                         "Small Fence"});
-#line 63
+#line 62
     testRunner.And("I add the following GeoCircleFence items", ((string)(null)), table67, "And ");
-#line 67
+#line 66
     testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 68
+#line 67
     testRunner.And("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 69
+#line 68
     testRunner.And("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 70
+#line 69
     testRunner.And("I get the response for the Advanced Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 71
+#line 70
     testRunner.Then("the Advanced Authorization response should contain a GeoCircleFence with a radius" +
                     " of 15200, a latitude of 45.1250, a longitude of 150.51, and a name of \"Large Fe" +
                     "nce\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 72
+#line 71
     testRunner.And("the Advanced Authorization response should contain a GeoCircleFence with a radius" +
                     " of 100, a latitude of -50.01, a longitude of -140, and a name of \"Small Fence\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 73
+#line 72
     testRunner.And("the Advanced Authorization response should have the requirement \"AMOUNT\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -329,14 +329,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         public virtual void VerifyThatTerritoryFenceFencesCanBeParsedFromFencesOnAFactorsPolicy()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that TerritoryFence fences can be parsed from Fences on a Factors Policy", null, ((string[])(null)));
-#line 75
+#line 74
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
   this.FeatureBackground();
-#line 76
+#line 75
     testRunner.When("I create a new Factors Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 77
+#line 76
     testRunner.And("I set the factors to \"KNOWLEDGE\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table68 = new TechTalk.SpecFlow.Table(new string[] {
@@ -349,21 +349,21 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "US-NV",
                         "89120",
                         "US-NV"});
-#line 78
+#line 77
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table68, "And ");
-#line 81
+#line 80
     testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 82
+#line 81
     testRunner.And("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 83
+#line 82
     testRunner.And("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 84
+#line 83
     testRunner.And("I get the response for the Advanced Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 85
+#line 84
     testRunner.Then("the Advanced Authorization response should contain a TerritoryFence with a countr" +
                     "y of \"US\", a administrative area of \"US-NV\", a postal code of \"89120\", and a nam" +
                     "e of \"US-NV\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 86
+#line 85
     testRunner.And("the Advanced Authorization response should have the requirement \"TYPES\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -378,12 +378,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that TerritoryFence fences can be parsed from Fences on a Methods Amount P" +
                     "olicy", null, ((string[])(null)));
-#line 88
+#line 87
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
   this.FeatureBackground();
-#line 89
+#line 88
     testRunner.When("I create a new MethodAmountPolicy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table69 = new TechTalk.SpecFlow.Table(new string[] {
@@ -396,21 +396,21 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "US-NV",
                         "89120",
                         "US-NV"});
-#line 90
+#line 89
     testRunner.And("I add the following TerritoryFence items", ((string)(null)), table69, "And ");
-#line 93
+#line 92
     testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 94
+#line 93
     testRunner.And("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 95
+#line 94
     testRunner.And("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 96
+#line 95
     testRunner.And("I get the response for the Advanced Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 97
+#line 96
     testRunner.Then("the Advanced Authorization response should contain a TerritoryFence with a countr" +
                     "y of \"US\", a administrative area of \"US-NV\", a postal code of \"89120\", and a nam" +
                     "e of \"US-NV\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 98
+#line 97
     testRunner.And("the Advanced Authorization response should have the requirement \"AMOUNT\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -425,12 +425,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify that TerritoryFence fences can be parsed from Fences on a Conditional Geof" +
                     "ence Policy", null, ((string[])(null)));
-#line 100
+#line 99
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
   this.FeatureBackground();
-#line 101
+#line 100
     testRunner.Given("the Directory Service is set to any Conditional Geofence Policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table70 = new TechTalk.SpecFlow.Table(new string[] {
@@ -443,21 +443,21 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
                         "US-NV",
                         "89120",
                         "US-NV"});
-#line 102
+#line 101
     testRunner.When("I add the following TerritoryFence items", ((string)(null)), table70, "When ");
-#line 105
+#line 104
     testRunner.And("I set the Advanced Policy for the Current Directory Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 106
+#line 105
     testRunner.And("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 107
+#line 106
     testRunner.And("I deny the auth request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 108
+#line 107
     testRunner.And("I get the response for the Advanced Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 109
+#line 108
     testRunner.Then("the Advanced Authorization response should contain a TerritoryFence with a countr" +
                     "y of \"US\", a administrative area of \"US-NV\", a postal code of \"89120\", and a nam" +
                     "e of \"US-NV\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 110
+#line 109
     testRunner.And("the Advanced Authorization response should have the requirement \"COND_GEO\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
