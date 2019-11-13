@@ -800,7 +800,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Services.
 #line 176
     testRunner.And("I set the Advanced Policy for the Current Organization Service to the new policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 177
-    testRunner.When("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.And("I retrieve the Advanced Policy for the Current Organization Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 178
     testRunner.Then(string.Format("factors should be set to \"{0}\"", factors), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
