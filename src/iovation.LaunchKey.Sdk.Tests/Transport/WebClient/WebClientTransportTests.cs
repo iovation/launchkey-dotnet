@@ -308,8 +308,8 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
             {
                 Headers = new System.Net.WebHeaderCollection
                 {
-                    {"X-IOV-KEY-ID", "key id"},
-                    {"X-IOV-JWT", "my jwt" }
+                    {"X-IOV-KEY-ID", "d2:8e:16:91:39:5b:9d:24:73:0e:36:0a:9a:ef:7e:de"},
+                    {"X-IOV-JWT", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImQyOjhlOjE2OjkxOjM5OjViOjlkOjI0OjczOjBlOjM2OjBhOjlhOmVmOjdlOmRlIn0.eyJhdWQiOiJzdmM6ZjgzMjllMGUtZGQ3YS0xMWU3LTk4YjQtNDY5MTU4NDY3YjFhIiwiaXNzIjoibGthIiwiY3R5IjoiYXBwbGljYXRpb24vanNvbiIsIm5iZiI6MTUxNTA1MTcwMSwianRpIjoiMjJkYWU0MjUzMTY1NDk1YThlZDU2YzM0YzRkMDUwY2UiLCJleHAiOjE1MTUwNTE3MDYsImlhdCI6MTUxNTA1MTcwMSwicmVzcG9uc2UiOnsic3RhdHVzIjoyMDAsImhhc2giOiI0YzViODBlZDhlNTRhZWIwNDkwODFiYTBjMWE0ZDViMjkwNzhkMjIzM2NhZTkxZDg5ODUyMjUwYTFkMWQ1OWEyIiwiZnVuYyI6IlMyNTYifSwic3ViIjoic3ZjOmY4MzI5ZTBlLWRkN2EtMTFlNy05OGI0LTQ2OTE1ODQ2N2IxYSJ9.NFhztQSep7f0QT8j7KIfK4yFwdHvL24r8qdYKZz3M3Y2kyQYT0ECBPXnXgr2KbU5gntWdjVUOySUQbDnF2aL8QDyWPQHGy6jX7n4rO2VdeYuROz-3dbx7taSJEUUlDSvoDAerL26P02xU6LbZno1TCl4pYMQn4k41xwBvYdf8vvN1ixLhCJE_S2V18bT4YKTqwxE-XnbubdAdvhkPdl-7Khja4r1MpktRTZAMWJECLXI3JJILm-3HudO9KS5uAAHkxGbW1ovZfxOcKv9fcwoZ4mSn1pXA7k1aAt7DJdk4EuOtLmxb5rIKTDvQcBZIPyO_N3repWeD8ghCIFgWOSHqUE7cM1koUvUZzDiTvPA9o2C46zD26QaljSWfsxYPKtyzZsyglPYc1bcmzJZWzfHFCOoKA8uxe7HLiqNyzry3Cyg0_kPiwwtJ_FBRAnN3MVhAczaXbEPHtrm3vLafw14_M2svtL6f6RsObFroBJE_VDmgdiKtiJiYQ1UEpx_LcwK_OB-BagOnXUFGtveKQIJvABZoRwrxS6TebhVMAU1cGurF2sJmlSO3oi1CC-GSgtVDMmh_a2oA9E5UrG3W5nmB-ThCGBpKfTIYB19rwsOd6RYNUaOEj65_KN_EFHH_7dLAeDDlPWqFCUfML9pjeRUK289c_ByDDOX3N3iTrnCt1o" }
                 },
                 ResponseBody = responseBody,
                 StatusCode = (HttpStatusCode)responseCode,
@@ -1001,8 +1001,8 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
             {
                 Headers = new System.Net.WebHeaderCollection
                 {
-                    {"X-IOV-KEY-ID", "key id"},
-                    {"X-IOV-JWT", "my jwt" },
+                    {"X-IOV-KEY-ID", "d2:8e:16:91:39:5b:9d:24:73:0e:36:0a:9a:ef:7e:de"},
+                    {"X-IOV-JWT", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImQyOjhlOjE2OjkxOjM5OjViOjlkOjI0OjczOjBlOjM2OjBhOjlhOmVmOjdlOmRlIn0.eyJhdWQiOiJzdmM6ZjgzMjllMGUtZGQ3YS0xMWU3LTk4YjQtNDY5MTU4NDY3YjFhIiwiaXNzIjoibGthIiwiY3R5IjoiYXBwbGljYXRpb24vanNvbiIsIm5iZiI6MTUxNTA1MTcwMSwianRpIjoiMjJkYWU0MjUzMTY1NDk1YThlZDU2YzM0YzRkMDUwY2UiLCJleHAiOjE1MTUwNTE3MDYsImlhdCI6MTUxNTA1MTcwMSwicmVzcG9uc2UiOnsic3RhdHVzIjoyMDAsImhhc2giOiI0YzViODBlZDhlNTRhZWIwNDkwODFiYTBjMWE0ZDViMjkwNzhkMjIzM2NhZTkxZDg5ODUyMjUwYTFkMWQ1OWEyIiwiZnVuYyI6IlMyNTYifSwic3ViIjoic3ZjOmY4MzI5ZTBlLWRkN2EtMTFlNy05OGI0LTQ2OTE1ODQ2N2IxYSJ9.NFhztQSep7f0QT8j7KIfK4yFwdHvL24r8qdYKZz3M3Y2kyQYT0ECBPXnXgr2KbU5gntWdjVUOySUQbDnF2aL8QDyWPQHGy6jX7n4rO2VdeYuROz-3dbx7taSJEUUlDSvoDAerL26P02xU6LbZno1TCl4pYMQn4k41xwBvYdf8vvN1ixLhCJE_S2V18bT4YKTqwxE-XnbubdAdvhkPdl-7Khja4r1MpktRTZAMWJECLXI3JJILm-3HudO9KS5uAAHkxGbW1ovZfxOcKv9fcwoZ4mSn1pXA7k1aAt7DJdk4EuOtLmxb5rIKTDvQcBZIPyO_N3repWeD8ghCIFgWOSHqUE7cM1koUvUZzDiTvPA9o2C46zD26QaljSWfsxYPKtyzZsyglPYc1bcmzJZWzfHFCOoKA8uxe7HLiqNyzry3Cyg0_kPiwwtJ_FBRAnN3MVhAczaXbEPHtrm3vLafw14_M2svtL6f6RsObFroBJE_VDmgdiKtiJiYQ1UEpx_LcwK_OB-BagOnXUFGtveKQIJvABZoRwrxS6TebhVMAU1cGurF2sJmlSO3oi1CC-GSgtVDMmh_a2oA9E5UrG3W5nmB-ThCGBpKfTIYB19rwsOd6RYNUaOEj65_KN_EFHH_7dLAeDDlPWqFCUfML9pjeRUK289c_ByDDOX3N3iTrnCt1o" },
                     {"Location", "http://badguys.com" }
                 },
                 ResponseBody = "basic key data",
@@ -1038,8 +1038,8 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
             {
                 Headers = new System.Net.WebHeaderCollection
                 {
-                    {"X-IOV-KEY-ID", "key id"},
-                    {"X-IOV-JWT", "my jwt" },
+                    {"X-IOV-KEY-ID", "d2:8e:16:91:39:5b:9d:24:73:0e:36:0a:9a:ef:7e:de"},
+                    {"X-IOV-JWT", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImQyOjhlOjE2OjkxOjM5OjViOjlkOjI0OjczOjBlOjM2OjBhOjlhOmVmOjdlOmRlIn0.eyJhdWQiOiJzdmM6ZjgzMjllMGUtZGQ3YS0xMWU3LTk4YjQtNDY5MTU4NDY3YjFhIiwiaXNzIjoibGthIiwiY3R5IjoiYXBwbGljYXRpb24vanNvbiIsIm5iZiI6MTUxNTA1MTcwMSwianRpIjoiMjJkYWU0MjUzMTY1NDk1YThlZDU2YzM0YzRkMDUwY2UiLCJleHAiOjE1MTUwNTE3MDYsImlhdCI6MTUxNTA1MTcwMSwicmVzcG9uc2UiOnsic3RhdHVzIjoyMDAsImhhc2giOiI0YzViODBlZDhlNTRhZWIwNDkwODFiYTBjMWE0ZDViMjkwNzhkMjIzM2NhZTkxZDg5ODUyMjUwYTFkMWQ1OWEyIiwiZnVuYyI6IlMyNTYifSwic3ViIjoic3ZjOmY4MzI5ZTBlLWRkN2EtMTFlNy05OGI0LTQ2OTE1ODQ2N2IxYSJ9.NFhztQSep7f0QT8j7KIfK4yFwdHvL24r8qdYKZz3M3Y2kyQYT0ECBPXnXgr2KbU5gntWdjVUOySUQbDnF2aL8QDyWPQHGy6jX7n4rO2VdeYuROz-3dbx7taSJEUUlDSvoDAerL26P02xU6LbZno1TCl4pYMQn4k41xwBvYdf8vvN1ixLhCJE_S2V18bT4YKTqwxE-XnbubdAdvhkPdl-7Khja4r1MpktRTZAMWJECLXI3JJILm-3HudO9KS5uAAHkxGbW1ovZfxOcKv9fcwoZ4mSn1pXA7k1aAt7DJdk4EuOtLmxb5rIKTDvQcBZIPyO_N3repWeD8ghCIFgWOSHqUE7cM1koUvUZzDiTvPA9o2C46zD26QaljSWfsxYPKtyzZsyglPYc1bcmzJZWzfHFCOoKA8uxe7HLiqNyzry3Cyg0_kPiwwtJ_FBRAnN3MVhAczaXbEPHtrm3vLafw14_M2svtL6f6RsObFroBJE_VDmgdiKtiJiYQ1UEpx_LcwK_OB-BagOnXUFGtveKQIJvABZoRwrxS6TebhVMAU1cGurF2sJmlSO3oi1CC-GSgtVDMmh_a2oA9E5UrG3W5nmB-ThCGBpKfTIYB19rwsOd6RYNUaOEj65_KN_EFHH_7dLAeDDlPWqFCUfML9pjeRUK289c_ByDDOX3N3iTrnCt1o" },
                     {"Cache-control", "nefarious value" }
                 },
                 ResponseBody = "response",
@@ -1075,8 +1075,8 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
             {
                 Headers = new System.Net.WebHeaderCollection
                 {
-                    {"X-IOV-KEY-ID", "key id"},
-                    {"X-IOV-JWT", "my jwt" },
+                    {"X-IOV-KEY-ID", "d2:8e:16:91:39:5b:9d:24:73:0e:36:0a:9a:ef:7e:de"},
+                    {"X-IOV-JWT", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImQyOjhlOjE2OjkxOjM5OjViOjlkOjI0OjczOjBlOjM2OjBhOjlhOmVmOjdlOmRlIn0.eyJhdWQiOiJzdmM6ZjgzMjllMGUtZGQ3YS0xMWU3LTk4YjQtNDY5MTU4NDY3YjFhIiwiaXNzIjoibGthIiwiY3R5IjoiYXBwbGljYXRpb24vanNvbiIsIm5iZiI6MTUxNTA1MTcwMSwianRpIjoiMjJkYWU0MjUzMTY1NDk1YThlZDU2YzM0YzRkMDUwY2UiLCJleHAiOjE1MTUwNTE3MDYsImlhdCI6MTUxNTA1MTcwMSwicmVzcG9uc2UiOnsic3RhdHVzIjoyMDAsImhhc2giOiI0YzViODBlZDhlNTRhZWIwNDkwODFiYTBjMWE0ZDViMjkwNzhkMjIzM2NhZTkxZDg5ODUyMjUwYTFkMWQ1OWEyIiwiZnVuYyI6IlMyNTYifSwic3ViIjoic3ZjOmY4MzI5ZTBlLWRkN2EtMTFlNy05OGI0LTQ2OTE1ODQ2N2IxYSJ9.NFhztQSep7f0QT8j7KIfK4yFwdHvL24r8qdYKZz3M3Y2kyQYT0ECBPXnXgr2KbU5gntWdjVUOySUQbDnF2aL8QDyWPQHGy6jX7n4rO2VdeYuROz-3dbx7taSJEUUlDSvoDAerL26P02xU6LbZno1TCl4pYMQn4k41xwBvYdf8vvN1ixLhCJE_S2V18bT4YKTqwxE-XnbubdAdvhkPdl-7Khja4r1MpktRTZAMWJECLXI3JJILm-3HudO9KS5uAAHkxGbW1ovZfxOcKv9fcwoZ4mSn1pXA7k1aAt7DJdk4EuOtLmxb5rIKTDvQcBZIPyO_N3repWeD8ghCIFgWOSHqUE7cM1koUvUZzDiTvPA9o2C46zD26QaljSWfsxYPKtyzZsyglPYc1bcmzJZWzfHFCOoKA8uxe7HLiqNyzry3Cyg0_kPiwwtJ_FBRAnN3MVhAczaXbEPHtrm3vLafw14_M2svtL6f6RsObFroBJE_VDmgdiKtiJiYQ1UEpx_LcwK_OB-BagOnXUFGtveKQIJvABZoRwrxS6TebhVMAU1cGurF2sJmlSO3oi1CC-GSgtVDMmh_a2oA9E5UrG3W5nmB-ThCGBpKfTIYB19rwsOd6RYNUaOEj65_KN_EFHH_7dLAeDDlPWqFCUfML9pjeRUK289c_ByDDOX3N3iTrnCt1o" },
                     {"Cache-control", "nefarious value" }
                 },
                 ResponseBody = "response",
@@ -1118,8 +1118,8 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
             {
                 Headers = new System.Net.WebHeaderCollection
                 {
-                    {"X-IOV-KEY-ID", "key id"},
-                    {"X-IOV-JWT", "my jwt" },
+                    {"X-IOV-KEY-ID", "d2:8e:16:91:39:5b:9d:24:73:0e:36:0a:9a:ef:7e:de"},
+                    {"X-IOV-JWT", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImQyOjhlOjE2OjkxOjM5OjViOjlkOjI0OjczOjBlOjM2OjBhOjlhOmVmOjdlOmRlIn0.eyJhdWQiOiJzdmM6ZjgzMjllMGUtZGQ3YS0xMWU3LTk4YjQtNDY5MTU4NDY3YjFhIiwiaXNzIjoibGthIiwiY3R5IjoiYXBwbGljYXRpb24vanNvbiIsIm5iZiI6MTUxNTA1MTcwMSwianRpIjoiMjJkYWU0MjUzMTY1NDk1YThlZDU2YzM0YzRkMDUwY2UiLCJleHAiOjE1MTUwNTE3MDYsImlhdCI6MTUxNTA1MTcwMSwicmVzcG9uc2UiOnsic3RhdHVzIjoyMDAsImhhc2giOiI0YzViODBlZDhlNTRhZWIwNDkwODFiYTBjMWE0ZDViMjkwNzhkMjIzM2NhZTkxZDg5ODUyMjUwYTFkMWQ1OWEyIiwiZnVuYyI6IlMyNTYifSwic3ViIjoic3ZjOmY4MzI5ZTBlLWRkN2EtMTFlNy05OGI0LTQ2OTE1ODQ2N2IxYSJ9.NFhztQSep7f0QT8j7KIfK4yFwdHvL24r8qdYKZz3M3Y2kyQYT0ECBPXnXgr2KbU5gntWdjVUOySUQbDnF2aL8QDyWPQHGy6jX7n4rO2VdeYuROz-3dbx7taSJEUUlDSvoDAerL26P02xU6LbZno1TCl4pYMQn4k41xwBvYdf8vvN1ixLhCJE_S2V18bT4YKTqwxE-XnbubdAdvhkPdl-7Khja4r1MpktRTZAMWJECLXI3JJILm-3HudO9KS5uAAHkxGbW1ovZfxOcKv9fcwoZ4mSn1pXA7k1aAt7DJdk4EuOtLmxb5rIKTDvQcBZIPyO_N3repWeD8ghCIFgWOSHqUE7cM1koUvUZzDiTvPA9o2C46zD26QaljSWfsxYPKtyzZsyglPYc1bcmzJZWzfHFCOoKA8uxe7HLiqNyzry3Cyg0_kPiwwtJ_FBRAnN3MVhAczaXbEPHtrm3vLafw14_M2svtL6f6RsObFroBJE_VDmgdiKtiJiYQ1UEpx_LcwK_OB-BagOnXUFGtveKQIJvABZoRwrxS6TebhVMAU1cGurF2sJmlSO3oi1CC-GSgtVDMmh_a2oA9E5UrG3W5nmB-ThCGBpKfTIYB19rwsOd6RYNUaOEj65_KN_EFHH_7dLAeDDlPWqFCUfML9pjeRUK289c_ByDDOX3N3iTrnCt1o" },
                     {"Location", "http://badguys.com" }
                 },
                 ResponseBody = "response",
