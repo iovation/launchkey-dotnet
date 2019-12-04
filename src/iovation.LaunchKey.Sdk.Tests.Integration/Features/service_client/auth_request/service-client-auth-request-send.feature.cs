@@ -94,6 +94,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
   #line 10
     testRunner.Given("I created a Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 11
+    testRunner.And("I have added an SDK Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 12
     testRunner.And("I created a Directory Service", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -104,16 +106,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         public virtual void MakingARequestWithAValidUserAnNoLinkedDevicesRaisesEntityNotFound()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Making a request with a valid User an no linked Devices raises EntityNotFound", null, ((string[])(null)));
-#line 13
+#line 14
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 9
   this.FeatureBackground();
-#line 14
-    testRunner.Given("I made a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 15
-    testRunner.When("I attempt to make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.Given("I made a Device linking request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 16
+    testRunner.When("I attempt to make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
     testRunner.Then("a EntityNotFound error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -125,15 +127,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         public virtual void MakingARequestWithAnInvalidUserThrowsEntityNotFound()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Making a request with an invalid User Throws EntityNotFound", null, ((string[])(null)));
-#line 18
+#line 19
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 9
   this.FeatureBackground();
-#line 19
+#line 20
     testRunner.When("I attempt to make an Authorization request for the User identified by \"Not a vali" +
                     "d user\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 20
+#line 21
     testRunner.Then("a EntityNotFound error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -145,16 +147,39 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Service_Client.Auth_
         public virtual void MakingARequestIncludingContextWithAnInvalidUserThrowsEntityNotFound()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Making a request including context with an invalid User Throws EntityNotFound", null, ((string[])(null)));
-#line 22
+#line 23
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 9
   this.FeatureBackground();
-#line 23
+#line 24
     testRunner.When("I attempt to make an Authorization request with the context value \"Hello iovation" +
                     "!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 24
+#line 25
     testRunner.Then("a EntityNotFound error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Making a request with a valid user device parses the device IDs in the response")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Service Client Authorization Request: Can Send Request")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("device_testing")]
+        public virtual void MakingARequestWithAValidUserDeviceParsesTheDeviceIDsInTheResponse()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Making a request with a valid user device parses the device IDs in the response", null, new string[] {
+                        "device_testing"});
+#line 28
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 9
+  this.FeatureBackground();
+#line 29
+    testRunner.Given("I have a linked Device", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 30
+    testRunner.When("I make an Authorization request", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 31
+    testRunner.Then("the Authorization Request response Device IDs matches the current Devices list", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
