@@ -373,8 +373,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             List<string> deviceIDs = authorizationRequest.DeviceIds;
 
             if (deviceIDs is null || deviceIDs.Count == 0)
-                throw new Exception("Expected device IDs to be present in Auth Request but was null");
-
+                throw new Exception("Expected device IDs to be present in Auth Request but it was empty or null");
             var currentDevices = _directoryClientContext.LoadedDevices;
 
             foreach(var device in currentDevices)
