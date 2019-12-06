@@ -44,5 +44,25 @@ namespace iovation.LaunchKey.Sdk.Tests.Transport.Domain
 
             Assert.AreEqual("Expected Push Package", o.PushPackage);
         }
+
+        [TestMethod]
+        public void ShouldDeserialize_WithAuthRequest_PushPackage_DeviceIds()
+        {
+            var json = "{\"auth_request\": \"e4629564-f693-11e7-8e81-328aef89fa8b\", \"push_package\": \"Expected Push Package\",\"device_ids\": [\"device_a\", \"device_b\"]}";
+            var o = JsonConvert.DeserializeObject<ServiceV3AuthsPostResponse>(json);
+
+            Assert.AreEqual(2, o.DeviceIDs.Count);
+            Assert.AreEqual(o.DeviceIDs[0], "device_a");
+            Assert.AreEqual(o.DeviceIDs[1], "device_b");
+        }
+
+        [TestMethod]
+        public void ShouldDeserialize_WithAuthRequest_PushPackage_And_Null_DeviceIds()
+        {
+            var json = "{\"auth_request\": \"e4629564-f693-11e7-8e81-328aef89fa8b\", \"push_package\": \"Expected Push Package\",\"device_ids\": null}";
+            var o = JsonConvert.DeserializeObject<ServiceV3AuthsPostResponse>(json);
+
+            Assert.IsNull(o.DeviceIDs);
+        }
     }
 }

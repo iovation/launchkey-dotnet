@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
@@ -10,5 +11,8 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 
         [JsonProperty("push_package")]
         public string PushPackage { get; set; }
+
+        [JsonProperty("device_ids", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> DeviceIDs { get; set; }
     }
 }

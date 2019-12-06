@@ -1,14 +1,17 @@
-﻿namespace iovation.LaunchKey.Sdk.Client
+﻿using System.Collections.Generic;
+
+namespace iovation.LaunchKey.Sdk.Client
 {
     /// <summary>
     /// Object that represents an authorization request
     /// </summary>
     public class AuthorizationRequest
     {
-        public AuthorizationRequest(string id, string pushPackage)
+        public AuthorizationRequest(string id, string pushPackage, List<string> deviceIDs = null)
         {
             Id = id;
             PushPackage = pushPackage;
+            DeviceIds = deviceIDs;
         }
 
         /// <summary>
@@ -20,5 +23,11 @@
         /// Push package to be sent to Devices when managing your own Device push notifications.
         /// </summary>
         public string PushPackage { get; }
+
+        /// <summary>
+        /// Device IDs for Devices that may respond to the authorization request. This will be null when requests are made
+        /// for Organization Services
+        /// </summary>
+        public List<string> DeviceIds { get; }
     }
 }
