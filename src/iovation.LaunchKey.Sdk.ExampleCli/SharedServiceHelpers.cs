@@ -344,6 +344,8 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 IList<DenialReason> denialReasons = GetDenialReasons(fraudDenialreasons, nonFraudDenialreasons);
                 AuthorizationRequest authorizationRequest = serviceClient.CreateAuthorizationRequest(username, context, policy, title, ttl, pushTitle, pushBody, denialReasons);
                 Console.WriteLine($"Auth Request Started: {authorizationRequest.Id}");
+                if(authorizationRequest.DeviceIds != null)
+                    Console.WriteLine($"Auth Request Sent to Devices: {string.Join(",", authorizationRequest.DeviceIds)}");
 
                 if (useWebhook == true)
                 {

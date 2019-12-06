@@ -362,5 +362,29 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             Assert.IsTrue(fenceFound);
         }
 
+        [Then(@"the Authorization Request response Device IDs matches the current Devices list")]
+        public void ThenTheAuthorizationRequestResponseDeviceIDsMatchesTheCurrentDevicesList()
+        {
+            Client.AuthorizationRequest authorizationRequest = _directoryServiceClientContext._lastAuthorizationRequest;
+            _directoryClientContext.LoadDevicesForCurrentUser();
+            if(authorizationRequest is null)
+                throw new Exception("Expected Auth Request to be present but was null");
+
+            List<string> deviceIDs = authorizationRequest.DeviceIds;
+
+            if (deviceIDs is null || deviceIDs.Count == 0)
+                throw new Exception("Expected device IDs to be present in Auth Request but it was empty or null");
+            var currentDevices = _directoryClientContext.LoadedDevices;
+
+            foreach(var device in currentDevices)
+            {
+                if (deviceIDs.Contains(device.Id) == false)
+                {
+                    throw new Exception(string.Format("Expected Device ID {0} not found in device list {1}", device, currentDevices));
+                }
+
+            }
+        }
+
     }
 }
