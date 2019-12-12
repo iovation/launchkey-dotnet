@@ -190,6 +190,59 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         }
 
         [TestMethod]
+        public void CreateAuthorizationRequest_ShouldReturnAuthRequestWithDeviceIDs()
+        {
+            var mockTransport = new Mock<ITransport>();
+            string expectedPushPackage = "Push Package";
+            List<string> expectedDeviceIDs = new List<string>() { "deviceA", "deviceB" };
+            mockTransport.Setup(p => p.ServiceV3AuthsPost(
+                    It.Is<ServiceV3AuthsPostRequest>(req => req.Username == "name" && req.PushTitle == "Push Title" && req.PushBody == "Push Body"),
+                    It.IsAny<EntityIdentifier>()))
+                .Returns(new ServiceV3AuthsPostResponse
+                {
+                    AuthRequest = TestConsts.DefaultAuthenticationId,
+                    PushPackage = expectedPushPackage,
+                    DeviceIDs = expectedDeviceIDs
+                })
+                .Verifiable();
+
+            var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+
+            var authRequest = client.CreateAuthorizationRequest("name", pushTitle: "Push Title", pushBody: "Push Body");
+
+            mockTransport.Verify();
+            Assert.AreEqual(TestConsts.DefaultAuthenticationId.ToString(), authRequest.Id);
+            Assert.AreEqual(expectedPushPackage, authRequest.PushPackage);
+            CollectionAssert.AreEquivalent(expectedDeviceIDs, authRequest.DeviceIds);
+        }
+
+        [TestMethod]
+        public void CreateAuthorizationRequest_ShouldReturnAuthRequestWithNullDeviceIDsWhenResponseIsNull()
+        {
+            var mockTransport = new Mock<ITransport>();
+            string expectedPushPackage = "Push Package";
+            mockTransport.Setup(p => p.ServiceV3AuthsPost(
+                    It.Is<ServiceV3AuthsPostRequest>(req => req.Username == "name" && req.PushTitle == "Push Title" && req.PushBody == "Push Body"),
+                    It.IsAny<EntityIdentifier>()))
+                .Returns(new ServiceV3AuthsPostResponse
+                {
+                    AuthRequest = TestConsts.DefaultAuthenticationId,
+                    PushPackage = expectedPushPackage,
+                    DeviceIDs = null
+                })
+                .Verifiable();
+
+            var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+
+            var authRequest = client.CreateAuthorizationRequest("name", pushTitle: "Push Title", pushBody: "Push Body");
+
+            mockTransport.Verify();
+            Assert.AreEqual(TestConsts.DefaultAuthenticationId.ToString(), authRequest.Id);
+            Assert.AreEqual(expectedPushPackage, authRequest.PushPackage);
+            Assert.IsNull(authRequest.DeviceIds);
+        }
+
+        [TestMethod]
         public void CancelAuthorizationRequest_ShouldCallTransportWithProperEntityIdentifierAndAuthRequestId()
         {
             var mockTransport = new Mock<ITransport>();
