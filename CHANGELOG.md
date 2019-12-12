@@ -1,5 +1,9 @@
 Change Log
 ----------
+3.7.0
+=====
+* Added DeviceID Parsing to Authorization Request
+
 3.6.0
 =====
 * Added new Policy objects
