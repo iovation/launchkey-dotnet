@@ -66,7 +66,7 @@ namespace iovation.LaunchKey.Sdk.Client
             }
             var request = new ServiceV3AuthsPostRequest(user, requestPolicy, context, title, ttl, pushTitle, pushBody, transportDenialReasons);
             var response = _transport.ServiceV3AuthsPost(request, _serviceId);
-            var authRequest = new AuthorizationRequest(response.AuthRequest.ToString("D"), response.PushPackage);
+            var authRequest = new AuthorizationRequest(response.AuthRequest.ToString("D"), response.PushPackage, response.DeviceIDs);
             return authRequest;
         }
 
