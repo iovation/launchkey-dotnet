@@ -9,7 +9,7 @@
     <PackageTags>LaunchKey Security Multi-Factor Two-Factor Authentication 2FA MFA</PackageTags>
     <Copyright>Copyright 2019 iovation, Inc.</Copyright>
     <Description>SDK for accessing LaunchKey V3 endpoints.</Description>
-    <PackageLicenseUrl />
+    <PackageLicenseUrl>https://raw.githubusercontent.com/iovation/launchkey-dotnet/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://docs.launchkey.com/api/index.html</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <ReleaseVersion>3.7</ReleaseVersion>
