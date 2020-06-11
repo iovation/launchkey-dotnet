@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -347,7 +348,19 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
             if (response.Headers[HttpResponseHeader.Location] != jwt.Response.LocationHeader)
                 throw new JwtError("Location header of response content does not match JWT response location");
 
-            if (response.Headers[HttpResponseHeader.CacheControl] != jwt.Response.CacheControlHeader)
+            string[] expectedCacheControlHeaders = new string[] { };
+
+            if (jwt.Response.CacheControlHeader != null)
+            {
+                expectedCacheControlHeaders = jwt.Response.CacheControlHeader.Split(',').Select(x => x.Trim()).ToArray();
+                Array.Sort(expectedCacheControlHeaders);
+            }
+
+            var actualCacheControlHeaders = response.Headers.GetValues("cache-control") ?? new string[] { };
+            if(actualCacheControlHeaders != null)
+                Array.Sort(actualCacheControlHeaders);
+
+            if ( !expectedCacheControlHeaders.SequenceEqual(actualCacheControlHeaders))
                 throw new JwtError("Cache-Control header of response content does not match JWT response cache");
 
             if ((int)response.StatusCode != jwt.Response.StatusCode)
