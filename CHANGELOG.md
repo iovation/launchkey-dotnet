@@ -1,5 +1,9 @@
 Change Log
 ----------
+3.7.1
+=====
+* Fixed bug where cache-control headers were not properly compared due to limitation in System.Web.HttpWebResponse
+
 3.7.0
 =====
 * Added DeviceID Parsing to Authorization Request
