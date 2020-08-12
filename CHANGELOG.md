@@ -1,5 +1,10 @@
 Change Log
 ----------
+3.8.0
+=====
+* Added totp functionality
+* Updated CLI with generateUserTotp, removeUserTotp, verifyUserTotp
+
 3.7.1
 =====
 * Fixed bug where cache-control headers were not properly compared due to limitation in System.Web.HttpWebResponse
