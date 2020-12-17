@@ -65,5 +65,12 @@ namespace iovation.LaunchKey.Sdk.Client
         /// </summary>
         /// <param name="user">The username or directory user ID to end the session for</param>
         void SessionEnd(string user);
+        
+        /// <summary>
+        /// Verifies a given TOTP is valid for a given user.
+        /// </summary>
+        /// <param name="user">LaunchKey Username, User Push ID, or Directory User ID for the End User</param>
+        /// <param name="otp">6-8 digit OTP code for to verify</param>
+        bool VerifyTotp(string user, string otp);
     }
 }

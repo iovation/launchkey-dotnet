@@ -575,6 +575,11 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
             ExecuteRequest(HttpMethod.DELETE, "/service/v3/sessions", subject, request, null);
         }
 
+        public ServiceV3TotpPostResponse serviceV3TotpPost(ServiceV3TotpPostRequest request, EntityIdentifier subject)
+        {
+            throw new NotImplementedException();
+        }
+
         public DirectoryV3DevicesPostResponse DirectoryV3DevicesPost(DirectoryV3DevicesPostRequest request, EntityIdentifier subject)
         {
             var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/devices", subject, request, null);
@@ -604,6 +609,16 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
         public void DirectoryV3SessionsDelete(DirectoryV3SessionsDeleteRequest request, EntityIdentifier subject)
         {
             ExecuteRequest(HttpMethod.DELETE, "/directory/v3/sessions", subject, request, null);
+        }
+
+        public DirectoryV3TotpPostResponse DirectoryV3TotpPost(DirectoryV3TotpPostRequest request, EntityIdentifier subject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DirectoryV3TotpDelete(DirectoryV3TotpDeleteRequest request, EntityIdentifier subject)
+        {
+            throw new NotImplementedException();
         }
 
         public ServicesPostResponse OrganizationV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject)

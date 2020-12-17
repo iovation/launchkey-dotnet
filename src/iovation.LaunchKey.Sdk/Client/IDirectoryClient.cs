@@ -40,5 +40,27 @@ namespace iovation.LaunchKey.Sdk.Client
         /// </summary>
         /// <param name="userId">The user ID of the user. This should be in the format of a GUID.</param>
         void EndAllServiceSessions(string userId);
+        
+        /// <summary>
+        /// Generate and return TOTP secret data for the given user identifier.
+        ///
+        /// Note that a user can only have a single TOTP configured. Submitting this request when there is an
+        /// existing configuration will overwrite any previous settings 
+        /// </summary>
+        /// <param name="userId">
+        ///     Unique value identifying the End User in the your system. It is the permanent link for the End User
+        ///     between the your application(s) and the iovation LaunchKey API. This will be used for validating as
+        ///     well as managing TOTP.
+        /// </param>
+        DirectoryUserTotp GenerateUserTotp(string userId);
+        
+        /// <summary>
+        /// Removes a TOTP configuration from a given user.
+        /// </summary>
+        /// <param name="userId">
+        ///     Unique value identifying the End User in the your system. This value was used to create the Directory
+        ///     User and Link Device
+        /// </param>
+        void RemoveUserTotp(string userId);
     }
 }

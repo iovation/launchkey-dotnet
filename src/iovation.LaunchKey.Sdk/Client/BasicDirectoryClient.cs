@@ -91,6 +91,16 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport.DirectoryV3SessionsDelete(request, _directoryId);
         }
 
+        public DirectoryUserTotp GenerateUserTotp(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveUserTotp(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Guid CreateService(string name, string description, Uri icon, Uri callbackUrl, bool active)
         {
             var request = new ServicesPostRequest(name, description, icon, callbackUrl, active);
