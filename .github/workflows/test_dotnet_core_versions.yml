@@ -1,0 +1,82 @@
+
+name: Test Dotnet SDK Versions
+
+on: [pull_request, push]
+
+jobs:
+  run_on_linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['3.0', '3.1.x', '5.0.x' ]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    - name: Install dependencies
+      run: dotnet restore src\iovation.LaunchKey.Sdk.sln
+    - name: Build
+      run: dotnet build src\iovation.LaunchKey.Sdk.sln --verbosity minimal
+    - name: Test
+      run: dotnet test iovation.LaunchKey.Sdk.Tests.dll --no-restore --verbosity normal
+  run_on_windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        dotnet-version: ['3.0', '3.1.x', '5.0.x' ]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    - name: Install dependencies
+      run: dotnet restore src\iovation.LaunchKey.Sdk.sln
+    - name: Build
+      run: dotnet build src\iovation.LaunchKey.Sdk.sln --verbosity minimal
+    - name: Test
+      run: dotnet test iovation.LaunchKey.Sdk.Tests.dll --no-restore --verbosity normal
+  run_on_macos:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        dotnet-version: ['3.0', '3.1.x', '5.0.x' ]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    - name: Install dependencies
+      run: dotnet restore src\iovation.LaunchKey.Sdk.sln
+    - name: Build
+      run: dotnet build src\iovation.LaunchKey.Sdk.sln --verbosity minimal
+    - name: Test
+      run: dotnet test iovation.LaunchKey.Sdk.Tests.dll --no-restore --verbosity normal
+  run_dotnetframework_on_windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+    - name: Navigate to Workspace
+      run: cd $GITHUB_WORKSPACE
+    - name: Create Build Directory
+      run: mkdir _build
+    - name: Restore Packages
+      run: nuget restore src\iovation.LaunchKey.Sdk.sln
+    - name: Build Solution
+      run: |
+        msbuild.exe src\iovation.LaunchKey.Sdk.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: Dotnet SDK
+        path: "./_build"        
+    - name: Test
+      run: dotnet test iovation.LaunchKey.Sdk.Tests.dll --no-restore --verbosity normal
+  
