@@ -16,4 +16,6 @@ jobs:
         dotnet-version: ${{ matrix.dotnet-version }}
     - name: See where stuff is
       run: ls -la
+    - name: Install dependencies
+      run: dotnet restore
   
