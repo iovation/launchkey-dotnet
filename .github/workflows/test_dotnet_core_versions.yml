@@ -16,4 +16,6 @@ jobs:
         dotnet-version: ${{ matrix.dotnet-version }}
     - name: Install dependencies
       run: dotnet restore src/iovation.LaunchKey.Sdk
+    - name: Build SDK
+      run: dotnet build src/iovation.LaunchKey.Sdk --no-restore
   
