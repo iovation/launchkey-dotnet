@@ -19,5 +19,7 @@ jobs:
     - name: Build SDK
       run: dotnet build src/iovation.LaunchKey.Sdk --no-restore
     - name: Run Tests
-      run: cd src/iovation.LaunchKey.Sdk.Tests && dotnet test
+      run: cd src/iovation.LaunchKey.Sdk.Tests
+      run: dotnet add package Microsoft.EntityFrameworkCore.Design
+      run: dotnet test
   
