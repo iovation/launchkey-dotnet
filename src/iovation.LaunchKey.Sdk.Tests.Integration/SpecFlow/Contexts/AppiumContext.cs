@@ -16,6 +16,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         private AndroidDriver<AndroidElement> driver;
         private ScenarioContext _scenarioContext;
         private TestConfiguration _testConfiguration;
+        public string SDKKey;
 
         [BeforeScenario("device_testing")]
         public void BeforeAll()
@@ -67,22 +68,19 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         public void LinkDevice(string sdkKey, string linkingCode, string deviceName)
         {
-            ApproveAlert();
+            SetSdkKey(sdkKey);
             OpenLinkingMenu();
             FillLinkingMenu(linkingCode);
-            FillAuthenticatorSdkKey(sdkKey);
+            SubmitLinkingForm();
+
             if (deviceName != "")
             {
                 FillDeviceName(deviceName);
             }
-
-            SubmitLinkingForm();
-
         }
 
         public void UnlinkDevice()
         {
-            ApproveAlert();
             FindByScrollableText("Unlink 2 (Custom UI)").Click();
         }
 
@@ -142,30 +140,28 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         private void SubmitLinkingForm()
         {
-            AndroidElement linkButton = FindByID("demo_link_button");
+            //AndroidElement linkButton = FindByID("pair_entercode_button_done");
+            AndroidElement linkButton = FindByText("TAP TO FINISH");
             linkButton.Click();
         }
 
         private void FillDeviceName(string deviceName)
         {
-            FindByText("Use custom device name").Click();
-            FindByID("demo_link_edit_name").SendKeys(deviceName);
-
-        }
-
-        private void FillAuthenticatorSdkKey(string sdkKey)
-        {
-            FindByID("demo_link_edit_key").SendKeys(sdkKey);
+            AndroidElement deviceNameTextField = FindByID("setname_edit_name");
+            deviceNameTextField.Click();
+            deviceNameTextField.Clear();
+            deviceNameTextField.SendKeys(deviceName);
+            FindByText("OK").Click();
         }
 
         private void FillLinkingMenu(string linkingCode)
         {
-            FindByText("Linking code").SendKeys(linkingCode);
+            FindByScrollableText("ABCD123").SendKeys(linkingCode);
         }
 
         private void OpenLinkingMenu()
         {
-            FindByText("Link (Custom UI - Manual)").Click();
+            FindByScrollableText("Link (Default UI - Manual)").Click();
         }
 
         private void ApproveAlert()
@@ -182,6 +178,27 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
             var touch = new TouchAction(driver);
             touch.Press(centerX, centerY).Wait(2000).MoveTo(centerX, centerY).Release();
             touch.Perform();
+        }
+
+        private void SetSdkKey(string sdkKey)
+        {
+            OpenOptionsMenu();
+            FillAuthenticatorSdkKey(sdkKey);
+        }
+
+        private void FillAuthenticatorSdkKey(string sdkKey)
+        {
+            AndroidElement sdk_key_element = FindByID("configs_sdk_key");
+            sdk_key_element.Click();
+            sdk_key_element.Clear();
+            sdk_key_element.SendKeys(sdkKey);
+            driver.Navigate().Back();
+            FindByScrollableText("RE-INITIALIZE").Click();
+        }
+
+        private void OpenOptionsMenu()
+        {
+            FindByScrollableText("Config Testing").Click();
         }
 
         private AndroidElement FindByResourceID(string resourceID)
