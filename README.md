@@ -1,5 +1,7 @@
 # TruValidate Multifactor Authentication .NET SDK
 
+[![Test Dotnet SDK Versions](https://github.com/iovation/launchkey-dotnet/actions/workflows/test_dotnet_core_versions.yml/badge.svg)](https://github.com/iovation/launchkey-dotnet/actions/workflows/test_dotnet_core_versions.yml)
+
 ## Summary
 This project contains the source code for the TruValidate Multifactor Authentication .NET SDK. For quick examples, see the [Examples Project](src/iovation.LaunchKey.Sdk.ExampleCli). For API introduction and requirements, read on.
 ## Requirements
