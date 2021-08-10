@@ -1,5 +1,10 @@
 Change Log
 ----------
+3.8.0
+=====
+* Removed support for .NET 4.0 and bumped minimum to 4.5.0
+* Added SDK version tracking user agent
+
 3.7.1
 =====
 * Fixed bug where cache-control headers were not properly compared due to limitation in System.Web.HttpWebResponse

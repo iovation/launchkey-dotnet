@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Reflection;
 
 namespace iovation.LaunchKey.Sdk.Transport.WebClient
 {
@@ -12,6 +13,11 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
     public class WebRequestHttpClient : IHttpClient
     {
         private int _timeout;
+
+        private static string GetAppVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+        }
 
         public WebRequestHttpClient(TimeSpan timeout)
         {
@@ -35,6 +41,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
             request.Method = method.ToString();
             request.Timeout = _timeout;
             request.ReadWriteTimeout = _timeout;
+            request.UserAgent = string.Format(".NETServiceSDK/{0}", GetAppVersion());
             if (headers != null)
             {
                 foreach (var header in headers)
