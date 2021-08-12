@@ -34,13 +34,6 @@ namespace iovation.LaunchKey.Sdk.Client
         void CancelAuthorizationRequest(string authorizationRequestId);
 
         /// <summary>
-        /// Retrieve the status of an authorization request.
-        /// </summary>
-        /// <param name="authorizationRequestId">The authorization request identifier, usually retrieved via CreateAuthorizationRequest()</param>
-        /// <returns>NULL if the authorization is pending. A response package once the user has responded.</returns>
-        AuthorizationResponse GetAuthorizationResponse(string authorizationRequestId);
-
-        /// <summary>
         /// Retrieve the status of an Advanced authorization request.
         /// </summary>
         /// <param name="authorizationRequestId">The authorization request identifier, usually retrieved via CreateAuthorizationRequest()</param>

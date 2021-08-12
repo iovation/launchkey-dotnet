@@ -272,7 +272,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
 
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
             Assert.IsTrue(response == null);
@@ -289,7 +289,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -318,7 +318,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -378,15 +378,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.HandleWebhook(testHeaders, testBody, null, null);
+            var response = client.HandleAdvancedWebhook(testHeaders, testBody, null, null);
 
             // verify the call worked
             mockTransport.Verify();
 
             // verify we got the right response
-            Assert.IsTrue(response is AuthorizationResponseWebhookPackage);
+            Assert.IsTrue(response is AdvancedAuthorizationResponseWebhookPackage);
 
-            var authResponse = ((AuthorizationResponseWebhookPackage)response).AuthorizationResponse;
+            var authResponse = ((AdvancedAuthorizationResponseWebhookPackage)response).AdvancedAuthorizationResponse;
             // verify response contents
             Assert.AreEqual(authResponse.AuthorizationRequestId, testResponse.AuthorizationRequestId.ToString("D"));
             Assert.AreEqual(authResponse.Authorized, testResponse.Response);
@@ -399,14 +399,11 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(Sdk.Domain.Service.AuthorizationResponseReason.APPROVED, authResponse.Reason);
             Assert.AreEqual("Denial Reason", authResponse.DenialReason);
             Assert.AreEqual(false, authResponse.Fraud);
-            Assert.AreEqual(2, authResponse.AuthPolicy.RequiredFactors);
-            Assert.AreEqual(1, authResponse.AuthPolicy.Locations.Count);
-            Assert.AreEqual(200, authResponse.AuthPolicy.Locations[0].Radius);
-            Assert.AreEqual(36.120825, authResponse.AuthPolicy.Locations[0].Latitude);
-            Assert.AreEqual(-115.157216, authResponse.AuthPolicy.Locations[0].Longitude);
-            Assert.AreEqual(null, authResponse.AuthPolicy.RequireInherenceFactor);
-            Assert.AreEqual(null, authResponse.AuthPolicy.RequireKnowledgeFactor);
-            Assert.AreEqual(null, authResponse.AuthPolicy.RequirePosessionFactor);
+            Assert.AreEqual(2, authResponse.Policy.Amount);
+            Assert.AreEqual(1, authResponse.Policy.Fences.Count);
+            Assert.AreEqual(null, authResponse.Policy.InherenceRequired);
+            Assert.AreEqual(null, authResponse.Policy.KnowledgeRequired);
+            Assert.AreEqual(null, authResponse.Policy.PossessionRequired);
             Assert.AreEqual(null, authResponse.AuthMethods);
         }
 
@@ -419,17 +416,17 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.HandleWebhook(testHeaders, testBody, null, null);
+            var response = client.HandleAdvancedWebhook(testHeaders, testBody, null, null);
 
             // verify the call worked
             mockTransport.Verify();
 
             // verify we got the right response
-            Assert.IsTrue(response is AuthorizationResponseWebhookPackage);
+            Assert.IsTrue(response is AdvancedAuthorizationResponseWebhookPackage);
 
-            var authResponse = ((AuthorizationResponseWebhookPackage)response).AuthorizationResponse;
+            var authResponse = ((AdvancedAuthorizationResponseWebhookPackage)response).AdvancedAuthorizationResponse;
             // verify response contents
-            Assert.AreEqual(null, authResponse.AuthPolicy);
+            Assert.AreEqual(null, authResponse.Policy);
             Assert.AreEqual(null, authResponse.AuthMethods);
         }
 
@@ -442,15 +439,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.HandleWebhook(testHeaders, testBody, null, null);
+            var response = client.HandleAdvancedWebhook(testHeaders, testBody, null, null);
 
             // verify the call worked
             mockTransport.Verify();
 
             // verify we got the right response
-            Assert.IsTrue(response is AuthorizationResponseWebhookPackage);
+            Assert.IsTrue(response is AdvancedAuthorizationResponseWebhookPackage);
 
-            var authResponse = ((AuthorizationResponseWebhookPackage)response).AuthorizationResponse;
+            var authResponse = ((AdvancedAuthorizationResponseWebhookPackage)response).AdvancedAuthorizationResponse;
             Assert.AreEqual(true, authResponse.Fraud);
         }
 
@@ -463,7 +460,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             var mockTransport = new Mock<ITransport>();
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.HandleWebhook(testHeaders, testBody, null, null);
+            var response = client.HandleAdvancedWebhook(testHeaders, testBody, null, null);
 
             // verify the call worked
             mockTransport.Verify();
@@ -488,7 +485,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             mockTransport.Setup(p => p.HandleServerSentEvent(testHeaders, testBody, null, null)).Returns(testResponse).Verifiable();
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
 
-            client.HandleWebhook(testHeaders, testBody, null, null);
+            client.HandleAdvancedWebhook(testHeaders, testBody, null, null);
         }
 
         [TestMethod]
@@ -502,11 +499,11 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
-            Assert.AreEqual(null, response.AuthPolicy);
+            Assert.AreEqual(null, response.Policy);
             Assert.AreEqual(null, response.AuthMethods);
         }
 
@@ -533,16 +530,12 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
-            Assert.AreEqual(150, response.AuthPolicy.Locations[0].Radius);
-            Assert.AreEqual(36.083548, response.AuthPolicy.Locations[0].Latitude);
-            Assert.AreEqual(-115.157517, response.AuthPolicy.Locations[0].Longitude);
-            Assert.AreEqual(100, response.AuthPolicy.Locations[1].Radius);
-            Assert.AreEqual(40.55, response.AuthPolicy.Locations[1].Latitude);
-            Assert.AreEqual(-90.12, response.AuthPolicy.Locations[1].Longitude);
+            Assert.AreEqual("Work", response.Policy.Fences[0].Name);
+            Assert.AreEqual("Home", response.Policy.Fences[1].Name);
         }
 
         [TestMethod]
@@ -566,15 +559,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
             List<Sdk.Domain.Service.Location> emptyLocation = new List<Sdk.Domain.Service.Location>();
 
 
-            CollectionAssert.AreEqual(emptyLocation, response.AuthPolicy.Locations);
-            Assert.AreEqual(0, response.AuthPolicy.Locations.Count);
+            CollectionAssert.AreEqual(emptyLocation, response.Policy.Fences);
+            Assert.AreEqual(0, response.Policy.Fences.Count);
         }
 
         [TestMethod]
@@ -595,14 +588,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
-            Assert.AreEqual(true, response.AuthPolicy.RequireInherenceFactor);
-            Assert.AreEqual(true, response.AuthPolicy.RequireKnowledgeFactor);
-            Assert.AreEqual(false, response.AuthPolicy.RequirePosessionFactor);
-            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors);
+            Assert.AreEqual(true, response.Policy.InherenceRequired);
+            Assert.AreEqual(true, response.Policy.KnowledgeRequired);
+            Assert.AreEqual(false, response.Policy.PossessionRequired);
+            Assert.AreEqual(null, response.Policy.Amount);
         }
 
         [TestMethod]
@@ -624,14 +617,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
-            Assert.AreEqual(true, response.AuthPolicy.RequireInherenceFactor);
-            Assert.AreEqual(false, response.AuthPolicy.RequireKnowledgeFactor);
-            Assert.AreEqual(false, response.AuthPolicy.RequirePosessionFactor);
-            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors);
+            Assert.AreEqual(true, response.Policy.InherenceRequired);
+            Assert.AreEqual(false, response.Policy.KnowledgeRequired);
+            Assert.AreEqual(false, response.Policy.PossessionRequired);
+            Assert.AreEqual(null, response.Policy.Amount);
         }
 
         [TestMethod]
@@ -652,13 +645,13 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
-            Assert.AreEqual(false, response.AuthPolicy.RequireInherenceFactor);
-            Assert.AreEqual(true, response.AuthPolicy.RequireKnowledgeFactor);
-            Assert.AreEqual(false, response.AuthPolicy.RequirePosessionFactor);
+            Assert.AreEqual(false, response.Policy.InherenceRequired);
+            Assert.AreEqual(true, response.Policy.KnowledgeRequired);
+            Assert.AreEqual(false, response.Policy.PossessionRequired);
         }
 
         [TestMethod]
@@ -680,14 +673,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
-            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors); 
-            Assert.AreEqual(null, response.AuthPolicy.RequireInherenceFactor);
-            Assert.AreEqual(null, response.AuthPolicy.RequireKnowledgeFactor);
-            Assert.AreEqual(null, response.AuthPolicy.RequirePosessionFactor);
+            Assert.AreEqual(null, response.Policy.Amount); 
+            Assert.AreEqual(null, response.Policy.InherenceRequired);
+            Assert.AreEqual(null, response.Policy.KnowledgeRequired);
+            Assert.AreEqual(null, response.Policy.PossessionRequired);
         }
 
         [TestMethod]
@@ -708,14 +701,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
-            Assert.AreEqual(3, response.AuthPolicy.RequiredFactors);
-            Assert.AreEqual(null, response.AuthPolicy.RequireInherenceFactor);
-            Assert.AreEqual(null, response.AuthPolicy.RequireKnowledgeFactor);
-            Assert.AreEqual(null, response.AuthPolicy.RequirePosessionFactor);
+            Assert.AreEqual(3, response.Policy.Amount);
+            Assert.AreEqual(null, response.Policy.InherenceRequired);
+            Assert.AreEqual(null, response.Policy.KnowledgeRequired);
+            Assert.AreEqual(null, response.Policy.PossessionRequired);
         }
 
         [TestMethod]
@@ -736,14 +729,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
-            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors);
-            Assert.AreEqual(false, response.AuthPolicy.RequireInherenceFactor);
-            Assert.AreEqual(true, response.AuthPolicy.RequireKnowledgeFactor);
-            Assert.AreEqual(false, response.AuthPolicy.RequirePosessionFactor);
+            Assert.AreEqual(null, response.Policy.Amount);
+            Assert.AreEqual(false, response.Policy.InherenceRequired);
+            Assert.AreEqual(true, response.Policy.KnowledgeRequired);
+            Assert.AreEqual(false, response.Policy.PossessionRequired);
         }
 
         public AuthPolicy.AuthMethod CreateAuthTransportMethod( string method, bool? set, bool active, bool allowed, bool supported, bool? userRequired, bool? passed, bool? error)
@@ -788,7 +781,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -829,7 +822,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -856,12 +849,11 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Passed);
             Assert.AreEqual(null, authMethod.Error);
 
-            Assert.AreEqual(null, response.AuthPolicy.RequiredFactors);
-            Assert.AreEqual(null, response.AuthPolicy.RequireInherenceFactor);
-            Assert.AreEqual(null, response.AuthPolicy.RequireKnowledgeFactor);
-            Assert.AreEqual(null, response.AuthPolicy.RequirePosessionFactor);
-            Assert.AreEqual(null, response.AuthPolicy.JailbreakDetection);
-            Assert.AreEqual(0, response.AuthPolicy.Locations.Count);
+            Assert.AreEqual(null, response.Policy.Amount);
+            Assert.AreEqual(null, response.Policy.InherenceRequired);
+            Assert.AreEqual(null, response.Policy.KnowledgeRequired);
+            Assert.AreEqual(null, response.Policy.PossessionRequired);
+            Assert.AreEqual(0, response.Policy.Fences.Count);
         }
 
         [TestMethod]
@@ -891,7 +883,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -909,7 +901,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Error);
 
             List<Sdk.Domain.Service.Location> emptyLocation = new List<Sdk.Domain.Service.Location>();
-            CollectionAssert.AreEqual(emptyLocation, response.AuthPolicy.Locations);
+            CollectionAssert.AreEqual(emptyLocation, response.Policy.Fences);
         }
 
 
@@ -940,7 +932,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -958,7 +950,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Error);
 
             List<Sdk.Domain.Service.Location> emptyLocation = new List<Sdk.Domain.Service.Location>();
-            CollectionAssert.AreEqual(emptyLocation, response.AuthPolicy.Locations);
+            CollectionAssert.AreEqual(emptyLocation, response.Policy.Fences);
         }
 
         [TestMethod]
@@ -988,7 +980,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -1016,7 +1008,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Error);
 
             List<Sdk.Domain.Service.Location> emptyLocation = new List<Sdk.Domain.Service.Location>();
-            CollectionAssert.AreEqual(emptyLocation, response.AuthPolicy.Locations);
+            CollectionAssert.AreEqual(emptyLocation, response.Policy.Fences);
         }
 
         [TestMethod]
@@ -1046,7 +1038,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -1085,7 +1077,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Error);
 
             List<Sdk.Domain.Service.Location> emptyLocation = new List<Sdk.Domain.Service.Location>();
-            CollectionAssert.AreEqual(emptyLocation, response.AuthPolicy.Locations);
+            CollectionAssert.AreEqual(emptyLocation, response.Policy.Fences);
         }
 
         [TestMethod]
@@ -1115,7 +1107,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -1154,7 +1146,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(false, authMethod.Error);
 
             List<Sdk.Domain.Service.Location> emptyLocation = new List<Sdk.Domain.Service.Location>();
-            CollectionAssert.AreEqual(emptyLocation, response.AuthPolicy.Locations);
+            CollectionAssert.AreEqual(emptyLocation, response.Policy.Fences);
         }
 
         [TestMethod]
@@ -1188,7 +1180,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -1228,7 +1220,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
             serviceDomain.Location location = new serviceDomain.Location(150,36.083548,-115.157517, "");
 
-            Assert.AreEqual(location, response.AuthPolicy.Locations[0]);
+            Assert.AreEqual(location, response.Policy.Fences[0]);
         }
 
         [TestMethod]
@@ -1262,7 +1254,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -1302,7 +1294,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
             serviceDomain.Location location = new serviceDomain.Location(150, 36.083548, -115.157517, "");
 
-            Assert.AreEqual(location, response.AuthPolicy.Locations[0]);
+            Assert.AreEqual(location, response.Policy.Fences[0]);
         }
 
         [TestMethod]
@@ -1335,7 +1327,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -1373,9 +1365,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Passed);
             Assert.AreEqual(null, authMethod.Error);
 
-            serviceDomain.Location location = new serviceDomain.Location(150, 36.083548, -115.157517, "");
-
-            Assert.AreEqual(location, response.AuthPolicy.Locations[0]);
+            serviceDomain.Policy.GeoCircleFence location = new serviceDomain.Policy.GeoCircleFence(36.083548, -115.157517, 150, "Work");
+            Assert.AreEqual(location, response.Policy.Fences[0]);
         }
 
         [TestMethod]
@@ -1405,7 +1396,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -1434,7 +1425,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Error);
 
             List<Sdk.Domain.Service.Location> emptyLocation = new List<Sdk.Domain.Service.Location>();
-            CollectionAssert.AreEqual(emptyLocation, response.AuthPolicy.Locations);
+            CollectionAssert.AreEqual(emptyLocation, response.Policy.Fences);
         }
 
         [TestMethod]
@@ -1464,7 +1455,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
                 .Verifiable();
 
             var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
-            var response = client.GetAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
+            var response = client.GetAdvancedAuthorizationResponse(TestConsts.DefaultAuthenticationId.ToString("D"));
 
             mockTransport.Verify();
 
@@ -1493,7 +1484,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             Assert.AreEqual(null, authMethod.Error);
 
             List<Sdk.Domain.Service.Location> emptyLocation = new List<Sdk.Domain.Service.Location>();
-            CollectionAssert.AreEqual(emptyLocation, response.AuthPolicy.Locations);
+            CollectionAssert.AreEqual(emptyLocation, response.Policy.Fences);
         }
 
     }

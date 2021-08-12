@@ -75,36 +75,36 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport.ServiceV3AuthsDelete(Guid.Parse(authorizationRequestId), _serviceId);
         }
 
-        [Obsolete("GetAuthorizationResponse has been deprecated and will be removed in the next major version. Please use GetAdvancedAuthorizationResponse")]
-        public AuthorizationResponse GetAuthorizationResponse(string authorizationRequestId)
-        {
-            AdvancedAuthorizationResponse advancedAuthResponse = GetAdvancedAuthorizationResponse(authorizationRequestId);
+        //[Obsolete("GetAuthorizationResponse has been deprecated and will be removed in the next major version. Please use GetAdvancedAuthorizationResponse")]
+        //public AuthorizationResponse GetAuthorizationResponse(string authorizationRequestId)
+        //{
+        //    AdvancedAuthorizationResponse advancedAuthResponse = GetAdvancedAuthorizationResponse(authorizationRequestId);
 
-            if(advancedAuthResponse != null)
-            {
-                AuthPolicy authPolicy = GetAuthPolicyFromAuthResponsePolicy(advancedAuthResponse.Policy);
+        //    if(advancedAuthResponse != null)
+        //    {
+        //        AuthPolicy authPolicy = GetAuthPolicyFromAuthResponsePolicy(advancedAuthResponse.Policy);
 
-                return new AuthorizationResponse(
-                    authorizationRequestId: advancedAuthResponse.AuthorizationRequestId,
-                    authorized: advancedAuthResponse.Authorized,
-                    serviceUserHash: advancedAuthResponse.ServiceUserHash,
-                    organizationUserHash: advancedAuthResponse.OrganizationUserHash,
-                    userPushId: advancedAuthResponse.UserPushId,
-                    deviceId: advancedAuthResponse.DeviceId,
-                    devicePins: advancedAuthResponse.DevicePins,
-                    type: advancedAuthResponse.Type,
-                    reason: advancedAuthResponse.Reason,
-                    denialReason: advancedAuthResponse.DenialReason,
-                    fraud: advancedAuthResponse.Fraud,
-                    authPolicy: authPolicy,
-                    authMethods: advancedAuthResponse.AuthMethods
-                );
-            }
-            else
-            {
-                return null;
-            }
-        }
+        //        return new AuthorizationResponse(
+        //            authorizationRequestId: advancedAuthResponse.AuthorizationRequestId,
+        //            authorized: advancedAuthResponse.Authorized,
+        //            serviceUserHash: advancedAuthResponse.ServiceUserHash,
+        //            organizationUserHash: advancedAuthResponse.OrganizationUserHash,
+        //            userPushId: advancedAuthResponse.UserPushId,
+        //            deviceId: advancedAuthResponse.DeviceId,
+        //            devicePins: advancedAuthResponse.DevicePins,
+        //            type: advancedAuthResponse.Type,
+        //            reason: advancedAuthResponse.Reason,
+        //            denialReason: advancedAuthResponse.DenialReason,
+        //            fraud: advancedAuthResponse.Fraud,
+        //            authPolicy: authPolicy,
+        //            authMethods: advancedAuthResponse.AuthMethods
+        //        );
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
 
         private AdvancedAuthorizationResponse ParseAuthsGetToAdvancedAuthorizationPackage(ServiceV3AuthsGetResponse response)
         {
@@ -250,88 +250,6 @@ namespace iovation.LaunchKey.Sdk.Client
             }
         }
 
-        private AuthPolicy GetAuthPolicyFromAuthResponsePolicy(AuthorizationResponsePolicy authResponsePolicy)
-        {
-            AuthPolicy authPolicy = new AuthPolicy();
-            List<Location> authPolicyLocations = new List<Location>();
-
-            if (authResponsePolicy != null)
-            {
-                if (authResponsePolicy.Fences != null && authResponsePolicy.Fences.Any())
-                {
-                    foreach (DomainPolicy.IFence fence in authResponsePolicy.Fences)
-                    {
-                        if(fence.GetType() == typeof(DomainPolicy.GeoCircleFence))
-                        {
-                            authPolicyLocations.Add(
-                                new Location(
-                                    (fence as DomainPolicy.GeoCircleFence).Radius,
-                                    (fence as DomainPolicy.GeoCircleFence).Latitude,
-                                    (fence as DomainPolicy.GeoCircleFence).Longitude,
-                                    (fence as DomainPolicy.GeoCircleFence)?.Name
-                                )
-                            );
-                        }
-                        else
-                        {
-                            Trace.TraceWarning($"A Fence besides GeoCircleFence was present while using legacy functionality. This fence has been skipped from being processed.");
-
-                        }
-                    }
-                }
-
-                if (authResponsePolicy.Requirement == Requirement.AMOUNT)
-                {
-                    authPolicy = new AuthPolicy(
-                        authResponsePolicy.Amount,
-                        null,
-                        null,
-                        null,
-                        null,
-                        authPolicyLocations
-                    );
-                }
-                else if(authResponsePolicy.Requirement == Requirement.TYPES)
-                {
-                    bool? requiredKnowledge = authResponsePolicy.KnowledgeRequired;
-                    bool? requiredInherence = authResponsePolicy.InherenceRequired;
-                    bool? requiredPosession = authResponsePolicy.PossessionRequired;
-
-                    authPolicy = new AuthPolicy(
-                        null,
-                        requiredKnowledge,
-                        requiredInherence,
-                        requiredPosession,
-                        null,
-                        authPolicyLocations
-                    );
-                }
-                else if(authResponsePolicy.Requirement == Requirement.COND_GEO)
-                {
-                    Trace.TraceWarning($"Conditional Geofence cannot be converted to the legacy policy. To utilize new policies please use HandleAdvancedWebhook");
-                    return null;
-                }
-                else
-                {
-                    authPolicy = new AuthPolicy(
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        authPolicyLocations
-                    );
-                }
-            } 
-            else
-            {
-                authPolicy = null;
-            }
-
-            return authPolicy;
-
-        }
-
         private List<AuthMethod> GetAuthMethods(ServiceV3AuthsGetResponse authResponse)
         {
             var authMethods = new List<AuthMethod>();
@@ -422,45 +340,45 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport.ServiceV3SessionsDelete(request, _serviceId);
         }
 
-        [Obsolete("HandleWebhook(headers, body) is obsolete. Please use HandleWebhook(headers, body, method, path)", false)]
-        public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body)
-        {
-            return HandleWebhook(headers, body, null, null);
-        }
+        //[Obsolete("HandleWebhook(headers, body) is obsolete. Please use HandleWebhook(headers, body, method, path)", false)]
+        //public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body)
+        //{
+        //    return HandleWebhook(headers, body, null, null);
+        //}
 
-        public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null)
-        {
-            var webhookPackage = HandleAdvancedWebhook(headers, body, method, path);
-            if(webhookPackage is ServiceUserSessionEndWebhookPackage)
-            {
-                return webhookPackage;
-            }
-            else if(webhookPackage is AdvancedAuthorizationResponseWebhookPackage)
-            {
-                AdvancedAuthorizationResponse advancedAuthorizationResponse = ((AdvancedAuthorizationResponseWebhookPackage)webhookPackage).AdvancedAuthorizationResponse;
-                AuthPolicy authPolicy = GetAuthPolicyFromAuthResponsePolicy(advancedAuthorizationResponse.Policy);
+        //public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null)
+        //{
+        //    var webhookPackage = HandleAdvancedWebhook(headers, body, method, path);
+        //    if(webhookPackage is ServiceUserSessionEndWebhookPackage)
+        //    {
+        //        return webhookPackage;
+        //    }
+        //    else if(webhookPackage is AdvancedAuthorizationResponseWebhookPackage)
+        //    {
+        //        AdvancedAuthorizationResponse advancedAuthorizationResponse = ((AdvancedAuthorizationResponseWebhookPackage)webhookPackage).AdvancedAuthorizationResponse;
+        //        AuthPolicy authPolicy = GetAuthPolicyFromAuthResponsePolicy(advancedAuthorizationResponse.Policy);
 
-                return new AuthorizationResponseWebhookPackage(
-                    new AuthorizationResponse(
-                        authorizationRequestId: advancedAuthorizationResponse.AuthorizationRequestId,
-                        authorized: advancedAuthorizationResponse.Authorized,
-                        serviceUserHash: advancedAuthorizationResponse.ServiceUserHash,
-                        organizationUserHash: advancedAuthorizationResponse.OrganizationUserHash,
-                        userPushId: advancedAuthorizationResponse.UserPushId,
-                        deviceId: advancedAuthorizationResponse.DeviceId,
-                        devicePins: advancedAuthorizationResponse.DevicePins,
-                        type: advancedAuthorizationResponse.Type,
-                        reason: advancedAuthorizationResponse.Reason,
-                        denialReason: advancedAuthorizationResponse.DenialReason,
-                        fraud: advancedAuthorizationResponse.Fraud,
-                        authPolicy: authPolicy,
-                        authMethods: advancedAuthorizationResponse.AuthMethods
-                    )
-                );
-            }
+        //        return new AuthorizationResponseWebhookPackage(
+        //            new AuthorizationResponse(
+        //                authorizationRequestId: advancedAuthorizationResponse.AuthorizationRequestId,
+        //                authorized: advancedAuthorizationResponse.Authorized,
+        //                serviceUserHash: advancedAuthorizationResponse.ServiceUserHash,
+        //                organizationUserHash: advancedAuthorizationResponse.OrganizationUserHash,
+        //                userPushId: advancedAuthorizationResponse.UserPushId,
+        //                deviceId: advancedAuthorizationResponse.DeviceId,
+        //                devicePins: advancedAuthorizationResponse.DevicePins,
+        //                type: advancedAuthorizationResponse.Type,
+        //                reason: advancedAuthorizationResponse.Reason,
+        //                denialReason: advancedAuthorizationResponse.DenialReason,
+        //                fraud: advancedAuthorizationResponse.Fraud,
+        //                authPolicy: authPolicy,
+        //                authMethods: advancedAuthorizationResponse.AuthMethods
+        //            )
+        //        );
+        //    }
 
-            throw new InvalidRequestException("Unknown response type");
-        }
+        //    throw new InvalidRequestException("Unknown response type");
+        //}
 
         public IWebhookPackage HandleAdvancedWebhook(Dictionary<string, List<string>> headers, string body, string method = null, string path = null)
         {
