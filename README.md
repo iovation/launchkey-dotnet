@@ -1,7 +1,9 @@
-# LaunchKey .NET SDK
+# TruValidate Multifactor Authentication .NET SDK
+
+[![Test Dotnet SDK Versions](https://github.com/iovation/launchkey-dotnet/actions/workflows/test_dotnet_core_versions.yml/badge.svg)](https://github.com/iovation/launchkey-dotnet/actions/workflows/test_dotnet_core_versions.yml)
 
 ## Summary
-This project contains the source code for the LaunchKey .NET SDK. For quick examples, see the [Examples Project](src/iovation.LaunchKey.Sdk.ExampleCli). For API introduction and requirements, read on.
+This project contains the source code for the TruValidate Multifactor Authentication .NET SDK. For quick examples, see the [Examples Project](src/iovation.LaunchKey.Sdk.ExampleCli). For API introduction and requirements, read on.
 ## Requirements
 This SDK is targeted toward:
 
@@ -27,11 +29,11 @@ dotnet test
 This method results in both the .NET 4.0 and .NET Core runtimes being used for test execution. Currently, VS 2017's IDE-based test runner does *not* properly run all targets.
 
 ## Example & Usage
-The primary entry point to the SDK is a class named `FactoryFactoryBuilder`. This class, located in the `iovation.LaunchKey.Sdk` namespace provides factories for instantiating API clients which can be used to consume the LaunchKey platform API. The `FactoryFactoryBuilder` is designed to simplify creating the rather complex (and highly customizable!) object model that drives the LaunchKey .NET SDK.
+The primary entry point to the SDK is a class named `FactoryFactoryBuilder`. This class, located in the `iovation.LaunchKey.Sdk` namespace provides factories for instantiating API clients which can be used to consume the TruValidate Multifactor Authentication platform API. The `FactoryFactoryBuilder` is designed to simplify creating the rather complex (and highly customizable!) object model that drives the TruValidate Multifactor Authentication .NET SDK.
 
 To be able to use the SDK, you will need a few pieces of key information:
 
-* **API Credentials**: in the form of an RSA private key and the unique ID of the Organization, Directory or Service that issued the key. These are issued at the Organization, Directory or Service level. An Organization-level credential may access all services and directories within itself. A Directory-level credential may access itself and its child services. A Service-level credential may only access the service for which it is issued. Generally speaking, you may issue these credentials from the [LaunchKey Admin Center](https://admin.launchkey.com)
+* **API Credentials**: in the form of an RSA private key and the unique ID of the Organization, Directory or Service that issued the key. These are issued at the Organization, Directory or Service level. An Organization-level credential may access all services and directories within itself. A Directory-level credential may access itself and its child services. A Service-level credential may only access the service for which it is issued. Generally speaking, you may issue these credentials from the [TruValidate Multifactor Authentication Admin Center](https://admin.launchkey.com)
 * **Service ID, Directory ID or Organization ID**: This is a UUID/GUID for referencing the Organization, Directory or Service you wish to interact with programmatically.
 
 Once you have obtained the above information, you have everything you need to create a `FactoryFactoryBuilder`, and begin consuming the API. 
@@ -110,5 +112,5 @@ This example is incomplete, and a full implementation would involve additional e
 There is an elborate example application as a part of the source code. The demo application is documented and located [here](src/iovation.LaunchKey.Sdk.ExampleCli).
 
 ## Further Reading
-As always, the best place to get information is the [LaunchKey documentation site](https://docs.launchkey.com).
+As always, the best place to get information is the [TruValidate Multifactor Authentication documentation site](https://docs.launchkey.com).
 
