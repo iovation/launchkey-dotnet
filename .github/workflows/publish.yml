@@ -1,0 +1,27 @@
+name: Publish to Nuget
+on:
+  push:
+    branches:
+      - master
+jobs:
+  publish:
+    name: build, pack & publish
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: 2.1.x
+    - name: Build SDK
+      run: |
+        dotnet build --framework netstandard20 src/iovation.LaunchKey.Sdk
+        dotnet build --framework netcoreapp21 src/iovation.LaunchKey.Sdk.Tests
+
+    - name: Publish SDK
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PACKAGE_NAME: iovation.LaunchKey.Sdk
+        PROJECT_FILE_PATH: src/iovation.LaunchKey.Sdk/iovation.LaunchKey.Sdk.csproj
+        TAG_COMMIT: false
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
