@@ -22,6 +22,9 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 
             [JsonProperty("active")]
             public bool Active { get; set; }
+
+            [JsonProperty("key_type")]
+            public int KeyType { get; set; }
         }
 
         public List<Key> PublicKeys { get; }

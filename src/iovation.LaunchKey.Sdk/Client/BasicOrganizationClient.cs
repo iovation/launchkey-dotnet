@@ -175,27 +175,42 @@ namespace iovation.LaunchKey.Sdk.Client
 
             foreach (var transportKey in response.PublicKeys)
             {
+                KeyType keyType = KeyType.OTHER;
+
+                KeyType parsedKeyType;
+                if (Enum.TryParse(transportKey.KeyType.ToString(), true, out parsedKeyType))
+                {
+                    keyType = parsedKeyType;
+                }
+
                 keys.Add(new PublicKey(
                     transportKey.Id,
                     transportKey.Active,
                     transportKey.Created,
-                    transportKey.Expires
+                    transportKey.Expires,
+                    keyType
                 ));
             }
 
             return keys;
         }
 
-        public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires)
+        public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires, KeyType keyType = KeyType.BOTH)
         {
             var request = new ServiceKeysPostRequest(
                 serviceId,
                 publicKeyPem,
                 expires?.ToUniversalTime(),
-                active
+                active,
+                (int)keyType
             );
             var response = _transport.OrganizationV3ServiceKeysPost(request, _organizationId);
             return response.Id;
+        }
+
+        public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires)
+        {
+            return AddServicePublicKey(serviceId, publicKeyPem, active, expires, KeyType.BOTH);
         }
 
         public void UpdateServicePublicKey(Guid serviceId, string keyId, bool active, DateTime? expires)
@@ -263,27 +278,42 @@ namespace iovation.LaunchKey.Sdk.Client
 
             foreach (var transportKey in response.PublicKeys)
             {
+                KeyType keyType = KeyType.OTHER;
+
+                KeyType parsedKeyType;
+                if (Enum.TryParse(transportKey.KeyType.ToString(), true, out parsedKeyType))
+                {
+                    keyType = parsedKeyType;
+                }
+
                 keys.Add(new PublicKey(
                     transportKey.Id,
                     transportKey.Active,
                     transportKey.Created,
-                    transportKey.Expires
+                    transportKey.Expires,
+                    keyType
                 ));
             }
 
             return keys;
         }
 
-        public string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime? expires)
+        public string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime? expires, KeyType keyType = KeyType.BOTH)
         {
             var request = new DirectoryKeysPostRequest(
                 directoryId,
                 publicKeyPem,
                 expires?.ToUniversalTime(),
-                active
+                active,
+                (int)keyType
             );
             var response = _transport.OrganizationV3DirectoryKeysPost(request, _organizationId);
             return response.Id;
+        }
+
+        public string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime? expires)
+        {
+            return AddDirectoryPublicKey(directoryId, publicKeyPem, active, expires, KeyType.BOTH);
         }
 
         public void UpdateDirectoryPublicKey(Guid directoryId, string keyId, bool active, DateTime? expires)

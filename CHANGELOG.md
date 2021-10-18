@@ -1,5 +1,9 @@
 Change Log
 ----------
+4.1.0
+=====
+* Added PublicKey Key Types for differentiating between keys that can encrypt, sign or perform both actions.
+
 4.0.0
 =====
 * Removed support for .NET 4.0 and bumped minimum to 4.5.0

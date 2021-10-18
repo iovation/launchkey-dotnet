@@ -27,12 +27,44 @@ namespace iovation.LaunchKey.Sdk.Domain
         /// </summary>
         public DateTime? Expires { get; }
 
-        public PublicKey(string id, bool active, DateTime created, DateTime? expires)
+        /// <summary>
+        /// The type of key that represents what it will be used for. IE: encryption, signature, or both.
+        /// </summary>
+        public KeyType KeyType { get; }
+
+        public PublicKey(string id, bool active, DateTime created, DateTime? expires, KeyType keyType = KeyType.BOTH)
         {
             Id = id;
             Active = active;
             Created = created;
             Expires = expires;
+            KeyType = keyType;
         }
+    }
+
+    /// <summary>
+    /// The type of key that is being utilized
+    /// </summary>
+    public enum KeyType
+    {
+        /// <summary>
+        /// Other exists only to allow for forward compatibility to future key types
+        /// </summary>
+        OTHER = -1,
+
+        /// <summary>
+        /// This key can be used to both decrypt responses as well as sign requests
+        /// </summary>
+        BOTH = 0,
+
+        /// <summary>
+        /// This key can only be used to decrypt requests
+        /// </summary>
+        ENCRYPTION = 1,
+
+        /// <summary>
+        /// This key can only be used to sign requests
+        /// </summary>
+        SIGNATURE = 2
     }
 }

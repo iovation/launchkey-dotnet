@@ -2,6 +2,7 @@
 using System.Linq;
 using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
+using iovation.LaunchKey.Sdk.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
@@ -123,6 +124,23 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             Assert.IsTrue(_directoryClientContext.LoadedServicePublicKeys.Any(
                 e => e.Id == _directoryClientContext.AddedServicePublicKeys[0]
             ));
+        }
+
+        [Then(@"the Public Key is in the list of Public Keys for the Directory Service and has a (BOTH|ENCRYPTION|SIGNATURE) key type")]
+        public void ThenThePublicKeyIsInTheListOfPublicKeysForTheDirectoryServiceAndHasAKeyType(string keyType)
+        {
+            Assert.IsTrue(_directoryClientContext.LoadedServicePublicKeys.Any(
+                e => e.Id == _directoryClientContext.AddedServicePublicKeys[0]
+            ));
+            KeyType parsedKeyType;
+            Enum.TryParse(keyType, true, out parsedKeyType);
+            Assert.IsTrue(_directoryClientContext.LoadedServicePublicKeys[0].KeyType == parsedKeyType);
+        }
+
+        [Then(@"the Public Key is in the list of Public Keys for the Directory Service and has a ""(BOTH|ENCRYPTION|SIGNATURE)"" key type")]
+        public void ThenThePublicKeyIsInTheListOfPublicKeysForTheDirectoryServiceAndHasAQuotedKeyType(string keyType)
+        {
+            ThenThePublicKeyIsInTheListOfPublicKeysForTheDirectoryServiceAndHasAKeyType(keyType);
         }
 
         [Then(@"the Directory Service Public Key is inactive")]
@@ -266,6 +284,51 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                     keyId,
                     true,
                     new DateTime(2020, 1, 1)
+                );
+            }
+            catch (BaseException e)
+            {
+                _commonContext.RecordException(e);
+            }
+        }
+
+        [When(@"I add a Public Key with a (BOTH|ENCRYPTION|SIGNATURE) type to the Directory Service")]
+        public void WhenIAddAPublicKeyWithAKeyTypeTypeToTheDirectoryService(string keyType)
+        {
+            try
+            {
+                KeyType parsedKeyType;
+                Enum.TryParse(keyType, true, out parsedKeyType);
+                _directoryClientContext.AddServicePublicKey(
+                    _directoryClientContext.LastCreatedService.Id,
+                    _keyManager.GetAlphaPublicKey(),
+                    true,
+                    new DateTime(2020, 1, 1),
+                    parsedKeyType
+                );
+            }
+            catch (BaseException e)
+            {
+                _commonContext.RecordException(e);
+            }
+        }
+
+        [When(@"I attempt to add a Public Key with a ""(.*)"" type to the Directory Service")]
+        public void WhenIAttemptToAddAPublicKeyWithATypeToTheDirectoryService(string keyType)
+        {
+            try
+            {
+                KeyType parsedKeyType;
+                if (!Enum.TryParse(keyType, true, out parsedKeyType))
+                {
+                    parsedKeyType = KeyType.OTHER;
+                }
+                _directoryClientContext.AddServicePublicKey(
+                    _directoryClientContext.LastCreatedService.Id,
+                    _keyManager.GetAlphaPublicKey(),
+                    true,
+                    new DateTime(2020, 1, 1),
+                    parsedKeyType
                 );
             }
             catch (BaseException e)
