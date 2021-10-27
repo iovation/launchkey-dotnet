@@ -295,22 +295,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [When(@"I add a Public Key with a (BOTH|ENCRYPTION|SIGNATURE) type to the Directory Service")]
         public void WhenIAddAPublicKeyWithAKeyTypeTypeToTheDirectoryService(string keyType)
         {
-            try
-            {
-                KeyType parsedKeyType;
-                Enum.TryParse(keyType, true, out parsedKeyType);
-                _directoryClientContext.AddServicePublicKey(
-                    _directoryClientContext.LastCreatedService.Id,
-                    _keyManager.GetAlphaPublicKey(),
-                    true,
-                    new DateTime(2020, 1, 1),
-                    parsedKeyType
-                );
-            }
-            catch (BaseException e)
-            {
-                _commonContext.RecordException(e);
-            }
+            KeyType parsedKeyType;
+            Enum.TryParse(keyType, true, out parsedKeyType);
+            _directoryClientContext.AddServicePublicKey(
+                _directoryClientContext.LastCreatedService.Id,
+                _keyManager.GetAlphaPublicKey(),
+                true,
+                new DateTime(2020, 1, 1),
+                parsedKeyType
+            );
         }
 
         [When(@"I attempt to add a Public Key with a ""(.*)"" type to the Directory Service")]

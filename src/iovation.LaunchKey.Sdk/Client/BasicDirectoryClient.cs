@@ -156,28 +156,7 @@ namespace iovation.LaunchKey.Sdk.Client
         {
             var request = new ServiceKeysListPostRequest(serviceId);
             var response = _transport.DirectoryV3ServiceKeysListPost(request, _directoryId);
-            var keys = new List<PublicKey>();
-
-            foreach (var transportKey in response.PublicKeys)
-            {
-                KeyType keyType = KeyType.OTHER;
-
-                KeyType parsedKeyType;
-                if (Enum.TryParse(transportKey.KeyType.ToString(), true, out parsedKeyType))
-                {
-                    keyType = parsedKeyType;
-                }
-
-                keys.Add(new PublicKey(
-                    transportKey.Id,
-                    transportKey.Active,
-                    transportKey.Created,
-                    transportKey.Expires,
-                    keyType
-                ));
-            }
-
-            return keys;
+            return response.FromTransport();
         }
 
         public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires, KeyType keyType = KeyType.BOTH)

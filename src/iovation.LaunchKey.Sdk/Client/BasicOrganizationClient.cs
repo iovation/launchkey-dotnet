@@ -171,28 +171,7 @@ namespace iovation.LaunchKey.Sdk.Client
         {
             var request = new ServiceKeysListPostRequest(serviceId);
             var response = _transport.OrganizationV3ServiceKeysListPost(request, _organizationId);
-            var keys = new List<PublicKey>();
-
-            foreach (var transportKey in response.PublicKeys)
-            {
-                KeyType keyType = KeyType.OTHER;
-
-                KeyType parsedKeyType;
-                if (Enum.TryParse(transportKey.KeyType.ToString(), true, out parsedKeyType))
-                {
-                    keyType = parsedKeyType;
-                }
-
-                keys.Add(new PublicKey(
-                    transportKey.Id,
-                    transportKey.Active,
-                    transportKey.Created,
-                    transportKey.Expires,
-                    keyType
-                ));
-            }
-
-            return keys;
+            return response.FromTransport();
         }
 
         public string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires, KeyType keyType = KeyType.BOTH)
@@ -275,27 +254,7 @@ namespace iovation.LaunchKey.Sdk.Client
             var request = new DirectoryKeysListPostRequest(directoryId);
             var response = _transport.OrganizationV3DirectoryKeysListPost(request, _organizationId);
             var keys = new List<PublicKey>();
-
-            foreach (var transportKey in response.PublicKeys)
-            {
-                KeyType keyType = KeyType.OTHER;
-
-                KeyType parsedKeyType;
-                if (Enum.TryParse(transportKey.KeyType.ToString(), true, out parsedKeyType))
-                {
-                    keyType = parsedKeyType;
-                }
-
-                keys.Add(new PublicKey(
-                    transportKey.Id,
-                    transportKey.Active,
-                    transportKey.Created,
-                    transportKey.Expires,
-                    keyType
-                ));
-            }
-
-            return keys;
+            return response.FromTransport();
         }
 
         public string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime? expires, KeyType keyType = KeyType.BOTH)

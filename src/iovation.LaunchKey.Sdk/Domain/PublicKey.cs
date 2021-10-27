@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace iovation.LaunchKey.Sdk.Domain
 {
@@ -39,6 +40,27 @@ namespace iovation.LaunchKey.Sdk.Domain
             Created = created;
             Expires = expires;
             KeyType = keyType;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is PublicKey key &&
+                   Id == key.Id &&
+                   Active == key.Active &&
+                   Created == key.Created &&
+                   Expires == key.Expires &&
+                   KeyType == key.KeyType;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -683061471;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
+            hashCode = hashCode * -1521134295 + Active.GetHashCode();
+            hashCode = hashCode * -1521134295 + Created.GetHashCode();
+            hashCode = hashCode * -1521134295 + Expires.GetHashCode();
+            hashCode = hashCode * -1521134295 + KeyType.GetHashCode();
+            return hashCode;
         }
     }
 
