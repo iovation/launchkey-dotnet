@@ -725,7 +725,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
         {
             var svcId = Guid.NewGuid();
             DoApiCallTest(
-                t => t.OrganizationV3ServiceKeysPost(new ServiceKeysPostRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+                t => t.OrganizationV3ServiceKeysPost(new ServiceKeysPostRequest(svcId, "pubkey", DateTime.MaxValue, true, 0), TestConsts.DefaultOrganizationEntity),
                 HttpMethod.POST,
                 "/organization/v3/service/keys"
             );
@@ -770,7 +770,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
         {
             var svcId = Guid.NewGuid();
             DoApiCallTest(
-                t => t.DirectoryV3ServiceKeysPost(new ServiceKeysPostRequest(svcId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultDirectoryEntity),
+                t => t.DirectoryV3ServiceKeysPost(new ServiceKeysPostRequest(svcId, "pubkey", DateTime.MaxValue, true, 0), TestConsts.DefaultDirectoryEntity),
                 HttpMethod.POST,
                 "/directory/v3/service/keys"
             );
@@ -816,7 +816,7 @@ PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
         {
             var dirId = Guid.NewGuid();
             DoApiCallTest(
-                t => t.OrganizationV3DirectoryKeysPost(new DirectoryKeysPostRequest(dirId, "pubkey", DateTime.MaxValue, true), TestConsts.DefaultOrganizationEntity),
+                t => t.OrganizationV3DirectoryKeysPost(new DirectoryKeysPostRequest(dirId, "pubkey", DateTime.MaxValue, true, 0), TestConsts.DefaultOrganizationEntity),
                 HttpMethod.POST,
                 "/organization/v3/directory/keys"
             );

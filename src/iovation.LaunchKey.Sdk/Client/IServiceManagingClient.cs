@@ -64,6 +64,17 @@ namespace iovation.LaunchKey.Sdk.Client
         /// <param name="publicKeyPem">The public key (in PEM format) to add</param>
         /// <param name="active">Whether or not the key should be active</param>
         /// <param name="expires">The time at which the key should no longer be active</param>
+        /// <param name="keyType">KeyType enum to identify whether the key is an encryption key, signature key, or a dual use key
+        /// <returns></returns>
+        string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires, KeyType keyType);
+
+        /// <summary>
+        /// Add a public key to a service
+        /// </summary>
+        /// <param name="serviceId">The service to add the key to</param>
+        /// <param name="publicKeyPem">The public key (in PEM format) to add</param>
+        /// <param name="active">Whether or not the key should be active</param>
+        /// <param name="expires">The time at which the key should no longer be active</param>
         /// <returns></returns>
         string AddServicePublicKey(Guid serviceId, string publicKeyPem, bool active, DateTime? expires);
 

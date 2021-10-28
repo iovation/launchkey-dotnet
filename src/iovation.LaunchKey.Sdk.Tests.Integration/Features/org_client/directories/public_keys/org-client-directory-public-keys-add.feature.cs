@@ -117,26 +117,128 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
             this.ScenarioCleanup();
         }
         
+        public virtual void ICanAddAPublicKeyWithAKeyTypeToADirectoryAndTheKeyTypeIsPresentWhenTheKeyIsRetrieved(string key_Type, string[] exampleTags)
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can add a Public Key with a key type to a Directory and the key type is present" +
+                    " when the key is retrieved", null, exampleTags);
+#line 15
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 6
+  this.FeatureBackground();
+#line 16
+    testRunner.When(string.Format("I add a Public Key with a {0} type to the Directory", key_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
+    testRunner.And("I retrieve the current Directory\'s Public Keys", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 18
+    testRunner.Then(string.Format("the Public Key is in the list of Public Keys for the Directory and has a {0} key " +
+                        "type", key_Type), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can add a Public Key with a key type to a Directory and the key type is present" +
+            " when the key is retrieved: BOTH")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization clients can add a Public Key to a Directory")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "BOTH")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:key_type", "BOTH")]
+        public virtual void ICanAddAPublicKeyWithAKeyTypeToADirectoryAndTheKeyTypeIsPresentWhenTheKeyIsRetrieved_BOTH()
+        {
+#line 15
+  this.ICanAddAPublicKeyWithAKeyTypeToADirectoryAndTheKeyTypeIsPresentWhenTheKeyIsRetrieved("BOTH", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can add a Public Key with a key type to a Directory and the key type is present" +
+            " when the key is retrieved: ENCRYPTION")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization clients can add a Public Key to a Directory")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "ENCRYPTION")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:key_type", "ENCRYPTION")]
+        public virtual void ICanAddAPublicKeyWithAKeyTypeToADirectoryAndTheKeyTypeIsPresentWhenTheKeyIsRetrieved_ENCRYPTION()
+        {
+#line 15
+  this.ICanAddAPublicKeyWithAKeyTypeToADirectoryAndTheKeyTypeIsPresentWhenTheKeyIsRetrieved("ENCRYPTION", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("I can add a Public Key with a key type to a Directory and the key type is present" +
+            " when the key is retrieved: SIGNATURE")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization clients can add a Public Key to a Directory")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "SIGNATURE")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:key_type", "SIGNATURE")]
+        public virtual void ICanAddAPublicKeyWithAKeyTypeToADirectoryAndTheKeyTypeIsPresentWhenTheKeyIsRetrieved_SIGNATURE()
+        {
+#line 15
+  this.ICanAddAPublicKeyWithAKeyTypeToADirectoryAndTheKeyTypeIsPresentWhenTheKeyIsRetrieved("SIGNATURE", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adding a Public Key to a Directory with an empty key type defaults to a dual use " +
+            "key type")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization clients can add a Public Key to a Directory")]
+        public virtual void AddingAPublicKeyToADirectoryWithAnEmptyKeyTypeDefaultsToADualUseKeyType()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding a Public Key to a Directory with an empty key type defaults to a dual use " +
+                    "key type", null, ((string[])(null)));
+#line 25
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 6
+  this.FeatureBackground();
+#line 26
+    testRunner.When("I add a Public Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+    testRunner.And("I retrieve the current Directory\'s Public Keys", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+    testRunner.Then("the Public Key is in the list of Public Keys for the Directory and has a \"BOTH\" k" +
+                    "ey type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adding a Public Key to a Directory with an invalid key type yields an error")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization clients can add a Public Key to a Directory")]
+        public virtual void AddingAPublicKeyToADirectoryWithAnInvalidKeyTypeYieldsAnError()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding a Public Key to a Directory with an invalid key type yields an error", null, ((string[])(null)));
+#line 30
+  this.ScenarioInitialize(scenarioInfo);
+            this.ScenarioStart();
+#line 6
+  this.FeatureBackground();
+#line 31
+    testRunner.When("I attempt to add a Public Key with a \"sup\" type to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 32
+    testRunner.Then("an InvalidParameters error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adding multiple Public Keys to a Directory works")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Organization clients can add a Public Key to a Directory")]
         public virtual void AddingMultiplePublicKeysToADirectoryWorks()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adding multiple Public Keys to a Directory works", null, ((string[])(null)));
-#line 14
+#line 34
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 15
+#line 35
     testRunner.When("I add a Public Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 16
+#line 36
     testRunner.When("I add another Public Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 17
+#line 37
     testRunner.And("I retrieve the current Directory\'s Public Keys", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 18
+#line 38
     testRunner.Then("the Public Key is in the list of Public Keys for the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 19
+#line 39
     testRunner.And("the other Public Key is in the list of Public Keys for the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -150,15 +252,15 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to add a Public Key to an invalid Directory throws a Forbidden excepti" +
                     "on", null, ((string[])(null)));
-#line 21
+#line 41
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 22
+#line 42
     testRunner.When("I attempt to add a Public Key to the Directory with the ID \"eba60cb8-c649-11e7-ab" +
                     "c4-cec278b6b50a\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 23
+#line 43
     testRunner.Then("a Forbidden error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -172,16 +274,16 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.Features.Org_Client.Directori
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Attempting to add the same Public Key twice to the same Directory throws a Public" +
                     "KeyAlreadyInUse exception", null, ((string[])(null)));
-#line 25
+#line 45
   this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 6
   this.FeatureBackground();
-#line 26
+#line 46
     testRunner.When("I add a Public Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 27
+#line 47
     testRunner.And("I attempt to add the same Public Key to the Directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 28
+#line 48
     testRunner.Then("a PublicKeyAlreadyInUse error occurs", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

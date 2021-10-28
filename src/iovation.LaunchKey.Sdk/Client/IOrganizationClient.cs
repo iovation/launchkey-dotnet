@@ -80,6 +80,17 @@ namespace iovation.LaunchKey.Sdk.Client
         /// <param name="publicKeyPem">The public key (in PEM format) to add</param>
         /// <param name="active">Whether or not the key should be active</param>
         /// <param name="expires">The time at which the key should no longer be active</param>
+        /// <param name="keyType">KeyType enum to identify whether the key is an encryption key, signature key, or a dual use key
+        /// <returns>The key ID</returns>
+        string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime? expires, KeyType keyType);
+
+        /// <summary>
+        /// Add a Public Key for a Directory
+        /// </summary>
+        /// <param name="directoryId">The directory to add the key for</param>
+        /// <param name="publicKeyPem">The public key (in PEM format) to add</param>
+        /// <param name="active">Whether or not the key should be active</param>
+        /// <param name="expires">The time at which the key should no longer be active</param>
         /// <returns>The key ID</returns>
         string AddDirectoryPublicKey(Guid directoryId, string publicKeyPem, bool active, DateTime? expires);
 
