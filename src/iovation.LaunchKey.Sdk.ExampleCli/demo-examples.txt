@@ -17,39 +17,88 @@ Keys:
 
 Service examples:
 
-	example service-auth -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
-	example service-auth-webhook -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
-	example service-session-start -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
-	example service-session-end -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+	dotnet run -- service-auth -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+	dotnet run -- service-auth-webhook -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+	dotnet run -- service-session-start -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+	dotnet run -- service-session-end -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
 
 	Auth policy demos:
 		geofence (john's house):
-			example service-auth-policy -u johnhargrove -p key-service2.txt -s 4d41b438-f6ef-11e7-bcf6-7ae26f9f46f4 -f 28.5612797:-81.5985253:1000
+			dotnet run -- service-auth-policy -u johnhargrove -p key-service2.txt -s 4d41b438-f6ef-11e7-bcf6-7ae26f9f46f4 -f 28.5612797:-81.5985253:1000
 			
 		geofence + 1 factor required:
-			example service-auth-policy -u johnhargrove -p key-service2.txt -s 4d41b438-f6ef-11e7-bcf6-7ae26f9f46f4 -f 28.5612797:-81.5985253:1000 -c 1
+			dotnet run -- service-auth-policy -u johnhargrove -p key-service2.txt -s 4d41b438-f6ef-11e7-bcf6-7ae26f9f46f4 -f 28.5612797:-81.5985253:1000 -c 1
 
 		geofence + 1 factor required + jailbreak detection: 
-			example service-auth-policy -u johnhargrove -p key-service2.txt -s 4d41b438-f6ef-11e7-bcf6-7ae26f9f46f4 -f 28.5612797:-81.5985253:1000 -c 1 -j
+			dotnet run -- service-auth-policy -u johnhargrove -p key-service2.txt -s 4d41b438-f6ef-11e7-bcf6-7ae26f9f46f4 -f 28.5612797:-81.5985253:1000 -c 1 -j
 
 
 Directory examples:
 
 	Device link:
-		example directory-device-link -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
-		example directory-device-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
-		example directory-device-unlink -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -e [DEVICE_ID]
+		dotnet run -- directory-device-link -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+		dotnet run -- directory-device-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+		dotnet run -- directory-device-unlink -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -i [DEVICE_ID]
 
 	Session Management:
-		example directory-session-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
-		example directory-service-auth -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -s 1f8d859a-f0c2-11e7-8d6e-b2432b556c77
-		example directory-service-session-start -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -s 1f8d859a-f0c2-11e7-8d6e-b2432b556c77
-		example directory-service-session-end -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -s 1f8d859a-f0c2-11e7-8d6e-b2432b556c77
+		dotnet run -- directory-session-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+		dotnet run -- directory-service-auth -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -s 1f8d859a-f0c2-11e7-8d6e-b2432b556c77
+        dotnet run -- directory-service-purge -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
 
 Org examples:
 
 	Service Auth (Act as service):
-		example.exe org-service-auth -o d289298e-dacd-11e7-b097-469158467b1a -p key-org.txt -u johnhargrove -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+		dotnet run -- org-service-auth -o d289298e-dacd-11e7-b097-469158467b1a -p key-org.txt -u johnhargrove -s f8329e0e-dd7a-11e7-98b4-469158467b1a
 	
 	Directory Device List (Act as directory):
-		example.exe org-directory-device-list -o d289298e-dacd-11e7-b097-469158467b1a -p key-org.txt -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -u 153C010DFA4646BA8B64B90A97F97885
+		dotnet run -- org-directory-device-list -o d289298e-dacd-11e7-b097-469158467b1a -p key-org.txt -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -u 153C010DFA4646BA8B64B90A97F97885
+
+Single purpose key examples:
+    Service examples:
+    
+        Service Auth:
+            dotnet run -- service-auth -u johnhargrove -p signature-key-service.txt -e encryption-key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+        
+        Service Auth with Webhook:
+            dotnet run -- service-auth -u johnhargrove -p signature-key-service.txt -e encryption-key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a -w
+        
+        Service Auth with AdvancedWebhooks:
+            dotnet run -- service-auth -u johnhargrove -p signature-key-service.txt -e encryption-key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a -o
+        
+        dotnet run -- service-auth-cancel -p signature-key-service.txt -e encryption-key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a -r [auth-request-id]
+        dotnet run -- service-session-start -u johnhargrove -p signature-key-service.txt -e encryption-key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+        dotnet run -- service-session-end -u johnhargrove -p signature-key-service.txt -e encryption-key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+    
+        Auth policy demos:
+            geofence (john's house):
+                dotnet run -- service-auth-policy -u johnhargrove -p signature-key-service.txt -e encryption-key-service.txt -s 4d41b438-f6ef-11e7-bcf6-7ae26f9f46f4 -f 28.5612797:-81.5985253:1000
+                
+            geofence + 1 factor required:
+                dotnet run -- service-auth-policy -u johnhargrove -p signature-key-service.txt -e encryption-key-service.txt -s 4d41b438-f6ef-11e7-bcf6-7ae26f9f46f4 -f 28.5612797:-81.5985253:1000 -c 1
+    
+            geofence + 1 factor required + jailbreak detection: 
+                dotnet run -- service-auth-policy -u johnhargrove -p signature-key-service.txt -e encryption-key-service.txt -s 4d41b438-f6ef-11e7-bcf6-7ae26f9f46f4 -f 28.5612797:-81.5985253:1000 -c 1 -j
+    
+    
+    Directory examples:
+    
+        Device link:
+            dotnet run -- directory-device-link -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+            dotnet run -- directory-device-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+            dotnet run -- directory-device-unlink -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -i [DEVICE_ID]
+    
+        Session Management:
+            dotnet run -- directory-session-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+            dotnet run -- directory-service-auth -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -s 1f8d859a-f0c2-11e7-8d6e-b2432b556c77
+            dotnet run -- directory-service-purge -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+    
+    Org examples:
+    
+        Service Auth (Act as service):
+            dotnet run -- org-service-auth -o d289298e-dacd-11e7-b097-469158467b1a -p signature-key-org.txt -e encryption-key-org.txt -u johnhargrove -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+            
+        
+        Directory Device List (Act as directory):
+            dotnet run -- org-directory-device-list -o d289298e-dacd-11e7-b097-469158467b1a -p signature-key-org.txt -e encryption-key-org.txt -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -u 153C010DFA4646BA8B64B90A97F97885
+            dotnet run -- org-service-auth -o d289298e-dacd-11e7-b097-469158467b1a -p signature-key-org.txt -e encryption-key-org.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a -u 153C010DFA4646BA8B64B90A97F97885
+            dotnet run -- org-directory-device-list -o d289298e-dacd-11e7-b097-469158467b1a -p signature-key-org.txt -e encryption-key-org.txt -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -u 153C010DFA4646BA8B64B90A97F97885
