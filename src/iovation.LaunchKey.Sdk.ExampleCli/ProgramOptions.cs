@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CommandLine;
 
 namespace iovation.LaunchKey.Sdk.ExampleCli
@@ -10,6 +11,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('p', "private-key", HelpText = "Path to a file containing your LaunchKey private key for the organization", Required = true)]
 		public string PrivateKeyPath { get; set; }
 
+		[Option('e', "encryption-private-key", Separator = ',', HelpText = "Path to a file containing your LaunchKey private encryption key for the service if you are using single purpose keys", Required = false)]
+		public IEnumerable<string> EncryptionPrivateKeyPath { get; set; }
+		
 		[Option('a', "api-url", HelpText = "URL of the API", Required = false)]
 		public string APIURL { get; set; }
 	}
@@ -55,6 +59,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('p', "private-key", HelpText = "Path to a file containing your LaunchKey private key for the directory", Required = true)]
 		public string PrivateKeyPath { get; set; }
 
+		[Option('e', "encryption-private-key", Separator = ',', HelpText = "Path to a file containing your LaunchKey private encryption key for the service if you are using single purpose keys", Required = false)]
+		public IEnumerable<string> EncryptionPrivateKeyPath { get; set; }
+
 		[Option('a', "api-url", HelpText = "URL of the API", Required = false)]
 		public string APIURL { get; set; }
 	}
@@ -78,7 +85,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('u', "user-id", HelpText = "The unique ID of the user the device is being linked for. This should be in the format of a GUID/UUID.", Required = true)]
 		public string UserId { get; set; }
 
-		[Option('e', "device-id", HelpText = "The ID of the device to unlink. This can be retrieved with the devices-list command.", Required = true)]
+		[Option('i', "device-id", HelpText = "The ID of the device to unlink. This can be retrieved with the devices-list command.", Required = true)]
 		public string DeviceId { get; set; }
 	}
 
@@ -141,6 +148,9 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		[Option('p', "private-key", HelpText = "Path to a file containing your LaunchKey private key for the service", Required = true)]
 		public string PrivateKeyPath { get; set; }
 
+		[Option('e', "encryption-private-key", Separator = ',', HelpText = "Path to a file containing your LaunchKey private encryption key for the service if you are using single purpose keys", Required = false)]
+		public IEnumerable<string> EncryptionPrivateKeyPath { get; set; }
+
 		[Option('s', "service-id", HelpText = "The unique ID of the service", Required = true)]
 		public string ServiceId { get; set; }
 
@@ -196,10 +206,10 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 	{
 	
 		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
-		public bool? UseWebhook { get; set; }
+		public bool UseWebhook { get; set; }
 
         [Option('o', "use-advanced-webhooks", HelpText = "Whether to use the new HandleAdvancedWebhook instead of deprecated HandleWebhook", Required = false)]
-        public bool? AdvancedWebhook { get; set; }
+        public bool AdvancedWebhook { get; set; }
 	}
 
 	[Verb("service-auth-cancel", HelpText = "Cancel an existing authorization request for a user")]
