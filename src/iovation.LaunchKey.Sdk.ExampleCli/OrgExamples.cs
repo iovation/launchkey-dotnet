@@ -1,19 +1,20 @@
 using System;
+using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Error;
 
 namespace iovation.LaunchKey.Sdk.ExampleCli
 {
     class OrgExamples
     {
-        public static int DoServiceAuth(string orgId, string privateKey, string serviceId, string userId, string apiURL, bool? useWebhook)
+        public static int DoServiceAuth(string orgId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string serviceId, string userId, string apiURL, bool? useWebhook)
         {
-            var serviceClient = ClientFactories.MakeOrganizationServiceClient(orgId, privateKey, serviceId, apiURL);
+            var serviceClient = ClientFactories.MakeOrganizationServiceClient(orgId, privateKey, serviceId, apiURL, encryptionPrivateKeys);
             return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, userId, useWebhook);
         }
 
-        public static int DoDirectoryDeviceList(string orgId, string privateKey, string directoryId, string userId, string apiURL)
+        public static int DoDirectoryDeviceList(string orgId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string directoryId, string userId, string apiURL)
         {
-            var directoryClient = ClientFactories.MakeOrganizationDirectoryClient(orgId, privateKey, directoryId, apiURL);
+            var directoryClient = ClientFactories.MakeOrganizationDirectoryClient(orgId, privateKey, directoryId, apiURL, encryptionPrivateKeys);
             try
             {
                 var deviceListResponse = directoryClient.GetLinkedDevices(userId);
@@ -40,7 +41,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
             return 0;
         }
 
-        public static int DoUpdateDirectoryWebhookUrl(string orgId, string privateKey, string directoryId, string apiURL, string webkhookUrl)
+        public static int DoUpdateDirectoryWebhookUrl(string orgId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string directoryId, string apiURL, string webkhookUrl)
         {
             var orgClient = ClientFactories.MakeOrganizationClient(orgId, privateKey, apiURL);
             var directory = orgClient.GetDirectory(Guid.Parse(directoryId));
