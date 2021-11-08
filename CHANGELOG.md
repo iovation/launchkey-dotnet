@@ -3,6 +3,7 @@ Change Log
 4.1.0
 =====
 * Added PublicKey Key Types for differentiating between keys that can encrypt, sign or perform both actions.
+* Added the capability for separate Encryption and Signature keys for entities as an enabler for FIPS 140-3
 
 4.0.0
 =====
