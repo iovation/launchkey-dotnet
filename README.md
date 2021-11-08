@@ -11,12 +11,12 @@ This SDK is targeted toward:
 - Windows 7 and above
 - Linux
 - OSX
-- .NET Framework 4.0+
+- .NET Framework 4.5+
 - .NET Standard 2.0 (.NET 4.6.1+, .NET Core 2.0+, Mono 5.4, etc.) See .NET Standard compatibility here: https://docs.microsoft.com/en-us/dotnet/standard/net-standard
 
 
 ## Building
-The solution file is for Visual Studio 2017, and the projects are multi-targeting .NET 4.0 and .NET Standard 2.0. The project should build out of the box. Simply clone, open in VS, compile.
+The solution file is for Visual Studio 2017, and the projects are multi-targeting .NET 4.5 and .NET Standard 2.0. The project should build out of the box. Simply clone, open in VS, compile.
 
 ## Tests
 The test projects use multi-targeting as well. The best way to run these tests is using the command line:
