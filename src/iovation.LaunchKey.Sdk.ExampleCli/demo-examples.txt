@@ -18,7 +18,7 @@ Keys:
 Service examples:
 
 	dotnet run -- service-auth -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
-	dotnet run -- service-auth-webhook -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
+	dotnet run -- service-auth -w -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
 	dotnet run -- service-session-start -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
 	dotnet run -- service-session-end -u johnhargrove -p key-service.txt -s f8329e0e-dd7a-11e7-98b4-469158467b1a
 
@@ -43,7 +43,7 @@ Directory examples:
 	Session Management:
 		dotnet run -- directory-session-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
 		dotnet run -- directory-service-auth -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -s 1f8d859a-f0c2-11e7-8d6e-b2432b556c77
-        dotnet run -- directory-service-purge -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+        dotnet run -- directory-session-purge -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
 
 Org examples:
 
@@ -90,7 +90,7 @@ Single purpose key examples:
         Session Management:
             dotnet run -- directory-session-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
             dotnet run -- directory-service-auth -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -s 1f8d859a-f0c2-11e7-8d6e-b2432b556c77
-            dotnet run -- directory-service-purge -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+            dotnet run -- directory-session-purge -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
     
     Org examples:
     
