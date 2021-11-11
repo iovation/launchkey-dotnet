@@ -39,7 +39,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                 try
                 {
                     var parts = geofence.Split(':');
-                    if (parts.Length != 3)
+                    if (parts.Length != 4)
                     {
                         Console.WriteLine("geofence should be in the format lat:lon:radius:name");
                         return 1;
