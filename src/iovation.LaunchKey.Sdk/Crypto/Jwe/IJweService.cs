@@ -6,20 +6,20 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwe
     public interface IJweService
     {
         /// <summary>
-        /// Given a JWE-encrypted payload, decrypt it, and return the unecnrypted result.
+        /// Given a JWE-encrypted payload, decrypt it, and return the unencrypted result.
         /// This function also performs validity checks, including signature checks
         /// </summary>
         /// <param name="data">The JWE payload</param>
-        /// <returns>The decrytped data</returns>
+        /// <returns>The decrypted data</returns>
         string Decrypt(string data);
 
         /// <summary>
-        /// Given a JWE-encrypted payload, decrypt it, and return the unecnrypted result.
+        /// Given a JWE-encrypted payload, decrypt it, and return the unencrypted result.
         /// This function also performs validity checks, including signature checks.
         /// </summary>
         /// <param name="data">The JWE payload</param>
         /// <param name="privateKey">The RSA private key to use when decrypting it</param>
-        /// <returns>The decrytped data</returns>
+        /// <returns>The decrypted data</returns>
         string Decrypt(string data, RSA privateKey);
 
         /// <summary>

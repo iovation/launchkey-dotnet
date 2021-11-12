@@ -17,12 +17,16 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
         [JsonProperty("active")]
         public bool Active { get; }
 
-        public ServiceKeysPostRequest(Guid serviceId, string publicKey, DateTime? expires, bool active)
+        [JsonProperty("key_type")]
+        public int KeyType { get; }
+
+        public ServiceKeysPostRequest(Guid serviceId, string publicKey, DateTime? expires, bool active, int keyType)
         {
             ServiceId = serviceId;
             PublicKey = publicKey;
             Expires = expires;
             Active = active;
+            KeyType = keyType;
         }
     }
 }

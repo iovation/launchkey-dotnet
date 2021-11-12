@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using iovation.LaunchKey.Sdk.Error;
 
 namespace iovation.LaunchKey.Sdk.ExampleCli
@@ -13,7 +14,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// Start a session for a directory service and user
         /// </summary>
-        public static int DoDirectoryServiceSessionStart(string directoryId, string privateKey, string serviceId, string userId, string apiURL)
+        public static int DoDirectoryServiceSessionStart(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string serviceId, string userId, string apiURL)
         {
             var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
             return SharedServiceHelpers.DoSessionStart(serviceClient, userId);
@@ -22,29 +23,29 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// End a session for a directory service and user
         /// </summary>
-        public static int DoDirectoryServiceSessionEnd(string directoryId, string privateKey, string serviceId, string userId, string apiURL)
+        public static int DoDirectoryServiceSessionEnd(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string serviceId, string userId, string apiURL)
         {
-            var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
+            var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL, encryptionPrivateKeys);
             return SharedServiceHelpers.DoSessionEnd(serviceClient, userId);
         }
 
         /// <summary>
         /// Authorize a directory user against a directory service
         /// </summary>
-        public static int DoDirectoryServiceAuth(string directoryId, string privateKey, string serviceId, string userId, string apiURL, bool? useWebhook)
+        public static int DoDirectoryServiceAuth(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string serviceId, string userId, string apiURL, bool? useWebhook)
         {
-            var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL);
+            var serviceClient = ClientFactories.MakeDirectoryServiceClient(directoryId, privateKey, serviceId, apiURL, encryptionPrivateKeys);
             return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, userId, useWebhook);
         }
 
         /// <summary>
         /// List all devices associated with a user for the given directory and user id
         /// </summary>
-        public static int DoDeviceList(string directoryId, string privateKey, string userId, string apiURL)
+        public static int DoDeviceList(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string userId, string apiURL)
         {
             try
             {
-                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL);
+                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL, encryptionPrivateKeys);
                 Console.WriteLine("Sending request to get linked devices ... ");
                 var deviceListResponse = directoryClient.GetLinkedDevices(userId);
 
@@ -73,11 +74,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// Unlink a device from a user
         /// </summary>
-        public static int DoDeviceUnlink(string directoryId, string privateKey, string userId, string deviceId, string apiURL)
+        public static int DoDeviceUnlink(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string userId, string deviceId, string apiURL)
         {
             try
             {
-                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL);
+                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL, encryptionPrivateKeys);
                 Console.WriteLine("Sending request to unlink device ... ");
                 directoryClient.UnlinkDevice(userId, deviceId);
                 Console.WriteLine($"Successfully sent unlink request for device id {deviceId} on user with ID {userId}.");
@@ -93,11 +94,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// Link a device to a user. This starts the process which must be completed via the authenticator app for this directory
         /// </summary>
-        public static int DoDeviceLink(string directoryId, string privateKey, string userId, string apiURL, int? ttl, bool? useWebhook)
+        public static int DoDeviceLink(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string userId, string apiURL, int? ttl, bool? useWebhook)
         {
             try
             {
-                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL);
+                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL, encryptionPrivateKeys);
                 Console.WriteLine("Sending request to begin device link ... ");
                 var deviceLinkResponse = directoryClient.LinkDevice(userId, ttl);
                 Console.WriteLine($"Successfully sent link request. \n Device ID: {deviceLinkResponse.DeviceId} \n Use the following code to complete the link: {deviceLinkResponse.Code}");
@@ -120,11 +121,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// List all active sessions across all services for a user within this directory
         /// </summary>
-        public static int DoSessionList(string directoryId, string privateKey, string userId, string apiURL)
+        public static int DoSessionList(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string userId, string apiURL)
         {
             try
             {
-                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL);
+                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL, encryptionPrivateKeys);
                 Console.WriteLine("Sending request to get list of sessions ... ");
                 var sessions = directoryClient.GetAllServiceSessions(userId);
 
@@ -149,11 +150,11 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// Purges all user sessions across all services for a user within this directory
         /// </summary>
-        public static int DoSessionPurge(string directoryId, string privateKey, string userId, string apiURL)
+        public static int DoSessionPurge(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string userId, string apiURL)
         {
             try
             {
-                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL);
+                var directoryClient = ClientFactories.MakeDirectoryClient(directoryId, privateKey, apiURL, encryptionPrivateKeys);
                 Console.WriteLine("Sending request to end all sessions ... ");
                 directoryClient.EndAllServiceSessions(userId);
                 Console.WriteLine("Done.");

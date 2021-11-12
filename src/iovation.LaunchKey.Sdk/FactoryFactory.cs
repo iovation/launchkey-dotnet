@@ -64,12 +64,29 @@ namespace iovation.LaunchKey.Sdk
         /// <returns>A configured ServiceFactory, ready to create ServiceClients</returns>
         public ServiceFactory MakeServiceFactory(string serviceId, string privateKeyPem)
         {
-            var key = _crypto.LoadRsaPrivateKey(privateKeyPem);
+            var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(_crypto.LoadRsaPrivateKey(privateKeyPem));
+            return MakeServiceFactory(serviceId, new List<string> {privateKeyPem}, fingerprint);
+        }
+
+        /// <summary>
+        /// Creates a factory with multiple service credentials allowing for use of single purpose keys. Allows interacting with just services, as service credentials have no child services or directories.
+        /// </summary>
+        /// <param name="serviceId">The unique service ID of the service</param>
+        /// <param name="privateKeyPems">A list of private keys to use for the entity. Should be the key itself -- not a path.</param>
+        /// <param name="currentKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key to be used to sign requests.</param> 
+        /// <returns>A configured ServiceFactory, ready to create ServiceClients</returns>
+        public ServiceFactory MakeServiceFactory(string serviceId, List<string> privateKeyPems, string currentKeyId)
+        {
             var keys = new Dictionary<string, RSA>();
             var id = new EntityIdentifier(EntityType.Service, Guid.Parse(serviceId));
-            var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(key);
-            keys.Add(fingerprint, key);
-            return new ServiceFactory(MakeTransport(id, keys, fingerprint), Guid.Parse(serviceId));
+            foreach(string key in privateKeyPems)
+            {
+                var parsedKey = _crypto.LoadRsaPrivateKey(key); 
+                var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(parsedKey);
+                keys.Add(fingerprint, parsedKey);
+            }
+
+            return new ServiceFactory(MakeTransport(id, keys, currentKeyId), Guid.Parse(serviceId));
         }
 
         /// <summary>
@@ -80,28 +97,62 @@ namespace iovation.LaunchKey.Sdk
         /// <returns></returns>
         public DirectoryFactory MakeDirectoryFactory(string directoryId, string privateKeyPem)
         {
-            var key = _crypto.LoadRsaPrivateKey(privateKeyPem);
-            var keys = new Dictionary<string, RSA>();
-            var id = new EntityIdentifier(EntityType.Directory, Guid.Parse(directoryId));
-            var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(key);
-            keys.Add(fingerprint, key);
-            return new DirectoryFactory(MakeTransport(id, keys, fingerprint), Guid.Parse(directoryId));
+            var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(_crypto.LoadRsaPrivateKey(privateKeyPem));
+            return MakeDirectoryFactory(directoryId, new List<string> {privateKeyPem}, fingerprint);
         }
 
         /// <summary>
-        /// Creates a factory using organization-level credentials. allow interacting with any directories or services within the organization.
+        /// Creates a factory with multiple directory credentials allowing for use of single purpose keys. Allows interacting with the directory itself and any child services within the directory.
+        /// </summary>
+        /// <param name="directoryId">The unique directory ID of the directory</param>
+        /// <param name="privateKeyPems">A list of private keys to use for the entity. Should be the key itself -- not a path.</param>
+        /// <param name="currentKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key to be used to sign requests.</param>  
+        /// <returns></returns>
+        public DirectoryFactory MakeDirectoryFactory(string directoryId, List<string> privateKeyPems, string currentKeyId)
+        {
+            var keys = new Dictionary<string, RSA>();
+            var id = new EntityIdentifier(EntityType.Directory, Guid.Parse(directoryId));
+            foreach(string key in privateKeyPems)
+            {
+                var parsedKey = _crypto.LoadRsaPrivateKey(key); 
+                var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(parsedKey);
+                keys.Add(fingerprint, parsedKey);
+            }
+            
+            return new DirectoryFactory(MakeTransport(id, keys, currentKeyId), Guid.Parse(directoryId));
+        }
+
+        /// <summary>
+        /// Creates a factory using organization-level credentials. Allows interacting with any directories or services within the organization.
         /// </summary>
         /// <param name="organizationId">The unique organization ID</param>
         /// <param name="privateKeyPem">The private key to use. Should be the key itself -- not a path.</param>
         /// <returns></returns>
         public OrganizationFactory MakeOrganizationFactory(string organizationId, string privateKeyPem)
         {
-            var key = _crypto.LoadRsaPrivateKey(privateKeyPem);
+            var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(_crypto.LoadRsaPrivateKey(privateKeyPem));
+            return MakeOrganizationFactory(organizationId, new List<string> {privateKeyPem}, fingerprint);            
+        }
+
+        /// <summary>
+        /// Creates a factory with multiple organization credentials allowing for use of single purpose keys. Allows interacting with any directories or services within the organization.
+        /// </summary>
+        /// <param name="organizationId">The unique organization ID</param>
+        /// <param name="privateKeyPems">A list of private keys to use for the entity. Should be the key itself -- not a path.</param>
+        /// <param name="currentKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key to be used to sign requests.</param>
+        /// <returns></returns>
+        public OrganizationFactory MakeOrganizationFactory(string organizationId, List<string> privateKeyPems, string currentKeyId)
+        {
             var keys = new Dictionary<string, RSA>();
             var id = new EntityIdentifier(EntityType.Organization, Guid.Parse(organizationId));
-            var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(key);
-            keys.Add(fingerprint, key);
-            return new OrganizationFactory(MakeTransport(id, keys, fingerprint), Guid.Parse(organizationId));
+            foreach(string key in privateKeyPems)
+            {
+                var parsedKey = _crypto.LoadRsaPrivateKey(key); 
+                var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(parsedKey);
+                keys.Add(fingerprint, parsedKey);
+            }
+            
+            return new OrganizationFactory(MakeTransport(id, keys, currentKeyId), Guid.Parse(organizationId));            
         }
 
         private ITransport MakeTransport(
@@ -121,7 +172,7 @@ namespace iovation.LaunchKey.Sdk
                 _apiBaseUrl,
                 issuer,
                 new JwtService(new UnixTimeConverter(), _apiIdentifier, privateKeys, currentPrivateKey, _requestExpireSeconds),
-                new JweService(privateKeys[currentPrivateKey]),
+                new JweService(privateKeys),
                 _offsetTtl,
                 _currentPublicKeyTtl,
                 _entityKeyMap,

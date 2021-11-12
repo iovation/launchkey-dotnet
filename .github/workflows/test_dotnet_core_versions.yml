@@ -1,0 +1,50 @@
+name: Test Dotnet SDK Versions
+
+on:
+    push:
+      branches:
+        - 'master'
+        - '*-DEV'
+    pull_request:
+      branches:
+        - 'master'
+        - '*-DEV'
+    workflow_dispatch:
+      branches:
+        - 'master'
+        - '*-DEV'
+
+jobs:
+  run_on_nix_based_os:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        dotnet-version: ['2.1.x', '3.1.x', '5.0.x']
+        os: ['ubuntu-latest', 'macos-latest']
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    - name: Build SDK
+      run: |
+        dotnet build --framework netstandard20 src/iovation.LaunchKey.Sdk
+        dotnet build --framework netcoreapp21 src/iovation.LaunchKey.Sdk.Tests
+  
+  run_on_windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+    - name: Restore NuGet Packages
+      run: nuget restore src/iovation.LaunchKey.Sdk.sln
+    - name: Build SDK
+      run: |
+        msbuild src/iovation.LaunchKey.Sdk /p:Configuration=Release
+        msbuild src/iovation.LaunchKey.Sdk.Tests /p:Configuration=Release
+    - name: Run Tests
+      run: dotnet test src/iovation.LaunchKey.Sdk.Tests

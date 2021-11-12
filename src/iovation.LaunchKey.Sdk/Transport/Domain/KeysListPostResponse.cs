@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using iovation.LaunchKey.Sdk.Domain;
 
 namespace iovation.LaunchKey.Sdk.Transport.Domain
 {
@@ -22,6 +23,33 @@ namespace iovation.LaunchKey.Sdk.Transport.Domain
 
             [JsonProperty("active")]
             public bool Active { get; set; }
+
+            [JsonProperty("key_type")]
+            public int KeyType { get; set; }
+        }
+
+        public List<PublicKey> FromTransport()
+        {
+            var keys = new List<PublicKey>();
+            foreach (var transportKey in PublicKeys)
+            {
+                KeyType keyType = KeyType.OTHER;
+
+                KeyType parsedKeyType;
+                if (Enum.TryParse(transportKey.KeyType.ToString(), true, out parsedKeyType))
+                {
+                    keyType = parsedKeyType;
+                }
+
+                keys.Add(new PublicKey(
+                    transportKey.Id,
+                    transportKey.Active,
+                    transportKey.Created,
+                    transportKey.Expires,
+                    keyType
+                ));
+            }
+            return keys;
         }
 
         public List<Key> PublicKeys { get; }

@@ -6,25 +6,31 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 {
     class ServiceExamples
     {
-        public static int DoSessionStart(string username, string serviceId, string privateKey, string apiURL)
+        public static int DoSessionStart(string username, string serviceId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string apiURL)
         {
-            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL, encryptionPrivateKeys);
             return SharedServiceHelpers.DoSessionStart(serviceClient, username);
         }
 
-        public static int DoSessionEnd(string username, string serviceId, string privateKey, string apiURL)
+        public static int DoSessionEnd(string username, string serviceId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string apiURL)
         {
-            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL, encryptionPrivateKeys);
             return SharedServiceHelpers.DoSessionEnd(serviceClient, username);
         }
 
-        public static int DoServiceAuthorization(string username, string serviceId, string privateKey, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons, bool? useWebhook = false, bool? advancedWebhook = false)
+        public static int DoServiceAuthorization(string username, string serviceId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string apiURL, string context, int? ttl, string title, string pushTitle, string pushBody, int? fraudDenialreasons, int? nonFraudDenialreasons, bool? useWebhook = false, bool? advancedWebhook = false)
         {
-            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            // Don't require the user to submit both flags to use webhooks
+            if (advancedWebhook == true)
+            {
+                useWebhook = true;
+            }
+            
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL, encryptionPrivateKeys);
             return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, username, useWebhook, advancedWebhook, context, null, title, ttl, pushTitle, pushBody, fraudDenialreasons, nonFraudDenialreasons);
         }
 
-        public static int DoServiceAuthorizationWithPolicy(string username, string serviceId, string privateKey, bool jailbreakDetection, int? factors, string geofence, string apiURL)
+        public static int DoServiceAuthorizationWithPolicy(string username, string serviceId, string privateKey, IEnumerable<string> encryptionPrivateKeys, bool jailbreakDetection, int? factors, string geofence, string apiURL)
         {
             List<Location> locations = null;
             // parse geofence input
@@ -59,13 +65,13 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
                     requiredFactors: factors
                 );
 
-            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL, encryptionPrivateKeys);
             return SharedServiceHelpers.DoAuthorizationRequest(serviceClient, username, false, policy: policy);
         }
 
-        public static object DoServiceAuthorizationCancel(string serviceId, string privateKey, string apiURL, string authorizationRequestId)
+        public static object DoServiceAuthorizationCancel(string serviceId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string apiURL, string authorizationRequestId)
         {
-            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL);
+            var serviceClient = ClientFactories.MakeServiceClient(serviceId, privateKey, apiURL, encryptionPrivateKeys);
 
             return SharedServiceHelpers.DoAuthorizationCancel(serviceClient, authorizationRequestId);
         }

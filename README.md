@@ -1,7 +1,9 @@
-# LaunchKey .NET SDK
+# TruValidate Multifactor Authentication .NET SDK
+
+[![Test Dotnet SDK Versions](https://github.com/iovation/launchkey-dotnet/actions/workflows/test_dotnet_core_versions.yml/badge.svg)](https://github.com/iovation/launchkey-dotnet/actions/workflows/test_dotnet_core_versions.yml)
 
 ## Summary
-This project contains the source code for the LaunchKey .NET SDK. For quick examples, see the [Examples Project](src/iovation.LaunchKey.Sdk.ExampleCli). For API introduction and requirements, read on.
+This project contains the source code for the TruValidate Multifactor Authentication .NET SDK. For quick examples, see the [Examples Project](src/iovation.LaunchKey.Sdk.ExampleCli). For API introduction and requirements, read on.
 ## Requirements
 This SDK is targeted toward:
 
@@ -9,12 +11,14 @@ This SDK is targeted toward:
 - Windows 7 and above
 - Linux
 - OSX
-- .NET Framework 4.0+
+- .NET Framework 4.5+
 - .NET Standard 2.0 (.NET 4.6.1+, .NET Core 2.0+, Mono 5.4, etc.) See .NET Standard compatibility here: https://docs.microsoft.com/en-us/dotnet/standard/net-standard
 
 
 ## Building
-The solution file is for Visual Studio 2017, and the projects are multi-targeting .NET 4.0 and .NET Standard 2.0. The project should build out of the box. Simply clone, open in VS, compile.
+The solution file is for Visual Studio 2017, Visual Studio for Mac 2019, and the projects are multi-targeting .NET 4.5 and .NET Standard 2.0. The project should build out of the box. Simply clone, open in VS, compile.
+
+This project also works with the JetBrains IDE Rider.  
 
 ## Tests
 The test projects use multi-targeting as well. The best way to run these tests is using the command line:
@@ -26,12 +30,14 @@ dotnet test
 
 This method results in both the .NET 4.0 and .NET Core runtimes being used for test execution. Currently, VS 2017's IDE-based test runner does *not* properly run all targets.
 
+If you are using Rider you can configure it to run for all runtimes
+
 ## Example & Usage
-The primary entry point to the SDK is a class named `FactoryFactoryBuilder`. This class, located in the `iovation.LaunchKey.Sdk` namespace provides factories for instantiating API clients which can be used to consume the LaunchKey platform API. The `FactoryFactoryBuilder` is designed to simplify creating the rather complex (and highly customizable!) object model that drives the LaunchKey .NET SDK.
+The primary entry point to the SDK is a class named `FactoryFactoryBuilder`. This class, located in the `iovation.LaunchKey.Sdk` namespace provides factories for instantiating API clients which can be used to consume the TruValidate Multifactor Authentication platform API. The `FactoryFactoryBuilder` is designed to simplify creating the rather complex (and highly customizable!) object model that drives the TruValidate Multifactor Authentication .NET SDK.
 
 To be able to use the SDK, you will need a few pieces of key information:
 
-* **API Credentials**: in the form of an RSA private key and the unique ID of the Organization, Directory or Service that issued the key. These are issued at the Organization, Directory or Service level. An Organization-level credential may access all services and directories within itself. A Directory-level credential may access itself and its child services. A Service-level credential may only access the service for which it is issued. Generally speaking, you may issue these credentials from the [LaunchKey Admin Center](https://admin.launchkey.com)
+* **API Credentials**: in the form of an RSA private key and the unique ID of the Organization, Directory or Service that issued the key. These are issued at the Organization, Directory or Service level. An Organization-level credential may access all services and directories within itself. A Directory-level credential may access itself and its child services. A Service-level credential may only access the service for which it is issued. Generally speaking, you may issue these credentials from the [TruValidate Multifactor Authentication Admin Center](https://admin.launchkey.com)
 * **Service ID, Directory ID or Organization ID**: This is a UUID/GUID for referencing the Organization, Directory or Service you wish to interact with programmatically.
 
 Once you have obtained the above information, you have everything you need to create a `FactoryFactoryBuilder`, and begin consuming the API. 
@@ -110,5 +116,41 @@ This example is incomplete, and a full implementation would involve additional e
 There is an elborate example application as a part of the source code. The demo application is documented and located [here](src/iovation.LaunchKey.Sdk.ExampleCli).
 
 ## Further Reading
-As always, the best place to get information is the [LaunchKey documentation site](https://docs.launchkey.com).
+As always, the best place to get information is the [TruValidate Multifactor Authentication documentation site](https://docs.launchkey.com).
 
+## Advanced Usage: Single Purpose Keys
+If you are implementing Single Purpose Keys with the intention of being FIPS 140-3 compliant you need to instantiate your factories just a little bit differently. 
+You need to put all of your keys into a `List` and provide the primary MD5 hash of the entities Signature key in the format "aa:bb:cc..." when you make your factory.
+There is a helper method in the `BouncyCastleCrypto` class called `GeneratePublicKeyFingerprintFromPrivateKey` to aid in the generation of the hash if you do not have it readily available. 
+
+### Polling Authorization Example with Single Purpose Keys
+
+```c#
+var serviceSignatureKeyContents = File.ReadAllText("my-service-signature-key.txt");
+var serviceEncryptionKeyContents = File.ReadAllText("my-service-encryption-key.txt");
+var keys = new List<string> {serviceSignatureKeyContents, serviceEncryptionKeyContents};
+var crypto = new BouncyCastleCrypto();
+var parsedRSAKey = crypto.LoadRsaPrivateKey(serviceSignatureKeyContents); 
+var serviceSignatureKeyMD5 = crypto.GeneratePublicKeyFingerprintFromPrivateKey(parsedRSAKey);
+var factory = new FactoryFactoryBuilder().Build();
+var serviceFactory = factory.MakeServiceFactory("6FFC9464-4B29-422A-9D70-87D22CB09A61", keys, serviceSignatureKeyMD5);
+var serviceClient = serviceFactory.MakeServiceClient();
+var authorizationRequest = serviceClient.CreateAuthorizationRequest("myusername");
+while (true)
+{
+	var response = serviceClient.GetAuthorizationResponse(authorizationRequest.Id);
+	if (response != null)
+	{
+		if (response.Authorized)
+			Console.WriteLine("Login successful!");
+		else
+			Console.WriteLine("User denied us!");
+		break;
+	}
+	else
+	{
+		Console.WriteLine("Waiting for the user to respond ...");
+		Thread.Sleep(1000);
+	}
+}
+```
