@@ -48,7 +48,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		public string UserId { get; set; }
 
 		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
-		public bool? UseWebhook { get; set; }
+		public bool UseWebhook { get; set; }
 	}
 
 	class DirectoryOptions
@@ -76,7 +76,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		public int? TTL { get; set; }
 
 		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
-		public bool? UseWebhook { get; set; }
+		public bool UseWebhook { get; set; }
 	}
 
  	[Verb("directory-device-unlink", HelpText = "Unlink a device for a directory user")]
@@ -113,7 +113,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
 		public string UserId { get; set; }
 
 		[Option('w', "use-webhooks", HelpText = "Whether to open a port to receive a response via a Webhook instead of polling", Required = false)]
-		public bool? UseWebhook { get; set; }
+		public bool UseWebhook { get; set; }
 	}
 
 	[Verb("directory-service-session-start", HelpText = "Start a session for a directory user against a directory service")]

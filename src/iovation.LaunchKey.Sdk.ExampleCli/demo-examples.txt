@@ -37,6 +37,7 @@ Directory examples:
 
 	Device link:
 		dotnet run -- directory-device-link -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+		dotnet run -- directory-device-link -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -w
 		dotnet run -- directory-device-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
 		dotnet run -- directory-device-unlink -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -i [DEVICE_ID]
 
@@ -84,6 +85,7 @@ Single purpose key examples:
     
         Device link:
             dotnet run -- directory-device-link -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
+            dotnet run -- directory-device-link -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -w
             dotnet run -- directory-device-list -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885
             dotnet run -- directory-device-unlink -d 5c289662-f0c1-11e7-8fb7-b2432b556c77 -p signature-key-directory.txt -e encryption-key-directory.txt -u 153C010DFA4646BA8B64B90A97F97885 -i [DEVICE_ID]
     

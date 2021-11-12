@@ -94,7 +94,7 @@ namespace iovation.LaunchKey.Sdk.ExampleCli
         /// <summary>
         /// Link a device to a user. This starts the process which must be completed via the authenticator app for this directory
         /// </summary>
-        public static int DoDeviceLink(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string userId, string apiURL, int? ttl, bool? useWebhook)
+        public static int DoDeviceLink(string directoryId, string privateKey, IEnumerable<string> encryptionPrivateKeys, string userId, string apiURL, int? ttl, bool useWebhook)
         {
             try
             {
