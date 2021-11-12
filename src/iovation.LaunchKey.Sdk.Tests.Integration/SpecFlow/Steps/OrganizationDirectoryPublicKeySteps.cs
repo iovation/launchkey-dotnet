@@ -2,6 +2,7 @@
 using System.Linq;
 using iovation.LaunchKey.Sdk.Error;
 using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
+using iovation.LaunchKey.Sdk.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 
@@ -72,6 +73,23 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
                     x => x.Id == _orgClientContext.AddedDirectoryPublicKeys[1]
                 ) == 1
             );
+        }
+
+        [Then(@"the Public Key is in the list of Public Keys for the Directory and has a (BOTH|ENCRYPTION|SIGNATURE) key type")]
+        public void ThenThePublicKeyIsInTheListOfPublicKeysForTheDirectoryAndHasAKeyType(string keyType)
+        {
+            Assert.IsTrue(_orgClientContext.LoadedDirectoryPublicKeys.Any(
+                e => e.Id == _orgClientContext.AddedDirectoryPublicKeys[0]
+            ));
+            KeyType parsedKeyType;
+            Enum.TryParse(keyType, true, out parsedKeyType);
+            Assert.IsTrue(_orgClientContext.LoadedDirectoryPublicKeys[0].KeyType == parsedKeyType);
+        }
+
+        [Then(@"the Public Key is in the list of Public Keys for the Directory and has a ""(BOTH|ENCRYPTION|SIGNATURE)"" key type")]
+        public void ThenThePublicKeyIsInTheListOfPublicKeysForTheDirectoryAndHasAQuotedKeyType(string keyType)
+        {
+            ThenThePublicKeyIsInTheListOfPublicKeysForTheDirectoryAndHasAKeyType(keyType);
         }
 
         [When(@"I attempt to add a Public Key to the Directory with the ID ""(.*)""")]
@@ -280,5 +298,42 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
             }
         }
 
+        [When(@"I add a Public Key with a (BOTH|ENCRYPTION|SIGNATURE) type to the Directory")]
+        public void WhenIAddAPublicKeyWithAKeyTypeTypeToTheDirectory(string keyType)
+        {
+            KeyType parsedKeyType;
+            Enum.TryParse(keyType, true, out parsedKeyType);
+            _orgClientContext.AddDirectoryPublicKey(
+                _orgClientContext.LastCreatedDirectory.Id,
+                _keyManager.GetAlphaPublicKey(),
+                true,
+                new DateTime(2020, 1, 1),
+                parsedKeyType
+            );
+        }
+
+        [When(@"I attempt to add a Public Key with a ""(.*)"" type to the Directory")]
+        public void WhenIAttemptToAddAPublicKeyWithATypeToTheDirectory(string keyType)
+        {
+            try
+            {
+                KeyType parsedKeyType;
+                if (!Enum.TryParse(keyType, true, out parsedKeyType))
+                {
+                    parsedKeyType = KeyType.OTHER;
+                }
+                _orgClientContext.AddDirectoryPublicKey(
+                    _orgClientContext.LastCreatedDirectory.Id,
+                    _keyManager.GetAlphaPublicKey(),
+                    true,
+                    new DateTime(2020, 1, 1),
+                    parsedKeyType
+                );
+            }
+            catch (BaseException e)
+            {
+                _commonContext.RecordException(e);
+            }
+        }
     }
 }

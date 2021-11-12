@@ -9,16 +9,24 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwe
     public class JweService : IJweService
     {
         private readonly RSA _privateKey;
+        private readonly Dictionary<string, RSA> _privateKeys;
 
         public JweService(RSA privateKey)
         {
             _privateKey = privateKey;
+            _privateKeys = null;
         }
 
+        public JweService(Dictionary<string, RSA> privateKeys)
+        {
+            _privateKey = null;
+            _privateKeys = privateKeys;
+        }
+        
         public string Decrypt(string data)
         {
             if (string.IsNullOrWhiteSpace(data)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(data));
-            return Decrypt(data, _privateKey);
+            return Decrypt(data, GetCurrentEncryptionKey(data));
         }
 
         public string Decrypt(string data, RSA privateKey)
@@ -74,6 +82,35 @@ namespace iovation.LaunchKey.Sdk.Crypto.Jwe
             catch (Exception ex)
             {
                 throw new JweException("Error reading JWE headers, see inner exception", ex);
+            }
+        }
+
+        private RSA GetCurrentEncryptionKey(string data)
+        {
+            // Provides backwards compatibility for dual purpose keys 
+            if (_privateKeys is null || _privateKeys.Count == 0)
+            {
+                if (_privateKey is null)
+                {
+                    throw new NoKeyFoundException("No keys were passed to the JWE service");
+                }
+
+                return _privateKey;
+            }
+
+            // Obtain KID from headers and select the appropriate key from the list of the entities keys
+            Dictionary<string, string> headers = GetHeaders(data);
+            if (!headers.ContainsKey("kid"))
+                throw new InvalidRequestException("JWE headers did not include a key id");
+            
+            try
+            {
+                return _privateKeys[headers["kid"]];
+            }
+            catch (Exception)
+            {
+                throw new NoKeyFoundException(
+                    $"The key id: {headers["kid"]} could not be found in the entities available keys");
             }
         }
     }

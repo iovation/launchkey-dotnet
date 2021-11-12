@@ -210,9 +210,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
             _orgClient.UpdateServicePublicKey(serviceId, keyId, active, expires);
         }
 
+        public void AddDirectoryPublicKey(Guid directoryId, string key, bool active, DateTime? expires, KeyType keyType)
+        {
+            _addedDirectoryPublicKeys.Add(_orgClient.AddDirectoryPublicKey(directoryId, key, active, expires, keyType));
+        }
+
         public void AddDirectoryPublicKey(Guid directoryId, string key, bool active, DateTime? expires)
         {
-            _addedDirectoryPublicKeys.Add(_orgClient.AddDirectoryPublicKey(directoryId, key, active, expires));
+            AddDirectoryPublicKey(directoryId, key, active, expires, KeyType.BOTH);
         }
 
         public void LoadDirectoryPublicKeys(Guid directoryId)

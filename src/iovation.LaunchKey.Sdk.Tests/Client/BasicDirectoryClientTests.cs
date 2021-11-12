@@ -406,6 +406,30 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
         }
 
         [TestMethod]
+        public void AddServicePublicKey_ShouldCallTransportWithKeyType()
+        {
+            var mockTransport = new Mock<ITransport>();
+            var serviceId = Guid.NewGuid();
+
+            mockTransport
+                .Setup(p => p.DirectoryV3ServiceKeysPost(It.Is<ServiceKeysPostRequest>(x =>
+                    x.Active == true
+                    && x.Expires == new DateTime(2020, 1, 1).ToUniversalTime()
+                    && x.PublicKey == "keyhere"
+                    && x.ServiceId == serviceId), It.IsAny<EntityIdentifier>()))
+                .Returns(new KeysPostResponse { Id = "keyid" })
+                .Verifiable();
+
+            var client = new BasicDirectoryClient(TestConsts.DefaultDirectoryId, mockTransport.Object);
+
+            var response = client.AddServicePublicKey(serviceId, "keyhere", true, new DateTime(2020, 1, 1), Sdk.Domain.KeyType.ENCRYPTION);
+
+            mockTransport.Verify();
+
+            Assert.IsTrue(response == "keyid");
+        }
+
+        [TestMethod]
         public void UpdateServicePublicKey_ShouldCallTransportWithCorrectParams()
         {
             var mockTransport = new Mock<ITransport>();

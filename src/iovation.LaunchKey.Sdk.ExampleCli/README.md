@@ -1,6 +1,6 @@
-﻿# LaunchKey.NET CLI Example
+﻿# TruValidate Multifactor Authentication .NET CLI Example
 
-This example application demonstrates most, if not all, functions of the LaunchKey.NET SDK. This example is meant to serve as a useful test tool and a repository of example usages of the SDK itself. Verifying your own code against this example is a good troubleshooting step.
+This example application demonstrates most, if not all, functions of the TruValidate Multifactor Authentication .NET SDK. This example is meant to serve as a useful test tool and a repository of example usages of the SDK itself. Verifying your own code against this example is a good troubleshooting step.
 
 ## The Command Line Interface
 The application itself is a fleshed command line application with numerous useful actions. There are too many to list here, but the help screen is a great place to start:
@@ -41,7 +41,7 @@ The application itself is a fleshed command line application with numerous usefu
 For example, if I wanted to test authorizing a user against a service, I would need 3 pieces of information:
 
 - The Service I wish to authorize against (**Service ID**, a GUID)
-- An RSA private key issued from the LaunchKey Admin Center
+- An RSA private key issued from the TruValidate Multifactor Authentication Admin Center
 - The username I wish to authorize
 
 In action:
@@ -57,8 +57,8 @@ This reads as "authenticate user johnhargrove against the service identified by 
 Examples are separated into 3 files:
 
 - `ServiceExamples.cs`: Examples that use the 'Service' endpoints, authenticating using Service credentials.
-- `DirectoryExamples.cs`: Examples that use the 'Service' and 'Directory' endpoints, authenticating using Directory credentials. Service examples contained here are all related to LaunchKey Services which are *children* of LaunchKey directories.
+- `DirectoryExamples.cs`: Examples that use the 'Service' and 'Directory' endpoints, authenticating using Directory credentials. Service examples contained here are all related to TruValidate Multifactor Authentication Services which are *children* of TruValidate Multifactor Authentication directories.
 - `OrgExamples.cs`: A small number of examples that demonstrate using Organization-level credentials to perform operations on the 'Service' and 'Directory' endpoints. Using Organization-level credentials allows the SDK to interface with all services, directories and directory services within an organization.
 
 ## Building
-The source code for this example is a part of the LaunchKey.NET SDK's main source base. To build the example, simply clone the launchkey-dotnet repo and build the entire solution.
+The source code for this example is a part of the TruValidate Multifactor Authentication .NET SDK's main source base. To build the example, simply clone the launchkey-dotnet repo and build the entire solution.
