@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 
 namespace iovation.LaunchKey.Sdk.Crypto
 {
@@ -50,6 +51,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
         /// </summary>
         /// <param name="keyContents">The PEM-format key</param>
         /// <returns>an RSACryptoServiceProvider configured with the key</returns>
+        [Obsolete("Reading and processing of PEM files has been deprecated for FIPS 140 compliance")]
         RSA LoadRsaPrivateKey(string keyContents);
 
         /// <summary>
@@ -57,6 +59,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
         /// </summary>
         /// <param name="keyContents">The PEM-format key</param>
         /// <returns>an RSACryptoServiceProvider configured with the key</returns>
+        [Obsolete("Reading and processing of PEM files has been deprecated for FIPS 140 compliance")]
         RSA LoadRsaPublicKey(string keyContents);
 
         /// <summary>
@@ -64,6 +67,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
         /// </summary>
         /// <param name="privateKey">The RSA private key to use when generating the public key and its fingerprint</param>
         /// <returns>an MD5 hash in the format of (aa:bb:cc:dd...)</returns>
+        [Obsolete("GeneratePublicKeyFingerprintFromPrivateKey will be dropped in favor of support for FIPS 140 compliance and MD5 is not an approved algorithm")]
         string GeneratePublicKeyFingerprintFromPrivateKey(RSA privateKey);
     }
 }

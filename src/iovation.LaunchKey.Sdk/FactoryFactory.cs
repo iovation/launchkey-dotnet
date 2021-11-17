@@ -62,6 +62,7 @@ namespace iovation.LaunchKey.Sdk
         /// <param name="serviceId">The unique service ID of the service</param>
         /// <param name="privateKeyPem">The private key to use. Should be the key itself -- not a path.</param>
         /// <returns>A configured ServiceFactory, ready to create ServiceClients</returns>
+        [Obsolete("Reading in PEM files directly is deprecated and will be removed in a future version. Please use MakeServiceFactory(string serviceId, Dictionary<string, RSA> privateKeys, string currentKeyId) instead")]
         public ServiceFactory MakeServiceFactory(string serviceId, string privateKeyPem)
         {
             var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(_crypto.LoadRsaPrivateKey(privateKeyPem));
@@ -75,6 +76,7 @@ namespace iovation.LaunchKey.Sdk
         /// <param name="privateKeyPems">A list of private keys to use for the entity. Should be the key itself -- not a path.</param>
         /// <param name="currentKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key to be used to sign requests.</param> 
         /// <returns>A configured ServiceFactory, ready to create ServiceClients</returns>
+        [Obsolete("Reading in PEM files directly is deprecated. Please use MakeServiceFactory(string serviceId, Dictionary<string, RSA> privateKeys, string currentKeyId) instead")]
         public ServiceFactory MakeServiceFactory(string serviceId, List<string> privateKeyPems, string currentKeyId)
         {
             var keys = new Dictionary<string, RSA>();
@@ -90,11 +92,27 @@ namespace iovation.LaunchKey.Sdk
         }
 
         /// <summary>
+        /// Creates a factory with multiple directory credentials allowing for use of single purpose keys. Allows interacting with any directories or services within the organization.
+        /// </summary>
+        /// <param name="serviceId">The unique service ID of the service</param>
+        /// <param name="privateKeys">A dictionary where the key is the MD5 hash of the private key and the value is a System.Security.Cryptography.RSA object</param>
+        /// <param name="currentKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key to be used to sign requests.</param>
+        /// <returns></returns>
+        public ServiceFactory MakeServiceFactory(string serviceId, Dictionary<string, RSA> privateKeys, string currentKeyId)
+        {
+            if (privateKeys.Count == 0)
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(privateKeys));
+            var id = new EntityIdentifier(EntityType.Service, Guid.Parse(serviceId));
+            return new ServiceFactory(MakeTransport(id, privateKeys, currentKeyId), Guid.Parse(serviceId));            
+        }
+
+        /// <summary>
         /// Creates a factory using directory credentials. Allows interacting with the directory itself and any child services within the directory.
         /// </summary>
         /// <param name="directoryId">The unique directory ID of the directory</param>
         /// <param name="privateKeyPem">The private key to use. Should be the key itself -- not a path.</param>
         /// <returns></returns>
+        [Obsolete("Reading in PEM files directly is deprecated and will be removed in a future version. Please use MakeDirectoryFactory(string directoryId, Dictionary<string, RSA> privateKeys, string currentKeyId) instead")]
         public DirectoryFactory MakeDirectoryFactory(string directoryId, string privateKeyPem)
         {
             var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(_crypto.LoadRsaPrivateKey(privateKeyPem));
@@ -108,6 +126,7 @@ namespace iovation.LaunchKey.Sdk
         /// <param name="privateKeyPems">A list of private keys to use for the entity. Should be the key itself -- not a path.</param>
         /// <param name="currentKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key to be used to sign requests.</param>  
         /// <returns></returns>
+        [Obsolete("Reading in PEM files directly is deprecated and will be removed in a future version. Please use MakeDirectoryFactory(string directoryId, Dictionary<string, RSA> privateKeys, string currentKeyId) instead")]
         public DirectoryFactory MakeDirectoryFactory(string directoryId, List<string> privateKeyPems, string currentKeyId)
         {
             var keys = new Dictionary<string, RSA>();
@@ -123,11 +142,27 @@ namespace iovation.LaunchKey.Sdk
         }
 
         /// <summary>
+        /// Creates a factory with multiple directory credentials allowing for use of single purpose keys. Allows interacting with any directories or services within the organization.
+        /// </summary>
+        /// <param name="directoryId">The unique directory ID of the directory</param>
+        /// <param name="privateKeys">A dictionary where the key is the MD5 hash of the private key and the value is a System.Security.Cryptography.RSA object</param>
+        /// <param name="currentKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key to be used to sign requests.</param>
+        /// <returns></returns>
+        public DirectoryFactory MakeDirectoryFactory(string directoryId, Dictionary<string, RSA> privateKeys, string currentKeyId)
+        {
+            if (privateKeys.Count == 0)
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(privateKeys));
+            var id = new EntityIdentifier(EntityType.Directory, Guid.Parse(directoryId));
+            return new DirectoryFactory(MakeTransport(id, privateKeys, currentKeyId), Guid.Parse(directoryId));            
+        }
+
+        /// <summary>
         /// Creates a factory using organization-level credentials. Allows interacting with any directories or services within the organization.
         /// </summary>
         /// <param name="organizationId">The unique organization ID</param>
         /// <param name="privateKeyPem">The private key to use. Should be the key itself -- not a path.</param>
         /// <returns></returns>
+        [Obsolete("Reading in PEM files directly is deprecated and will be removed in a future version. Please use MakeOrganizationFactory(string organizationId, Dictionary<string, RSA> privateKeys, string currentKeyId) instead")]
         public OrganizationFactory MakeOrganizationFactory(string organizationId, string privateKeyPem)
         {
             var fingerprint = _crypto.GeneratePublicKeyFingerprintFromPrivateKey(_crypto.LoadRsaPrivateKey(privateKeyPem));
@@ -141,6 +176,7 @@ namespace iovation.LaunchKey.Sdk
         /// <param name="privateKeyPems">A list of private keys to use for the entity. Should be the key itself -- not a path.</param>
         /// <param name="currentKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key to be used to sign requests.</param>
         /// <returns></returns>
+        [Obsolete("Reading in PEM files directly is deprecated and will be removed in a future version. Please use MakeOrganizationFactory(string organizationId, Dictionary<string, RSA> privateKeys, string currentKeyId) instead")]
         public OrganizationFactory MakeOrganizationFactory(string organizationId, List<string> privateKeyPems, string currentKeyId)
         {
             var keys = new Dictionary<string, RSA>();
@@ -153,6 +189,21 @@ namespace iovation.LaunchKey.Sdk
             }
             
             return new OrganizationFactory(MakeTransport(id, keys, currentKeyId), Guid.Parse(organizationId));            
+        }
+
+        /// <summary>
+        /// Creates a factory with multiple organization credentials allowing for use of single purpose keys. Allows interacting with any directories or services within the organization.
+        /// </summary>
+        /// <param name="organizationId">The unique organization ID</param>
+        /// <param name="privateKeys">A dictionary where the key is the MD5 hash of the private key and the value is a System.Security.Cryptography.RSA object</param>
+        /// <param name="currentKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key to be used to sign requests.</param>
+        /// <returns></returns>
+        public OrganizationFactory MakeOrganizationFactory(string organizationId, Dictionary<string, RSA> privateKeys, string currentKeyId)
+        {
+            if (privateKeys.Count == 0)
+                throw new ArgumentException("Value cannot be an empty collection.", nameof(privateKeys));
+            var id = new EntityIdentifier(EntityType.Organization, Guid.Parse(organizationId));
+            return new OrganizationFactory(MakeTransport(id, privateKeys, currentKeyId), Guid.Parse(organizationId));            
         }
 
         private ITransport MakeTransport(

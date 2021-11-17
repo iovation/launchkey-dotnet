@@ -15,6 +15,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
     {
         private static readonly string RSA_CRYPTO_CIPHER = "RSA/ECB/OAEPWithSHA1AndMGF1Padding";
 
+        [Obsolete("LoadRsaPublicKey will be removed in a future version to support FIPS 140 compliance")]
         public RSA LoadRsaPublicKey(string keyContents)
         {
             if (keyContents == null) throw new ArgumentNullException(nameof(keyContents));
@@ -68,6 +69,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
             return DoHash(data, new Sha512Digest());
         }
 
+        [Obsolete("LoadRsaPrivateKey will be removed in a future version to support FIPS 140 compliance")]
         public RSA LoadRsaPrivateKey(string keyContents)
         {
             if (keyContents == null) throw new ArgumentNullException(nameof(keyContents));
@@ -96,6 +98,7 @@ namespace iovation.LaunchKey.Sdk.Crypto
             }
         }
 
+        [Obsolete("GeneratePublicKeyFingerprintFromPrivateKey will be removed in a future version to support FIPS 140 compliance")]
         public string GeneratePublicKeyFingerprintFromPrivateKey(RSA privateKey)
         {
             if (privateKey == null) throw new ArgumentNullException(nameof(privateKey));

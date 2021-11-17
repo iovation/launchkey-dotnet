@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using iovation.LaunchKey.Sdk.Cache;
 using iovation.LaunchKey.Sdk.Crypto;
 using iovation.LaunchKey.Sdk.Transport.Domain;
@@ -140,6 +141,7 @@ namespace iovation.LaunchKey.Sdk
         /// <param name="serviceId">The unique service ID</param>
         /// <param name="pemKey">The private key contents</param>
         /// <returns>The builder</returns>
+        [Obsolete("Reading in PEM files directly is deprecated and will be removed in a future version. Please use AddServicePrivateKey(string serviceId, RSA serviceKey, string serviceKeyId)")]
         public FactoryFactoryBuilder AddServicePrivateKey(string serviceId, string pemKey)
         {
             var crypto = GetCrypto();
@@ -154,11 +156,29 @@ namespace iovation.LaunchKey.Sdk
         }
 
         /// <summary>
+        /// Adds an additional RSA private key for a known service. Useful if you plan to process Webhook requests for a service.
+        /// </summary>
+        /// <param name="serviceId">The unique service ID</param>
+        /// <param name="serviceKey">The System.Security.Cryptography.RSA key object</param>
+        /// <param name="serviceKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key</param>
+        /// <returns>The builder</returns>
+        public FactoryFactoryBuilder AddServicePrivateKey(string serviceId, RSA serviceKey, string serviceKeyId)
+        {
+            _entityKeyMap.AddKey(
+                new EntityIdentifier(EntityType.Service, Guid.Parse(serviceId)),
+                serviceKeyId,
+                serviceKey
+            );
+            return this;
+        }
+        
+        /// <summary>
         /// Adds an additional RSA private key for a known directory. Useful if you plan to process Webhook requests for a directory.
         /// </summary>
         /// <param name="directoryId">The unique directory ID</param>
         /// <param name="pemKey">The private key contents</param>
         /// <returns>The builder</returns>
+        [Obsolete("Reading in PEM files directly is deprecated and will be removed in a future version. Please use AddDirectoryPrivateKey(string directoryId, RSA directoryKey, string directoryKeyId)")]
         public FactoryFactoryBuilder AddDirectoryPrivateKey(string directoryId, string pemKey)
         {
             var crypto = GetCrypto();
@@ -173,11 +193,29 @@ namespace iovation.LaunchKey.Sdk
         }
 
         /// <summary>
+        /// Adds an additional RSA private key for a known directory. Useful if you plan to process Webhook requests for a directory.
+        /// </summary>
+        /// <param name="directoryId">The unique directory ID</param>
+        /// <param name="directoryKey">The System.Security.Cryptography.RSA key object</param>
+        /// <param name="directoryKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key</param>
+        /// <returns>The builder</returns>
+        public FactoryFactoryBuilder AddDirectoryPrivateKey(string directoryId, RSA directoryKey, string directoryKeyId)
+        {
+            _entityKeyMap.AddKey(
+                new EntityIdentifier(EntityType.Service, Guid.Parse(directoryId)),
+                directoryKeyId,
+                directoryKey
+            );
+            return this;
+        }
+        
+        /// <summary>
         /// Adds an additional RSA private key for a known organization. Useful if you plan to process Webhook requests for an organization.
         /// </summary>
         /// <param name="organizationId">The unique organization ID</param>
         /// <param name="pemKey">The private key contents</param>
         /// <returns>The builder</returns>
+        [Obsolete("Reading in PEM files directly is deprecated and will be removed in a future version. Please use AddOrganizationPrivateKey(string organizationId, RSA organizationKey, string organizationKeyId)")]
         public FactoryFactoryBuilder AddOrganizationPrivateKey(string organizationId, string pemKey)
         {
             var crypto = GetCrypto();
@@ -191,6 +229,23 @@ namespace iovation.LaunchKey.Sdk
             return this;
         }
 
+        /// <summary>
+        /// Adds an additional RSA private key for a known organization. Useful if you plan to process Webhook requests for an organization.
+        /// </summary>
+        /// <param name="organizationId">The unique organization ID</param>
+        /// <param name="organizationKey">The System.Security.Cryptography.RSA key object</param>
+        /// <param name="organizationKeyId">A MD5 hash in format of aa:bb:cc:dd... representing the key ID of the key</param>
+        /// <returns>The builder</returns>
+        public FactoryFactoryBuilder AddOrganizationPrivateKey(string organizationId, RSA organizationKey, string organizationKeyId)
+        {
+            _entityKeyMap.AddKey(
+                new EntityIdentifier(EntityType.Service, Guid.Parse(organizationId)),
+                organizationKeyId,
+                organizationKey
+            );
+            return this;
+        }
+        
         private ICrypto GetCrypto()
         {
             return _crypto ?? new BouncyCastleCrypto();
