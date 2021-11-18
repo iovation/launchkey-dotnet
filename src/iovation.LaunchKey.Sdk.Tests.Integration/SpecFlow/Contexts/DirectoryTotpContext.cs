@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using System.Text;
 using iovation.LaunchKey.Sdk.Client;
-using iovation.LaunchKey.Sdk.Domain;
 using iovation.LaunchKey.Sdk.Domain.Directory;
-using iovation.LaunchKey.Sdk.Domain.ServiceManager;
-using iovation.LaunchKey.Sdk.Domain.Service.Policy;
+using OtpNet;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 {
-    // TODO: Cleanup TOTP for the user since it is not deleted with the directory
-    public class DirectoryTotpContext
-        /// I think you can implement via the dispose() method the cleanup for TOTP
-        //public class DirectoryTotpContext : IDisposable
+    public class DirectoryTotpContext : IDisposable
     {
         private readonly TestConfiguration _testConfiguration;
         private readonly OrgClientContext _orgClientContext;
-        public DirectoryUserTotp currentGenerateUserTotpResponse;
+        private readonly List<string> _activeUserIds = new List<string>();
+        public DirectoryUserTotp CurrentGenerateUserTotpResponse;
 
         public DirectoryTotpContext(TestConfiguration testConfiguration, OrgClientContext orgClientContext)
         {
@@ -32,27 +27,61 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         public void GenerateUserTotp()
         {
-            throw new NotImplementedException();
+            string userId = Util.UniqueName("TOTP");
+            CurrentGenerateUserTotpResponse = GetDirectoryClient().GenerateUserTotp(userId);
+            _activeUserIds.Add(userId);
+        }
+        
+        public void GenerateUserTotp(string userId)
+        {
+            CurrentGenerateUserTotpResponse = GetDirectoryClient().GenerateUserTotp(userId);
+            _activeUserIds.Add(userId);
         }
 
         public void RemoveTotpCodeForUser()
         {
-            throw new NotImplementedException();
+            GetDirectoryClient().RemoveUserTotp(Util.UniqueName("TOTP"));
         }
 
         public void RemoveTotpCodeForUser(string userId)
         {
-            throw new NotImplementedException();
+            GetDirectoryClient().RemoveUserTotp(userId);
         }
 
-        public string getCodeForCurrentUserTotpResponse()
+        public string GetCodeForCurrentUserTotpResponse()
         {
-            throw new NotImplementedException("You have to find a TOTP Library first!");
+            byte[] byteSecret = Encoding.ASCII.GetBytes(CurrentGenerateUserTotpResponse.Secret);
+
+            OtpHashMode hashMode;
+            switch (CurrentGenerateUserTotpResponse.Algorithm)
+            {
+                case "SHA256":
+                    hashMode = OtpHashMode.Sha256;
+                    break;
+                case "SHA512":
+                    hashMode = OtpHashMode.Sha512;
+                    break;
+                default:
+                    hashMode = OtpHashMode.Sha1;
+                    break;
+            }
+            
+            var totp = new Totp(
+                byteSecret, 
+                mode: hashMode,
+                step: CurrentGenerateUserTotpResponse.Period, 
+                totpSize: CurrentGenerateUserTotpResponse.Digits
+            );
+            return totp.ComputeTotp();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            foreach (var userId in _activeUserIds)
+            {
+                // This is failing with "HTTP Error: [403] The subject Directory must be valid and active. The parent Organization must be ..."
+                // GetDirectoryClient().RemoveUserTotp(userId);
+            }
         }
     }
 }

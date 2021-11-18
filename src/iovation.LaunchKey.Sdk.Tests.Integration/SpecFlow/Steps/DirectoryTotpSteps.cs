@@ -1,55 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using iovation.LaunchKey.Sdk.Error;
+﻿using System.Linq;
 using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts;
-using iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Tables;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
 {
     [Binding]
     public class DirectoryTotpSteps
     {
-        private readonly CommonContext _commonContext;
-        private readonly DirectoryClientContext _directoryClientContext;
+        private readonly DirectoryTotpContext _directoryTotpContext;
 
-        public DirectoryTotpSteps(CommonContext commonContext, DirectoryClientContext directoryClientContext)
+        public DirectoryTotpSteps(DirectoryTotpContext directoryTotpContext)
         {
-            _commonContext = commonContext;
-            _directoryClientContext = directoryClientContext;
+            _directoryTotpContext = directoryTotpContext;
         }
 
-        [When(@"I make a User TOTP create request")]
-        public void WhenIMakeAUserTOTPCreateRequest()
+        [When(@"I make a User TOTP delete request")]
+        public void WhenIMakeAUserTotpDeleteRequest()
         {
-            ScenarioContext.Current.Pending();
+            _directoryTotpContext.RemoveTotpCodeForUser();
+        }
+        
+        [When(@"I make a User TOTP create request")]
+        public void WhenIMakeAUserTotpCreateRequest()
+        {
+            _directoryTotpContext.GenerateUserTotp();
         }
 
         [Then(@"the User TOTP create response contains a valid algorithm")]
-        public void ThenTheUserTOTPCreateResponseContainsAValidAlgorithm()
+        public void ThenTheUserTotpCreateResponseContainsAValidAlgorithm()
         {
-            ScenarioContext.Current.Pending();
+            string[] validAlgorithms =  {"SHA1", "SHA256", "SHA512"};
+            Assert.IsTrue(validAlgorithms.Contains(_directoryTotpContext.CurrentGenerateUserTotpResponse.Algorithm));
         }
 
         [Then(@"the User TOTP create response contains a valid amount of digits")]
-        public void ThenTheUserTOTPCreateResponseContainsAValidAmountOfDigits()
+        public void ThenTheUserTotpCreateResponseContainsAValidAmountOfDigits()
         {
-            ScenarioContext.Current.Pending();
+            Assert.IsTrue(_directoryTotpContext.CurrentGenerateUserTotpResponse.Digits >= 6);
         }
 
         [Then(@"the User TOTP create response contains a valid period")]
-        public void ThenTheUserTOTPCreateResponseContainsAValidPeriod()
+        public void ThenTheUserTotpCreateResponseContainsAValidPeriod()
         {
-            ScenarioContext.Current.Pending();
+            Assert.IsTrue(_directoryTotpContext.CurrentGenerateUserTotpResponse.Period >= 30);
         }
 
         [Then(@"the User TOTP create response contains a valid secret")]
-        public void ThenTheUserTOTPCreateResponseContainsAValidSecret()
+        public void ThenTheUserTotpCreateResponseContainsAValidSecret()
         {
-            ScenarioContext.Current.Pending();
+            Assert.IsTrue(_directoryTotpContext.CurrentGenerateUserTotpResponse.Secret.Length == 32);
         }
     }
 }

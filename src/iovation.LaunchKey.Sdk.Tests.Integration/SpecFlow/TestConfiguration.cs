@@ -35,10 +35,10 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow
             var factoryFactory = factoryFactoryBuilder.Build();
             organizationFactory = factoryFactory.MakeOrganizationFactory(orgId, orgPrivateKey);
 
-            // if (File.Exists(appiumConfiguration))
-            // {
-            appiumConfigs = null;// JsonConvert.DeserializeObject<AppiumConfigs>(File.ReadAllText(appiumConfiguration));
-            // }
+            if (File.Exists(appiumConfiguration))
+            {
+                appiumConfigs = JsonConvert.DeserializeObject<AppiumConfigs>(File.ReadAllText(appiumConfiguration));
+            }
 
         }
 

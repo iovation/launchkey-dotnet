@@ -1,6 +1,5 @@
 ﻿using System;
 using iovation.LaunchKey.Sdk.Client;
-using iovation.LaunchKey.Sdk.Domain.Service;
 
 namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 {
@@ -8,7 +7,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
     {
         private readonly TestConfiguration _testConfiguration;
         private readonly DirectoryClientContext _directoryClientContext;
-        public bool currentVerifyUserResponse;
+        public bool CurrentVerifyUserResponse;
 
         public DirectoryServiceTotpContext(
             TestConfiguration testConfiguration,
@@ -30,7 +29,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         public void VerifyUserTotpCode(string userId, string totpCode)
         {
-            currentVerifyUserResponse = GetServiceClientForCurrentService().VerifyTotp(userId, totpCode);
+            CurrentVerifyUserResponse = GetServiceClientForCurrentService().VerifyTotp(userId, totpCode);
         }
     }
 }

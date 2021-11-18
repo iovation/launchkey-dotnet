@@ -577,7 +577,9 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 
         public ServiceV3TotpPostResponse serviceV3TotpPost(ServiceV3TotpPostRequest request, EntityIdentifier subject)
         {
-            throw new NotImplementedException();
+            var response = ExecuteRequest(HttpMethod.POST, "/service/v3/totp", subject, request, httpStatusCodeWhiteList:null);
+            var decryptedResponse = DecryptResponse<ServiceV3TotpPostResponse>(response);
+            return decryptedResponse;
         }
 
         public DirectoryV3DevicesPostResponse DirectoryV3DevicesPost(DirectoryV3DevicesPostRequest request, EntityIdentifier subject)
@@ -613,12 +615,14 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
 
         public DirectoryV3TotpPostResponse DirectoryV3TotpPost(DirectoryV3TotpPostRequest request, EntityIdentifier subject)
         {
-            throw new NotImplementedException();
+            var response = ExecuteRequest(HttpMethod.POST, "/directory/v3/totp", subject, request, httpStatusCodeWhiteList:null);
+            var decryptedResponse = DecryptResponse<DirectoryV3TotpPostResponse>(response);
+            return decryptedResponse;
         }
 
         public void DirectoryV3TotpDelete(DirectoryV3TotpDeleteRequest request, EntityIdentifier subject)
         {
-            throw new NotImplementedException();
+            ExecuteRequest(HttpMethod.DELETE, "/directory/v3/totp", subject, request, httpStatusCodeWhiteList:null);
         }
 
         public ServicesPostResponse OrganizationV3ServicesPost(ServicesPostRequest request, EntityIdentifier subject)

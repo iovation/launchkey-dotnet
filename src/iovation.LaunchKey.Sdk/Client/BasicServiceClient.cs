@@ -424,7 +424,9 @@ namespace iovation.LaunchKey.Sdk.Client
 
         public bool VerifyTotp(string user, string otp)
         {
-            throw new NotImplementedException();
+            var request = new ServiceV3TotpPostRequest(user, otp);
+            var response = _transport.serviceV3TotpPost(request, _serviceId);
+            return response.Valid;
         }
 
         [Obsolete("HandleWebhook(headers, body) is obsolete. Please use HandleWebhook(headers, body, method, path)", false)]
