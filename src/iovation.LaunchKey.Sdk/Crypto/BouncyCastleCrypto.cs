@@ -18,15 +18,27 @@ namespace iovation.LaunchKey.Sdk.Crypto
         public RSA LoadRsaPublicKey(string keyContents)
         {
             if (keyContents == null) throw new ArgumentNullException(nameof(keyContents));
-            var stringReader = new StringReader(keyContents);
-            var pemReader = new Org.BouncyCastle.OpenSsl.PemReader(stringReader);
-            var pemObject = pemReader.ReadObject();
-            if (pemObject is RsaKeyParameters)
-            {
-                return BouncyCastleUtilities.ToRSA((RsaKeyParameters)pemObject);
-            }
 
-            throw new CryptographyError($"Failed to load public key from PEM file.");
+            var rsaCsp = new RSACryptoServiceProvider();
+            try
+            {
+                rsaCsp.ImportFromPem(keyContents);
+            }
+            catch (ArgumentException)
+            {
+                throw new CryptographyError("Failed to load public key from PEM file.");
+            }
+            return rsaCsp;
+
+            // var stringReader = new StringReader(keyContents);
+            // var pemReader = new Org.BouncyCastle.OpenSsl.PemReader(stringReader);
+            // var pemObject = pemReader.ReadObject();
+            // if (pemObject is RsaKeyParameters)
+            // {
+            //     return BouncyCastleUtilities.ToRSA((RsaKeyParameters)pemObject);
+            // }
+            //
+            // throw new CryptographyError($"Failed to load public key from PEM file.");
         }
 
         private byte[] DoHash(byte[] data, IDigest digest)
@@ -73,18 +85,30 @@ namespace iovation.LaunchKey.Sdk.Crypto
             if (keyContents == null) throw new ArgumentNullException(nameof(keyContents));
             try
             {
-                var stringReader = new StringReader(keyContents);
-                var pemReader = new Org.BouncyCastle.OpenSsl.PemReader(stringReader);
-                var pemObject = pemReader.ReadObject();
-                if (pemObject is AsymmetricCipherKeyPair)
+                var rsaCsp = new RSACryptoServiceProvider();
+                try
                 {
-                    var cipherPair = (AsymmetricCipherKeyPair)pemObject;
-                    if (cipherPair.Private == null) throw new CryptographyError("No private key found in PEM object");
-                    if (!(cipherPair.Private is RsaPrivateCrtKeyParameters)) throw new CryptographyError("Private key is not RSA");
-                    return BouncyCastleUtilities.ToRSA((RsaPrivateCrtKeyParameters)cipherPair.Private);
+                    rsaCsp.ImportFromPem(keyContents);
+                    if (rsaCsp.PublicOnly) throw new CryptographyError("No private key found in PEM object");
                 }
+                catch (ArgumentException)
+                {
+                    throw new CryptographyError("Failed to load public key from PEM file.");
+                }
+                return rsaCsp;
 
-                throw new CryptographyError($"Failed to load public key from PEM file. Object was not of type expected. ({pemObject})");
+                // var stringReader = new StringReader(keyContents);
+                // var pemReader = new Org.BouncyCastle.OpenSsl.PemReader(stringReader);
+                // var pemObject = pemReader.ReadObject();
+                // if (pemObject is AsymmetricCipherKeyPair)
+                // {
+                //     var cipherPair = (AsymmetricCipherKeyPair)pemObject;
+                //     if (cipherPair.Private == null) throw new CryptographyError("No private key found in PEM object");
+                //     if (!(cipherPair.Private is RsaPrivateCrtKeyParameters)) throw new CryptographyError("Private key is not RSA");
+                //     return BouncyCastleUtilities.ToRSA((RsaPrivateCrtKeyParameters)cipherPair.Private);
+                // }
+                //
+                // throw new CryptographyError($"Failed to load public key from PEM file. Object was not of type expected. ({pemObject})");
             }
             catch (CryptographyError)
             {

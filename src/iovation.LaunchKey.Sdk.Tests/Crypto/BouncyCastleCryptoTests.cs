@@ -55,9 +55,9 @@ r+ppoKXL4tSFNDsShVSQBgEAZU9F/F7wUgCXqBMnHu574fpKakiNpeTmLnQ4JNn4
 PmRoieUCtxxvmnckMGk4ub+/X4AJHb0ErqavEbIrrBNLW4ahtrJC5g==
 -----END RSA PRIVATE KEY-----";
             var key = _crypto.LoadRsaPrivateKey(pkey);
-            var csp = key as RSACryptoServiceProvider;
-
-            Assert.IsTrue(csp != null);
+            RSACryptoServiceProvider csp = new RSACryptoServiceProvider();
+            csp.ImportParameters(key.ExportParameters(true));
+            
             Assert.AreEqual(2048, csp.KeySize);
             Assert.AreEqual(false, csp.PublicOnly);
         }
