@@ -50,7 +50,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
 
         public string GetCodeForCurrentUserTotpResponse()
         {
-            byte[] byteSecret = Encoding.ASCII.GetBytes(CurrentGenerateUserTotpResponse.Secret);
+            byte[] byteSecret = Base32Encoding.ToBytes(CurrentGenerateUserTotpResponse.Secret);
 
             OtpHashMode hashMode;
             switch (CurrentGenerateUserTotpResponse.Algorithm)

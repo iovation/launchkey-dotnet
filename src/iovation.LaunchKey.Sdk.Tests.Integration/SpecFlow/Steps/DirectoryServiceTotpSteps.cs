@@ -32,9 +32,8 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [When(@"I verify a TOTP code with a valid code")]
         public void WhenIVerifyATotpCodeWithAValidCode()
         {
-            byte[] byteSecret = Encoding.ASCII.GetBytes(_directoryTotpContext.CurrentGenerateUserTotpResponse.Secret);
-            var totp = new Totp(byteSecret);
-            _directoryServiceTotpContext.VerifyUserTotpCode(_userId, totp.ComputeTotp());
+            string code = _directoryTotpContext.GetCodeForCurrentUserTotpResponse();
+            _directoryServiceTotpContext.VerifyUserTotpCode(_userId, code);
         }
         
         [When(@"I verify a TOTP code with an invalid code")]
