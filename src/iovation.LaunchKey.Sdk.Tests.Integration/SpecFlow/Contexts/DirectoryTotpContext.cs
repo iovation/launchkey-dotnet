@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using iovation.LaunchKey.Sdk.Client;
 using iovation.LaunchKey.Sdk.Domain.Directory;
 using OtpNet;
@@ -79,8 +79,14 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Contexts
         {
             foreach (var userId in _activeUserIds)
             {
-                // This is failing with "HTTP Error: [403] The subject Directory must be valid and active. The parent Organization must be ..."
-                // GetDirectoryClient().RemoveUserTotp(userId);
+                try
+                {
+                    GetDirectoryClient().RemoveUserTotp(userId);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine($"Error while deactivating service: {e}");
+                }
             }
         }
     }
