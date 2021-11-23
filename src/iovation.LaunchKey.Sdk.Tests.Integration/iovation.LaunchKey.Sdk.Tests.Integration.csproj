@@ -4,7 +4,7 @@
     <TargetFrameworks>netcoreapp21;net461</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
-    <ReleaseVersion>3.8.0</ReleaseVersion>
+    <ReleaseVersion>4.1.0</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -573,14 +573,14 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>service-client-auth-request-get-device-response-new-policy.feature.cs</LastGenOutput>
     </None>
-    <None Update="Features\directory_client\totp\directory-client-service-sessions-delete.feature">
-      <LastGenOutput>directory-client-service-sessions-delete.feature.cs</LastGenOutput>
+    <None Update="Features\directory_client\totp\directory-client-totp-delete.feature">
+      <LastGenOutput>directory-client-totp-delete.feature.cs</LastGenOutput>
     </None>
-    <None Update="Features\directory_client\totp\directory-client-totp-delete %28copy%29.feature">
-      <LastGenOutput>directory-client-service-sessions-delete.feature.cs</LastGenOutput>
+    <None Update="Features\directory_client\totp\directory-client-totp-generate.feature">
+      <LastGenOutput>directory-client-totp-generate.feature.cs</LastGenOutput>
     </None>
-    <None Update="Features\service_client\totp\service-client-session-end.feature">
-      <LastGenOutput>service-client-session-end.feature.cs</LastGenOutput>
+    <None Update="Features\service_client\totp\service-client-verify-totp.feature">
+      <LastGenOutput>service-client-verify-totp.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

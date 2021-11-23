@@ -62,7 +62,7 @@ namespace iovation.LaunchKey.Sdk.Transport
         /// <param name="request">request details</param>
         /// <param name="subject">the service ID associated with the session add request</param>
         /// <returns></returns>
-        ServiceV3TotpPostResponse serviceV3TotpPost(ServiceV3TotpPostRequest request, EntityIdentifier subject);
+        ServiceV3TotpPostResponse ServiceV3TotpPost(ServiceV3TotpPostRequest request, EntityIdentifier subject);
 
         /// <summary>
         /// links a device to a directory user

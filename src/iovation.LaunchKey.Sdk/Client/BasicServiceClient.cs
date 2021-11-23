@@ -425,7 +425,7 @@ namespace iovation.LaunchKey.Sdk.Client
         public bool VerifyTotp(string user, string otp)
         {
             var request = new ServiceV3TotpPostRequest(user, otp);
-            var response = _transport.serviceV3TotpPost(request, _serviceId);
+            var response = _transport.ServiceV3TotpPost(request, _serviceId);
             return response.Valid;
         }
 

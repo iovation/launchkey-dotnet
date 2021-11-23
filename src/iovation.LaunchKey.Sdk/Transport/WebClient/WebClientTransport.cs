@@ -575,7 +575,7 @@ namespace iovation.LaunchKey.Sdk.Transport.WebClient
             ExecuteRequest(HttpMethod.DELETE, "/service/v3/sessions", subject, request, null);
         }
 
-        public ServiceV3TotpPostResponse serviceV3TotpPost(ServiceV3TotpPostRequest request, EntityIdentifier subject)
+        public ServiceV3TotpPostResponse ServiceV3TotpPost(ServiceV3TotpPostRequest request, EntityIdentifier subject)
         {
             var response = ExecuteRequest(HttpMethod.POST, "/service/v3/totp", subject, request, httpStatusCodeWhiteList:null);
             var decryptedResponse = DecryptResponse<ServiceV3TotpPostResponse>(response);

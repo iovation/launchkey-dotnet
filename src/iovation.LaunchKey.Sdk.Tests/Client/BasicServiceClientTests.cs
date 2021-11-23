@@ -357,6 +357,25 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
             client.SessionEnd("user");
             mockTransport.Verify();
         }
+        
+        [TestMethod]
+        public void VerifyTotp_ShouldCallTransportAndReturnData()
+        {
+            var mockTransport = new Mock<ITransport>();
+            const bool expectedResponse = true;
+            
+            mockTransport.Setup(
+                t => t.ServiceV3TotpPost(
+                    It.IsAny<ServiceV3TotpPostRequest>(),
+                    It.IsAny<EntityIdentifier>()
+                )
+            ).Returns(new ServiceV3TotpPostResponse(expectedResponse));
+
+            var client = new BasicServiceClient(TestConsts.DefaultServiceId, mockTransport.Object);
+            var response = client.VerifyTotp("user", "123456");
+            mockTransport.Verify(p => p.ServiceV3TotpPost(It.IsAny<ServiceV3TotpPostRequest>(), It.IsAny<EntityIdentifier>()));
+            Assert.AreEqual(expectedResponse, response);
+        }
 
         [TestMethod]
         public void HandleWebhook_AuthPackage_ShouldReturnProperObject()
