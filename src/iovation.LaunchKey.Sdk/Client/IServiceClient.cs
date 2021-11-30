@@ -70,7 +70,7 @@ namespace iovation.LaunchKey.Sdk.Client
         /// Verifies a given TOTP is valid for a given user.
         /// </summary>
         /// <param name="user">LaunchKey Username, User Push ID, or Directory User ID for the End User</param>
-        /// <param name="otp">6-8 digit OTP code for to verify</param>
+        /// <param name="otp">6-8 digit OTP code for verification</param>
         bool VerifyTotp(string user, string otp);
     }
 }

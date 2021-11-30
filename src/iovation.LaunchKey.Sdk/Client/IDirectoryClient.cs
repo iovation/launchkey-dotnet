@@ -58,8 +58,7 @@ namespace iovation.LaunchKey.Sdk.Client
         /// Removes a TOTP configuration from a given user.
         /// </summary>
         /// <param name="userId">
-        ///     Unique value identifying the End User in the your system. This value was used to create the Directory
-        ///     User and Link Device
+        ///     Unique value identifying the End User in the your system.
         /// </param>
         void RemoveUserTotp(string userId);
     }
