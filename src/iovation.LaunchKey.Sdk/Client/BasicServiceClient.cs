@@ -422,6 +422,13 @@ namespace iovation.LaunchKey.Sdk.Client
             _transport.ServiceV3SessionsDelete(request, _serviceId);
         }
 
+        public bool VerifyTotp(string user, string otp)
+        {
+            var request = new ServiceV3TotpPostRequest(user, otp);
+            var response = _transport.ServiceV3TotpPost(request, _serviceId);
+            return response.Valid;
+        }
+
         [Obsolete("HandleWebhook(headers, body) is obsolete. Please use HandleWebhook(headers, body, method, path)", false)]
         public IWebhookPackage HandleWebhook(Dictionary<string, List<string>> headers, string body)
         {

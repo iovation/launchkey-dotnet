@@ -4,7 +4,7 @@
     <TargetFrameworks>netcoreapp21;net461</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
-    <ReleaseVersion>3.7.1</ReleaseVersion>
+    <ReleaseVersion>4.1.0</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -50,6 +50,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Include="Otp.NET" Version="1.2.2" />
     <PackageReference Include="SpecFlow" Version="3.9.22" />
     <PackageReference Include="Appium.WebDriver" Version="3.0.0.2" />
     <PackageReference Include="Castle.Core" Version="4.3.1" />
@@ -359,6 +360,21 @@
     <Compile Update="Features\service_client\auth_request\service-client-auth-request-get-device-response-new-policy.feature.cs">
       <DependentUpon>service-client-auth-request-get-device-response-new-policy.feature</DependentUpon>
     </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Features\directory_client\totp\directory-client-totp-delete.feature.cs">
+      <DependentUpon>directory-client-totp-delete.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Features\directory_client\totp\directory-client-totp-generate.feature.cs">
+      <DependentUpon>directory-client-totp-generate.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Features\service_client\totp\service-client-verify-totp.feature.cs">
+      <DependentUpon>service-client-verify-totp.feature</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -557,6 +573,15 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>service-client-auth-request-get-device-response-new-policy.feature.cs</LastGenOutput>
     </None>
+    <None Update="Features\directory_client\totp\directory-client-totp-delete.feature">
+      <LastGenOutput>directory-client-totp-delete.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Features\directory_client\totp\directory-client-totp-generate.feature">
+      <LastGenOutput>directory-client-totp-generate.feature.cs</LastGenOutput>
+    </None>
+    <None Update="Features\service_client\totp\service-client-verify-totp.feature">
+      <LastGenOutput>service-client-verify-totp.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
@@ -565,6 +590,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\policy\" />
+    <Folder Include="Features\directory_client\totp\" />
+    <Folder Include="Features\service_client\totp\" />
   </ItemGroup>
   <ItemGroup>
     <SpecFlowObsoleteCodeBehindFiles Update="Features\service_client\auth_request\service_client_auth_request_get_device_response_new_policy.feature.cs">

@@ -57,6 +57,14 @@ namespace iovation.LaunchKey.Sdk.Transport
         void ServiceV3SessionsDelete(ServiceV3SessionsDeleteRequest request, EntityIdentifier subject);
 
         /// <summary>
+        /// Verifies a given TOTP is valid for a given user.
+        /// </summary>
+        /// <param name="request">request details</param>
+        /// <param name="subject">the service ID associated with the session add request</param>
+        /// <returns></returns>
+        ServiceV3TotpPostResponse ServiceV3TotpPost(ServiceV3TotpPostRequest request, EntityIdentifier subject);
+
+        /// <summary>
         /// links a device to a directory user
         /// </summary>
         /// <param name="request">request details</param>
@@ -94,6 +102,21 @@ namespace iovation.LaunchKey.Sdk.Transport
         /// <param name="subject">the directory ID associated with the directory user</param>
         void DirectoryV3SessionsDelete(DirectoryV3SessionsDeleteRequest request, EntityIdentifier subject);
 
+        /// <summary>
+        /// Generate a TOTP secret for a Directory User
+        /// </summary>
+        /// <param name="request">the request details</param>
+        /// <param name="subject">the directory ID associated with the directory user</param>
+        /// <returns></returns>
+        DirectoryV3TotpPostResponse DirectoryV3TotpPost(DirectoryV3TotpPostRequest request, EntityIdentifier subject);
+
+        /// <summary>
+        /// Remove a TOTP secret for a Directory User
+        /// </summary>
+        /// <param name="request">the request details</param>
+        /// <param name="subject">the directory ID associated with the directory user</param>
+        void DirectoryV3TotpDelete(DirectoryV3TotpDeleteRequest request, EntityIdentifier subject);
+        
         /// <summary>
         /// process a server-sent event, and return a properly decoded and verified response object
         /// </summary>
