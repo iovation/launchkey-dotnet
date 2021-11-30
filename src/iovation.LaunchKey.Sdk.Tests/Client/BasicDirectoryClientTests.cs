@@ -177,6 +177,49 @@ namespace iovation.LaunchKey.Sdk.Tests.Client
 
             mockTransport.Verify(p => p.DirectoryV3SessionsDelete(It.IsAny<DirectoryV3SessionsDeleteRequest>(), It.IsAny<EntityIdentifier>()));
         }
+        
+        [TestMethod]
+        public void GenerateUserTotp_ShouldCallAndReturnDataFromTransportLayer()
+        {
+            var mockTransport = new Mock<ITransport>();
+            var client = new BasicDirectoryClient(TestConsts.DefaultDirectoryId, mockTransport.Object);
+            const string returnedSecret = "ABCDEFG";
+            const string returnedAlgorithm = "SHA1";
+            const int returnedPeriod = 30;
+            const int returnedDigits = 6;
+            var expectedResponse = new DirectoryV3TotpPostResponse(returnedSecret, returnedAlgorithm, returnedPeriod, returnedDigits);
+            
+            mockTransport.Setup(
+                t => t.DirectoryV3TotpPost(
+                    It.IsAny<DirectoryV3TotpPostRequest>(),
+                    It.IsAny<EntityIdentifier>()
+                )
+            ).Returns(expectedResponse);
+            var response = client.GenerateUserTotp("user");
+
+            mockTransport.Verify(p =>
+                p.DirectoryV3TotpPost(It.IsAny<DirectoryV3TotpPostRequest>(), It.IsAny<EntityIdentifier>()));
+            
+            Assert.AreEqual(new DirectoryUserTotp(returnedSecret, returnedAlgorithm, returnedPeriod, returnedDigits),
+                response);
+        }
+        
+        [TestMethod]
+        public void RemoveUserTotp_ShouldCallAndReturnDataFromTransportLayer()
+        {
+            var mockTransport = new Mock<ITransport>();
+            var client = new BasicDirectoryClient(TestConsts.DefaultDirectoryId, mockTransport.Object);
+            
+            mockTransport.Setup(
+                t => t.DirectoryV3TotpDelete(
+                    It.IsAny<DirectoryV3TotpDeleteRequest>(),
+                    It.IsAny<EntityIdentifier>()
+                )
+            );
+            client.RemoveUserTotp("user");
+            
+            mockTransport.Verify(p => p.DirectoryV3TotpDelete(It.IsAny<DirectoryV3TotpDeleteRequest>(), It.IsAny<EntityIdentifier>()));
+        }
 
         [TestMethod]
         public void CreateService_ShouldCallTransportWithCorrectParams()
