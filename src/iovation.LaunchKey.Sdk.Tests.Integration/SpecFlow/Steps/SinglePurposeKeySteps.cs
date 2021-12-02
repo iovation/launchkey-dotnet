@@ -64,10 +64,7 @@ namespace iovation.LaunchKey.Sdk.Tests.Integration.SpecFlow.Steps
         [Then(@"no valid key will be available to decrypt response")]
         public void ThenNoValidKeyWillBeAvailableToDecryptResponse()
         {
-            Assert.Throws(typeof(NoKeyFoundException), () =>
-            {
-                _scenarioContext.PerformAPICall();
-            });
+            Assert.IsInstanceOf<NoKeyFoundException>(_commonContext.GetLastException());
         }
     }
 }
