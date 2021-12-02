@@ -43,6 +43,14 @@
     <Content Include="Secrets\AppiumConfig.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Remove="Secrets\OrgEncryptionKey.txt" />
+    <Content Include="Secrets\OrgEncryptionKey.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Secrets\OrgSignatureKey.txt" />
+    <Content Include="Secrets\OrgSignatureKey.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
