@@ -6,7 +6,7 @@
     <Authors>iovation, Inc</Authors>
     <Company>iovation, Inc</Company>
     <Product>LaunchKey CLI Example</Product>
-    <ReleaseVersion>4.1.0</ReleaseVersion>
+    <ReleaseVersion>4.1.1</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
