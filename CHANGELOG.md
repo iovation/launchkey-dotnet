@@ -1,5 +1,9 @@
 Change Log
 ----------
+4.1.1
+=====
+* Updated Newtonsoft.Json to remediate CWE-755: [handle improper handling of exceptional conditions](https://github.com/advisories/GHSA-5crp-9r3c-p9vr)
+
 4.1.0
 =====
 * Added PublicKey Key Types for differentiating between keys that can encrypt, sign or perform both actions.

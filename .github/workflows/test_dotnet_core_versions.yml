@@ -32,7 +32,28 @@ jobs:
         dotnet build --framework netstandard20 src/iovation.LaunchKey.Sdk
         dotnet build --framework netcoreapp21 src/iovation.LaunchKey.Sdk.Tests
   
-  run_on_windows:
+  run_on_windows_dotnet_core:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+    - name: Restore NuGet Packages
+      run: nuget restore src/iovation.LaunchKey.Sdk.sln
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '2.1.x'
+    - name: Build SDK
+      run: |
+        msbuild src/iovation.LaunchKey.Sdk /p:Configuration=Release
+        msbuild src/iovation.LaunchKey.Sdk.Tests /p:Configuration=Release
+    - name: Run Tests
+      run: dotnet test -f netstandard20 src/iovation.LaunchKey.Sdk.Tests
+
+  run_on_windows_dotnet_framework:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -47,4 +68,4 @@ jobs:
         msbuild src/iovation.LaunchKey.Sdk /p:Configuration=Release
         msbuild src/iovation.LaunchKey.Sdk.Tests /p:Configuration=Release
     - name: Run Tests
-      run: dotnet test src/iovation.LaunchKey.Sdk.Tests
+      run: dotnet test -f net45 src/iovation.LaunchKey.Sdk.Tests
