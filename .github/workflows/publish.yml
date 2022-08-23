@@ -20,8 +20,6 @@ jobs:
       run: |
         dotnet pack "src\iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj" --configuration Release
         dotnet pack "src\iovation.LaunchKey.Sdk.ExampleCli\iovation.LaunchKey.Sdk.ExampleCli.csproj" --configuration Release
-    - name: Run Tests
-      run: dotnet test "src\iovation.LaunchKey.Sdk.Tests\iovation.LaunchKey.Sdk.Tests.csproj" --configuration Release
     - name: Publish SDK
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
