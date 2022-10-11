@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp21</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>iovation, Inc</Authors>
     <Company>iovation, Inc</Company>
     <Product>LaunchKey CLI Example</Product>
