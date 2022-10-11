@@ -1,5 +1,10 @@
 Change Log
 ----------
+5.0.0
+=====
+* Dropped support for everything below .NET 6 since .NET Core 2 and .NET Core 3 are EOL
+* Updated underlying httpclient to use HttpClient instead of WebRequest / WebResponse 
+
 4.1.1
 =====
 * Updated Newtonsoft.Json to remediate CWE-755: [handle improper handling of exceptional conditions](https://github.com/advisories/GHSA-5crp-9r3c-p9vr)

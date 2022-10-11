@@ -5,7 +5,7 @@
     <Authors>iovation, Inc</Authors>
     <Company>iovation, Inc</Company>
     <Product>LaunchKey CLI Example</Product>
-    <ReleaseVersion>4.1.1</ReleaseVersion>
+    <ReleaseVersion>5.0.0</ReleaseVersion>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
