@@ -8,6 +8,8 @@ using iovation.LaunchKey.Sdk.Transport.Domain;
 using serviceDomain = iovation.LaunchKey.Sdk.Domain.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+#pragma warning disable CS0618
+// Disable compiler warning on unit tests because until its completely obsolete you have to test the functionality isn't broken
 
 namespace iovation.LaunchKey.Sdk.Tests.Client
 {
