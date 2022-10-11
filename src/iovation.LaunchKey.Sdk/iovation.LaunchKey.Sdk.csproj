@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyVersion>4.1.1.0</AssemblyVersion>
-    <FileVersion>4.1.1.0</FileVersion>
-    <Version>4.1.1.0</Version>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <FileVersion>5.0.0.0</FileVersion>
+    <Version>5.0.0.0</Version>
+    <ReleaseVersion>5.0.0.0</ReleaseVersion>
+    <PackageVersion>5.0.0.0</PackageVersion>
     <Authors>iovation, Inc</Authors>
     <Product>LaunchKey .NET SDK</Product>
     <PackageTags>LaunchKey Security Multi-Factor Two-Factor Authentication 2FA MFA</PackageTags>
@@ -11,8 +13,6 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/iovation/launchkey-dotnet/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://docs.launchkey.com/api/index.html</PackageProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <ReleaseVersion>4.1.1</ReleaseVersion>
-    <PackageVersion>4.1.1.0</PackageVersion>
     <TargetFrameworks>net462;net6.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
