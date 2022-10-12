@@ -19,48 +19,51 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        dotnet-version: ['2.1.x', '3.1.x', '5.0.x']
+        dotnet-version: ['6.0.x']
         os: ['ubuntu-latest', 'macos-latest']
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
-      uses: actions/setup-dotnet@v1.7.2
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ matrix.dotnet-version }}
     - name: Build SDK
       run: |
-        dotnet build --framework netstandard20 src/iovation.LaunchKey.Sdk
-        dotnet build --framework netcoreapp21 src/iovation.LaunchKey.Sdk.Tests
+        dotnet build --framework net6.0 src/iovation.LaunchKey.Sdk
+        dotnet build --framework net6.0 src/iovation.LaunchKey.Sdk.Tests
+    - name: Run Tests
+      run: |
+        dotnet test --framework net6.0 src/iovation.LaunchKey.Sdk.Tests
   
   run_on_windows_dotnet_core:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
+      uses: NuGet/setup-nuget@v1
     - name: Restore NuGet Packages
       run: nuget restore src/iovation.LaunchKey.Sdk.sln
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '2.1.x'
+        dotnet-version: '6.0.x'
     - name: Build SDK
       run: |
         msbuild src/iovation.LaunchKey.Sdk /p:Configuration=Release
         msbuild src/iovation.LaunchKey.Sdk.Tests /p:Configuration=Release
     - name: Run Tests
-      run: dotnet test -f netstandard20 src/iovation.LaunchKey.Sdk.Tests
+      run: dotnet test -f net6.0 src/iovation.LaunchKey.Sdk.Tests
 
   run_on_windows_dotnet_framework:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
+      uses: NuGet/setup-nuget@v1
     - name: Restore NuGet Packages
       run: nuget restore src/iovation.LaunchKey.Sdk.sln
     - name: Build SDK
@@ -68,4 +71,4 @@ jobs:
         msbuild src/iovation.LaunchKey.Sdk /p:Configuration=Release
         msbuild src/iovation.LaunchKey.Sdk.Tests /p:Configuration=Release
     - name: Run Tests
-      run: dotnet test -f net45 src/iovation.LaunchKey.Sdk.Tests
+      run: dotnet test -f net462 src/iovation.LaunchKey.Sdk.Tests
