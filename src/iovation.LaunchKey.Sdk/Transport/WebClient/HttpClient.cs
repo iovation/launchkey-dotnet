@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
-
+#pragma warning disable SYSLIB0014
+/*
+ Disabling warning for .NET 6 because we have to support .NET Framework 4.6.2 and some of the changes are not
+ backported through the nuget package System.Net.Http at this time. 
+*/
 namespace iovation.LaunchKey.Sdk.Transport.WebClient
 {
     /// <summary>

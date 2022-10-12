@@ -3,7 +3,9 @@ Change Log
 5.0.0
 =====
 * Dropped support for everything below .NET 6 since .NET Core 2 and .NET Core 3 are EOL
-* Updated underlying httpclient to use HttpClient instead of WebRequest / WebResponse 
+* Dropped support for everything below .NET Framework 4.6.2
+* Added pragma compiler suppression for .NET 6 warning us to move to HttpClient instead of WebRequest / WebResponse because we have to support 
+  .NET Framework 4.6.2 and some of the API changes are not backported through Nuget packages 
 
 4.1.1
 =====
