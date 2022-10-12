@@ -11,12 +11,12 @@ This SDK is targeted toward:
 - Windows 7 and above
 - Linux
 - OSX
-- .NET Framework 4.5+
-- .NET Standard 2.0 (.NET 4.6.1+, .NET Core 2.0+, Mono 5.4, etc.) See .NET Standard compatibility here: https://docs.microsoft.com/en-us/dotnet/standard/net-standard
+- .NET Framework 4.6.2+
+- .NET Core (.NET 6)
 
 
 ## Building
-The solution file is for Visual Studio 2017, Visual Studio for Mac 2019, and the projects are multi-targeting .NET 4.5 and .NET Standard 2.0. The project should build out of the box. Simply clone, open in VS, compile.
+The solution file is for Visual Studio 2017, Visual Studio for Mac 2019, and the projects are multi-targeting .NET 4.6.2 and .NET 6. The project should build out of the box. Simply clone, open in VS, compile.
 
 This project also works with the JetBrains IDE Rider.  
 
@@ -28,7 +28,7 @@ cd iovation.LaunchKey.Sdk.Tests
 dotnet test
 ```
 
-This method results in both the .NET 4.0 and .NET Core runtimes being used for test execution. Currently, VS 2017's IDE-based test runner does *not* properly run all targets.
+This method results in both the .NET 4.6.2 and .NET Core runtimes being used for test execution. Currently, VS 2017's IDE-based test runner does *not* properly run all targets.
 
 If you are using Rider you can configure it to run for all runtimes
 
