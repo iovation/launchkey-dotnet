@@ -7,6 +7,7 @@
     <PackageVersion>5.0.0.0</PackageVersion>
     <Authors>iovation, Inc</Authors>
     <Product>LaunchKey .NET SDK</Product>
+    <PackageId>iovation.LaunchKey.Sdk</PackageId>
     <PackageTags>LaunchKey Security Multi-Factor Two-Factor Authentication 2FA MFA</PackageTags>
     <Copyright>Copyright 2019 iovation, Inc.</Copyright>
     <Description>SDK for accessing LaunchKey V3 endpoints.</Description>
