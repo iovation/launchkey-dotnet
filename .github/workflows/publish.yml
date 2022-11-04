@@ -7,23 +7,19 @@ jobs:
   publish:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
+      uses: NuGet/setup-nuget@v1
     - name: Build SDK
       run: |
         dotnet restore src\iovation.LaunchKey.Sdk.sln
         msbuild "src\iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj" /m /verbosity:minimal /p:GeneratePackageOnBuild=false
+    - name: Run Tests
+      run: dotnet test -f net462 src/iovation.LaunchKey.Sdk.Tests
     - name: Package SDK
       run: |
         dotnet pack "src\iovation.LaunchKey.Sdk\iovation.LaunchKey.Sdk.csproj" --configuration Release
-        dotnet pack "src\iovation.LaunchKey.Sdk.ExampleCli\iovation.LaunchKey.Sdk.ExampleCli.csproj" --configuration Release
     - name: Publish SDK
-      uses: brandedoutcast/publish-nuget@v2.5.5
-      with:
-        PACKAGE_NAME: iovation.LaunchKey.Sdk
-        PROJECT_FILE_PATH: src/iovation.LaunchKey.Sdk/iovation.LaunchKey.Sdk.csproj
-        TAG_COMMIT: false
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} -NonInteractive
